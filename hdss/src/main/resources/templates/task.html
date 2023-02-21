@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/header :: common-header" />
+<head th:replace="common/header :: common-header" >
+<script src="/static/js/individual.js"></script>
+</head>
 <body>
 <div th:replace="common/header :: navbar" /></div>
 
@@ -14,7 +16,12 @@
 
 
      <button type="button" class="btn">Zip Location</button>
-     <button type="button" class="btn">Zip Individual</button>
+
+     <button type="button" class="btn" id="zip-individual-btn">Zip Individual</button>
+     <div id="progress-bar-container">
+	  <div id="progress-bar"></div>
+	 </div>
+
      <button type="button" class="btn">Zip Residency</button>
      <button type="button" class="btn">Zip Socialgroup</button>
      <button type="button" class="btn">Zip Pregnancy</button>
@@ -27,5 +34,6 @@
 
 
 <div th:replace="common/header :: body-bottom-scripts" ></div>
+
 </body>
 </html>
