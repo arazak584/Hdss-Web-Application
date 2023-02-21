@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header" />
+<body>
+<div th:replace="common/header :: navbar" /></div>
+
+<div class="container">
+
+<div class="row">
+    <h1>Generate Zip Files</h1>
+    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+    
+    </div>
+
+
+     <button type="button" class="btn">Zip Location</button>
+     <button type="button" class="btn">Zip Individual</button>
+     <button type="button" class="btn">Zip Residency</button>
+     <button type="button" class="btn">Zip Socialgroup</button>
+     <button type="button" class="btn">Zip Pregnancy</button>
+     <button type="button" class="btn">Zip Relationship</button>
+
+
+    
+</div>
+
+
+
+<div th:replace="common/header :: body-bottom-scripts" ></div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header" />
+<body>
+<div th:replace="common/header :: navbar" /></div>
+
+<div class="container">
+
+<div class="row">
+    <h1>Country</h1>
+    
+    </div>
+    <div class="row">
+    <div class="col-lg-3">
+    <a th:href = "@{country/add}" class="btn btn-primary btn-sm mb-3">Add Country</a>
+    </div>
+    </div>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th>Country Code</th>
+            <th>Name</th>
+            <th>Parent</th>
+            <th>Level</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="country : ${country}">
+            <td th:text="${country.extId}"></td>
+            <td th:text="${country.name}"></td>
+            <td th:text="${country.parent_uuid}"></td>
+            <td th:text="${country.level_uuid}"></td>
+            <td>
+                <a  th:href="@{/country/{id}/edit(id=${country.extId})}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="#" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="common/header :: body-bottom-scripts" ></div>
+
+</body>
+</html>
