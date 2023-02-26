@@ -7,5 +7,4 @@ import com.arn.hdss.entity.Individual;
 public interface IndividualRepository extends JpaRepository <Individual, String> {
 
 
-
 }

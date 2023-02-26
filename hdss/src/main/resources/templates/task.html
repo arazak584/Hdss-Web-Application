@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/header :: common-header" >
-<script src="/static/js/individual.js"></script>
+
 </head>
 <body>
 <div th:replace="common/header :: navbar" /></div>
@@ -13,27 +13,53 @@
     <hr style="height:2px;border-width:0;color:gray;background-color:gray">
     
     </div>
+    
+    <button onclick="downloadCsv()">Generate Individual</button>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="message"></div>
 
 
-     <button type="button" class="btn">Zip Location</button>
+    <button onclick="downloadLocation()">Generate Location</button>
+<div class="progress">
+  <div class="progress-bar location-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="locmessage"></div>
 
-     <button type="button" class="btn" id="zip-individual-btn">Zip Individual</button>
-     <div id="progress-bar-container">
-	  <div id="progress-bar"></div>
-	 </div>
+<button onclick="downloadResidency()">Generate Residency</button>
+<div class="progress">
+  <div class="progress-bar residency-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="resmessage"></div>
 
-     <button type="button" class="btn">Zip Residency</button>
-     <button type="button" class="btn">Zip Socialgroup</button>
-     <button type="button" class="btn">Zip Pregnancy</button>
-     <button type="button" class="btn">Zip Relationship</button>
 
+<button onclick="downloadSocialgroup()">Generate Socialgroup</button>
+<div class="progress">
+  <div class="progress-bar socialgroup-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="somessage"></div>
+
+<button onclick="downloadRelationship()">Generate Relationship</button>
+<div class="progress">
+  <div class="progress-bar relationship-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="relmessage"></div>
+
+
+<button onclick="downloadPregnancy()">Generate Pregnancy</button>
+<div class="progress">
+  <div class="progress-bar pregnancy-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="pregmessage"></div>
+    
 
     
 </div>
 
+<div th:replace="common/header :: body-bottom-scripts" /></div>
 
-
-<div th:replace="common/header :: body-bottom-scripts" ></div>
-
+<!-- <script th:src="@{/js/individual.js}"></script>-->
+<script th:src="@{/js/task.js}"></script>
 </body>
 </html>

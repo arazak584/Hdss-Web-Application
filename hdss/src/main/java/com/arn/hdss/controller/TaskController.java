@@ -3,7 +3,6 @@ package com.arn.hdss.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.arn.hdss.repository.IndividualRepository;
 
 @Controller
@@ -17,6 +16,11 @@ public class TaskController {
 	@RequestMapping("/task")
 	public String task(){
 		return "task";
+	}
+	
+	@RequestMapping("/upload")
+	public String upload(){
+		return "upload";
 	}
 
 }
