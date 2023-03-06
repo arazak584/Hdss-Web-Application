@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/header :: common-header" />
- 
-
 <body>
 <div th:replace="common/header :: navbar" /></div>
+
 
 <div class="container">
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-		<h1 class="text-center">Register Country</h1>
+		<h1 class="text-center">Update Country</h1>
 		<div class="card-body">
-		<form th:action="@{/countryList}" th:object="${country}" method="post">
+		<form th:action="@{/countryList/{extId} (id=${country.extId})}" th:object="${country}" method="post">
 		<div class="form-group">
 		<label>COUNTRY CODE</label>
-		<input type="text" name="extId" th:field ="*{extId}" Placeholder="Enter extId Code in CAPS" class="form-control"/>
+		<input type="text" name="extId" th:field ="*{extId}" class="form-control"/>
 		</div>
 		<div class="form-group">
 		<label>COUNTRY NAME</label>
-		<input type="text" name="name" th:field ="*{name}" Placeholder="Enter Country Name" class="form-control"/>
+		<input type="text" name="name" th:field ="*{name}" class="form-control"/>
 		</div>
 		<div class="form-group">
 		<label>PARENT</label>
-		<input type="text" name="parent_uuid" th:field ="*{parent_uuid}" Placeholder="Enter Parent" class="form-control"/>
+		<input type="text" name="parent_uuid" th:field ="*{parent_uuid}" class="form-control"/>
 		</div>
 		<div class="form-group">
 		<label>LEVEL</label>
@@ -30,12 +29,12 @@
 		        <option value="">-- Select Level --</option>
 		        <option th:each="level : ${levels}" th:value="${level.uuid}" th:text="${level.name}"></option>
 		        <option th:each="hierarchy : ${hierarchy}" th:value="${hierarchy.uuid}" th:text="${hierarchy.name}"></option>
-		    </select>
-    		</div>
+		 </select>
+		</div>
 		
 		<div class="footer-body">
 		
-		<button type="submit" class="btn btn-primary">Save</button>
+		<button type="submit" class="btn btn-primary">Update</button>
 		
 		</div>
 		
@@ -48,5 +47,6 @@
 </div>
 
 <div th:replace="common/header :: body-bottom-scripts" ></div>
+
 </body>
 </html>

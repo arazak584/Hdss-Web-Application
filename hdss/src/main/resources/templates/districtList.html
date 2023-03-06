@@ -13,32 +13,32 @@
 <div class="container">
 
 <div class="row">
-    <h1>Country</h1>
+    <h1>District</h1>
     
     </div>
     <div class="row">
     <div class="col-lg-3">
-    <a th:href = "@{countryList/add}" class="btn btn-primary btn-sm mb-3">Add Country</a>
+    <a th:href = "@{districtList/add}" class="btn btn-primary btn-sm mb-3">Add District</a>
     </div>
     </div>
     <table class="table" id="myTable">
         <thead class="thead-light">
         <tr>
-            <th>Country Code</th>
+            <th>District Code</th>
             <th>Name</th>
-            <th>Parent</th>
+            <th>Region</th>
             <th>Level</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="country : ${country}">
-            <td th:text="${country.extId}"></td>
-            <td th:text="${country.name}"></td>
-            <td th:text="${country.parent_uuid}"></td>
-            <td th:text="${country.level_uuid}"></td>
+        <tr th:each="district : ${district}">
+            <td th:text="${district.extId}"></td>
+            <td th:text="${district.name}"></td>
+            <td th:text="${district.regionId}"></td>
+            <td th:text="${district.level_uuid}"></td>
             <td>
-                <a  th:href="@{/countryList/edit/{extId}(extId=${country.extId})}" class="btn btn-primary btn-sm">Edit</a>
+                <a  th:href="@{/districtList/edit/{extId}(extId=${district.extId})}" class="btn btn-primary btn-sm">Edit</a>
             </td>
         </tr>
         </tbody>

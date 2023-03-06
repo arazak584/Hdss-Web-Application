@@ -19,7 +19,7 @@ import com.arn.hdss.entity.Task;
 import com.arn.hdss.repository.TaskRepository;
 
 @RestController
-@RequestMapping("/api/zip/task")
+@RequestMapping("/api/task")
 public class TaskZipController {
 
     @Autowired
@@ -49,6 +49,9 @@ public class TaskZipController {
         List<Task> pregnancyTasks = tasks.stream()
                 .filter(task -> task.getFileName().equals("pregnancy.zip"))
                 .collect(Collectors.toList());
+        List<Task> demographyTasks = tasks.stream()
+                .filter(task -> task.getFileName().equals("demography.zip"))
+                .collect(Collectors.toList());
 
         // Create DTOs for each file
         TaskDto locationDto = createDto(locationTasks);
@@ -57,9 +60,10 @@ public class TaskZipController {
         TaskDto socialgroupDto = createDto(socialgroupTasks);
         TaskDto relationshipDto = createDto(relationshipTasks);
         TaskDto pregnancyDto = createDto(pregnancyTasks);
+        TaskDto demographyDto = createDto(demographyTasks);
 
         // Add DTOs to list
-        List<TaskDto> dtos = Arrays.asList(locationDto, individualDto, residencyDto, socialgroupDto,relationshipDto,pregnancyDto);
+        List<TaskDto> dtos = Arrays.asList(locationDto, individualDto, residencyDto, socialgroupDto,relationshipDto,pregnancyDto,demographyDto);
 
         // Return the DTOs in the response body
         return ResponseEntity.ok(dtos);

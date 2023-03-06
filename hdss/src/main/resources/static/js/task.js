@@ -159,3 +159,30 @@ function downloadPregnancy() {
 
   xhr.send();
 }
+
+
+//Demography
+function downloadDemography() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/api/zip/demography', true);
+  xhr.responseType = 'blob';
+
+  xhr.onloadstart = function(e) {
+    document.querySelector('.demography-progress').style.width = '0%';
+  };
+
+  xhr.onprogress = function(e) {
+    if (e.lengthComputable) {
+      var percentComplete = (e.loaded / e.total) * 100;
+      document.querySelector('.demography-progress').style.width = percentComplete + '%';
+      document.querySelector('.demography-progress').setAttribute('aria-valuenow', percentComplete);
+    }
+  };
+
+  xhr.onloadend = function(e) {
+    document.querySelector('.demography-progress').style.width = '100%';
+    document.querySelector('.demomessage').textContent = 'Demography task generated successfully.';
+  };
+
+  xhr.send();
+}

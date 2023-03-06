@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+
+<body>
+<div th:replace="common/header :: navbar" /></div>
+<div class="container">
+
+<div class="row">
+    <h1>Household Visits</h1>
+    
+    </div>
+    
+    <!-- Row Start -->
+    <div class="row">
+    <div class="col-lg-3">
+    </div>
+    	<div class="card-header">
+    	<form class="form-inline" method="GET" onsubmit="filterVisits(event)">
+		    <div class="form-group">
+		        Start Date: <input type="date" name="startDate" id="startDate" class="form-control mr-2">
+		    </div>
+		    <div class="form-group">
+		        End Date: <input type="date" name="endDate"  id="endDate" class="form-control mr-2">
+		    </div>
+		    <button type="submit" name="filter" class="btn btn-primary">Filter</button>
+		</form>
+
+		</div>
+
+
+    </div>
+    
+    
+    
+    <!-- Row Ends -->
+    <table class="table" id="myTable">
+        <thead class="thead-light">
+        <tr>
+            <th>#</th>
+            <th>Number</th>
+            <th>Date</th>
+            <th>Fieldworker</th>
+            <th>Village</th>
+            <th>Loc</th>
+            <th>VDate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="visit, row : ${visits}">
+        <td th:text="${row.index + 1}"></td>
+        <td th:text="${visit.extId}"></td>
+        <td th:text="${visit.insertDate}"></td>
+        <td th:text="${visit.fw}"></td>
+        <td th:text="${visit.location}"></td>
+        <td th:text="${visit.visitDate}"></td>
+    </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="common/header :: body-bottom-scripts" ></div>
+<script>
+$(document).ready(function() {
+    $('#myTable').DataTable({
+        "pageLength": 10
+    });
+});
+</script>
+
+<script>
+function filterVisits(event) {
+    event.preventDefault(); // prevent the form from submitting
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+    const rows = document.querySelectorAll("#myTable tbody tr");
+    for (const row of rows) {
+        const visitDate = row.querySelector("td:nth-child(6)").textContent; // get the visit date from the table cell
+        if (visitDate < startDate || visitDate > endDate) {
+            row.style.display = "none"; // hide the row if the visit date is outside the date range
+        } else {
+            row.style.display = ""; // show the row otherwise
+        }
+    }
+}
+</script>
+
+
+
+</body>
+</html>

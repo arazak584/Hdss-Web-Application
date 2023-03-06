@@ -5,7 +5,6 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 
 <body>
@@ -13,27 +12,15 @@
 <div class="container">
 
 <div class="row">
-    <h1>Field Workers</h1>
+    <h1>Round</h1>
     
     </div>
     
     <!-- Row Start -->
     <div class="row">
     <div class="col-lg-3">
-    <a th:href = "@{fieldworkers/add}" class="btn btn-primary btn-sm mb-3">Add Fieldworker</a>
+    <a th:href = "@{rounds/add}" class="btn btn-primary btn-sm mb-3">Add Round</a>
     </div>
-    	<div class="card-header">
-    	<form class="form-inline" method="POST" action="" style="text-align: center;">
-        <div class="form-group">
-            Start Date: <input type="date" name="startdate" id="startdate" class="form-control mr-2">
-        </div>
-        <div class="form-group">
-            End Date: <input type="date" name="enddate"  id="enddate" class="form-control mr-2">
-        </div>
-        <button type="submit" name="filter" class="btn btn-primary">Filter</button>
-    	</form>
-		</div>
-
 
     </div>
     
@@ -43,21 +30,21 @@
     <table class="table" id="myTable">
         <thead class="thead-light">
         <tr>
-            <th>User Name</th>
-            <th>Full Name</th>
-            <th>Password</th>
-            <th>Status</th>
+            <th>Round</th>
+            <th>Remarks</th>
+            <th>Start Date</th>
+            <th>End Date</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="fieldworker : ${fieldworkers}">
-            <td th:text="${fieldworker.username}"></td>
-            <td th:text="${fieldworker.fullName}"></td>
-            <td th:text="${fieldworker.password}"></td>
-            <td th:text="${fieldworker.status}"></td>
+        <tr th:each="round : ${rounds}">
+            <td th:text="${round.roundNumber}"></td>
+            <td th:text="${round.remark}"></td>
+            <td th:text="${round.startDate}"></td>
+            <td th:text="${round.endDate}"></td>
             <td>
-                <a th:href="@{/fieldworkers/edit/{id}(id=${fieldworker.id})}" class="btn btn-primary btn-sm">Edit</a>
+                <a th:href="@{/rounds/edit/{id}(id=${round.id})}" class="btn btn-primary btn-sm">Edit</a>
                 <!--  <a th:href="@{/fieldworkers/{id}(id=${fieldworker.id})}" class="btn btn-danger btn-sm" >Delete</a>-->
 
             </td>
@@ -70,7 +57,7 @@
 <script>
 $(document).ready(function() {
     $('#myTable').DataTable({
-        "pageLength": 10
+        "pageLength": 5
     });
 });
 </script>

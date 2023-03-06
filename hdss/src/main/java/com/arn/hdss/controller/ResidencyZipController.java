@@ -43,7 +43,7 @@ public class ResidencyZipController {
 	  List<Residency> data = repo.findAll();
 
 	  // Convert data to CSV
-	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("endDate").addColumn("endType")
+	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("compno").addColumn("endDate").addColumn("endType")
 			  .addColumn("extId").addColumn("fw").addColumn("insertDate").addColumn("location")
 			  .addColumn("socialgroup").addColumn("startDate").addColumn("startType").build();
 	  CsvMapper csvMapper = new CsvMapper();

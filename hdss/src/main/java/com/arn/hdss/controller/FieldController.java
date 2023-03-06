@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.arn.hdss.entity.Fieldworker;
+import com.arn.hdss.entity.Round;
 import com.arn.hdss.repository.FieldworkerRepository;
+import com.arn.hdss.repository.RoundRepository;
 
 @Controller
 public class FieldController {
@@ -22,7 +24,7 @@ public class FieldController {
 	@Autowired
 	FieldworkerRepository repo;
 
-	
+	//Field Workers
 	@GetMapping("/fieldworkers")
 	public String findFieldworker(Model model) {
 	    List<Fieldworker> fieldworkers = repo.findFieldworker();
@@ -90,6 +92,66 @@ public class FieldController {
 	    return "redirect:/fieldworkers";
 	}
 
+	
+	@Autowired
+	RoundRepository roundrepo;
 
+	//Round 
+	@GetMapping("/rounds")
+	public String findRound(Model model) {
+	    List<Round> rounds = roundrepo.findRound();
+	    model.addAttribute("rounds", rounds);
+	    return "rounds";
+	}
+	
+	@GetMapping("/rounds/add")
+	public String addRound(Model model) {
+		Round round = new Round();
+		model.addAttribute("round", round);
+		return "add_round";
+		
+	}
+	
+	@PostMapping("/rounds")
+	public String saveRound(@ModelAttribute("rounds") Round round) {
+		roundrepo.save(round);
+	    return "redirect:/rounds";
+	}
+	
+	@GetMapping("/rounds/edit/{id}")
+	public String editRound(@PathVariable("id") Long id, Model model) {
+	    Optional<Round> optionalROund = roundrepo.findById(id);
+	    if (optionalROund.isPresent()) {
+	    	Round round = optionalROund.get();
+	        // Add any other necessary data to the model attribute for editing
+	        model.addAttribute("round", round);
+	        return "edit_round";
+	    } else {
+	        return "error";
+	    }
+	}
+
+	
+	@PostMapping("/rounds/{id}")
+	public String updateRound(@PathVariable("id") Long id, @ModelAttribute("round") Round round, BindingResult result, Model model) {
+	    if (result.hasErrors()) {
+	        // Handle validation errors if necessary
+	        return "edit_round";
+	    } else {
+	        Optional<Round> optionalRound = roundrepo.findById(id);
+	        if (optionalRound.isPresent()) {
+	        	Round existingRound = optionalRound.get();
+	        	existingRound.setRoundNumber(round.getRoundNumber());
+	        	existingRound.setRemark(round.getRemark());
+	        	existingRound.setStartDate(round.getStartDate());
+	        	existingRound.setEndDate(round.getEndDate());
+	        	roundrepo.save(existingRound);
+	            return "redirect:/rounds";
+	        } else {
+	            return "error";
+	        }
+	    }
+	}
+	
 
 }

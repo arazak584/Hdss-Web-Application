@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arn.hdss.entity.Country;
@@ -16,13 +15,12 @@ import com.arn.hdss.exception.DataNotFoundException;
 import com.arn.hdss.repository.CountryRepository;
 
 @RestController
-@RequestMapping("")
 public class CountryController {
 	
 	@Autowired
 	CountryRepository repo;
 	
-	@GetMapping("")
+	@GetMapping("/api/country")
 	public DataWrapper<Country> findAll() {
 
 		List<Country> data = repo.findAll();

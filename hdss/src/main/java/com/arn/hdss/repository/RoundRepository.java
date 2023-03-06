@@ -13,7 +13,8 @@ public interface RoundRepository extends JpaRepository <Round, Long> {
 	@Query(nativeQuery = true, value = "SELECT * from round ORDER BY roundNumber DESC limit 1")
 	List<Round> findAll();
 	
-	
+	@Query(nativeQuery = true, value = "SELECT * from round ORDER BY roundNumber")
+	List<Round> findRound();
 	
 	
 

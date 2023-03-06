@@ -1,5 +1,7 @@
 package com.arn.hdss.entity;
 
+
+
 import java.sql.Date;
 
 import javax.persistence.Column;

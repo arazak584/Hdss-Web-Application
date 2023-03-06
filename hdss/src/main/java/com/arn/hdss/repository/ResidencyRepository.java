@@ -9,7 +9,10 @@ import com.arn.hdss.entity.Residency;
 
 public interface ResidencyRepository extends JpaRepository <Residency, String> {
 
-	@Query(nativeQuery = true, value = "SELECT * from membership where endType!=0")
+	@Query(nativeQuery = true, value = "SELECT m1.* FROM hdss.residency m1,\r\n"
+			+ "(SELECT MAX(startDate) AS startDate, extId FROM hdss.residency\r\n"
+			+ "GROUP BY extId) residency\r\n"
+			+ "WHERE m1.startDate = residency.startDate AND m1.extId = residency.extId;")
 	List<Residency> findAll();
 
 }

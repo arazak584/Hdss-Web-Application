@@ -39,6 +39,9 @@ public class Residency {
 	@Column(name = "location", nullable = false)
 	private String location;
 	
+	@Column(name = "compno", nullable = false)
+	private String compno;
+	
 	@Column(name = "socialgroup", nullable = false)
 	private String socialgroup;
 	
@@ -50,7 +53,7 @@ public class Residency {
 	
 
 	public Residency(String uuid, String extId, Date insertDate, Date startDate, Date endDate, Integer startType,
-			Integer endType, String location, String socialgroup, String fw) {
+			Integer endType, String location,String compno, String socialgroup, String fw) {
 		super();
 		this.uuid = uuid;
 		this.extId = extId;
@@ -60,6 +63,7 @@ public class Residency {
 		this.startType = startType;
 		this.endType = endType;
 		this.location = location;
+		this.compno = compno;
 		this.socialgroup = socialgroup;
 		this.fw = fw;
 	}
@@ -159,6 +163,17 @@ public class Residency {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	
+	public String getCompno() {
+		return compno;
+	}
+
+
+
+	public void setCompno(String compno) {
+		this.compno = compno;
 	}
 
 

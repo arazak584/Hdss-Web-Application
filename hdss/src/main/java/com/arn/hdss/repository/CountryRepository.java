@@ -5,5 +5,5 @@ import com.arn.hdss.entity.Country;
 
 public interface CountryRepository extends JpaRepository <Country, String> {
 
-
+	
 }

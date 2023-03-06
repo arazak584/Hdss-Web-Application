@@ -9,20 +9,24 @@
 <div class="container">
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-		<h1 class="text-center">Register Country</h1>
+		<h1 class="text-center">Register District</h1>
 		<div class="card-body">
-		<form th:action="@{/countryList}" th:object="${country}" method="post">
+		<form th:action="@{/districtList}" th:object="${district}" method="post">
 		<div class="form-group">
-		<label>COUNTRY CODE</label>
+		<label>DISTRICT CODE</label>
 		<input type="text" name="extId" th:field ="*{extId}" Placeholder="Enter extId Code in CAPS" class="form-control"/>
 		</div>
 		<div class="form-group">
-		<label>COUNTRY NAME</label>
-		<input type="text" name="name" th:field ="*{name}" Placeholder="Enter Country Name" class="form-control"/>
+		<label>DISTRICT NAME</label>
+		<input type="text" name="name" th:field ="*{name}" Placeholder="Enter District Name" class="form-control"/>
 		</div>
 		<div class="form-group">
-		<label>PARENT</label>
-		<input type="text" name="parent_uuid" th:field ="*{parent_uuid}" Placeholder="Enter Parent" class="form-control"/>
+		<label>REGION</label>
+		<select id="regionId" name="regionId" class="form-control form-control-lg" th:field="*{regionId}">
+		        <option value="">-- Select Region --</option>
+		        <option th:each="level : ${levels}" th:value="${level.extId}" th:text="${level.name}"></option>
+		        <option th:each="region : ${region}" th:value="${region.extId}" th:text="${region.name}"></option>
+		 </select>
 		</div>
 		<div class="form-group">
 		<label>LEVEL</label>
