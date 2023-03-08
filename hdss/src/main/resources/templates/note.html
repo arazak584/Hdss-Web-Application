@@ -11,8 +11,9 @@ mkdir /opt/hdss
 cp hdss.jar /opt/hdss/hdss.jar
 cp Dockerfile /opt/hdss/Dockerfile
 cd /opt/hdss
-chmod a+rx hdss.jar
+//chmod a+rx hdss.jar
 docker build -t hdss.jar .
+docker run -p 8080:8080 hdss.jar
 
 
 </body>

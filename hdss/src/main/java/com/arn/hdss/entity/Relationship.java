@@ -39,11 +39,20 @@ public class Relationship {
 	@Column(name = "fw", nullable = false)
 	private String fw;
 	
-	public Relationship() {}
+	private Integer mar;//Is this the first marriage of the woman?
+	private Integer tnbch;//Total Number of biological children
+	private Integer nchdm;//Number of biological children from this marriage
+	private Integer polygamous;//Are you in a polygamous marriage
+	private Integer nwive;//Number of wives of husband(including you)
+	private Integer lcow;//Does women live in the same household with co-wife(s)
+	private Integer mrank;//Woman's rank (In current marriage)
 
 	
+	public Relationship() {}
+
 	public Relationship(String uuid, String extId, String extIdB, Date insertDate, Date startDate, Date endDate,
-			Integer aIsToB, Integer endType, String fw) {
+			Integer aIsToB, Integer endType, String fw, Integer mar, Integer tnbch, Integer nchdm, Integer polygamous,
+			Integer nwive, Integer lcow, Integer mrank) {
 		super();
 		this.uuid = uuid;
 		this.extId = extId;
@@ -54,7 +63,15 @@ public class Relationship {
 		this.aIsToB = aIsToB;
 		this.endType = endType;
 		this.fw = fw;
+		this.mar = mar;
+		this.tnbch = tnbch;
+		this.nchdm = nchdm;
+		this.polygamous = polygamous;
+		this.nwive = nwive;
+		this.lcow = lcow;
+		this.mrank = mrank;
 	}
+
 
 
 
@@ -148,8 +165,63 @@ public class Relationship {
 	public void setFw(String fw) {
 		this.fw = fw;
 	}
+	
+	
+	public Integer getMar() {
+		return mar;
+	}
 
+	public void setMar(Integer mar) {
+		this.mar = mar;
+	}
 
+	public Integer getTnbch() {
+		return tnbch;
+	}
+
+	public void setTnbch(Integer tnbch) {
+		this.tnbch = tnbch;
+	}
+
+	public Integer getNchdm() {
+		return nchdm;
+	}
+
+	public void setNchdm(Integer nchdm) {
+		this.nchdm = nchdm;
+	}
+
+	public Integer getPolygamous() {
+		return polygamous;
+	}
+
+	public void setPolygamous(Integer polygamous) {
+		this.polygamous = polygamous;
+	}
+
+	public Integer getNwive() {
+		return nwive;
+	}
+
+	public void setNwive(Integer nwive) {
+		this.nwive = nwive;
+	}
+
+	public Integer getLcow() {
+		return lcow;
+	}
+
+	public void setLcow(Integer lcow) {
+		this.lcow = lcow;
+	}
+
+	public Integer getMrank() {
+		return mrank;
+	}
+
+	public void setMrank(Integer mrank) {
+		this.mrank = mrank;
+	}
 
 	@Override
 	public String toString() {
