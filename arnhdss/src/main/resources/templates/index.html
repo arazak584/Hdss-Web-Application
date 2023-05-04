@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common-header">
+<meta charset="ISO-8859-1">
+<title>Health &amp; Demographic Surveillance System</title>
+
+
+<link th:href="@{/css/progressBar.css}" rel="stylesheet" />
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="common/head :: navbar" /></div>
+
+
+<div class="ts-main-content">
+<div th:replace="common/logbar :: navbar" /></div>
+		<div class="content-wrapper">
+			<div class="container-fluid">
+
+				<div class="row">
+					<div class="col-md-12">
+					
+						<h2 class="page-title">User Login </h2>
+
+						<div class="row">
+					<div class="col-md-6 col-md-offset-3">
+						<div class="well row pt-2x pb-3x bk-light">
+							<div class="col-md-8 col-md-offset-2">
+							
+								<form th:action="@{/index}" class="mt" method="post">
+								
+								<div th:if="${param.error}">
+									<div class="alert alert-danger">Invalid username or
+										password.</div>
+								</div>
+							
+								<!-- logout message -->
+								<div th:if="${param.logout}">
+									<div class="alert alert-info">You have been logged out.</div>
+								</div>
+								
+									<label for="" class="text-uppercase text-sm">User Name</label>
+									<input type="text" id="username" placeholder="UserName" name="username" class="form-control mb" required="true">
+									<label for="" class="text-uppercase text-sm">Password</label>
+									<input type="password" placeholder="Password" id="password" name="password" class="form-control mb" required="true">
+									
+
+									<input type="submit" name="login-submit" id="login-submit" class="btn btn-primary btn-block" value="login" >
+								</form>
+							</div>
+						</div>
+						<!-- <div class="text-center text-light" style="color:black;">
+							<a href="forgot-password.php" style="color:black;">Forgot password?</a>
+						</div>-->
+					</div>
+				</div>
+						</div>
+							</div>
+						</div>
+					</div>
+				</div> 	
+ 
+ <div th:fragment="body-bottom-scripts">       
+
+<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap-select.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+</div>
+
+</body>
+</html>

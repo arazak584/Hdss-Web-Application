@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<body>
+<div th:replace="common/header :: navbar" /></div>
+
+<div class="container">
+
+<div class="row">
+    <h1>District</h1>
+    
+    </div>
+    <div class="row">
+    <div class="col-lg-3">
+    <a th:href = "@{districtList/add}" class="btn btn-primary btn-sm mb-3">Add District</a>
+    </div>
+    </div>
+    <table class="table" id="myTable">
+        <thead class="thead-light">
+        <tr>
+            <th>District Code</th>
+            <th>Name</th>
+            <th>Region</th>
+            <th>Level</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="district : ${district}">
+            <td th:text="${district.extId}"></td>
+            <td th:text="${district.name}"></td>
+            <td th:text="${district.regionId}"></td>
+            <td th:text="${district.level_uuid}"></td>
+            <td>
+                <a  th:href="@{/districtList/edit/{extId}(extId=${district.extId})}" class="btn btn-primary btn-sm">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="common/header :: body-bottom-scripts" ></div>
+<script>
+$(document).ready(function() {
+    $('#myTable').DataTable({
+        "pageLength": 10
+    });
+});
+</script>
+
+</body>
+</html>

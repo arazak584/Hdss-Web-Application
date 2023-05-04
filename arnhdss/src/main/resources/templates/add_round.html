@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="common/head :: common-header" />
+<title>Round</title>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<link th:href="@{/css/progressBar.css}" rel="stylesheet" />
+
+ <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<script th:src="@{/js/jquery-1.12.3.js}"></script>
+<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{/js/dataTables.buttons.min.js}"></script>
+
+
+</head>
+<body>
+<div th:replace="common/head :: navbar" /></div>
+	
+	<div class="ts-main-content">
+	<div th:replace="common/sidebar :: navbar" /></div>
+	<div class="content-wrapper">
+	<div class="container-fluid">
+		<div class="row">
+		<div class="col-md-12">
+
+	<div class="panel-body">
+  
+    <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card" style="margin-top:9%">
+		<h1 class="text-center">Create Round</h1>
+		<div class="card-body">
+		<form th:action="@{/rounds}" th:object="${round}" method="post">
+		<div class="form-group">
+		<label>ROUND NUMBER</label>
+		<input type="number" name="roundNumber" th:field ="*{roundNumber}" Placeholder="Enter Round Number" class="form-control"/>
+		</div>
+		<div class="form-group">
+		<label>START DATE</label>
+		<input type="date" name="startDate" th:field ="*{startDate}" class="form-control"/>
+		</div>
+		<div class="form-group">
+		<label>END DATE</label>
+		<input type="date" name="endDate" th:field ="*{endDate}"  class="form-control"/>
+		</div>
+		<div class="form-group">
+		<label>REMARKS</label>
+		<input type="text" name="remark" th:field ="*{remark}" Placeholder="Enter Remarks" class="form-control"/>
+		</div>
+		
+		<div class="footer-body">
+		
+		<button type="submit" class="btn btn-primary">Save</button>
+		
+		</div>
+		
+		</form>
+		</div>
+		</div>
+		</div>
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
+
+<div th:replace="common/head :: body-bottom-scripts" ></div>
+<script th:src="@{/js/main.js}"></script>  
+<script th:src="@{/js/buttons.html5.min.js}"></script> 
+<script>
+$(document).ready(function() {
+    $('#example').DataTable({
+        "pageLength": 10
+    });
+});
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

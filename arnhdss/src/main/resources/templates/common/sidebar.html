@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common-header">
+<meta charset="ISO-8859-1">
+<title>DashBoard</title>
+
+</head>
+<body>
+<div th:fragment="navbar">
+
+<nav class="ts-sidebar">
+			<ul class="ts-sidebar-menu">
+
+				<li class="ts-label">Main</li>
+				<li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+				<!-- 
+				<li><a href="#"><i class="fa fa-toggle-down"></i> Report</a>
+				<ul>
+					<li><a href="/dss/kintampo/report.php">Location</a></li>
+					<li><a th:href="@{/visits}">Visit</a></li>
+					<li><a href="/dss/kintampo/query/query.php">Inmigration</a></li>
+					<li><a href="/dss/kintampo/openhds.php">Outmigration</a></li>
+					<li><a href="/dss/kintampo/openhds.php">Pregnancy</a></li>
+					<li><a href="/dss/kintampo/openhds.php">Birth</a></li>
+					<li><a href="/dss/kintampo/openhds.php">Relationship</a></li>
+					<li><a href="/dss/kintampo/openhds.php">Death</a></li>
+				</ul>
+				</li>
+				<li><a href="#"><i class="fa fa-toggle-down"></i> Query</a>
+				<ul>
+					<li><a href="/dss/nkoranza/report.php">Profile</a></li>
+					<li><a href="/dss/nkoranza/query/query.php">Logout</a></li>
+				</ul>
+				</li>-->
+				<li><a href="#"><i class="fa fa-toggle-down"></i> Utility</a>
+				<ul>
+					<li><a th:href="@{/rounds}">Round</a></li>
+					<li><a th:href="@{/task}">Task</a></li>
+					<li><a th:href="@{/fieldworkers}">Fieldworker</a></li>
+					<li><a href="/" th:href="@{/registration}"> User Registration</a></li>
+				</ul>
+				</li>
+					<li><a th:href="@{/logout}" class="fa fa-sign-out" style="color:red; text-align:center">  Logout</a></li>
+
+			</ul>
+
+			
+			<!-- 
+			<div class="copyright-text" style="bottom: 80px;position: absolute;">
+            <p style="color:gold">Copyright &copy; 2022, All Right Reserved <a href="#" style="color:pink ">Developed by Abdul Razak Nuhu</a>
+			<a href="mailto:arazak584@yahoo.com">Contact Developer</a> </p>
+			</div>-->
+
+
+		</nav>
+
+		
+		
+</div>
+
+</body>
+</html>

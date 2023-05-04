@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link th:href="@{/css/login.css}" rel="stylesheet" />
+</head>
+<body>
+  <section class='login' id='login'>
+    <div class='head'>
+      <h1 class='company'>HDSS LOGIN</h1>
+    </div>
+    <p class='msg'>Akwaaba</p>
+    <div class='form'>
+      <form>
+        <input type="text" name="username" placeholder='Username' class='text' id='username' required><br>
+        <input type="password" name="password" placeholder='••••••••••••••' class='password' id='password' required><br>
+        <button type='button' class='btn-login' id='login-btn'>Login</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p style="text-align: center;">Developed <span class='heart'>&hearts;</span> by Abdul Razak(<a href='https://kintampo-hrc.org'>@KHDSS</a>)</p>
+    <!--  <p>Gradient: <a href='https://uigradients.com/#Turquoiseflow'>https://uigradients.com/#Turquoiseflow</a></p>-->
+  </footer>
+
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+      const loginBtn = document.getElementById('login-btn');
+      loginBtn.addEventListener('click', () => {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/login');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            window.location.href = '/home';
+          } else {
+            alert('Invalid username or password');
+          }
+        };
+        xhr.send(`username=${username}&password=${password}`);
+      });
+    /*]]>*/
+  </script>
+
+</body>
+</html>

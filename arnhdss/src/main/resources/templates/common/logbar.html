@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common-header">
+<meta charset="ISO-8859-1">
+<title>Log In</title>
+
+
+<link th:href="@{/css/progressBar.css}" rel="stylesheet" />
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:fragment="navbar">
+
+<nav class="ts-sidebar">
+			<ul class="ts-sidebar-menu">
+			
+				<li class="ts-label">Main</li>
+				
+				
+				<li><a href="/" th:href="@{/registration}"><i class="fa fa-files-o"></i> User Registration</a></li>
+				<li><a href="/" th:href="@{/index}"><i class="fa fa-users"></i> User Login</a></li>
+			</ul>
+
+			<div class="copyright-text" style="bottom: 80px;position: absolute;">
+            <p style="color:gold">Copyright &copy; 2022, All Right Reserved <a href="#" style="color:pink ">Developed by Abdul Razak Nuhu</a>
+			<a href="mailto:arazak584@yahoo.com">Contact Developer</a> </p>
+			
+             </div>
+			
+		</nav>
+		
+		
+</div>
+</body>
+</html>
