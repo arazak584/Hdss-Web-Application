@@ -2,10 +2,17 @@ package org.arn.hdsscapture.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
@@ -59,27 +66,25 @@ public class Location implements Serializable {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "location")
+	private List<Residency> residencies = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "location")
+	private List<Visit> visits = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "location")
+	private List<Sociodemographic> sociodemographics = new ArrayList<>();
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "locationLevel_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
+    private Locationhierarchy locationhierarchy;
+	
 	
 	public Location() {}
-
-	public Location(String location_uuid, String compextId, Date insertDate, String compno, String locationName,
-			String longitude, String latitude, String accuracy, Integer locationType, Integer status,
-			String locationLevel_uuid, String fw_uuid) {
-		super();
-		this.location_uuid = location_uuid;
-		this.compextId = compextId;
-		this.insertDate = insertDate;
-		this.compno = compno;
-		this.locationName = locationName;
-		this.longitude = longitude;
-		this.latitude = latitude;
-		this.accuracy = accuracy;
-		this.locationType = locationType;
-		this.status = status;
-		this.locationLevel_uuid = locationLevel_uuid;
-		this.fw_uuid = fw_uuid;
-	}
-
 
 
 	public String getLocation_uuid() {

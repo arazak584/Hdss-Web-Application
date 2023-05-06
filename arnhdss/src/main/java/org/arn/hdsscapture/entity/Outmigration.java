@@ -4,10 +4,18 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 @Entity
+@Audited
 @Table(name="outmigration")
 public class Outmigration {
 	
@@ -43,26 +51,25 @@ public class Outmigration {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+	private Visit visit;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	@MapsId
+	@OneToOne(optional = false)
+	@JoinColumn(name = "residency_uuid", referencedColumnName = "residency_uuid", insertable = true, updatable = true)
+	private Residency residency = new Residency();
+
+	
 	public Outmigration() {}
-
-
-
-	public Outmigration(String omg_uuid, String individual_uuid, String residency_uuid, Date insertDate,
-			Date recordedDate, Integer destination, Integer reason,String reason_oth, String visit_uuid, String fw_uuid) {
-		super();
-		this.omg_uuid = omg_uuid;
-		this.individual_uuid = individual_uuid;
-		this.residency_uuid = residency_uuid;
-		this.insertDate = insertDate;
-		this.recordedDate = recordedDate;
-		this.destination = destination;
-		this.reason = reason;
-		this.reason_oth = reason_oth;
-		this.visit_uuid = visit_uuid;
-		this.fw_uuid = fw_uuid;
-	}
-
-
 
 
 	public String getOmg_uuid() {

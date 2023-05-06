@@ -2,16 +2,22 @@ package org.arn.hdsscapture.entity;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
 
 @Audited
 @Entity
-@Table(name="residency")
+@Table(name="residency", indexes = {@Index(name="idx_residency_uuid", columnList="residency_uuid")})
 public class Residency {
 	
 	@Id
@@ -49,23 +55,30 @@ public class Residency {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
+	private Socialgroup socialgroup;
+	
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "residency")
+	private Inmigration inmigration;
+	
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "residency")
+	private Outmigration outmigration;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
+	private Location location;
+	
 	public Residency() {}
 
-	public Residency(String residency_uuid, String individual_uuid, Date insertDate, Date startDate, Date endDate,
-			Integer startType, Integer endType, String location_uuid, String socialgroup_uuid,Integer rltn_head, String fw_uuid) {
-		super();
-		this.residency_uuid = residency_uuid;
-		this.individual_uuid = individual_uuid;
-		this.insertDate = insertDate;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.startType = startType;
-		this.endType = endType;
-		this.location_uuid = location_uuid;
-		this.socialgroup_uuid = socialgroup_uuid;
-		this.rltn_head = rltn_head;
-		this.fw_uuid = fw_uuid;
-	}
 
 	public String getResidency_uuid() {
 		return residency_uuid;

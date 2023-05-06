@@ -1,13 +1,26 @@
 package org.arn.hdsscapture.entity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.envers.Audited;
 
 
 
 @Entity
+@Audited
 @Table(name="locationhierarchy")
 public class Locationhierarchy {
 	
@@ -33,22 +46,21 @@ public class Locationhierarchy {
 	@Column(name = "level_uuid")
 	private String level_uuid;
 	
-	public Locationhierarchy() {}
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "level_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
+	private Locationhierarchylevel locationhierarchylevel;
 	
-
-	public Locationhierarchy(String uuid, String villcode, String name, String town, String area, String parent_uuid,
-			String level_uuid) {
-		super();
-		this.uuid = uuid;
-		this.villcode = villcode;
-		this.name = name;
-		this.town = town;
-		this.area = area;
-		this.parent_uuid = parent_uuid;
-		this.level_uuid = level_uuid;
-	}
-
+	@OneToMany(mappedBy = "locationhierarchy", cascade = CascadeType.ALL)
+    private Set<Locationhierarchy> locationhierarchies = new HashSet<>();	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
+    private Locationhierarchy locationhierarchy;
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "locationhierarchy")
+	private List<Location> locations = new ArrayList<>();
+	
+	public Locationhierarchy() {}
 
 
 	public String getUuid() {

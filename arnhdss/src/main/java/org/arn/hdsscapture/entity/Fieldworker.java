@@ -2,19 +2,25 @@ package org.arn.hdsscapture.entity;
 
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Audited
 @Table(name =  "fieldworker", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class Fieldworker {
 	
@@ -27,7 +33,7 @@ public class Fieldworker {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	public Date insertDate;
 	
-	@Column(name = "username", nullable = false)
+	@Column(name = "username", nullable = false, unique=true)
 	public String username;
 		
 	@Column(name = "firstName", nullable = false)
@@ -42,25 +48,48 @@ public class Fieldworker {
 	@Column(name = "status", nullable = false)
 	private String status;
 	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Socialgroup> socialgroups = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Death> deaths = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Demographic> demographics = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Individual> individuals = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Inmigration> inmigrations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Location> locations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Outmigration> outmigrations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Pregnancyobservation> pregnancyobservations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Pregnancyoutcome> pregnancyoutcomes = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Relationship> relationships = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Residency> residencies = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Sociodemographic> sociodemographics = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Visit> visit = new ArrayList<>();
+	
+
 	
 	public Fieldworker() {}
-
-
-
-
-
-	public Fieldworker(String fw_uuid, Date insertDate, String username, String firstName, String lastName,
-			String password, String status) {
-		super();
-		this.fw_uuid = fw_uuid;
-		this.insertDate = insertDate;
-		this.username = username;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.password = password;
-		this.status = status;
-	}
-
 
 
 	public String getFw_uuid() {
@@ -68,15 +97,9 @@ public class Fieldworker {
 	}
 
 
-
-
-
 	public void setFw_uuid(String fw_uuid) {
 		this.fw_uuid = fw_uuid;
 	}
-
-
-
 
 
 	public Date getInsertDate() {
@@ -84,15 +107,9 @@ public class Fieldworker {
 	}
 
 
-
-
-
 	public void setInsertDate(Date insertDate) {
 		this.insertDate = insertDate;
 	}
-
-
-
 
 
 	public String getUsername() {
@@ -107,73 +124,39 @@ public class Fieldworker {
 		this.username = username;
 	}
 
-
-
-
-
 	public String getFirstName() {
 		return firstName;
 	}
-
-
-
-
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
 
-
-
-
 	public String getLastName() {
 		return lastName;
 	}
-
-
-
-
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
 
-
-
-
 	public String getPassword() {
 		return password;
 	}
-
-
-
-
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-
-
-
-
 	public String getStatus() {
 		return status;
 	}
 
-
-
-
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-
-
-
 
 	@Override
 	public String toString() {

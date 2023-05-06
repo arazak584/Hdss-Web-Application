@@ -3,22 +3,37 @@ package org.arn.hdsscapture.entity;
 
 
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Audited
 @Table(name="visit")
-public class Visit {
+public class Visit implements Serializable {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "visit_uuid", nullable = false)
 	private String visit_uuid;
 	
@@ -51,27 +66,31 @@ public class Visit {
 	@Column(name = "respondent")
 	private String respondent;
 	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
+	private List<Outmigration> outmigrations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
+	private List<Inmigration> inmigrations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
+	private List<Death> deaths = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
+	private List<Pregnancyobservation> pregnancyobservations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
+	private List<Pregnancyoutcome> pregnancyoutcomes = new ArrayList<>();
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
+	private Location location;
+	
 	
 	public Visit() {}
-
-
-
-
-	public Visit(String visit_uuid, String visitExtId, Date insertDate, Integer realVisit, Integer roundNumber,
-			Date visitDate, String location_uuid, String fw_uuid, String respondent) {
-		super();
-		this.visit_uuid = visit_uuid;
-		this.visitExtId = visitExtId;
-		this.insertDate = insertDate;
-		this.realVisit = realVisit;
-		this.roundNumber = roundNumber;
-		this.visitDate = visitDate;
-		this.location_uuid = location_uuid;
-		this.fw_uuid = fw_uuid;
-		this.respondent = respondent;
-	}
-
-
 
 
 	public String getVisit_uuid() {

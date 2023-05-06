@@ -1,25 +1,40 @@
 package org.arn.hdsscapture.entity;
 
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Audited
 @Entity
-@Table(name="individual")
-public class Individual {
+@Table(name="individual", uniqueConstraints = @UniqueConstraint(columnNames = "extId"))
+public class Individual implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8535563948748501772L;
+
 	@Id
 	@Column(name = "individual_uuid", nullable = false)
 	private String individual_uuid;
@@ -31,9 +46,7 @@ public class Individual {
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date insertDate;
-	
-	@Column(name = "submitDate")
-	private LocalDateTime submitDate;
+
 	
 	@Column(name = "dob", nullable = false)
 	@Temporal(TemporalType.DATE)
@@ -64,35 +77,63 @@ public class Individual {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
-	@Column(name = "ghanacard")
+	@Column(name = "ghanacard", unique=true)
 	private String ghanacard;
+	
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+    private Demographic demographic;
+	
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+	private Death deaths;
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+	private List<Outmigration> outmigrations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+	private List<Inmigration> inmigrations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+	private List<Residency> residency = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+	private List<Pregnancyobservation> pregnancyobservations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+	private List<Pregnancyoutcome> pregnancyoutcomes = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+	private List<Relationship> relationships = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+	private List<Socialgroup> socialgroups = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+	private List<Sociodemographic> sociodemographics = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+	private List<Outcome> outcomes = new ArrayList<>();
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	
+	@OneToMany(mappedBy = "mother", cascade = CascadeType.ALL)
+    private Set<Individual> children = new HashSet<>();	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mother_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+    private Individual mother;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "father_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+    private Individual father;
+	
+	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
+    private Set<Individual> offspring = new HashSet<>();
 	
 	
 	public Individual() {}
-
-	@PrePersist
-    protected void onCreate() {
-        submitDate = LocalDateTime.now();
-    }
-
-	public Individual(String individual_uuid, String extId, Date insertDate,LocalDateTime submitDate, Date dob, Integer dobAspect, String firstName,
-			String lastName, String otherName, Integer gender, String mother_uuid, String father_uuid, String fw_uuid,String ghanacard) {
-		super();
-		this.individual_uuid = individual_uuid;
-		this.extId = extId;
-		this.insertDate = insertDate;
-		this.submitDate = submitDate;
-		this.dob = dob;
-		this.dobAspect = dobAspect;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.otherName = otherName;
-		this.gender = gender;
-		this.mother_uuid = mother_uuid;
-		this.father_uuid = father_uuid;
-		this.fw_uuid = fw_uuid;
-		this.ghanacard = ghanacard;
-	}
 
 
 	public String getIndividual_uuid() {
@@ -122,16 +163,6 @@ public class Individual {
 
 	public void setInsertDate(Date insertDate) {
 		this.insertDate = insertDate;
-	}
-	
-
-	public LocalDateTime getSubmitDate() {
-		return submitDate;
-	}
-
-
-	public void setSubmitDate(LocalDateTime submitDate) {
-		this.submitDate = submitDate;
 	}
 
 
@@ -239,5 +270,8 @@ public class Individual {
 	public String toString() {
 		return extId;
 	}
+
+	
+	
 
 }

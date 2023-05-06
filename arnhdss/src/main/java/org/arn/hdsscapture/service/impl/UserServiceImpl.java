@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.arn.hdsscapture.Dto.UserRegistrationDto;
 import org.arn.hdsscapture.entity.Role;
 import org.arn.hdsscapture.entity.User;
+import org.arn.hdsscapture.exception.ResourceNotFoundException;
 import org.arn.hdsscapture.repository.UserRepository;
 import org.arn.hdsscapture.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,22 @@ public class UserServiceImpl implements UserService{
 		
 		return userRepository.save(user);
 	}
+	
+	@Override
+    public User update(User user) {
+        User existingUser = userRepository.findById(user.getId()).orElseThrow(() -> new ResourceNotFoundException("User", "id", user.getId()));
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setUsername(user.getUsername());
+
+        // Check if the password has changed
+        if (!existingUser.getPassword().equals(user.getPassword())) {
+            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        return userRepository.save(existingUser);
+    }
+
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -53,5 +70,7 @@ public class UserServiceImpl implements UserService{
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
+
+
 	
 }

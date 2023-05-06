@@ -4,14 +4,20 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
 
 @Entity
 @Audited
-@Table(name="sociodemographic")
+@Table(name="sociodemographic", indexes = {@Index(name="idx_socialgroup_uuid", columnList="socialgroup_uuid")})
 public class Sociodemographic {
 	
 	
@@ -393,247 +399,26 @@ public class Sociodemographic {
     @Column
     public String pd_dm_rel_spfy_scorres;
     
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual;
+    
+    @MapsId
+	@OneToOne(optional = false)
+	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
+	private Socialgroup socialgroup = new Socialgroup();
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
+	private Location location;
+    
     public Sociodemographic() {}
     
-	public Sociodemographic(String individual_uuid, String socialgroup_uuid, String fw_uuid, String location_uuid,
-			Date mnh03_formcompldat, Date insertDate, Integer form_comments_yn, String form_comments_txt,
-			Date sd_obsstdat, Integer marital_scorres, Integer marital_age, Integer religion_scorres,
-			String religion_spfy_scorres, Integer cethnic, String othr_trb_spfy_cethnic, String nth_trb_spfy_cethnic,
-			Integer head_hh_fcorres, String head_hh_spfy_fcorres, Integer house_occ_tot_fcorres,
-			Integer house_occ_lt5_fcorres, Integer house_occ_ge5_fcorres, Integer h2o_fcorres, String h2o_spfy_fcorres,
-			Integer h2o_dist_fcorres, Integer h2o_hours_fcorres, Integer h2o_mins_fcorres, Integer h2o_prep_fcorres,
-			Integer h2o_prep_spfy_fcorres_1, Integer h2o_prep_spfy_fcorres_2, Integer h2o_prep_spfy_fcorres_3,
-			Integer h2o_prep_spfy_fcorres_4, Integer h2o_prep_spfy_fcorres_5, Integer toilet_fcorres,
-			String toilet_spfy_fcorres, Integer toilet_loc_fcorres, String toilet_loc_spfy_fcorres,
-			Integer toilet_share_fcorres, Integer toilet_share_num_fcorres, Integer ext_wall_fcorres,
-			String ext_wall_spfy_fcorres, Integer floor_fcorres, String floor_spfy_fcorres, Integer roof_fcorres,
-			String roof_spfy_fcorres, Integer electricity_fcorres, Integer solar_fcorres, Integer internet_fcorres,
-			Integer landline_fcorres, Integer mobile_fcorres, Integer mobile_num_fcorres, Integer mobile_access_fcorres,
-			Integer radio_fcorres, Integer radio_num_fcorres, Integer tv_fcorres, Integer tv_num_fcorres,
-			Integer fridge_fcorres, Integer fridge_num_fcorres, Integer computer_fcorres, Integer computer_num_fcorres,
-			Integer watch_fcorres, Integer watch_num_fcorres, Integer bike_fcorres, Integer bike_num_fcorres,
-			Integer motorcycle_fcorres, Integer motorcycle_num_fcorres, Integer car_fcorres, Integer car_num_fcorres,
-			Integer boat_fcorres, Integer boat_num_fcorres, Integer cart_fcorres, Integer cart_num_fcorres,
-			Integer plough_fcorres, Integer plough_num_fcorres, Integer foam_matt_fcorres,
-			Integer foam_matt_num_fcorres, Integer straw_matt_fcorres, Integer straw_matt_num_fcorres,
-			Integer spring_matt_fcorres, Integer spring_matt_num_fcorres, Integer sofa_fcorres,
-			Integer sofa_num_fcorres, Integer lantern_fcorres, Integer lantern_num_fcorres, Integer sew_fcorres,
-			Integer sew_num_fcorres, Integer wash_fcorres, Integer wash_num_fcorres, Integer blender_fcorres,
-			Integer blender_num_fcorres, Integer mosquito_net_fcorres, Integer mosquito_net_num_fcorres,
-			Integer tricycles_fcorres, Integer tricycles_num_fcorres, Integer tables_fcorres,
-			Integer tables_num_fcorres, Integer cabinets_fcorres, Integer cabinets_num_fcorres,
-			Integer sat_dish_fcorres, Integer sat_dish_num_fcorres, Integer dvd_cd_fcorres, Integer dvd_cd_num_fcorres,
-			Integer aircon_fcorres, Integer aircon_num_fcorres, Integer tractor_fcorres, Integer tractor_num_fcorres,
-			Integer own_rent_scorres, String own_rent_spfy_scorres, Integer house_rooms_fcorres,
-			Integer house_room_child_fcorres, Integer land_fcorres, Integer land_use_fcorres_1,
-			Integer land_use_fcorres_2, Integer land_use_fcorres_3, Integer land_use_fcorres_4,
-			Integer land_use_fcorres_5, Integer land_use_fcorres_88, String land_use_spfy_fcorres_88,
-			Integer livestock_fcorres, Integer cattle_fcorres, Integer cattle_num_fcorres, Integer goat_fcorres,
-			Integer goat_num_fcorres, Integer sheep_fcorres, Integer sheep_num_fcorres, Integer poultry_fcorres,
-			Integer poultry_num_fcorres, Integer pig_fcorres, Integer pig_num_fcorres, Integer donkey_fcorres,
-			Integer donkey_num_fcorres, Integer horse_fcorres, Integer horse_num_fcorres, Integer animal_othr_fcorres,
-			String animal_othr_spfy_fcorres, Integer animal_othr_num_fcorres, Integer job_scorres,
-			String job_salary_spfy_scorres, String job_smbus_spfy_scorres, String job_busown_spfy_scorres,
-			String job_skilled_spfy_scorres, String job_unskilled_spfy_scorres, String job_othr_spfy_scorres,
-			Integer ptr_scorres, String ptr_salary_spfy_scorres, String ptr_smbus_spfy_scorres,
-			String ptr_busown_spfy_scorres, String ptr_skilled_spfy_scorres, String ptr_unskilled_spfy_scorres,
-			String ptr_othr_spfy_scorres, Integer stove_fcorres, String stove_spfy_fcorres,
-			Integer stove_fuel_fcorres_1, Integer stove_fuel_fcorres_2, Integer stove_fuel_fcorres_3,
-			Integer stove_fuel_fcorres_4, Integer stove_fuel_fcorres_5, Integer stove_fuel_fcorres_6,
-			Integer stove_fuel_fcorres_7, Integer stove_fuel_fcorres_8, Integer stove_fuel_fcorres_9,
-			Integer stove_fuel_fcorres_10, Integer stove_fuel_fcorres_11, Integer stove_fuel_fcorres_12,
-			Integer stove_fuel_fcorres_13, Integer stove_fuel_fcorres_14, Integer stove_fuel_fcorres_88,
-			String stove_fuel_spfy_fcorres_88, Integer cooking_inside_fcorres, Integer cooking_room_fcorres,
-			Integer cooking_loc_fcorres, Integer cooking_vent_fcorres, Integer smoke_oecoccur,
-			Integer smoke_in_oecdosfrq, Integer smoke_hhold_oecoccur, Integer smoke_hhold_in_oecdosfrq,
-			Integer chew_oecoccur, Integer chew_bnut_oecoccur, Integer drink_oecoccur, Integer pd_birth_oholoc,
-			String pd_birth_othr_spfy_oholoc, String pd_birth_fac_spfy_oholoc, Integer pd_dm_scorres,
-			String pd_dm_rel_spfy_scorres) {
-		super();
-		this.individual_uuid = individual_uuid;
-		this.socialgroup_uuid = socialgroup_uuid;
-		this.fw_uuid = fw_uuid;
-		this.location_uuid = location_uuid;
-		this.mnh03_formcompldat = mnh03_formcompldat;
-		this.insertDate = insertDate;
-		this.form_comments_yn = form_comments_yn;
-		this.form_comments_txt = form_comments_txt;
-		this.sd_obsstdat = sd_obsstdat;
-		this.marital_scorres = marital_scorres;
-		this.marital_age = marital_age;
-		this.religion_scorres = religion_scorres;
-		this.religion_spfy_scorres = religion_spfy_scorres;
-		this.cethnic = cethnic;
-		this.othr_trb_spfy_cethnic = othr_trb_spfy_cethnic;
-		this.nth_trb_spfy_cethnic = nth_trb_spfy_cethnic;
-		this.head_hh_fcorres = head_hh_fcorres;
-		this.head_hh_spfy_fcorres = head_hh_spfy_fcorres;
-		this.house_occ_tot_fcorres = house_occ_tot_fcorres;
-		this.house_occ_lt5_fcorres = house_occ_lt5_fcorres;
-		this.house_occ_ge5_fcorres = house_occ_ge5_fcorres;
-		this.h2o_fcorres = h2o_fcorres;
-		this.h2o_spfy_fcorres = h2o_spfy_fcorres;
-		this.h2o_dist_fcorres = h2o_dist_fcorres;
-		this.h2o_hours_fcorres = h2o_hours_fcorres;
-		this.h2o_mins_fcorres = h2o_mins_fcorres;
-		this.h2o_prep_fcorres = h2o_prep_fcorres;
-		this.h2o_prep_spfy_fcorres_1 = h2o_prep_spfy_fcorres_1;
-		this.h2o_prep_spfy_fcorres_2 = h2o_prep_spfy_fcorres_2;
-		this.h2o_prep_spfy_fcorres_3 = h2o_prep_spfy_fcorres_3;
-		this.h2o_prep_spfy_fcorres_4 = h2o_prep_spfy_fcorres_4;
-		this.h2o_prep_spfy_fcorres_5 = h2o_prep_spfy_fcorres_5;
-		this.toilet_fcorres = toilet_fcorres;
-		this.toilet_spfy_fcorres = toilet_spfy_fcorres;
-		this.toilet_loc_fcorres = toilet_loc_fcorres;
-		this.toilet_loc_spfy_fcorres = toilet_loc_spfy_fcorres;
-		this.toilet_share_fcorres = toilet_share_fcorres;
-		this.toilet_share_num_fcorres = toilet_share_num_fcorres;
-		this.ext_wall_fcorres = ext_wall_fcorres;
-		this.ext_wall_spfy_fcorres = ext_wall_spfy_fcorres;
-		this.floor_fcorres = floor_fcorres;
-		this.floor_spfy_fcorres = floor_spfy_fcorres;
-		this.roof_fcorres = roof_fcorres;
-		this.roof_spfy_fcorres = roof_spfy_fcorres;
-		this.electricity_fcorres = electricity_fcorres;
-		this.solar_fcorres = solar_fcorres;
-		this.internet_fcorres = internet_fcorres;
-		this.landline_fcorres = landline_fcorres;
-		this.mobile_fcorres = mobile_fcorres;
-		this.mobile_num_fcorres = mobile_num_fcorres;
-		this.mobile_access_fcorres = mobile_access_fcorres;
-		this.radio_fcorres = radio_fcorres;
-		this.radio_num_fcorres = radio_num_fcorres;
-		this.tv_fcorres = tv_fcorres;
-		this.tv_num_fcorres = tv_num_fcorres;
-		this.fridge_fcorres = fridge_fcorres;
-		this.fridge_num_fcorres = fridge_num_fcorres;
-		this.computer_fcorres = computer_fcorres;
-		this.computer_num_fcorres = computer_num_fcorres;
-		this.watch_fcorres = watch_fcorres;
-		this.watch_num_fcorres = watch_num_fcorres;
-		this.bike_fcorres = bike_fcorres;
-		this.bike_num_fcorres = bike_num_fcorres;
-		this.motorcycle_fcorres = motorcycle_fcorres;
-		this.motorcycle_num_fcorres = motorcycle_num_fcorres;
-		this.car_fcorres = car_fcorres;
-		this.car_num_fcorres = car_num_fcorres;
-		this.boat_fcorres = boat_fcorres;
-		this.boat_num_fcorres = boat_num_fcorres;
-		this.cart_fcorres = cart_fcorres;
-		this.cart_num_fcorres = cart_num_fcorres;
-		this.plough_fcorres = plough_fcorres;
-		this.plough_num_fcorres = plough_num_fcorres;
-		this.foam_matt_fcorres = foam_matt_fcorres;
-		this.foam_matt_num_fcorres = foam_matt_num_fcorres;
-		this.straw_matt_fcorres = straw_matt_fcorres;
-		this.straw_matt_num_fcorres = straw_matt_num_fcorres;
-		this.spring_matt_fcorres = spring_matt_fcorres;
-		this.spring_matt_num_fcorres = spring_matt_num_fcorres;
-		this.sofa_fcorres = sofa_fcorres;
-		this.sofa_num_fcorres = sofa_num_fcorres;
-		this.lantern_fcorres = lantern_fcorres;
-		this.lantern_num_fcorres = lantern_num_fcorres;
-		this.sew_fcorres = sew_fcorres;
-		this.sew_num_fcorres = sew_num_fcorres;
-		this.wash_fcorres = wash_fcorres;
-		this.wash_num_fcorres = wash_num_fcorres;
-		this.blender_fcorres = blender_fcorres;
-		this.blender_num_fcorres = blender_num_fcorres;
-		this.mosquito_net_fcorres = mosquito_net_fcorres;
-		this.mosquito_net_num_fcorres = mosquito_net_num_fcorres;
-		this.tricycles_fcorres = tricycles_fcorres;
-		this.tricycles_num_fcorres = tricycles_num_fcorres;
-		this.tables_fcorres = tables_fcorres;
-		this.tables_num_fcorres = tables_num_fcorres;
-		this.cabinets_fcorres = cabinets_fcorres;
-		this.cabinets_num_fcorres = cabinets_num_fcorres;
-		this.sat_dish_fcorres = sat_dish_fcorres;
-		this.sat_dish_num_fcorres = sat_dish_num_fcorres;
-		this.dvd_cd_fcorres = dvd_cd_fcorres;
-		this.dvd_cd_num_fcorres = dvd_cd_num_fcorres;
-		this.aircon_fcorres = aircon_fcorres;
-		this.aircon_num_fcorres = aircon_num_fcorres;
-		this.tractor_fcorres = tractor_fcorres;
-		this.tractor_num_fcorres = tractor_num_fcorres;
-		this.own_rent_scorres = own_rent_scorres;
-		this.own_rent_spfy_scorres = own_rent_spfy_scorres;
-		this.house_rooms_fcorres = house_rooms_fcorres;
-		this.house_room_child_fcorres = house_room_child_fcorres;
-		this.land_fcorres = land_fcorres;
-		this.land_use_fcorres_1 = land_use_fcorres_1;
-		this.land_use_fcorres_2 = land_use_fcorres_2;
-		this.land_use_fcorres_3 = land_use_fcorres_3;
-		this.land_use_fcorres_4 = land_use_fcorres_4;
-		this.land_use_fcorres_5 = land_use_fcorres_5;
-		this.land_use_fcorres_88 = land_use_fcorres_88;
-		this.land_use_spfy_fcorres_88 = land_use_spfy_fcorres_88;
-		this.livestock_fcorres = livestock_fcorres;
-		this.cattle_fcorres = cattle_fcorres;
-		this.cattle_num_fcorres = cattle_num_fcorres;
-		this.goat_fcorres = goat_fcorres;
-		this.goat_num_fcorres = goat_num_fcorres;
-		this.sheep_fcorres = sheep_fcorres;
-		this.sheep_num_fcorres = sheep_num_fcorres;
-		this.poultry_fcorres = poultry_fcorres;
-		this.poultry_num_fcorres = poultry_num_fcorres;
-		this.pig_fcorres = pig_fcorres;
-		this.pig_num_fcorres = pig_num_fcorres;
-		this.donkey_fcorres = donkey_fcorres;
-		this.donkey_num_fcorres = donkey_num_fcorres;
-		this.horse_fcorres = horse_fcorres;
-		this.horse_num_fcorres = horse_num_fcorres;
-		this.animal_othr_fcorres = animal_othr_fcorres;
-		this.animal_othr_spfy_fcorres = animal_othr_spfy_fcorres;
-		this.animal_othr_num_fcorres = animal_othr_num_fcorres;
-		this.job_scorres = job_scorres;
-		this.job_salary_spfy_scorres = job_salary_spfy_scorres;
-		this.job_smbus_spfy_scorres = job_smbus_spfy_scorres;
-		this.job_busown_spfy_scorres = job_busown_spfy_scorres;
-		this.job_skilled_spfy_scorres = job_skilled_spfy_scorres;
-		this.job_unskilled_spfy_scorres = job_unskilled_spfy_scorres;
-		this.job_othr_spfy_scorres = job_othr_spfy_scorres;
-		this.ptr_scorres = ptr_scorres;
-		this.ptr_salary_spfy_scorres = ptr_salary_spfy_scorres;
-		this.ptr_smbus_spfy_scorres = ptr_smbus_spfy_scorres;
-		this.ptr_busown_spfy_scorres = ptr_busown_spfy_scorres;
-		this.ptr_skilled_spfy_scorres = ptr_skilled_spfy_scorres;
-		this.ptr_unskilled_spfy_scorres = ptr_unskilled_spfy_scorres;
-		this.ptr_othr_spfy_scorres = ptr_othr_spfy_scorres;
-		this.stove_fcorres = stove_fcorres;
-		this.stove_spfy_fcorres = stove_spfy_fcorres;
-		this.stove_fuel_fcorres_1 = stove_fuel_fcorres_1;
-		this.stove_fuel_fcorres_2 = stove_fuel_fcorres_2;
-		this.stove_fuel_fcorres_3 = stove_fuel_fcorres_3;
-		this.stove_fuel_fcorres_4 = stove_fuel_fcorres_4;
-		this.stove_fuel_fcorres_5 = stove_fuel_fcorres_5;
-		this.stove_fuel_fcorres_6 = stove_fuel_fcorres_6;
-		this.stove_fuel_fcorres_7 = stove_fuel_fcorres_7;
-		this.stove_fuel_fcorres_8 = stove_fuel_fcorres_8;
-		this.stove_fuel_fcorres_9 = stove_fuel_fcorres_9;
-		this.stove_fuel_fcorres_10 = stove_fuel_fcorres_10;
-		this.stove_fuel_fcorres_11 = stove_fuel_fcorres_11;
-		this.stove_fuel_fcorres_12 = stove_fuel_fcorres_12;
-		this.stove_fuel_fcorres_13 = stove_fuel_fcorres_13;
-		this.stove_fuel_fcorres_14 = stove_fuel_fcorres_14;
-		this.stove_fuel_fcorres_88 = stove_fuel_fcorres_88;
-		this.stove_fuel_spfy_fcorres_88 = stove_fuel_spfy_fcorres_88;
-		this.cooking_inside_fcorres = cooking_inside_fcorres;
-		this.cooking_room_fcorres = cooking_room_fcorres;
-		this.cooking_loc_fcorres = cooking_loc_fcorres;
-		this.cooking_vent_fcorres = cooking_vent_fcorres;
-		this.smoke_oecoccur = smoke_oecoccur;
-		this.smoke_in_oecdosfrq = smoke_in_oecdosfrq;
-		this.smoke_hhold_oecoccur = smoke_hhold_oecoccur;
-		this.smoke_hhold_in_oecdosfrq = smoke_hhold_in_oecdosfrq;
-		this.chew_oecoccur = chew_oecoccur;
-		this.chew_bnut_oecoccur = chew_bnut_oecoccur;
-		this.drink_oecoccur = drink_oecoccur;
-		this.pd_birth_oholoc = pd_birth_oholoc;
-		this.pd_birth_othr_spfy_oholoc = pd_birth_othr_spfy_oholoc;
-		this.pd_birth_fac_spfy_oholoc = pd_birth_fac_spfy_oholoc;
-		this.pd_dm_scorres = pd_dm_scorres;
-		this.pd_dm_rel_spfy_scorres = pd_dm_rel_spfy_scorres;
-	}
+	
 	public String getIndividual_uuid() {
 		return individual_uuid;
 	}

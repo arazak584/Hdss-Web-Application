@@ -4,10 +4,16 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 @Entity
+@Audited
 @Table(name="pregnancyobservation")
 public class Pregnancyobservation {
 	
@@ -59,53 +65,19 @@ public class Pregnancyobservation {
 	private Integer outcome;
 	private Date outcome_date;//Select Date of Outcome
 			
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+	private Visit visit;
 	
 	public Pregnancyobservation() {}
-
-
-	public Pregnancyobservation(String obs_uuid, String individual_uuid, Date insertDate, Date recordedDate,
-			Date expectedDeliveryDate, String visit_uuid, String fw_uuid, Integer anteNatalClinic,
-			Integer ageOfPregFromPregNotes, Integer estimatedAgeOfPreg, Integer attend_you, String attend_you_other,
-			Integer first_rec, Integer anc_visits, Integer why_no, String why_no_other, Integer own_bnet,
-			Integer how_many, Integer bnet_sou, String bnet_sou_other, Integer bnet_loc, String bnet_loc_other,
-			Integer slp_bednet, Integer trt_bednet, Date lastClinicVisitDate, Integer healthfacility,
-			Integer medicineforpregnancy, Integer ttinjection, Integer first_preg, Integer pregnancyNumber,
-			Integer outcome, Date outcome_date) {
-		super();
-		this.obs_uuid = obs_uuid;
-		this.individual_uuid = individual_uuid;
-		this.insertDate = insertDate;
-		this.recordedDate = recordedDate;
-		this.expectedDeliveryDate = expectedDeliveryDate;
-		this.visit_uuid = visit_uuid;
-		this.fw_uuid = fw_uuid;
-		this.anteNatalClinic = anteNatalClinic;
-		this.ageOfPregFromPregNotes = ageOfPregFromPregNotes;
-		this.estimatedAgeOfPreg = estimatedAgeOfPreg;
-		this.attend_you = attend_you;
-		this.attend_you_other = attend_you_other;
-		this.first_rec = first_rec;
-		this.anc_visits = anc_visits;
-		this.why_no = why_no;
-		this.why_no_other = why_no_other;
-		this.own_bnet = own_bnet;
-		this.how_many = how_many;
-		this.bnet_sou = bnet_sou;
-		this.bnet_sou_other = bnet_sou_other;
-		this.bnet_loc = bnet_loc;
-		this.bnet_loc_other = bnet_loc_other;
-		this.slp_bednet = slp_bednet;
-		this.trt_bednet = trt_bednet;
-		this.lastClinicVisitDate = lastClinicVisitDate;
-		this.healthfacility = healthfacility;
-		this.medicineforpregnancy = medicineforpregnancy;
-		this.ttinjection = ttinjection;
-		this.first_preg = first_preg;
-		this.pregnancyNumber = pregnancyNumber;
-		this.outcome = outcome;
-		this.outcome_date = outcome_date;
-	}
 
 
 	public String getObs_uuid() {

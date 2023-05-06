@@ -1,12 +1,20 @@
 package org.arn.hdsscapture.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.envers.Audited;
 
 
 @Entity
+@Audited
 @Table(name="locationhierarchylevel")
 public class Locationhierarchylevel {
 	
@@ -20,14 +28,10 @@ public class Locationhierarchylevel {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "locationhierarchylevel")
+	private List<Locationhierarchy> locationhierarchies = new ArrayList<>();
+	
 	public Locationhierarchylevel () {}
-
-	public Locationhierarchylevel(String uuid, String keyIdentifier, String name) {
-		super();
-		this.uuid = uuid;
-		this.keyIdentifier = keyIdentifier;
-		this.name = name;
-	}
 
 	public String getUuid() {
 		return uuid;

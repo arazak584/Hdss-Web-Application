@@ -2,10 +2,16 @@ package org.arn.hdsscapture.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 @Entity
+@Audited
 @Table(name="outcome")
 public class Outcome {
 	
@@ -25,17 +31,21 @@ public class Outcome {
 	@Column(name = "type", nullable = false)
 	private Integer type;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "preg_uuid", referencedColumnName = "preg_uuid", insertable = false, updatable = false)
+	private Pregnancyoutcome pregnancyoutcome;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "mother_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "childuuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual2;
+	
 	
 	public Outcome() {}
 
-	public Outcome(String uuid, String childuuid,String preg_uuid, String mother_uuid, Integer type) {
-		super();
-		this.uuid = uuid;
-		this.childuuid = childuuid;
-		this.preg_uuid = preg_uuid;
-		this.mother_uuid = mother_uuid;
-		this.type = type;
-	}
 
 	public String getUuid() {
 		return uuid;

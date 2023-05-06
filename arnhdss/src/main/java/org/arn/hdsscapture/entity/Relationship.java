@@ -4,10 +4,16 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 @Entity
+@Audited
 @Table(name="relationship")
 public class Relationship {
 	
@@ -46,32 +52,22 @@ public class Relationship {
 	private Integer nwive;//Number of wives of husband(including you)
 	private Integer lcow;//Does women live in the same household with co-wife(s)
 	private Integer mrank;//Woman's rank (In current marriage)
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "man_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individuals;
 
 	
 	public Relationship() {}
 
-
-	public Relationship(String rel_uuid, String individual_uuid, String man_uuid, Date insertDate, Date startDate,
-			Date endDate, Integer aIsToB, Integer endType, String fw_uuid, Integer mar, Integer tnbch, Integer nchdm,
-			Integer polygamous, Integer nwive, Integer lcow, Integer mrank) {
-		super();
-		this.rel_uuid = rel_uuid;
-		this.individual_uuid = individual_uuid;
-		this.man_uuid = man_uuid;
-		this.insertDate = insertDate;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.aIsToB = aIsToB;
-		this.endType = endType;
-		this.fw_uuid = fw_uuid;
-		this.mar = mar;
-		this.tnbch = tnbch;
-		this.nchdm = nchdm;
-		this.polygamous = polygamous;
-		this.nwive = nwive;
-		this.lcow = lcow;
-		this.mrank = mrank;
-	}
 
 
 	public String getRel_uuid() {

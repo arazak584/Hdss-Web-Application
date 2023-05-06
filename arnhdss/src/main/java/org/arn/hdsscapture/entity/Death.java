@@ -1,17 +1,28 @@
 package org.arn.hdsscapture.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.envers.Audited;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="death")
+@Audited
+@Table(name="death", indexes = {@Index(name="idx_individual_uuid", columnList="individual_uuid, visit_uuid")})
 public class Death {
-	
-	
 	
 	@Id
 	@Column(name = "individual_uuid", nullable = false)
@@ -21,12 +32,16 @@ public class Death {
 	private String death_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date insertDate;
 	
 	@Column(name = "deathCause", nullable = false)
 	private Integer deathCause;
 	
 	@Column(name = "deathDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date deathDate;
 	
 	@Column(name = "deathPlace", nullable = false)
@@ -38,23 +53,20 @@ public class Death {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	@MapsId
+	@OneToOne(optional = false)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual = new Individual();
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+	private Visit visit;
+	
 	public Death() {}
-
-
-
-
-	public Death(String death_uuid, String individual_uuid, Date insertDate, Integer deathCause,
-			Date deathDate, Integer deathPlace, String visit_uuid, String fw_uuid) {
-		super();
-		this.death_uuid = death_uuid;
-		this.individual_uuid = individual_uuid;
-		this.insertDate = insertDate;
-		this.deathCause = deathCause;
-		this.deathDate = deathDate;
-		this.deathPlace = deathPlace;
-		this.visit_uuid = visit_uuid;
-		this.fw_uuid = fw_uuid;
-	}
 
 
 	public String getDeath_uuid() {

@@ -1,10 +1,18 @@
 package org.arn.hdsscapture.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
@@ -38,25 +46,22 @@ public class Socialgroup {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual;
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
+	private List<Residency> residencies = new ArrayList<>();
+	
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
+	private Sociodemographic sociodemographic;
+		
+	
 	public Socialgroup() {}
-
-
-
-
-	public Socialgroup(String socialgroup_uuid, String houseExtId, Date insertDate, String groupName, Integer groupType,
-			String individual_uuid, String fw_uuid) {
-		super();
-		this.socialgroup_uuid = socialgroup_uuid;
-		this.houseExtId = houseExtId;
-		this.insertDate = insertDate;
-		this.groupName = groupName;
-		this.groupType = groupType;
-		this.individual_uuid = individual_uuid;
-		this.fw_uuid = fw_uuid;
-	}
-
-
-
 
 	public String getSocialgroup_uuid() {
 		return socialgroup_uuid;

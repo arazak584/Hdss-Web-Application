@@ -1,13 +1,23 @@
 package org.arn.hdsscapture.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 @Entity
+@Audited
 @Table(name="pregnancyoutcome")
 public class Pregnancyoutcome {
 	
@@ -87,51 +97,28 @@ public class Pregnancyoutcome {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "father_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individuals;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+	private Visit visit;
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "pregnancyoutcome")
+	private List<Outcome> outcomes = new ArrayList<>();
+	
+	
+	
 	public Pregnancyoutcome() {}
-
-
-
-	public Pregnancyoutcome(String preg_uuid, String mother_uuid, String father_uuid, Date insertDate, Date outcomeDate,
-			Date conceptionDate, Integer numberofBirths, Integer b_place, Integer not_del,
-			String not_del_other, Integer ass_del, String ass_del_other, Integer how_del, String how_del_other,
-			Integer first_nb, Integer l_birth, Integer rec_anc, Integer where_anc, String where_anc_Other,
-			String whlth_fac, String whlth_fac_Other, Integer who_anc, Integer month_pg, Integer num_anc,
-			Integer why_no_anc, Integer rec_ipt, Integer first_rec, Integer many_ipt, Integer chd_weight,
-			Integer chd_size, Integer weig_hcard, String visit_uuid, String fw_uuid) {
-		super();
-		this.preg_uuid = preg_uuid;
-		this.mother_uuid = mother_uuid;
-		this.father_uuid = father_uuid;
-		this.insertDate = insertDate;
-		this.outcomeDate = outcomeDate;
-		this.conceptionDate = conceptionDate;
-		this.numberofBirths = numberofBirths;
-		this.b_place = b_place;
-		this.not_del = not_del;
-		this.not_del_other = not_del_other;
-		this.ass_del = ass_del;
-		this.ass_del_other = ass_del_other;
-		this.how_del = how_del;
-		this.how_del_other = how_del_other;
-		this.first_nb = first_nb;
-		this.l_birth = l_birth;
-		this.rec_anc = rec_anc;
-		this.where_anc = where_anc;
-		this.where_anc_Other = where_anc_Other;
-		this.whlth_fac = whlth_fac;
-		this.who_anc = who_anc;
-		this.month_pg = month_pg;
-		this.num_anc = num_anc;
-		this.why_no_anc = why_no_anc;
-		this.rec_ipt = rec_ipt;
-		this.first_rec = first_rec;
-		this.many_ipt = many_ipt;
-		this.chd_weight = chd_weight;
-		this.chd_size = chd_size;
-		this.weig_hcard = weig_hcard;
-		this.visit_uuid = visit_uuid;
-		this.fw_uuid = fw_uuid;
-	}
 
 
 

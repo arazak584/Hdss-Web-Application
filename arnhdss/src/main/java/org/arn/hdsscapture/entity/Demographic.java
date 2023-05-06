@@ -1,24 +1,42 @@
 package org.arn.hdsscapture.entity;
 
-import java.sql.Date;
+
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Audited
 @Entity
-@Table(name="demographic")
-public class Demographic {
+@Table(name="demographic", indexes = {@Index(name="idx_individual_uuid", columnList="individual_uuid")})
+public class Demographic implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "individual_uuid", nullable = false)
+	@Column(name = "individual_uuid", nullable = false, unique=true)
 	private String individual_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date insertDate;
 	
 	@Column(name = "religion")
@@ -57,36 +75,17 @@ public class Demographic {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
+	@MapsId
+	@OneToOne(optional = false)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = true, updatable = true)
+	private Individual individual = new Individual();
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
 	
 	public Demographic() {}
-
-
-	public Demographic(String individual_uuid, Date insertDate, Integer religion, String religion_oth,
-			Integer education, Integer comp_yrs, Integer occupation, String occupation_oth, Integer marital,
-			String phone1, String phone2, Integer tribe, String tribe_oth, String fw_uuid) {
-		super();
-		this.individual_uuid = individual_uuid;
-		this.insertDate = insertDate;
-		this.religion = religion;
-		this.religion_oth = religion_oth;
-		this.education = education;
-		this.comp_yrs = comp_yrs;
-		this.occupation = occupation;
-		this.occupation_oth = occupation_oth;
-		this.marital = marital;
-		this.phone1 = phone1;
-		this.phone2 = phone2;
-		this.tribe = tribe;
-		this.tribe_oth = tribe_oth;
-		this.fw_uuid = fw_uuid;
-	}
-
-
-
-
-
-
-
 
 	public String getIndividual_uuid() {
 		return individual_uuid;
