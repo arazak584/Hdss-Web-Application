@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface UserTableRepository extends JpaRepository<UserTable, String> {
 
-	@Query("SELECT u FROM UserTable u WHERE u.userEmail = ?1")
+	@Query("SELECT u FROM user_table u WHERE u.user_email = ?1")
 	Optional<UserTable> findByUserEmail(String user_email);
 
 }

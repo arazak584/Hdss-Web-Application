@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
+@Entity(name = "group_table")
 public class GroupTable implements Serializable {
 
 	/**
@@ -17,30 +17,30 @@ public class GroupTable implements Serializable {
 
 	@Id
 	@Column(nullable = false, length = 80)
-	private String groupRole;
+	private String group_role;
 
 	@Column(nullable = false, length = 80)
-	private String groupDesc;
+	private String group_desc;
 
-	public String getGroupRole() {
-		return groupRole;
+	public String getGroup_role() {
+		return group_role;
 	}
 
-	public void setGroupRole(String groupRole) {
-		this.groupRole = groupRole;
+	public void setGroup_role(String group_role) {
+		this.group_role = group_role;
 	}
 
-	public String getGroupDesc() {
-		return groupDesc;
+	public String getGroup_desc() {
+		return group_desc;
 	}
 
-	public void setGroupDesc(String groupDesc) {
-		this.groupDesc = groupDesc;
+	public void setGroup_desc(String group_desc) {
+		this.group_desc = group_desc;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(groupRole);
+		return Objects.hash(group_role);
 	}
 
 	@Override
@@ -52,12 +52,12 @@ public class GroupTable implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		GroupTable other = (GroupTable) obj;
-		return Objects.equals(groupRole, other.groupRole);
+		return Objects.equals(group_role, other.group_role);
 	}
 
 	@Override
 	public String toString() {
-		return groupRole;
+		return group_role;
 	}
 	
 }

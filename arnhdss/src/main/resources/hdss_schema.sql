@@ -39,10 +39,6 @@ ALTER TABLE visit ADD UNIQUE INDEX `extId_UNIQUE` (`visitExtId` ASC);
 ALTER TABLE location ADD UNIQUE INDEX `extId_loc_UNIQUE` (`compextId` ASC);
 ALTER TABLE location ADD UNIQUE INDEX `extId_comp_UNIQUE` (`compno` ASC);
 
-INSERT IGNORE INTO `user` (`firstName`, `lastName`, `password`, `username`)
- VALUES ('Administrator', 'System', '$2a$10$t8y21LV71ZS7HmJaF19u.urUf4xuHydQ8QsF952TWKJhdXUbMRAVO', 'admin');
-
--- password: data
 -- fieldworker
 INSERT IGNORE INTO fieldworker (fw_uuid, username, firstName, lastName, password, status,insertDate) 
 VALUES ('UnknownFieldWorker','UNK', 'Unknown', 'FieldWorker', 'invalid-password-hash', 0,'2023-05-12 15:07:43');

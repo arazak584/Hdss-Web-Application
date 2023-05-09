@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 
 import org.jetbrains.annotations.NotNull;
 
-@Entity
+@Entity(name = "user_table")
 public class UserTable implements Serializable {
 
 	/**
@@ -32,25 +32,25 @@ public class UserTable implements Serializable {
 	private String username;
 
 	@Column(nullable = false, length = 80)
-	private String userEmail;
+	private String user_email;
 
 	@Column(nullable = false, length = 80)
-	private String userFname;
+	private String user_fname;
 
 	@Column(nullable = false, length = 80)
-	private String userLname;
+	private String user_lname;
 	
 	@Column(nullable = false)
-	private boolean userEnabled;
+	private boolean user_enabled;
 
 	@Column(nullable = false, length = 80)
-	private String userPassword;
+	private String user_password;
 
 	@Transient
-	private String curPassword;
+	private String cur_password;
 
 	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "username"), inverseJoinColumns = @JoinColumn(name = "groupRole"))
+	@JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "username"), inverseJoinColumns = @JoinColumn(name = "group_role"))
 	private List<GroupTable> groups = new ArrayList<>();
 
 	public String getUsername() {
@@ -61,52 +61,54 @@ public class UserTable implements Serializable {
 		this.username = username;
 	}
 
-	public String getUserEmail() {
-		return userEmail;
+	
+
+	public String getUser_email() {
+		return user_email;
 	}
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setUser_email(String user_email) {
+		this.user_email = user_email;
 	}
 
-	public String getUserFname() {
-		return userFname;
+	public String getUser_fname() {
+		return user_fname;
 	}
 
-	public void setUserFname(String userFname) {
-		this.userFname = userFname;
+	public void setUser_fname(String user_fname) {
+		this.user_fname = user_fname;
 	}
 
-	public String getUserLname() {
-		return userLname;
+	public String getUser_lname() {
+		return user_lname;
 	}
 
-	public void setUserLname(String userLname) {
-		this.userLname = userLname;
+	public void setUser_lname(String user_lname) {
+		this.user_lname = user_lname;
 	}
 
-	public boolean isUserEnabled() {
-		return userEnabled;
+	public boolean isUser_enabled() {
+		return user_enabled;
 	}
 
-	public void setUserEnabled(boolean userEnabled) {
-		this.userEnabled = userEnabled;
+	public void setUser_enabled(boolean user_enabled) {
+		this.user_enabled = user_enabled;
 	}
 
-	public String getUserPassword() {
-		return userPassword;
+	public String getUser_password() {
+		return user_password;
 	}
 
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
+	public void setUser_password(String user_password) {
+		this.user_password = user_password;
 	}
 
-	public String getCurPassword() {
-		return curPassword;
+	public String getCur_password() {
+		return cur_password;
 	}
 
-	public void setCurPassword(String curPassword) {
-		this.curPassword = curPassword;
+	public void setCur_password(String cur_password) {
+		this.cur_password = cur_password;
 	}
 
 	public List<GroupTable> getGroups() {
@@ -119,7 +121,7 @@ public class UserTable implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(userEmail);
+		return Objects.hash(user_email);
 	}
 
 	@Override
@@ -131,7 +133,7 @@ public class UserTable implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		UserTable other = (UserTable) obj;
-		return Objects.equals(userEmail, other.userEmail);
+		return Objects.equals(user_email, other.user_email);
 	}
 
 	@Override

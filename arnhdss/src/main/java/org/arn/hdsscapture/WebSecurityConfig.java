@@ -30,11 +30,16 @@ public class WebSecurityConfig {
 				.antMatchers("/pi/**").hasRole("INVESTIGATOR")// can only enter data
 //				.antMatchers("/**").hasRole("ADMINISTRATOR")// can view audits
                 .anyRequest().authenticated()).formLogin(login -> login
+                		
                 .loginPage("/login")
                 .failureUrl("/login?error")
-                .permitAll()).logout(logout -> logout.permitAll());
+                .permitAll())
+        		.logout(logout -> logout
+        		.logoutUrl("/logout") // specifies the logout URL
+        		.logoutSuccessUrl("/login?logout")
+        		.permitAll());
 
-        //http.csrf(withDefaults());
+        http.csrf(withDefaults());
         http.csrf().disable();
         http.headers(headers -> headers.frameOptions().disable());
 

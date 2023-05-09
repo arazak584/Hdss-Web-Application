@@ -1,8 +1,13 @@
-
 <form class="form-inline" th:action="@{/logout}" method="post">
-	<label class="text-light small ms-2"> [(#{current.user})]: <b>[[${#httpServletRequest.remoteUser}]]</b>
-		<input class="btn btn-sm btn-link text-warning" type="submit" value="Sign out" /></label>
+    <label class="text-light small ms-2 flex-grow-1">
+        [(#{current.user})]: <b>[[${#httpServletRequest.remoteUser}]]</b>
+    </label>
 
-	<label th:unless="${activated}" class="text-light small ms-2 float-end"> [(${myf})]</label>
+    <label th:unless="${activated}" class="text-light small ms-2">
+        [(${myf})]
+    </label>
 
+    <div class="ml-auto">
+        <input class="btn btn-sm btn-link text-warning fa fa-sign-out" type="submit" value="Log out"/>
+    </div>
 </form>

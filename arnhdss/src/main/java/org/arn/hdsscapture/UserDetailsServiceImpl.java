@@ -33,17 +33,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         final UserTable json = api.findById(username).get();
         
-        if(!json.isUserEnabled()) {
+        if(!json.isUser_enabled()) {
             throw new UsernameNotFoundException(username);        	
         }
         
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         for (GroupTable elem : json.getGroups()) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(elem.getGroupRole()));
+            grantedAuthorities.add(new SimpleGrantedAuthority(elem.getGroup_role()));
 
         }
 
-        return new User(json.getUsername(), json.getUserPassword(), json.isUserEnabled(),true,true,true, grantedAuthorities);
+        return new User(json.getUsername(), json.getUser_password(), json.isUser_enabled(),true,true,true, grantedAuthorities);
 
     }
 
