@@ -1,3 +1,28 @@
+INSERT IGNORE INTO user_table(username, user_email, user_enabled, user_password, user_fname, user_lname)
+    VALUES (
+        'webadmin'
+	    , 'webadmin@irb.com'
+	    , true
+	    , '$2a$10$SLlNbnvkIqatweZxewyZUeF6yrGexjppQpJgntGXCxWMQCaT3ORdi'
+	    , 'Administrator'
+	    , 'System'
+    );
+
+-- pw: admin
+
+	INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_CONTROLLER', 'Systems Administrator');
+  	INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_INVESTIGATOR', 'Investigator');
+    INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_ADMINISTRATOR', 'Protocol Administrator');
+    INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_REVIEWER', 'Protocol Reviewer');
+
+
+	DELETE FROM user_group WHERE username='webadmin';
+    INSERT IGNORE INTO user_group(username, group_role) values('webadmin', 'ROLE_CONTROLLER');
+    INSERT IGNORE INTO user_group(username, group_role) values('webadmin', 'ROLE_INVESTIGATOR');
+    INSERT IGNORE INTO user_group(username, group_role) values('webadmin', 'ROLE_ADMINISTRATOR');
+    INSERT IGNORE INTO user_group(username, group_role) values('webadmin', 'ROLE_REVIEWER');
+
+
 ALTER TABLE visit ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE death ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE individual ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;

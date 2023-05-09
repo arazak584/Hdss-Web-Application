@@ -6,11 +6,8 @@ import java.util.UUID;
 
 import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Round;
-import org.arn.hdsscapture.entity.User;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
-import org.arn.hdsscapture.repository.UserRepository;
-import org.arn.hdsscapture.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -188,52 +185,7 @@ public class FieldController {
 	    }
 	}
 	
-	@Autowired
-	UserRepository userrepo;
-	UserService userService;
-
-	//Round 
-	@GetMapping("/users")
-	public String findUser(Model model) {
-	    List<User> users = userrepo.findAll();
-	    model.addAttribute("users", users);
-	    return "users";
-	}
 	
-	@GetMapping("/users/edit/{id}")
-	public String editUser(@PathVariable("id") Long id, Model model) {
-	    List<User> optionalUser = userrepo.findUser(id);
-	    if (!optionalUser.isEmpty()) {
-	    	User user = optionalUser.get(0);
-	        // Add any other necessary data to the model attribute for editing
-	        model.addAttribute("user", user);
-	        return "edit_user";
-	    } else {
-	        return "error";
-	    }
-	}
-	
-	@PostMapping("/users/{userId}")
-	public String updateUser(@PathVariable("userId") Long id, @ModelAttribute("user") User user, BindingResult result, Model model) {
-	    if (result.hasErrors()) {
-	        // Handle validation errors if necessary
-	        return "edit_user";
-	    } else {
-	        List<User> optionalUser = userrepo.findUser(id);
-	        if (!optionalUser.isEmpty()) {
-	            User existingUser = optionalUser.get(0);
-	            existingUser.setId(id);
-	            existingUser.setFirstName(user.getFirstName());
-	            existingUser.setLastName(user.getLastName());
-	            existingUser.setUsername(user.getUsername());
-	            existingUser.setPassword(user.getPassword()); // plain text password
-	            userService.update(existingUser); // let the UserServiceImpl handle hashing and updating
-	            return "redirect:/users";
-	        } else {
-	            return "error";
-	        }
-	    }
-	}
 
 
 
