@@ -58,48 +58,12 @@ INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUE
 
 
 -- KEYS
-
--- Visit
-alter table visit add index FK6B04D4B36F4BE6E (fw_uuid), add constraint FK6B04D4B36F4BE6E foreign key (fw_uuid) references fieldworker (fw_uuid);
-alter table visit add index FK6B04D4BEC630DB3 (location_uuid), add constraint FK6B04D4BEC630DB3 foreign key (location_uuid) references location (location_uuid);
-alter table visit ADD UNIQUE INDEX FK6B04D4BEC630DB5 (visit_uuid);
-
--- Death
-alter table death add index FK5B0927436F4BE6E (fw_uuid), add constraint FK5B0927436F4BE6E foreign key (fw_uuid) references fieldworker (fw_uuid);
-alter table death add index FK5B0927468E8A298 (visit_uuid), add constraint FK5B0927468E8A298 foreign key (visit_uuid) references visit (visit_uuid);
-alter table death add index FK5B0927480470E9E (individual_uuid), add constraint FK5B0927480470E9E foreign key (individual_uuid) references individual (individual_uuid);
-
--- Fieldworker
-alter table fieldworker add index FK528ED0F897735AF9 (fw_uuid), add constraint FK528ED0F897735AF9 foreign key (fw_uuid) references fieldworker (fw_uuid);
-
--- Individual
-alter table individual add index FKFD3DA2999E4C80B4 (mother_uuid), add constraint FKFD3DA2999E4C80B4 foreign key (mother_uuid) references individual (individual_uuid);
-alter table individual add index FKFD3DA29936F4BE6E (fw_uuid), add constraint FKFD3DA29936F4BE6E foreign key (fw_uuid) references fieldworker (fw_uuid);
-alter table individual add index FKFD3DA29930076DBB (father_uuid), add constraint FKFD3DA29930076DBB foreign key (father_uuid) references individual (individual_uuid);
-
--- Sociodemographic
-alter table sociodemographic add index FKFD3DA2999E4C80B5 (individual_uuid), add constraint FKFD3DA2999E4C80B5 foreign key (individual_uuid) references individual (individual_uuid);
-alter table sociodemographic add index FKFD3DA29936F4BE6S (fw_uuid), add constraint FKFD3DA29936F4BE6S foreign key (fw_uuid) references fieldworker (fw_uuid);
-alter table sociodemographic add index FKFD3DA29930076DBC (socialgroup_uuid), add constraint FKFD3DA29930076DBC foreign key (socialgroup_uuid) references socialgroup (socialgroup_uuid);
-alter table sociodemographic add index FKFD3DA29930076DBS (location_uuid), add constraint FKFD3DA29930076DBS foreign key (location_uuid) references location (location_uuid);
-
--- Demographic
-alter table demographic add index FKFD3DA29936F4BE6D (fw_uuid), add constraint FKFD3DA29936F4BE6D foreign key (fw_uuid) references fieldworker (fw_uuid);
-alter table demographic add index FKFD3DA2999E4C80BD (individual_uuid), add constraint FKFD3DA2999E4C80BD foreign key (individual_uuid) references individual (individual_uuid);
-
+/*
 -- Inmigration
 alter table inmigration add index FKD692204936F4BE6E (fw_uuid), add constraint FKD692204936F4BE6E foreign key (fw_uuid) references fieldworker (fw_uuid);
 alter table inmigration add index FKD6922049851505F6 (residency_uuid), add constraint FKD6922049851505F6 foreign key (residency_uuid) references residency (residency_uuid);
 alter table inmigration add index FKD6922049301AAA96 (visit_uuid), add constraint FKD6922049301AAA96 foreign key (visit_uuid) references visit (visit_uuid);
 alter table inmigration add index FKD692204980470E9E (individual_uuid), add constraint FKD692204980470E9E foreign key (individual_uuid) references individual (individual_uuid);
-
-
--- Location
-alter table location add index FK714F9FB536F4BE6E (fw_uuid), add constraint FK714F9FB536F4BE6E foreign key (fw_uuid) references fieldworker (fw_uuid);
-alter table location add index FK714F9FB5DFDC7027 (locationLevel_uuid), add constraint FK714F9FB5DFDC7027 foreign key (locationLevel_uuid) references locationhierarchy (uuid);
-alter table location add index FK714F9FB5DFDC7028 (location_uuid);
-alter table locationhierarchy add index FK6AD2CE20F61555E (level_uuid), add constraint FK6AD2CE20F61555E foreign key (level_uuid) references locationhierarchylevel (uuid);
-alter table locationhierarchy add index FK6AD2CE2064C0094C (parent_uuid), add constraint FK6AD2CE2064C0094C foreign key (parent_uuid) references locationhierarchy (uuid);
 
 -- Outmigration
 alter table outmigration add index FKE109DC4036F4BE6E (fw_uuid), add constraint FKE109DC4036F4BE6E foreign key (fw_uuid) references fieldworker (fw_uuid);
@@ -107,41 +71,11 @@ alter table outmigration add index FKE109DC40851505F6 (residency_uuid), add cons
 alter table outmigration add index FKE109DC40301AAA96 (visit_uuid), add constraint FKE109DC40301AAA96 foreign key (visit_uuid) references visit (visit_uuid);
 alter table outmigration add index FKE109DC4080470E9E (individual_uuid), add constraint FKE109DC4080470E9E foreign key (individual_uuid) references individual (individual_uuid);
 
--- Pregnancy
-alter table pregnancyobservation add index FKDB9E9ADF97735AF9 (visit_uuid), add constraint FKDB9E9ADF97735AF9 foreign key (visit_uuid) references visit (visit_uuid);
-alter table pregnancyobservation add index FKDB9E9ADF9E4C80B4 (individual_uuid), add constraint FKDB9E9ADF9E4C80B4 foreign key (individual_uuid) references individual (individual_uuid);
-alter table pregnancyobservation add index FKDB9E9ADF36F4BE6E (fw_uuid), add constraint FKDB9E9ADF36F4BE6E foreign key (fw_uuid) references fieldworker (fw_uuid);
-
--- pregnancyoutcome
-alter table pregnancyoutcome add index FKA53B1B859E4C80B6 (mother_uuid), add constraint FKA53B1B859E4C80B6 foreign key (mother_uuid) references individual (individual_uuid);
-alter table pregnancyoutcome add index FKA53B1B8536F4BE6P (fw_uuid), add constraint FKA53B1B8536F4BE6P foreign key (fw_uuid) references fieldworker (fw_uuid);
-alter table pregnancyoutcome add index FKA53B1B8530076DBD (father_uuid), add constraint FKA53B1B8530076DBD foreign key (father_uuid) references individual (individual_uuid);
-alter table pregnancyoutcome add index FKA53B1B85301AAA97 (visit_uuid), add constraint FKA53B1B85301AAA97 foreign key (visit_uuid) references visit (visit_uuid);
-alter table pregnancyoutcome add index FKC4197498AFA9FEFE (preg_uuid);
-
 -- Outcome
 alter table outcome add index FKBE0C0752948ED5FB (childuuid), add constraint FKBE0C0752948ED5FB foreign key (childuuid) references individual (individual_uuid);
 alter table outcome add index FKBE0C0752948ED5FM (mother_uuid), add constraint FKBE0C0752948ED5FM foreign key (mother_uuid) references individual (individual_uuid);
 alter table outcome add index FKBE0C0752948ED5FP (preg_uuid), add constraint FKBE0C0752948ED5FP foreign key (preg_uuid) references pregnancyoutcome (preg_uuid);
-
--- Relationship
-alter table relationship add index FKF064763836F4BE6E (fw_uuid), add constraint FKF064763836F4BE6E foreign key (fw_uuid) references fieldworker (fw_uuid);
-alter table relationship add index FKF0647638995599AF (individual_uuid), add constraint FKF0647638995599AF foreign key (individual_uuid) references individual (individual_uuid);
-alter table relationship add index FKF06476389B0A724E (man_uuid), add constraint FKF06476389B0A724E foreign key (man_uuid) references individual (individual_uuid);
-
--- Residency
-alter table residency add index FK7E9A5B1A36F4BE6E (fw_uuid), add constraint FK7E9A5B1A36F4BE6E foreign key (fw_uuid) references fieldworker (fw_uuid);
-alter table residency add index FK7E9A5B1AB374291E (location_uuid), add constraint FK7E9A5B1AB374291E foreign key (location_uuid) references location (location_uuid);
-alter table residency add index FK7E9A5B1AB374291S (socialgroup_uuid), add constraint FK7E9A5B1AB374291S foreign key (socialgroup_uuid) references socialgroup (socialgroup_uuid);
-alter table residency add index FK7E9A5B1A80470E9E (individual_uuid), add constraint FK7E9A5B1A80470E9E foreign key (individual_uuid) references individual (individual_uuid);
-
-
--- Socialgroup
-alter table socialgroup add index FK89CF7B329001C018 (individual_uuid), add constraint FK89CF7B329001C018 foreign key (individual_uuid) references individual (individual_uuid);
-alter table socialgroup add index FK89CF7B3236F4BE6E (fw_uuid), add constraint FK89CF7B3236F4BE6E foreign key (fw_uuid) references fieldworker (fw_uuid);
-alter table socialgroup ADD UNIQUE INDEX FK6B04D4BEC630DB5 (socialgroup_uuid);
-
-
+*/
 
 ALTER TABLE visit ADD UNIQUE INDEX `extId_UNIQUE` (`visitExtId` ASC);
 ALTER TABLE location ADD UNIQUE INDEX `extId_loc_UNIQUE` (`compextId` ASC);

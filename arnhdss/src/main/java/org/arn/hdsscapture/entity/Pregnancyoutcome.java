@@ -95,24 +95,24 @@ public class Pregnancyoutcome {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
-//	private Fieldworker fieldworker;
-//	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-//	private Individual individual;
-//	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "father_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-//	private Individual individuals;
-//	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
-//	private Visit visit;
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "pregnancyoutcome")
-//	private List<Outcome> outcomes = new ArrayList<>();
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "father_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individuals;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+	private Visit visit;
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "pregnancyoutcome")
+	private List<Outcome> outcomes = new ArrayList<>();
 	
 	
 	

@@ -389,22 +389,22 @@ public class Sociodemographic {
     @Column
     public Integer drink_oecoccur;
     
-//    @ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
-//	private Fieldworker fieldworker;
-//    
-//    @ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-//	private Individual individual;
-//    
-//    @MapsId
-//	@OneToOne(optional = false)
-//	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
-//	private Socialgroup socialgroup = new Socialgroup();
-//    
-//    @ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
-//	private Location location;
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual;
+    
+    @MapsId
+	@OneToOne(optional = false)
+	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
+	private Socialgroup socialgroup = new Socialgroup();
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
+	private Location location;
     
     public Sociodemographic() {}
     

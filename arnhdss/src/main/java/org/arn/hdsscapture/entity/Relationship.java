@@ -53,17 +53,17 @@ public class Relationship {
 	private Integer lcow;//Does women live in the same household with co-wife(s)
 	private Integer mrank;//Woman's rank (In current marriage)
 	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
-//	private Fieldworker fieldworker;
-//	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-//	private Individual individual;
-//	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "man_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-//	private Individual individuals;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "man_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individuals;
 
 	
 	public Relationship() {}

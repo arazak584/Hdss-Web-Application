@@ -2,11 +2,15 @@ package org.arn.hdsscapture.entity;
 
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,44 +48,44 @@ public class Fieldworker {
 	@Column(name = "status", nullable = false)
 	private String status;
 	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Socialgroup> socialgroups = new ArrayList<>();
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Death> deaths = new ArrayList<>();
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Demographic> demographics = new ArrayList<>();
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Individual> individuals = new ArrayList<>();
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Inmigration> inmigrations = new ArrayList<>();
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Location> locations = new ArrayList<>();
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Outmigration> outmigrations = new ArrayList<>();
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Pregnancyobservation> pregnancyobservations = new ArrayList<>();
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Pregnancyoutcome> pregnancyoutcomes = new ArrayList<>();
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Relationship> relationships = new ArrayList<>();
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Residency> residencies = new ArrayList<>();
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Sociodemographic> sociodemographics = new ArrayList<>();
-//	
-//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-//	private List<Visit> visit = new ArrayList<>();
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Socialgroup> socialgroups = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Death> deaths = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Demographic> demographics = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Individual> individuals = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Inmigration> inmigrations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Location> locations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Outmigration> outmigrations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Pregnancyobservation> pregnancyobservations = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Pregnancyoutcome> pregnancyoutcomes = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Relationship> relationships = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Residency> residencies = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Sociodemographic> sociodemographics = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Visit> visit = new ArrayList<>();
 	
 
 	

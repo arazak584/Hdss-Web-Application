@@ -65,17 +65,17 @@ public class Pregnancyobservation {
 	private Integer outcome;
 	private Date outcome_date;//Select Date of Outcome
 			
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
-//	private Fieldworker fieldworker;
-//	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-//	private Individual individual;
-//	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
-//	private Visit visit;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	private Individual individual;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+	private Visit visit;
 	
 	public Pregnancyobservation() {}
 
