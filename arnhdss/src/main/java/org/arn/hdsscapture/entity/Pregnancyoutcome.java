@@ -67,8 +67,6 @@ public class Pregnancyoutcome {
 	//Where did you receive the ANC?
 	private Integer where_anc;
 	private String where_anc_Other;
-	//Which health facility
-	private String whlth_fac;
 	//Who attended to you?
 	private Integer who_anc;
 	//How many months pregnant were you when you first received  Antenatal Care?
@@ -97,24 +95,24 @@ public class Pregnancyoutcome {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
-	private Fieldworker fieldworker;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-	private Individual individual;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "father_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-	private Individual individuals;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
-	private Visit visit;
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "pregnancyoutcome")
-	private List<Outcome> outcomes = new ArrayList<>();
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+//	private Fieldworker fieldworker;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+//	private Individual individual;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "father_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+//	private Individual individuals;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+//	private Visit visit;
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "pregnancyoutcome")
+//	private List<Outcome> outcomes = new ArrayList<>();
 	
 	
 	
@@ -347,20 +345,6 @@ public class Pregnancyoutcome {
 	public void setWhere_anc_Other(String where_anc_Other) {
 		this.where_anc_Other = where_anc_Other;
 	}
-
-
-
-	public String getWhlth_fac() {
-		return whlth_fac;
-	}
-
-
-
-	public void setWhlth_fac(String whlth_fac) {
-		this.whlth_fac = whlth_fac;
-	}
-
-
 
 
 	public Integer getWho_anc() {

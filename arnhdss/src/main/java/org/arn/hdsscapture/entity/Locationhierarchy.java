@@ -1,18 +1,8 @@
 package org.arn.hdsscapture.entity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
@@ -46,19 +36,19 @@ public class Locationhierarchy {
 	@Column(name = "level_uuid")
 	private String level_uuid;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "level_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
-	private Locationhierarchylevel locationhierarchylevel;
-	
-	@OneToMany(mappedBy = "locationhierarchy", cascade = CascadeType.ALL)
-    private Set<Locationhierarchy> locationhierarchies = new HashSet<>();	
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
-    private Locationhierarchy locationhierarchy;
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "locationhierarchy")
-	private List<Location> locations = new ArrayList<>();
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "level_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
+//	private Locationhierarchylevel locationhierarchylevel;
+//	
+//	@OneToMany(mappedBy = "locationhierarchy", cascade = CascadeType.ALL)
+//    private Set<Locationhierarchy> locationhierarchies = new HashSet<>();	
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "parent_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
+//    private Locationhierarchy locationhierarchy;
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "locationhierarchy")
+//	private List<Location> locations = new ArrayList<>();
 	
 	public Locationhierarchy() {}
 

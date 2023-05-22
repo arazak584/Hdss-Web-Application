@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -21,8 +20,8 @@ public class Task {
     @Column(nullable = false)
     public LocalDateTime timestamp;
 
-    @Lob
-    private byte[] data;
+    @Column(nullable = false)
+    private String data;
 
     @Column(nullable = false)
     private String fileName;
@@ -36,7 +35,7 @@ public class Task {
     public Task() {}
 
 
-    public Task(Integer uuid, LocalDateTime timestamp, byte[] data, String fileName, String type, Integer total) {
+    public Task(Integer uuid, LocalDateTime timestamp, String data, String fileName, String type, Integer total) {
 		super();
 		this.uuid = uuid;
 		this.timestamp = timestamp;
@@ -69,11 +68,11 @@ public class Task {
         this.timestamp = timestamp;
     }
 
-    public byte[] getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(byte[] data) {
+    public void setData(String data) {
         this.data = data;
     }
 

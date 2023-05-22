@@ -66,28 +66,28 @@ public class Visit implements Serializable {
 	@Column(name = "respondent")
 	private String respondent;
 	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
-	private List<Outmigration> outmigrations = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
-	private List<Inmigration> inmigrations = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
-	private List<Death> deaths = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
-	private List<Pregnancyobservation> pregnancyobservations = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
-	private List<Pregnancyoutcome> pregnancyoutcomes = new ArrayList<>();
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
-	private Fieldworker fieldworker;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
-	private Location location;
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
+//	private List<Outmigration> outmigrations = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
+//	private List<Inmigration> inmigrations = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
+//	private List<Death> deaths = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
+//	private List<Pregnancyobservation> pregnancyobservations = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
+//	private List<Pregnancyoutcome> pregnancyoutcomes = new ArrayList<>();
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+//	private Fieldworker fieldworker;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
+//	private Location location;
 	
 	
 	public Visit() {}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/editor :: layout(_,~{::links},~{},~{::content},~{::subnav})}">
+
+<subnav>
+	<div class="m-1 small"></div>
+</subnav>
+<links>
+	<style>
+		.max-lines {
+			display: block;
+			/* or inline-block */
+			text-overflow: ellipsis;
+			word-wrap: break-word;
+			overflow: hidden;
+			max-height: 3.6em;
+			line-height: 1.8em;
+		}
+	</style>
+</links>
+
+<content>
+	<div class="card bg-light">
+		<div class="card-header border-bottom">
+			<p class="lead text-dark fw-bold">[[#{menubutton.fw}]]
+				<a class="btn btn-danger btn-sm small float-end" th:utext="#{button.close}" th:href="@{/utility}"></a>
+			</p>
+		</div>
+		<div class="card-body">
+			<div th:insert="utility/fw_list"></div>
+		</div>
+	</div>
+	
+
+</content>
+
+</html>

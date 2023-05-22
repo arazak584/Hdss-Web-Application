@@ -46,19 +46,19 @@ public class Socialgroup {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
-	private Fieldworker fieldworker;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-	private Individual individual;
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
-	private List<Residency> residencies = new ArrayList<>();
-	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
-	private Sociodemographic sociodemographic;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+//	private Fieldworker fieldworker;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+//	private Individual individual;
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
+//	private List<Residency> residencies = new ArrayList<>();
+//	
+//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
+//	private Sociodemographic sociodemographic;
 		
 	
 	public Socialgroup() {}

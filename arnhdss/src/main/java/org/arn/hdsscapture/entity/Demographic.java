@@ -77,7 +77,7 @@ public class Demographic implements Serializable {
 	
 	@MapsId
 	@OneToOne(optional = false)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = true, updatable = true)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
 	private Individual individual = new Individual();
 	
 	@ManyToOne(fetch = FetchType.LAZY)

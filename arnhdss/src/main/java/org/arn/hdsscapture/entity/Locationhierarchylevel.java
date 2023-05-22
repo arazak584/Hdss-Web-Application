@@ -28,8 +28,8 @@ public class Locationhierarchylevel {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "locationhierarchylevel")
-	private List<Locationhierarchy> locationhierarchies = new ArrayList<>();
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "locationhierarchylevel")
+//	private List<Locationhierarchy> locationhierarchies = new ArrayList<>();
 	
 	public Locationhierarchylevel () {}
 

@@ -52,27 +52,6 @@ public class Vpm {
 	private String fieldworker;
 	
 	public Vpm() {}
-
-
-
-	public Vpm(String individual_uuid,String extId, Date dob, Integer gender, String firstName, String lastName, Date deathDate, String compno,
-			String househead, String compname, String villname, String villcode, String fieldworker) {
-		super();
-		this.individual_uuid = individual_uuid;
-		this.extId = extId;
-		this.dob = dob;
-		this.gender = gender;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.deathDate = deathDate;
-		this.compno = compno;
-		this.househead = househead;
-		this.compname = compname;
-		this.villname = villname;
-		this.villcode = villcode;
-		this.fieldworker = fieldworker;
-	}
-
 	
 
 	public String getIndividual_uuid() {

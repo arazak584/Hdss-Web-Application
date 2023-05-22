@@ -31,17 +31,17 @@ public class Outcome {
 	@Column(name = "type", nullable = false)
 	private Integer type;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "preg_uuid", referencedColumnName = "preg_uuid", insertable = false, updatable = false)
-	private Pregnancyoutcome pregnancyoutcome;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "mother_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-	private Individual individual;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "childuuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-	private Individual individual2;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "preg_uuid", referencedColumnName = "preg_uuid", insertable = false, updatable = false)
+//	private Pregnancyoutcome pregnancyoutcome;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "mother_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+//	private Individual individual;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "childuuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+//	private Individual individual2;
 	
 	
 	public Outcome() {}

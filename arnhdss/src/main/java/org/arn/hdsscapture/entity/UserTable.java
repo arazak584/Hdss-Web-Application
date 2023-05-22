@@ -13,11 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.jetbrains.annotations.NotNull;
-
-@Entity(name = "user_table")
+@Entity(name= "user_table")
 public class UserTable implements Serializable {
 
 	/**
@@ -31,7 +30,7 @@ public class UserTable implements Serializable {
 	@Size(min = 1, max = 80)
 	private String username;
 
-	@Column(nullable = false, length = 80)
+	@Column(nullable = false, length = 80, unique = true)
 	private String user_email;
 
 	@Column(nullable = false, length = 80)
@@ -49,7 +48,7 @@ public class UserTable implements Serializable {
 	@Transient
 	private String cur_password;
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "username"), inverseJoinColumns = @JoinColumn(name = "group_role"))
 	private List<GroupTable> groups = new ArrayList<>();
 

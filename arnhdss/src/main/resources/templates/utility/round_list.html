@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html th:fragment="layout(title, links, scripts, content, subnav)" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+
+	<title  th:text="#{app.title}">HDSS</title>
+	<base href="/">
+	<!-- common links -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+
+
+	<style>
+		body {
+			background-color:  	rgb(57, 106, 147);
+		}
+
+
+		.workspace {
+			background-color: #92c7f2;
+		}
+
+		.formspace {
+			background-color: rgb(33, 63, 86) !important;
+			color: #FFFFFF;
+		}
+
+		.btn-maroon {
+			background-color: rgb(128, 0, 64);
+			border-color: rgb(128, 0, 64);
+		}
+
+		.btn-maroon:hover {
+			background-color: rgb(64, 0, 0) !important;
+			border-color: rgb(64, 0, 0) !important;
+		}
+		
+		/* Customizing DataTables pagination */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  color: #ffffff; /* Change the text color */
+  background-color: #ffffff; /* Change the background color */
+  border: 1px solid #ffffff; /* Change the border color */
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: #ffffff; /* Change the text color on hover */
+  background-color: #0056b3; /* Change the background color on hover */
+  border: 1px solid #0056b3; /* Change the border color on hover */
+}
+
+/* Customizing DataTables search */
+.dataTables_wrapper .dataTables_filter label input[type="search"] {
+  color: #ffffff; /* Change the text color */
+  background-color: #ffffff; /* Change the background color */
+  border-color: #000; /* Change the border color */
+}
+
+.dataTables_wrapper .dataTables_filter label input[type="search"]:focus {
+  color: #000; /* Change the text color on focus */
+  background-color: #fff; /* Change the background color on focus */
+  border-color: #000; /* Change the border color on focus */
+}
+		
+	</style>
+</head>
+
+<body class="me-5 ms-5 mt-1">
+	<div th:if="${exceptionMsg}" class="alert alert-danger" th:text="${exceptionMsg}"></div>
+
+
+	<div th:insert="fragments/current-user"></div>
+	<div th:insert="fragments/menubar-main"></div>
+
+
+	<div class="mx-auto box-shadow">
+	<div class="col-lg-10 col-md-10 col-sm-10 container justify-content-center card">
+
+		<div class="card-body">
+		<div class="table-responsive">
+		<div><a th:href = "@{/utility/round/add}" class="btn btn-primary btn-sm mb-3" >Add Round</a>
+		<a th:href = "@{/utility}" class="btn btn-danger btn-sm mb-3" >Close</a>
+		</div>
+		
+		<table id="dtBasicExample" class="table align-middle mb-0 table-striped table-secondary table-hover">
+			<thead class="bg-red">
+				<tr>
+					<th th:text="#{rn.number}"></th>
+					<th th:text="#{rn.start}"></th>
+					<th th:text="#{rn.end}"></th>
+					<th th:text="#{rn.remark}"></th>
+					<th th:text="#{fw.action}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			<tr th:each="round : ${rounds}">
+            <td th:text="${round.roundNumber}"></td>
+            <td th:text="${round.startDate}"></td>
+            <td th:text="${round.endDate}"></td>
+            <td th:text="${round.remark}"></td>
+            
+            <td>
+                <a th:href="@{/utility/round/edit/{roundNumber}(roundNumber=${round.roundNumber})}" 
+                class="btn btn-primary btn-sm">Edit</a>
+
+            </td>
+        </tr>
+				
+			</tbody>
+		</table>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<footer class="text-light text-center mb-4">
+		<div th:insert="fragments/app-version"></div>
+		<!-- common scripts -->
+				
+		<script type="text/javascript">
+	$(document).ready(function () {
+		  $('#dtBasicExample').DataTable();
+		  $('.dataTables_length').addClass('bs-select');
+		});
+	</script>
+		
+	</footer>
+	
+
+
+</body>
+
+</html>
+

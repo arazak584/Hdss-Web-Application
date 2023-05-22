@@ -1,11 +1,14 @@
 <div class="row mb-3">
 	<div class="text-end p-2 rounded mb-1" style="background-color: rgb(255, 255, 255);">
 		<span>
-			<a class="btn btn-dark" href="#" th:href="@{/update}" th:text="#{menubutton.update}"> </a>
-			<a class="btn btn-dark" href="#" th:href="@{/report}" th:text="#{menubutton.report}"></a>
-			<a class="btn btn-dark" href="#" th:href="@{/utility}" th:text="#{menubutton.utility}"></a>
+			<!-- <a class="btn btn-dark" href="#" th:href="@{/update}" th:text="#{menubutton.update}"> </a>
+			<a class="btn btn-dark" href="#" th:href="@{/rp}" th:text="#{menubutton.report}"></a>
 			<a class="btn btn-dark" href="#" th:href="@{/amend}" th:text="#{menubutton.amend}"></a>
-			<a class="btn btn-dark" href="#" th:href="@{/config}" th:utext="#{menubutton.config}"></a>
+			<a class="btn btn-dark" href="#" th:href="@{/utility}" th:text="#{menubutton.utility}"> </a>-->
+			<a class="btn btn-primary" href="#" th:href="@{/utility/fw}" th:text="#{menubutton.fw}"> </a>
+			<a class="btn btn-warning" href="#" th:href="@{/utility/task}" th:text="#{menubutton.task}"> </a>
+			<a class="btn btn-info" href="#" th:href="@{/utility/round}" th:text="#{menubutton.round}"> </a>
+			<a class="btn btn-secondary" href="#" th:href="@{/controls/users}" th:text="#{menubutton.user}"> </a>
 		</span>
 	</div>
 </div>

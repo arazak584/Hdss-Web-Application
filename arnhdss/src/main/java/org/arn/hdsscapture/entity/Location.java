@@ -66,22 +66,22 @@ public class Location implements Serializable {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
-	private Fieldworker fieldworker;
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "location")
-	private List<Residency> residencies = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "location")
-	private List<Visit> visits = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "location")
-	private List<Sociodemographic> sociodemographics = new ArrayList<>();
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "locationLevel_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
-    private Locationhierarchy locationhierarchy;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+//	private Fieldworker fieldworker;
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "location")
+//	private List<Residency> residencies = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "location")
+//	private List<Visit> visits = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "location")
+//	private List<Sociodemographic> sociodemographics = new ArrayList<>();
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "locationLevel_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
+//    private Locationhierarchy locationhierarchy;
 	
 	
 	public Location() {}

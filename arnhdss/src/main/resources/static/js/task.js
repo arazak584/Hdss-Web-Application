@@ -1,7 +1,7 @@
 //Individual
 function downloadCsv() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/api/zip/individual', true);
+  xhr.open('GET', '/api/task/individual', true);
   xhr.responseType = 'blob';
 
   xhr.onloadstart = function(e) {
@@ -29,7 +29,7 @@ function downloadCsv() {
 //Location
 function downloadLocation() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/api/zip/location', true);
+  xhr.open('GET', '/api/task/location', true);
   xhr.responseType = 'blob';
 
   xhr.onloadstart = function(e) {
@@ -56,7 +56,7 @@ function downloadLocation() {
 //Residency
 function downloadResidency() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/api/zip/residency', true);
+  xhr.open('GET', '/api/task/residency', true);
   xhr.responseType = 'blob';
 
   xhr.onloadstart = function(e) {
@@ -83,7 +83,7 @@ function downloadResidency() {
 //Socialgroup
 function downloadSocialgroup() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/api/zip/socialgroup', true);
+  xhr.open('GET', '/api/task/socialgroup', true);
   xhr.responseType = 'blob';
 
   xhr.onloadstart = function(e) {
@@ -110,7 +110,7 @@ function downloadSocialgroup() {
 //Relationship
 function downloadRelationship() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/api/zip/relationship', true);
+  xhr.open('GET', '/api/task/relationship', true);
   xhr.responseType = 'blob';
 
   xhr.onloadstart = function(e) {
@@ -137,7 +137,7 @@ function downloadRelationship() {
 //Relationship
 function downloadPregnancy() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/api/zip/pregnancy', true);
+  xhr.open('GET', '/api/task/pregnancy', true);
   xhr.responseType = 'blob';
 
   xhr.onloadstart = function(e) {
@@ -164,7 +164,7 @@ function downloadPregnancy() {
 //Demography
 function downloadDemography() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/api/zip/demography', true);
+  xhr.open('GET', '/api/task/demographics', true);
   xhr.responseType = 'blob';
 
   xhr.onloadstart = function(e) {
@@ -191,7 +191,7 @@ function downloadDemography() {
 //SES
 function downloadSes() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/api/zip/ses', true);
+  xhr.open('GET', '/api/task/ses', true);
   xhr.responseType = 'blob';
 
   xhr.onloadstart = function(e) {

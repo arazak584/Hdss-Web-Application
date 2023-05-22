@@ -1,11 +1,13 @@
 package org.arn.hdsscapture.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity(name = "group_table")
 public class GroupTable implements Serializable {
@@ -22,6 +24,11 @@ public class GroupTable implements Serializable {
 	@Column(nullable = false, length = 80)
 	private String group_desc;
 
+	@ManyToMany(mappedBy = "groups")
+	private List<UserTable> users;
+
+	
+
 	public String getGroup_role() {
 		return group_role;
 	}
@@ -36,6 +43,14 @@ public class GroupTable implements Serializable {
 
 	public void setGroup_desc(String group_desc) {
 		this.group_desc = group_desc;
+	}
+
+	public List<UserTable> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<UserTable> users) {
+		this.users = users;
 	}
 
 	@Override
@@ -59,5 +74,5 @@ public class GroupTable implements Serializable {
 	public String toString() {
 		return group_role;
 	}
-	
+
 }

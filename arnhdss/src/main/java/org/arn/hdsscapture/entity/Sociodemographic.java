@@ -388,33 +388,23 @@ public class Sociodemographic {
     public Integer chew_bnut_oecoccur;
     @Column
     public Integer drink_oecoccur;
-    @Column
-    public Integer pd_birth_oholoc;
-    @Column
-    public String pd_birth_othr_spfy_oholoc;
-    @Column
-    public String pd_birth_fac_spfy_oholoc;
-    @Column
-    public Integer pd_dm_scorres;
-    @Column
-    public String pd_dm_rel_spfy_scorres;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
-	private Fieldworker fieldworker;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-	private Individual individual;
-    
-    @MapsId
-	@OneToOne(optional = false)
-	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
-	private Socialgroup socialgroup = new Socialgroup();
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
-	private Location location;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+//	private Fieldworker fieldworker;
+//    
+//    @ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+//	private Individual individual;
+//    
+//    @MapsId
+//	@OneToOne(optional = false)
+//	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
+//	private Socialgroup socialgroup = new Socialgroup();
+//    
+//    @ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
+//	private Location location;
     
     public Sociodemographic() {}
     
@@ -1486,36 +1476,6 @@ public class Sociodemographic {
 	}
 	public void setDrink_oecoccur(Integer drink_oecoccur) {
 		this.drink_oecoccur = drink_oecoccur;
-	}
-	public Integer getPd_birth_oholoc() {
-		return pd_birth_oholoc;
-	}
-	public void setPd_birth_oholoc(Integer pd_birth_oholoc) {
-		this.pd_birth_oholoc = pd_birth_oholoc;
-	}
-	public String getPd_birth_othr_spfy_oholoc() {
-		return pd_birth_othr_spfy_oholoc;
-	}
-	public void setPd_birth_othr_spfy_oholoc(String pd_birth_othr_spfy_oholoc) {
-		this.pd_birth_othr_spfy_oholoc = pd_birth_othr_spfy_oholoc;
-	}
-	public String getPd_birth_fac_spfy_oholoc() {
-		return pd_birth_fac_spfy_oholoc;
-	}
-	public void setPd_birth_fac_spfy_oholoc(String pd_birth_fac_spfy_oholoc) {
-		this.pd_birth_fac_spfy_oholoc = pd_birth_fac_spfy_oholoc;
-	}
-	public Integer getPd_dm_scorres() {
-		return pd_dm_scorres;
-	}
-	public void setPd_dm_scorres(Integer pd_dm_scorres) {
-		this.pd_dm_scorres = pd_dm_scorres;
-	}
-	public String getPd_dm_rel_spfy_scorres() {
-		return pd_dm_rel_spfy_scorres;
-	}
-	public void setPd_dm_rel_spfy_scorres(String pd_dm_rel_spfy_scorres) {
-		this.pd_dm_rel_spfy_scorres = pd_dm_rel_spfy_scorres;
 	}
     
     

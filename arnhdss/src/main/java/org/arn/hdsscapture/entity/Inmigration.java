@@ -77,22 +77,23 @@ public class Inmigration {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
-	private Fieldworker fieldworker;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+//	private Fieldworker fieldworker;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+//	private Individual individual;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+//	private Visit visit;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-	private Individual individual;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
-	private Visit visit;
-	
-	@MapsId
-	@OneToOne(optional = false)
-	@JoinColumn(name = "residency_uuid", referencedColumnName = "residency_uuid", insertable = true, updatable = true)
-	private Residency residency = new Residency();
+//	@MapsId
+//	@OneToOne(optional = false)
+//	@JoinColumn(name = "residency_uuid", referencedColumnName = "residency_uuid", insertable = false, updatable = false)
+//	private Residency residency = new Residency();
+
 	
 	public Inmigration() {}
 
@@ -269,7 +270,7 @@ public class Inmigration {
 
 	@Override
     public String toString() {
-        return img_uuid;
+        return residency_uuid;
     }
 
 }

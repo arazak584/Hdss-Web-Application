@@ -1,5 +1,8 @@
 package org.arn.hdsscapture.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,15 +86,33 @@ public class TaskZipController {
         }
 
         Task task = optionalTask.get();
+        
+     // Create the file path
+        String directoryPath = "zips";
+        String filePath = directoryPath + File.separator + task.getFileName();
 
-        // Create ByteArrayResource from task data
-        ByteArrayResource resource = new ByteArrayResource(task.getData());
+        // Create the file object
+        File file = new File(filePath);
 
-        // Build response headers
+        // Check if the file exists
+        if (!file.exists()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+     // Create a ByteArrayResource from the file
+        ByteArrayResource resource;
+        try {
+            resource = new ByteArrayResource(Files.readAllBytes(file.toPath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        
+     // Build response headers
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + task.getFileName() + "\"");
         headers.add(HttpHeaders.CONTENT_TYPE, task.getType());
-        headers.setContentLength(task.getData().length);
+        headers.setContentLength(file.length());
 
         // Build response entity
         ResponseEntity<Resource> response = ResponseEntity.ok()

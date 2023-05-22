@@ -2,21 +2,10 @@ package org.arn.hdsscapture.entity;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -77,60 +66,60 @@ public class Individual implements Serializable {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
-	@Column(name = "ghanacard", unique=true)
+	@Column(name = "ghanacard", unique=false)
 	private String ghanacard;
 	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-    private Demographic demographic;
-	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-	private Death deaths;
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-	private List<Outmigration> outmigrations = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-	private List<Inmigration> inmigrations = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-	private List<Residency> residency = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-	private List<Pregnancyobservation> pregnancyobservations = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-	private List<Pregnancyoutcome> pregnancyoutcomes = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-	private List<Relationship> relationships = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-	private List<Socialgroup> socialgroups = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-	private List<Sociodemographic> sociodemographics = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-	private List<Outcome> outcomes = new ArrayList<>();
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
-	private Fieldworker fieldworker;
-	
-	
-	@OneToMany(mappedBy = "mother", cascade = CascadeType.ALL)
-    private Set<Individual> children = new HashSet<>();	
-
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mother_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-    private Individual mother;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "father_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-    private Individual father;
-	
-	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
-    private Set<Individual> offspring = new HashSet<>();
+//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//    private Demographic demographic;
+//	
+//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//	private Death deaths;
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//	private List<Outmigration> outmigrations = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//	private List<Inmigration> inmigrations = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//	private List<Residency> residency = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//	private List<Pregnancyobservation> pregnancyobservations = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//	private List<Pregnancyoutcome> pregnancyoutcomes = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//	private List<Relationship> relationships = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//	private List<Socialgroup> socialgroups = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//	private List<Sociodemographic> sociodemographics = new ArrayList<>();
+//	
+//	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//	private List<Outcome> outcomes = new ArrayList<>();
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+//	private Fieldworker fieldworker;
+//	
+//	
+//	@OneToMany(mappedBy = "mother", cascade = CascadeType.ALL)
+//    private Set<Individual> children = new HashSet<>();	
+//
+//	@ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "mother_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+//    private Individual mother;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "father_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+//    private Individual father;
+//	
+//	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
+//    private Set<Individual> offspring = new HashSet<>();
 	
 	
 	public Individual() {}

@@ -55,23 +55,23 @@ public class Residency {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
-	private Fieldworker fieldworker;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+//	private Fieldworker fieldworker;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+//	private Individual individual;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
+//	private Socialgroup socialgroup;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-	private Individual individual;
+//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "residency")
+//	private Inmigration inmigration;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
-	private Socialgroup socialgroup;
-	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "residency")
-	private Inmigration inmigration;
-	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "residency")
-	private Outmigration outmigration;
+//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "residency")
+//	private Outmigration outmigration;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
