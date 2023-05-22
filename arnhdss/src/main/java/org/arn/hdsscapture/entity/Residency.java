@@ -67,11 +67,11 @@ public class Residency {
 	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
 	private Socialgroup socialgroup;
 	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "residency")
-	private Inmigration inmigration;
-	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "residency")
-	private Outmigration outmigration;
+//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "residency")
+//	private Inmigration inmigration;
+//	
+//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "residency")
+//	private Outmigration outmigration;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
@@ -168,6 +168,11 @@ public class Residency {
 	public void setFw_uuid(String fw_uuid) {
 		this.fw_uuid = fw_uuid;
 	}
+	
+	@Override
+    public String toString() {
+        return residency_uuid;
+    }
 
 	
 

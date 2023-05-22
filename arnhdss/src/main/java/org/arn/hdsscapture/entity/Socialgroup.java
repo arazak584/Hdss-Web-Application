@@ -57,8 +57,8 @@ public class Socialgroup {
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
 	private List<Residency> residencies = new ArrayList<>();
 	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
-	private Sociodemographic sociodemographic;
+//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
+//	private Sociodemographic sociodemographic;
 		
 	
 	public Socialgroup() {}

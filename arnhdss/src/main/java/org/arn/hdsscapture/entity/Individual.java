@@ -80,11 +80,11 @@ public class Individual implements Serializable {
 	@Column(name = "ghanacard", unique=false)
 	private String ghanacard;
 	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-    private Demographic demographic;
+//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//    private Demographic demographic;
 	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-	private Death deaths;
+//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+//	private Death deaths;
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
 	private List<Outmigration> outmigrations = new ArrayList<>();

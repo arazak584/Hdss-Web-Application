@@ -88,11 +88,6 @@ public class Inmigration {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
 	private Visit visit;
-	
-	@MapsId
-	@OneToOne(optional = false)
-	@JoinColumn(name = "residency_uuid", referencedColumnName = "residency_uuid", insertable = false, updatable = false)
-	private Residency residency = new Residency();
 
 	
 	public Inmigration() {}

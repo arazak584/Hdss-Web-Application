@@ -58,24 +58,20 @@ INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUE
 
 
 -- KEYS
-/*
+
 -- Inmigration
-alter table inmigration add index FKD692204936F4BE6E (fw_uuid), add constraint FKD692204936F4BE6E foreign key (fw_uuid) references fieldworker (fw_uuid);
 alter table inmigration add index FKD6922049851505F6 (residency_uuid), add constraint FKD6922049851505F6 foreign key (residency_uuid) references residency (residency_uuid);
-alter table inmigration add index FKD6922049301AAA96 (visit_uuid), add constraint FKD6922049301AAA96 foreign key (visit_uuid) references visit (visit_uuid);
-alter table inmigration add index FKD692204980470E9E (individual_uuid), add constraint FKD692204980470E9E foreign key (individual_uuid) references individual (individual_uuid);
 
 -- Outmigration
-alter table outmigration add index FKE109DC4036F4BE6E (fw_uuid), add constraint FKE109DC4036F4BE6E foreign key (fw_uuid) references fieldworker (fw_uuid);
 alter table outmigration add index FKE109DC40851505F6 (residency_uuid), add constraint FKE109DC40851505F6 foreign key (residency_uuid) references residency (residency_uuid);
-alter table outmigration add index FKE109DC40301AAA96 (visit_uuid), add constraint FKE109DC40301AAA96 foreign key (visit_uuid) references visit (visit_uuid);
-alter table outmigration add index FKE109DC4080470E9E (individual_uuid), add constraint FKE109DC4080470E9E foreign key (individual_uuid) references individual (individual_uuid);
+-- Profile
+alter table sociodemographic add index FKFD3DA29930076DBC (socialgroup_uuid), add constraint FKFD3DA29930076DBC foreign key (socialgroup_uuid) references socialgroup (socialgroup_uuid);
+-- Death
+alter table death add index FK5B0927480470E9E (individual_uuid), add constraint FK5B0927480470E9E foreign key (individual_uuid) references individual (individual_uuid);
+
 
 -- Outcome
 alter table outcome add index FKBE0C0752948ED5FB (childuuid), add constraint FKBE0C0752948ED5FB foreign key (childuuid) references individual (individual_uuid);
-alter table outcome add index FKBE0C0752948ED5FM (mother_uuid), add constraint FKBE0C0752948ED5FM foreign key (mother_uuid) references individual (individual_uuid);
-alter table outcome add index FKBE0C0752948ED5FP (preg_uuid), add constraint FKBE0C0752948ED5FP foreign key (preg_uuid) references pregnancyoutcome (preg_uuid);
-*/
 
 ALTER TABLE visit ADD UNIQUE INDEX `extId_UNIQUE` (`visitExtId` ASC);
 ALTER TABLE location ADD UNIQUE INDEX `extId_loc_UNIQUE` (`compextId` ASC);

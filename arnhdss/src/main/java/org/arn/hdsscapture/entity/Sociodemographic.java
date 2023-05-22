@@ -397,10 +397,10 @@ public class Sociodemographic {
 	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
 	private Individual individual;
     
-    @MapsId
-	@OneToOne(optional = false)
-	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
-	private Socialgroup socialgroup = new Socialgroup();
+//    @MapsId
+//	@OneToOne(optional = false)
+//	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
+//	private Socialgroup socialgroup = new Socialgroup();
     
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
@@ -1477,7 +1477,11 @@ public class Sociodemographic {
 	public void setDrink_oecoccur(Integer drink_oecoccur) {
 		this.drink_oecoccur = drink_oecoccur;
 	}
-    
-    
+
+
+	@Override
+    public String toString() {
+        return socialgroup_uuid;
+    }
 
 }

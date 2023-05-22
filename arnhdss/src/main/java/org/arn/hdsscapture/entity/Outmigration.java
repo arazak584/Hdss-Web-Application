@@ -8,8 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
@@ -63,10 +61,10 @@ public class Outmigration {
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
 	private Fieldworker fieldworker;
 	
-	@MapsId
-	@OneToOne(optional = false)
-	@JoinColumn(name = "residency_uuid", referencedColumnName = "residency_uuid", insertable =false, updatable = false)
-	private Residency residency = new Residency();
+//	@MapsId
+//	@OneToOne(optional = false)
+//	@JoinColumn(name = "residency_uuid", referencedColumnName = "residency_uuid", insertable =false, updatable = false)
+//	private Residency residency = new Residency();
 
 	
 	public Outmigration() {}
@@ -178,15 +176,8 @@ public class Outmigration {
 
 
 	@Override
-	public String toString() {
-		return omg_uuid;
-	}
-
-
-
-	//@Override
-    //public String toString() {
-    //    return "Individual" + "extId=" + extId + ", insertDate=" + insertDate + ", dob=" + dob + ", dobAspect=" + dobAspect + '}';
-    //}
+    public String toString() {
+        return residency_uuid;
+    }
 
 }
