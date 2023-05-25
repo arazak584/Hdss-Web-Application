@@ -34,6 +34,7 @@ ALTER TABLE socialgroup ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAM
 ALTER TABLE sociodemographic ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 ALTER TABLE pregnancyoutcome ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE demographic ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE listing ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 
 
 -- fieldworker
@@ -486,6 +487,8 @@ INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('s
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('shortlong', '2', 'Short (up to a year)');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('shortlong', '3', 'Unknown');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('site', '1', 'KHDSS');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('site', '2', 'NHDSS');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('site', '3', 'DHDSS');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('size', '1', 'Very small');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('size', '2', 'Small');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('size', '3', 'Average');
@@ -579,3 +582,16 @@ INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('w
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('whereoutside', '8', 'South America');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('whereoutside', '9', 'Asia');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('whereoutside', '10', 'Australia');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetSou', 'Child Welfare clinic', 1);
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetSou', 'Bought it', 2);
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetSou', 'Received as a gift', 3);
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetSou', 'ANC visit', 4);
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetSou', 'Received during mass campaign', 5);
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetSou', 'From NGO', 6);
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetSou', 'Borrowed', 7);
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetSou', 'Other', 8);
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetLoc', 'Still in use', 1);
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetLoc', 'Being used by other household members', 2);
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetLoc', 'Lend', 3);
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetLoc', 'Destroyed', 4);
+INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetLoc', 'Other', 5);

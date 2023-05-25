@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
@@ -35,7 +33,7 @@ public class Sociodemographic {
     public String location_uuid;
 
     @Column
-    public Date mnh03_formcompldat;
+    public Date formcompldate;
 
     @Column
     public Date insertDate;
@@ -433,11 +431,11 @@ public class Sociodemographic {
 	public void setLocation_uuid(String location_uuid) {
 		this.location_uuid = location_uuid;
 	}
-	public Date getMnh03_formcompldat() {
-		return mnh03_formcompldat;
+	public Date getFormcompldate() {
+		return formcompldate;
 	}
-	public void setMnh03_formcompldat(Date mnh03_formcompldat) {
-		this.mnh03_formcompldat = mnh03_formcompldat;
+	public void setFormcompldate(Date formcompldate) {
+		this.formcompldate = formcompldate;
 	}
 	public Date getInsertDate() {
 		return insertDate;
