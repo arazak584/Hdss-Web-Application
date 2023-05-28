@@ -1,7 +1,7 @@
 INSERT IGNORE INTO user_table(username, user_email, user_enabled, user_password, user_fname, user_lname)
     VALUES (
         'admin'
-	    , 'webadmin@irb.com'
+	    , 'webadmin@hdss.com'
 	    , true
 	    , '$2a$10$SLlNbnvkIqatweZxewyZUeF6yrGexjppQpJgntGXCxWMQCaT3ORdi'
 	    , 'Administrator'
