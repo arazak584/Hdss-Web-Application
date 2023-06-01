@@ -13,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -25,7 +26,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Audited
-@Table(name="visit")
+@Table(name="visit", indexes = {@Index(name="idx_visit_uuid", columnList="visit_uuid")})
 public class Visit implements Serializable {
 	
 	
@@ -34,10 +35,11 @@ public class Visit implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "visit_uuid", nullable = false)
+	@Id
+	@Column(name = "visit_uuid", nullable = false, unique=true)
 	private String visit_uuid;
 	
-	@Id
+	
 	@Column(name = "visitExtId", nullable = false)
 	private String visitExtId;
 	
@@ -207,7 +209,7 @@ public class Visit implements Serializable {
 
 	@Override
 	public String toString() {
-		return visitExtId;
+		return visit_uuid;
 	}
 
 }

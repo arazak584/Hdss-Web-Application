@@ -1,6 +1,50 @@
+//Generate the Docker file in Windows
+
+1. Generate Maven Install of hdss.jar
+2. cd D:\Tutorials\JAVA\RestAPI\sts-4.16.0.RELEASE\arnhdss
+3. docker build -t hdss.jar .
+4. docker tag hdss.jar arazak584/hdss.jar:1.0.0
+5. docker push arazak584/hdss.jar:1.0.0
+
+
+//Install Docker on Ubuntu Server
+1. Install Docker from hub.docker.com
+
+//Install Mysql on Ubuntu Server
+
+sudo apt update
+sudo apt install mysql-server
+sudo systemctl start mysql.service
+sudo mysql_secure_installation
+sudo mysql
+mysql -u root -p
+CREATE USER 'data'@'localhost' IDENTIFIED BY 'data';
+GRANT ALL PRIVILEGES ON *.* TO 'data'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+exit
+mysql -u data -p data
+create database hdss;
+
+// Set bind address for docker to connect
+cd /etc/mysql/mysql.conf.d
+sudo nano mysqld.cnf
+set 
+bind-address = 0.0.0.0
+ctrl + X to save
+restart mysql
+sudo service mysql restart
+
+
+//Install app on docker
+
+docker pull arazak584/hdss.jar:version
+
 
 docker run -p 8080:8080 \
 -e SPRING_DATASOURCE_URL=jdbc:mysql://192.168.10.52:3306/hdss \
 -e SPRING_DATASOURCE_USERNAME=data \
 -e SPRING_DATASOURCE_PASSWORD=data \
-arazak584/hdss.jar:1.0.0
+arazak584/hdss.jar:version
+
+//Run this for restart when server restarts
+docker update --restart unless-stopped c854b1356724(THIS IS THE IMAGE ID)

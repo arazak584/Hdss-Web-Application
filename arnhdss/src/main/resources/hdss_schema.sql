@@ -74,7 +74,7 @@ alter table death add index FK5B0927480470E9E (individual_uuid), add constraint 
 -- Outcome
 alter table outcome add index FKBE0C0752948ED5FB (childuuid), add constraint FKBE0C0752948ED5FB foreign key (childuuid) references individual (individual_uuid);
 
-ALTER TABLE visit ADD UNIQUE INDEX `extId_UNIQUE` (`visitExtId` ASC);
+-- ALTER TABLE visit ADD UNIQUE INDEX `extId_UNIQUE` (`visitExtId` ASC);
 ALTER TABLE location ADD UNIQUE INDEX `extId_loc_UNIQUE` (`compextId` ASC);
 ALTER TABLE location ADD UNIQUE INDEX `extId_comp_UNIQUE` (`compno` ASC);
 ALTER TABLE socialgroup ADD UNIQUE INDEX `extId_so_UNIQUE` (`houseExtId` ASC);
