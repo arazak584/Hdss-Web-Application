@@ -13,20 +13,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Audited
 @Entity
-@Table(name="individual", uniqueConstraints = @UniqueConstraint(columnNames = "extId"))
+@Table(name="individual", indexes = {@Index(name="idx_individual_uuid", columnList="extId")})
 public class Individual implements Serializable {
 	
 	/**
@@ -35,10 +36,10 @@ public class Individual implements Serializable {
 	private static final long serialVersionUID = -8535563948748501772L;
 
 	@Id
-	@Column(name = "individual_uuid", nullable = false)
-	private String individual_uuid;
+	@Column(name = "uuid", nullable = false, unique=true)
+	private String uuid;
 	
-	@Column(name = "extId", nullable = false)
+	@Column(name = "extId", nullable = false, unique=true)
 	private String extId;
 	
 	@Column(name = "insertDate", nullable = false)
@@ -67,23 +68,20 @@ public class Individual implements Serializable {
 	@Column(name = "gender", nullable = false)
 	private Integer gender;
 	
-	@Column(name = "mother_uuid", nullable = false)
-	private String mother_uuid;
-	
-	@Column(name = "father_uuid", nullable = false)
-	private String father_uuid;
-	
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
-	@Column(name = "ghanacard", unique=false)
+	@Column(name = "ghanacard", nullable=true, unique=true)
 	private String ghanacard;
 	
-//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-//    private Demographic demographic;
+	@Column(name = "mother_uuid")
+	@NotAudited
+    private String mother_uuid;
+
+	@Column(name = "father_uuid")
+	@NotAudited
+    private String father_uuid;
 	
-//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-//	private Death deaths;
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
 	private List<Outmigration> outmigrations = new ArrayList<>();
@@ -121,11 +119,11 @@ public class Individual implements Serializable {
     private Set<Individual> children = new HashSet<>();	
 
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mother_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+    @JoinColumn(name = "mother_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
     private Individual mother;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "father_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+    @JoinColumn(name = "father_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
     private Individual father;
 	
 	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
@@ -134,15 +132,29 @@ public class Individual implements Serializable {
 	
 	public Individual() {}
 
-
-	public String getIndividual_uuid() {
-		return individual_uuid;
+	public String getUuid() {
+		return uuid;
 	}
 
-
-	public void setIndividual_uuid(String individual_uuid) {
-		this.individual_uuid = individual_uuid;
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
+
+	public String getMother_uuid() {
+        return mother_uuid;
+    }
+
+    public void setMother_uuid(String mother_uuid) {
+        this.mother_uuid = mother_uuid;
+    }
+
+    public String getFather_uuid() {
+        return father_uuid;
+    }
+
+    public void setFather_uuid(String father_uuid) {
+        this.father_uuid = father_uuid;
+    }  
 
 
 	public String getExtId() {
@@ -223,27 +235,6 @@ public class Individual implements Serializable {
 	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
-
-
-	public String getMother_uuid() {
-		return mother_uuid;
-	}
-
-
-	public void setMother_uuid(String mother_uuid) {
-		this.mother_uuid = mother_uuid;
-	}
-
-
-	public String getFather_uuid() {
-		return father_uuid;
-	}
-
-
-	public void setFather_uuid(String father_uuid) {
-		this.father_uuid = father_uuid;
-	}
-
 
 	public String getFw_uuid() {
 		return fw_uuid;

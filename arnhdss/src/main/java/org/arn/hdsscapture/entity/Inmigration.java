@@ -14,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -22,10 +23,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Inmigration {
 	
 	
-	@Column(name = "img_uuid", nullable = false)
-	private String img_uuid;
+	@Column(name = "uuid", nullable = false)
+	private String uuid;
 	
 	@Column(name = "individual_uuid", nullable = false)
+	@NotAudited
 	private String individual_uuid;
 	
 	@Id
@@ -55,6 +57,7 @@ public class Inmigration {
 	private Integer migType;
 	
 	@Column(name = "visit_uuid", nullable = false)
+	@NotAudited
 	private String visit_uuid;
 	
 	@Column(name = "livestock")
@@ -80,24 +83,24 @@ public class Inmigration {
 	private Fieldworker fieldworker;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Individual individual;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "visit_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Visit visit;
 
 	
 	public Inmigration() {}
 
 
-	public String getImg_uuid() {
-		return img_uuid;
+	public String getUuid() {
+		return uuid;
 	}
 
 
-	public void setImg_uuid(String img_uuid) {
-		this.img_uuid = img_uuid;
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 
@@ -110,21 +113,25 @@ public class Inmigration {
 		this.individual_uuid = individual_uuid;
 	}
 
-	
+
+	public String getVisit_uuid() {
+		return visit_uuid;
+	}
+
+
+	public void setVisit_uuid(String visit_uuid) {
+		this.visit_uuid = visit_uuid;
+	}
+
 
 	public String getResidency_uuid() {
 		return residency_uuid;
 	}
 
 
-
-
-
 	public void setResidency_uuid(String residency_uuid) {
 		this.residency_uuid = residency_uuid;
 	}
-
-
 
 
 
@@ -191,13 +198,13 @@ public class Inmigration {
 	}
 
 
-	public String getVisit_uuid() {
-		return visit_uuid;
+	public Visit getVisit() {
+		return visit;
 	}
 
 
-	public void setVisit_uuid(String visit_uuid) {
-		this.visit_uuid = visit_uuid;
+	public void setVisit(Visit visit) {
+		this.visit = visit;
 	}
 
 
@@ -259,6 +266,7 @@ public class Inmigration {
 	public void setFw_uuid(String fw_uuid) {
 		this.fw_uuid = fw_uuid;
 	}
+	
 
 
 	@Override

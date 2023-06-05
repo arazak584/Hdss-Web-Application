@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 @Entity
 @Audited
@@ -23,14 +24,19 @@ public class Sociodemographic {
     @Column
     public String socialgroup_uuid;
 	
-	@Column
+	@Column(nullable = false)
+	@NotAudited
     public String individual_uuid;
-
-    @Column
-    public String fw_uuid;
-
-    @Column
+	
+	@Column(nullable = false)
+	@NotAudited
     public String location_uuid;
+
+	@Column(nullable = false)
+    public String fw_uuid;
+    
+	@Column(nullable = false)
+    public String uuid;
 
     @Column
     public Date formcompldate;
@@ -392,16 +398,11 @@ public class Sociodemographic {
 	private Fieldworker fieldworker;
     
     @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Individual individual;
     
-//    @MapsId
-//	@OneToOne(optional = false)
-//	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
-//	private Socialgroup socialgroup = new Socialgroup();
-    
     @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "location_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Location location;
     
     public Sociodemographic() {}
@@ -410,9 +411,26 @@ public class Sociodemographic {
 	public String getIndividual_uuid() {
 		return individual_uuid;
 	}
+
 	public void setIndividual_uuid(String individual_uuid) {
 		this.individual_uuid = individual_uuid;
 	}
+
+
+	public String getLocation_uuid() {
+		return location_uuid;
+	}
+
+
+
+
+	public void setLocation_uuid(String location_uuid) {
+		this.location_uuid = location_uuid;
+	}
+
+
+
+
 	public String getSocialgroup_uuid() {
 		return socialgroup_uuid;
 	}
@@ -425,12 +443,20 @@ public class Sociodemographic {
 	public void setFw_uuid(String fw_uuid) {
 		this.fw_uuid = fw_uuid;
 	}
-	public String getLocation_uuid() {
-		return location_uuid;
+
+
+	public String getUuid() {
+		return uuid;
 	}
-	public void setLocation_uuid(String location_uuid) {
-		this.location_uuid = location_uuid;
+
+
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
+
+
+
 	public Date getFormcompldate() {
 		return formcompldate;
 	}

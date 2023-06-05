@@ -49,8 +49,9 @@ public class SocialgroupZipController {
 	  List<Socialgroup> data = repo.findAll();
 
 	  // Convert data to CSV
-	  CsvSchema schema = CsvSchema.builder().addColumn("socialgroup_uuid").addColumn("houseExtId").addColumn("fw_uuid").addColumn("groupName").addColumn("groupType")
-			  .addColumn("individual_uuid").addColumn("insertDate").build();
+	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("extId").addColumn("fw_uuid").addColumn("groupName")
+			  .addColumn("groupType").addColumn("insertDate")
+			  .addColumn("individual_uuid").build();
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	  StringWriter writer = new StringWriter();

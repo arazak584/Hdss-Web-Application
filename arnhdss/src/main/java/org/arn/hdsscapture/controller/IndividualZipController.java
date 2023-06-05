@@ -49,9 +49,9 @@ public class IndividualZipController {
             List<Individual> data = repo.findAll();
             
          // Convert data to CSV
-      	  CsvSchema schema = CsvSchema.builder().addColumn("individual_uuid").addColumn("dob").addColumn("dobAspect").addColumn("extId")
-                  .addColumn("father_uuid").addColumn("firstName").addColumn("fw_uuid").addColumn("gender").addColumn("ghanacard").addColumn("insertDate")
-                  .addColumn("lastName").addColumn("mother_uuid").addColumn("otherName").build();
+      	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("dob").addColumn("dobAspect").addColumn("extId")
+                  .addColumn("firstName").addColumn("fw_uuid").addColumn("gender").addColumn("ghanacard").addColumn("insertDate")
+                  .addColumn("lastName").addColumn("otherName").addColumn("father_uuid").addColumn("mother_uuid").build();
       	  CsvMapper csvMapper = new CsvMapper();
       	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
       	  StringWriter writer = new StringWriter();

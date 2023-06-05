@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -15,19 +14,20 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Audited
-@Table(name="death", indexes = {@Index(name="idx_individual_uuid", columnList="individual_uuid, visit_uuid")})
+@Table(name="death")
 public class Death {
 	
 	@Id
 	@Column(name = "individual_uuid", nullable = false)
 	private String individual_uuid;
 	
-	@Column(name = "death_uuid", nullable = false)
-	private String death_uuid;
+	@Column(name = "uuid", nullable = false)
+	private String uuid;
 	
 	@Column(name = "insertDate", nullable = false)
 	@Temporal(TemporalType.DATE)
@@ -46,37 +46,31 @@ public class Death {
 	private Integer deathPlace;
 	
 	@Column(name = "visit_uuid", nullable = false)
+	@NotAudited
 	private String visit_uuid;
 	
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false, nullable=false)
 	private Fieldworker fieldworker;
 	
-//	@MapsId
-//	@OneToOne(optional = false)
-//	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
-//	private Individual individual = new Individual();
-	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "visit_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Visit visit;
 	
 	public Death() {}
 
 
-	public String getDeath_uuid() {
-		return death_uuid;
+	public String getUuid() {
+		return uuid;
 	}
 
 
-	public void setDeath_uuid(String death_uuid) {
-		this.death_uuid = death_uuid;
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
-
-
 
 
 	public String getIndividual_uuid() {
@@ -84,13 +78,19 @@ public class Death {
 	}
 
 
-
-
 	public void setIndividual_uuid(String individual_uuid) {
 		this.individual_uuid = individual_uuid;
 	}
 
 
+	public String getVisit_uuid() {
+		return visit_uuid;
+	}
+
+
+	public void setVisit_uuid(String visit_uuid) {
+		this.visit_uuid = visit_uuid;
+	}
 
 
 	public Date getInsertDate() {
@@ -134,21 +134,6 @@ public class Death {
 	}
 
 
-
-	public String getVisit_uuid() {
-		return visit_uuid;
-	}
-
-
-
-
-	public void setVisit_uuid(String visit_uuid) {
-		this.visit_uuid = visit_uuid;
-	}
-
-
-
-
 	public String getFw_uuid() {
 		return fw_uuid;
 	}
@@ -158,10 +143,9 @@ public class Death {
 		this.fw_uuid = fw_uuid;
 	}
 
-
 	@Override
 	public String toString() {
-		return death_uuid;
+		return uuid;
 	}
 
 

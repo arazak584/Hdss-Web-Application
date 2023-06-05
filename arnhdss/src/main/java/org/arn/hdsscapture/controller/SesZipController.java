@@ -69,14 +69,14 @@ public class SesZipController {
 				.addColumn("head_hh_fcorres").addColumn("head_hh_spfy_fcorres").addColumn("horse_fcorres")
 				.addColumn("horse_num_fcorres").addColumn("house_occ_ge5_fcorres").addColumn("house_occ_lt5_fcorres")
 				.addColumn("house_occ_tot_fcorres").addColumn("house_room_child_fcorres")
-				.addColumn("house_rooms_fcorres").addColumn("individual_uuid").addColumn("insertDate")
+				.addColumn("house_rooms_fcorres").addColumn("insertDate")
 				.addColumn("internet_fcorres").addColumn("job_busown_spfy_scorres").addColumn("job_othr_spfy_scorres")
 				.addColumn("job_salary_spfy_scorres").addColumn("job_scorres").addColumn("job_skilled_spfy_scorres")
 				.addColumn("job_smbus_spfy_scorres").addColumn("job_unskilled_spfy_scorres").addColumn("land_fcorres")
 				.addColumn("land_use_fcorres_1").addColumn("land_use_fcorres_2").addColumn("land_use_fcorres_3")
 				.addColumn("land_use_fcorres_4").addColumn("land_use_fcorres_5").addColumn("land_use_fcorres_88")
 				.addColumn("land_use_spfy_fcorres_88").addColumn("landline_fcorres").addColumn("lantern_fcorres")
-				.addColumn("lantern_num_fcorres").addColumn("livestock_fcorres").addColumn("location_uuid")
+				.addColumn("lantern_num_fcorres").addColumn("livestock_fcorres")
 				.addColumn("marital_age").addColumn("marital_scorres")
 				.addColumn("mobile_access_fcorres").addColumn("mobile_fcorres").addColumn("mobile_num_fcorres")
 				.addColumn("mosquito_net_fcorres").addColumn("mosquito_net_num_fcorres").addColumn("motorcycle_fcorres")
@@ -106,9 +106,9 @@ public class SesZipController {
 				.addColumn("toilet_share_fcorres").addColumn("toilet_share_num_fcorres")
 				.addColumn("toilet_spfy_fcorres").addColumn("tractor_fcorres").addColumn("tractor_num_fcorres")
 				.addColumn("tricycles_fcorres").addColumn("tricycles_num_fcorres").addColumn("tv_fcorres")
-				.addColumn("tv_num_fcorres").addColumn("wash_fcorres").addColumn("wash_num_fcorres")
+				.addColumn("tv_num_fcorres").addColumn("uuid").addColumn("wash_fcorres").addColumn("wash_num_fcorres")
 				.addColumn("watch_fcorres")
-			  .addColumn("watch_num_fcorres").build();
+			  .addColumn("watch_num_fcorres").addColumn("individual_uuid").addColumn("location_uuid").build();
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	  StringWriter writer = new StringWriter();

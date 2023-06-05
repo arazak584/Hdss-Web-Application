@@ -42,10 +42,10 @@ INSERT IGNORE INTO fieldworker (fw_uuid, username, firstName, lastName, password
 VALUES ('UnknownFieldWorker','UNK', 'Unknown', 'FieldWorker', 'invalid-password-hash', 0,'2023-05-12 15:07:43');
 
 -- individual
-INSERT IGNORE INTO `individual`(individual_uuid,extId,firstName,otherName,lastName,gender,dob,mother_uuid,father_uuid,insertDate,fw_uuid,dobAspect) 
+INSERT IGNORE INTO `individual`(uuid,extId,firstName,otherName,lastName,gender,dob,mother_uuid,father_uuid,insertDate,fw_uuid,dobAspect) 
 VALUES('UNK','UNK','UNK',NULL,'UNK',1, '1800-12-19 15:07:43', 'UNK', 'UNK','2023-05-12 15:07:43','UnknownFieldWorker',1);
 -- locationhierarchy
-INSERT IGNORE INTO locationhierarchy(uuid,name,villcode,level_uuid,parent_uuid) VALUES('hierarchy_root','', 'HIERARCHY_ROOT', NULL,NULL);
+INSERT IGNORE INTO locationhierarchy(uuid,name,extId,level_uuid,parent_uuid) VALUES('hierarchy_root','', 'HIERARCHY_ROOT', NULL,NULL);
 
 
 INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUES ('294.00 bytes', 'individuals', '2023-05-19 11:32:55', 1, 'application/octet-stream');
@@ -61,25 +61,21 @@ INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUE
 -- KEYS
 
 -- Inmigration
-alter table inmigration add index FKD6922049851505F6 (residency_uuid), add constraint FKD6922049851505F6 foreign key (residency_uuid) references residency (residency_uuid);
+alter table inmigration add index FKD6922049851505F6 (residency_uuid), add constraint FKD6922049851505F6 foreign key (residency_uuid) references residency (uuid);
 
 -- Outmigration
-alter table outmigration add index FKE109DC40851505F6 (residency_uuid), add constraint FKE109DC40851505F6 foreign key (residency_uuid) references residency (residency_uuid);
+alter table outmigration add index FKE109DC40851505F6 (residency_uuid), add constraint FKE109DC40851505F6 foreign key (residency_uuid) references residency (uuid);
 -- Profile
-alter table sociodemographic add index FKFD3DA29930076DBC (socialgroup_uuid), add constraint FKFD3DA29930076DBC foreign key (socialgroup_uuid) references socialgroup (socialgroup_uuid);
+alter table sociodemographic add index FKFD3DA29930076DBC (socialgroup_uuid), add constraint FKFD3DA29930076DBC foreign key (socialgroup_uuid) references socialgroup (uuid);
 -- Death
-alter table death add index FK5B0927480470E9E (individual_uuid), add constraint FK5B0927480470E9E foreign key (individual_uuid) references individual (individual_uuid);
+alter table death add index FK5B0927480470E9E (individual_uuid), add constraint FK5B0927480470E9E foreign key (individual_uuid) references individual (uuid);
+alter table demographic add index FK5B0927480470E9C (individual_uuid), add constraint FK5B0927480470E9C foreign key (individual_uuid) references individual (uuid);
 
 
 -- Outcome
-alter table outcome add index FKBE0C0752948ED5FB (childuuid), add constraint FKBE0C0752948ED5FB foreign key (childuuid) references individual (individual_uuid);
+alter table outcome add index FKBE0C0752948ED5FB (childuuid), add constraint FKBE0C0752948ED5FB foreign key (childuuid) references individual (uuid);
 
--- ALTER TABLE visit ADD UNIQUE INDEX `extId_UNIQUE` (`visitExtId` ASC);
-ALTER TABLE location ADD UNIQUE INDEX `extId_loc_UNIQUE` (`compextId` ASC);
-ALTER TABLE location ADD UNIQUE INDEX `extId_comp_UNIQUE` (`compno` ASC);
-ALTER TABLE socialgroup ADD UNIQUE INDEX `extId_so_UNIQUE` (`houseExtId` ASC);
-ALTER TABLE individual ADD UNIQUE INDEX `extId_ind_UNIQUE` (`extId` ASC);
-
+alter table listing add index FKD6922049851605F6 (compextId), add constraint FKD6922049851605F6 foreign key (compextId) references location (compextId);
 
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('assist', '1', 'Doctor');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('assist', '2', 'Nurse/Midwife');
@@ -558,8 +554,8 @@ INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('t
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('tribe', '33', 'Kanjaga/Builsa');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('tribe', '77', 'Other');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('whereoutside', '1', 'Within this community or village');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('whereoutside', '2', 'From another community or village within the HDSS area');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('whereoutside', '3', 'From another community within the Region (Bono East) but not in the HDSS area');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('whereoutside', '2', 'TO another community or village within the HDSS area');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('whereoutside', '3', 'To another community within the Region (Bono East) but not in the HDSS area');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('whereoutside', '4', 'Within Ghana but outside the region (Bono East)');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('whereoutside', '5', 'Africa');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('whereoutside', '6', 'Europe');
@@ -580,3 +576,61 @@ INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('b
 INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetLoc', 'Lend', 3);
 INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetLoc', 'Destroyed', 4);
 INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetLoc', 'Other', 5);
+
+
+
+-- Dashboard
+CREATE TABLE `admin`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `password` varchar(300) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updation_date` date NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+SET FOREIGN_KEY_CHECKS = 1;
+INSERT INTO `admin` (`id`, `username`, `email`, `password`, `reg_date`, `updation_date`) VALUES (1, 'admin', 'hdss@gmail.com', 'admin', '2022-04-04 20:31:45', '2016-04-17');
+
+
+CREATE TABLE `adminlog`  (
+  `id` int(11) NOT NULL,
+  `adminid` int(11) NOT NULL,
+  `ip` varbinary(16) NOT NULL,
+  `logintime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+CREATE TABLE `userregistration`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `regNo` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `firstName` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `lastName` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `project` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updationDate` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `passUdateDate` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `approve` int(255) UNSIGNED NULL DEFAULT 0,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `email`(`email`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE `userlog`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL,
+  `userEmail` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `userIp` varbinary(16) NOT NULL,
+  `city` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `country` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `loginTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2674 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+SET FOREIGN_KEY_CHECKS = 1;

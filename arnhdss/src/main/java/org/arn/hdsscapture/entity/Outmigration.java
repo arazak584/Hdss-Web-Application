@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 @Entity
 @Audited
@@ -18,10 +19,11 @@ import org.hibernate.envers.Audited;
 public class Outmigration {
 	
 	
-	@Column(name = "omg_uuid", nullable = false)
-	private String omg_uuid;
+	@Column(name = "uuid", nullable = false)
+	private String uuid;
 	
 	@Column(name = "individual_uuid", nullable = false)
+	@NotAudited
 	private String individual_uuid;
 	
 	@Id
@@ -44,17 +46,18 @@ public class Outmigration {
 	private String reason_oth;
 	
 	@Column(name = "visit_uuid", nullable = false)
+	@NotAudited
 	private String visit_uuid;
 	
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Individual individual;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "visit_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Visit visit;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -69,14 +72,14 @@ public class Outmigration {
 	
 	public Outmigration() {}
 
-
-	public String getOmg_uuid() {
-		return omg_uuid;
+	public String getUuid() {
+		return uuid;
 	}
 
 
-	public void setOmg_uuid(String omg_uuid) {
-		this.omg_uuid = omg_uuid;
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 
@@ -84,18 +87,21 @@ public class Outmigration {
 		return individual_uuid;
 	}
 
-
 	public void setIndividual_uuid(String individual_uuid) {
 		this.individual_uuid = individual_uuid;
 	}
-	
 
+	public String getVisit_uuid() {
+		return visit_uuid;
+	}
+
+	public void setVisit_uuid(String visit_uuid) {
+		this.visit_uuid = visit_uuid;
+	}
 
 	public String getResidency_uuid() {
 		return residency_uuid;
 	}
-
-
 
 	public void setResidency_uuid(String residency_uuid) {
 		this.residency_uuid = residency_uuid;
@@ -151,17 +157,6 @@ public class Outmigration {
 
 	public void setReason_oth(String reason_oth) {
 		this.reason_oth = reason_oth;
-	}
-
-
-
-	public String getVisit_uuid() {
-		return visit_uuid;
-	}
-
-
-	public void setVisit_uuid(String visit_uuid) {
-		this.visit_uuid = visit_uuid;
 	}
 
 

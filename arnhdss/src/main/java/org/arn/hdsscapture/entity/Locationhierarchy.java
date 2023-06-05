@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -21,15 +22,15 @@ import org.hibernate.envers.Audited;
 
 @Entity
 @Audited
-@Table(name="locationhierarchy")
+@Table(name="locationhierarchy", indexes = {@Index(name="idx_hierarchy_uuid", columnList="uuid")})
 public class Locationhierarchy {
 	
 	@Id
 	@Column(name = "uuid", nullable = false)
 	private String uuid;
 	
-	@Column(name = "villcode", nullable = false)
-	private String villcode;
+	@Column(name = "extId", nullable = false, unique=true)
+	private String extId;
 	
 	@Column(name = "name", nullable = false)
 	private String name;
@@ -71,13 +72,15 @@ public class Locationhierarchy {
 		this.uuid = uuid;
 	}
 
-	public String getVillcode() {
-		return villcode;
+	public String getExtId() {
+		return extId;
 	}
 
-	public void setVillcode(String villcode) {
-		this.villcode = villcode;
+
+	public void setExtId(String extId) {
+		this.extId = extId;
 	}
+
 
 	public String getName() {
 		return name;
@@ -122,7 +125,7 @@ public class Locationhierarchy {
 	
 	@Override
 	public String toString() {
-		return villcode;
+		return extId;
 	}
 
 }

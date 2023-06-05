@@ -12,17 +12,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 @Audited
 @Entity
-@Table(name="residency", indexes = {@Index(name="idx_residency_uuid", columnList="residency_uuid")})
+@Table(name="residency", indexes = {@Index(name="idx_residency_uuid", columnList="uuid")})
 public class Residency {
 	
 	@Id
-	@Column(name = "residency_uuid", nullable = false)
-	private String residency_uuid;
+	@Column(name = "uuid", nullable = false)
+	private String uuid;
 	
 	@Column(name = "individual_uuid", nullable = false)
+	@NotAudited
 	private String individual_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
@@ -40,12 +42,13 @@ public class Residency {
 	@Column(name = "endType", nullable = false)
 	private Integer endType;
 	
-	@Column(name = "location_uuid", nullable = false)
-	private String location_uuid;
-
-	
 	@Column(name = "socialgroup_uuid", nullable = false)
+	@NotAudited
 	private String socialgroup_uuid;
+	
+	@Column(name = "location_uuid", nullable = false)
+	@NotAudited
+	private String location_uuid;
 	
 	@Column(name = "rltn_head", nullable = false)
 	private Integer rltn_head;
@@ -54,45 +57,62 @@ public class Residency {
 	private String fw_uuid;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false, nullable=false)
 	private Fieldworker fieldworker;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Individual individual;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "socialgroup_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Socialgroup socialgroup;
-	
-//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "residency")
-//	private Inmigration inmigration;
-//	
-//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "residency")
-//	private Outmigration outmigration;
+
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "location_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
 	private Location location;
 	
 	public Residency() {}
 
 
-	public String getResidency_uuid() {
-		return residency_uuid;
+	public String getUuid() {
+		return uuid;
 	}
 
-	public void setResidency_uuid(String residency_uuid) {
-		this.residency_uuid = residency_uuid;
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 	public String getIndividual_uuid() {
 		return individual_uuid;
 	}
 
+
 	public void setIndividual_uuid(String individual_uuid) {
 		this.individual_uuid = individual_uuid;
 	}
+
+
+	public String getSocialgroup_uuid() {
+		return socialgroup_uuid;
+	}
+
+
+	public void setSocialgroup_uuid(String socialgroup_uuid) {
+		this.socialgroup_uuid = socialgroup_uuid;
+	}
+
+	public String getLocation_uuid() {
+		return location_uuid;
+	}
+
+
+	public void setLocation_uuid(String location_uuid) {
+		this.location_uuid = location_uuid;
+	}
+
 
 	public Date getInsertDate() {
 		return insertDate;
@@ -134,22 +154,6 @@ public class Residency {
 		this.endType = endType;
 	}
 
-	public String getLocation_uuid() {
-		return location_uuid;
-	}
-
-	public void setLocation_uuid(String location_uuid) {
-		this.location_uuid = location_uuid;
-	}
-
-	public String getSocialgroup_uuid() {
-		return socialgroup_uuid;
-	}
-
-	public void setSocialgroup_uuid(String socialgroup_uuid) {
-		this.socialgroup_uuid = socialgroup_uuid;
-	}
-	
 
 	public Integer getRltn_head() {
 		return rltn_head;
@@ -169,7 +173,7 @@ public class Residency {
 	
 	@Override
     public String toString() {
-        return residency_uuid;
+        return uuid;
     }
 
 	

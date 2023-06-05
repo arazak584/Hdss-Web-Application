@@ -14,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -22,14 +23,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Relationship {
 	
 	@Id
-	@Column(name = "rel_uuid", nullable = false)
-	private String rel_uuid;
+	@Column(name = "uuid", nullable = false)
+	private String uuid;
 	
-	@Column(name = "individual_uuid", nullable = false)
-	private String individual_uuid;
+	@Column(name = "individualA_uuid", nullable = false)
+	@NotAudited
+	private String individualA_uuid;
 	
-	@Column(name = "man_uuid", nullable = false)
-	private String man_uuid;
+	@Column(name = "individualB_uuid", nullable = false)
+	@NotAudited
+	private String individualB_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
 	@Temporal(TemporalType.DATE)
@@ -68,11 +71,11 @@ public class Relationship {
 	private Fieldworker fieldworker;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "individualA_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
 	private Individual individual;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "man_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "individualB_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
 	private Individual individuals;
 
 	
@@ -80,34 +83,39 @@ public class Relationship {
 
 
 
-	public String getRel_uuid() {
-		return rel_uuid;
+	public String getUuid() {
+		return uuid;
 	}
 
 
-	public void setRel_uuid(String rel_uuid) {
-		this.rel_uuid = rel_uuid;
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 
-	public String getIndividual_uuid() {
-		return individual_uuid;
+
+	public String getIndividualA_uuid() {
+		return individualA_uuid;
 	}
 
 
-	public void setIndividual_uuid(String individual_uuid) {
-		this.individual_uuid = individual_uuid;
+
+	public void setIndividualA_uuid(String individualA_uuid) {
+		this.individualA_uuid = individualA_uuid;
 	}
 
 
-	public String getMan_uuid() {
-		return man_uuid;
+
+	public String getIndividualB_uuid() {
+		return individualB_uuid;
 	}
 
 
-	public void setMan_uuid(String man_uuid) {
-		this.man_uuid = man_uuid;
+
+	public void setIndividualB_uuid(String individualB_uuid) {
+		this.individualB_uuid = individualB_uuid;
 	}
+
 
 
 	public Date getInsertDate() {
@@ -242,7 +250,7 @@ public class Relationship {
 
 	@Override
 	public String toString() {
-		return rel_uuid;
+		return uuid;
 	}
 
 

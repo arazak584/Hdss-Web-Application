@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -23,7 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Audited
 @Entity
-@Table(name="location")
+@Table(name="location", indexes = {@Index(name="idx_location_uuid", columnList="uuid")})
 public class Location implements Serializable {
 
 	/**
@@ -31,12 +32,12 @@ public class Location implements Serializable {
 	 */
 	private static final long serialVersionUID = -1844137379269740194L;
 	
-	
-	@Column(name = "location_uuid", nullable = false)
-	private String location_uuid;
-	
 	@Id
-	@Column(name = "compextId", nullable = false)
+	@Column(name = "uuid", nullable = false, unique=true)
+	private String uuid;
+	
+	
+	@Column(name = "compextId", nullable = false, unique=true)
 	private String compextId;
 	
 	@Column(name = "insertDate", nullable = false)
@@ -44,7 +45,7 @@ public class Location implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date insertDate;
 		
-	@Column(name = "compno", nullable = false)
+	@Column(name = "compno", nullable = false, unique=true)
 	private String compno;
 	
 	@Column(name = "locationName", nullable = false)
@@ -92,13 +93,15 @@ public class Location implements Serializable {
 	public Location() {}
 
 
-	public String getLocation_uuid() {
-		return location_uuid;
+	public String getUuid() {
+		return uuid;
 	}
 
-	public void setLocation_uuid(String location_uuid) {
-		this.location_uuid = location_uuid;
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
+
 
 	public String getCompextId() {
 		return compextId;

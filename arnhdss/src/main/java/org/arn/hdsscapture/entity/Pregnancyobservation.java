@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 @Entity
 @Audited
@@ -18,10 +19,11 @@ import org.hibernate.envers.Audited;
 public class Pregnancyobservation {
 	
 	@Id
-	@Column(name = "obs_uuid", nullable = false)
-	private String obs_uuid;
+	@Column(name = "uuid", nullable = false)
+	private String uuid;
 	
 	@Column(name = "individual_uuid", nullable = false)
+	@NotAudited
 	private String individual_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
@@ -34,6 +36,7 @@ public class Pregnancyobservation {
 	private Date expectedDeliveryDate;
 	
 	@Column(name = "visit_uuid", nullable = false)
+	@NotAudited
 	private String visit_uuid;
 	
 	@Column(name = "fw_uuid", nullable = false)
@@ -70,23 +73,27 @@ public class Pregnancyobservation {
 	private Fieldworker fieldworker;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Individual individual;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "visit_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Visit visit;
 	
 	public Pregnancyobservation() {}
 
 
-	public String getObs_uuid() {
-		return obs_uuid;
+
+
+	public String getUuid() {
+		return uuid;
 	}
 
 
-	public void setObs_uuid(String obs_uuid) {
-		this.obs_uuid = obs_uuid;
+
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 
@@ -98,6 +105,22 @@ public class Pregnancyobservation {
 	public void setIndividual_uuid(String individual_uuid) {
 		this.individual_uuid = individual_uuid;
 	}
+
+
+
+
+	public String getVisit_uuid() {
+		return visit_uuid;
+	}
+
+
+
+
+	public void setVisit_uuid(String visit_uuid) {
+		this.visit_uuid = visit_uuid;
+	}
+
+
 
 
 	public Date getInsertDate() {
@@ -127,16 +150,6 @@ public class Pregnancyobservation {
 
 	public void setExpectedDeliveryDate(Date expectedDeliveryDate) {
 		this.expectedDeliveryDate = expectedDeliveryDate;
-	}
-
-
-	public String getVisit_uuid() {
-		return visit_uuid;
-	}
-
-
-	public void setVisit_uuid(String visit_uuid) {
-		this.visit_uuid = visit_uuid;
 	}
 
 
@@ -402,7 +415,7 @@ public class Pregnancyobservation {
 
 	@Override
 	public String toString() {
-		return obs_uuid;
+		return uuid;
 	}
 
 

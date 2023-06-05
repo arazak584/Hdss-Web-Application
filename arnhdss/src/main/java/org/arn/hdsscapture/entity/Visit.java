@@ -22,11 +22,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Audited
-@Table(name="visit", indexes = {@Index(name="idx_visit_uuid", columnList="visit_uuid")})
+@Table(name="visit", indexes = {@Index(name="idx_visit_uuid", columnList="uuid")})
 public class Visit implements Serializable {
 	
 	
@@ -36,12 +37,12 @@ public class Visit implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "visit_uuid", nullable = false, unique=true)
-	private String visit_uuid;
+	@Column(name = "uuid", nullable = false, unique=true)
+	private String uuid;
 	
 	
-	@Column(name = "visitExtId", nullable = false)
-	private String visitExtId;
+	@Column(name = "extId", nullable = false)
+	private String extId;
 	
 	@Column(name = "insertDate", nullable = false)
 	@Temporal(TemporalType.DATE)
@@ -59,11 +60,12 @@ public class Visit implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date visitDate;
 	
-	@Column(name = "location_uuid", nullable = false)
-	private String location_uuid;
-	
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
+	
+	@Column(name = "location_uuid", nullable = false)
+	@NotAudited
+	private String location_uuid;
 	
 	@Column(name = "respondent")
 	private String respondent;
@@ -88,34 +90,41 @@ public class Visit implements Serializable {
 	private Fieldworker fieldworker;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "location_uuid", referencedColumnName = "location_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "location_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Location location;
 	
 	
 	public Visit() {}
 
 
-	public String getVisit_uuid() {
-		return visit_uuid;
+	public String getUuid() {
+		return uuid;
 	}
 
 
-
-	public void setVisit_uuid(String visit_uuid) {
-		this.visit_uuid = visit_uuid;
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 
-
-	public String getVisitExtId() {
-		return visitExtId;
+	public String getLocation_uuid() {
+		return location_uuid;
 	}
 
 
-	public void setVisitExtId(String visitExtId) {
-		this.visitExtId = visitExtId;
+	public void setLocation_uuid(String location_uuid) {
+		this.location_uuid = location_uuid;
 	}
 
+
+	public String getExtId() {
+		return extId;
+	}
+
+
+	public void setExtId(String extId) {
+		this.extId = extId;
+	}
 
 
 	public Date getInsertDate() {
@@ -165,19 +174,6 @@ public class Visit implements Serializable {
 	}
 
 
-
-	public String getLocation_uuid() {
-		return location_uuid;
-	}
-
-
-
-	public void setLocation_uuid(String location_uuid) {
-		this.location_uuid = location_uuid;
-	}
-
-
-
 	public String getFw_uuid() {
 		return fw_uuid;
 	}
@@ -189,27 +185,18 @@ public class Visit implements Serializable {
 	}
 
 
-
-
-
-
 	public String getRespondent() {
 		return respondent;
 	}
-
-
-
 
 	public void setRespondent(String respondent) {
 		this.respondent = respondent;
 	}
 
 
-
-
 	@Override
 	public String toString() {
-		return visit_uuid;
+		return uuid;
 	}
 
 }

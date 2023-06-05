@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 @Entity
 @Audited
@@ -22,12 +23,14 @@ import org.hibernate.envers.Audited;
 public class Pregnancyoutcome {
 	
 	@Id
-	private String preg_uuid;
+	private String uuid;
 	
 	@Column(name = "mother_uuid", nullable = false)
+	@NotAudited
 	private String mother_uuid;
 	
 	@Column(name = "father_uuid", nullable = false)
+	@NotAudited
 	private String father_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
@@ -90,6 +93,7 @@ public class Pregnancyoutcome {
 
 	
 	@Column(name = "visit_uuid", nullable = false)
+	@NotAudited
 	private String visit_uuid;
 	
 	@Column(name = "fw_uuid", nullable = false)
@@ -100,15 +104,15 @@ public class Pregnancyoutcome {
 	private Fieldworker fieldworker;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "individual_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "mother_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Individual individual;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "father_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "father_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Individual individuals;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "visit_uuid", referencedColumnName = "visit_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "visit_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Visit visit;
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "pregnancyoutcome")
@@ -119,17 +123,23 @@ public class Pregnancyoutcome {
 	public Pregnancyoutcome() {}
 
 
+	public String getUuid() {
+		return uuid;
+	}
 
-	public String getPreg_uuid() {
-		return preg_uuid;
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 
-
-	public void setPreg_uuid(String preg_uuid) {
-		this.preg_uuid = preg_uuid;
+	public String getVisit_uuid() {
+		return visit_uuid;
 	}
 
+
+	public void setVisit_uuid(String visit_uuid) {
+		this.visit_uuid = visit_uuid;
+	}
 
 
 	public String getMother_uuid() {
@@ -466,19 +476,6 @@ public class Pregnancyoutcome {
 	}
 
 
-
-	public String getVisit_uuid() {
-		return visit_uuid;
-	}
-
-
-
-	public void setVisit_uuid(String visit_uuid) {
-		this.visit_uuid = visit_uuid;
-	}
-
-
-
 	public String getFw_uuid() {
 		return fw_uuid;
 	}
@@ -493,7 +490,7 @@ public class Pregnancyoutcome {
 
 	@Override
 	public String toString() {
-		return preg_uuid;
+		return uuid;
 	}
 
 }

@@ -49,8 +49,8 @@ public class RelationshipZipController {
 	  List<Relationship> data = repo.findRelationship();
 
 	  // Convert data to CSV
-	  CsvSchema schema = CsvSchema.builder().addColumn("rel_uuid").addColumn("aIsToB").addColumn("endDate").addColumn("endType")
-			  .addColumn("fw_uuid").addColumn("individual_uuid").addColumn("insertDate").addColumn("lcow").addColumn("man_uuid").addColumn("mar")
+	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("aIsToB").addColumn("endDate").addColumn("endType")
+			  .addColumn("fw_uuid").addColumn("individualA_uuid").addColumn("individualB_uuid").addColumn("insertDate").addColumn("lcow").addColumn("mar")
 			  .addColumn("mrank").addColumn("nchdm").addColumn("nwive").addColumn("polygamous")
 			  .addColumn("startDate").addColumn("tnbch").build();
 	  CsvMapper csvMapper = new CsvMapper();

@@ -32,11 +32,11 @@ public class Outcome {
 	private Integer type;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "preg_uuid", referencedColumnName = "preg_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "preg_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Pregnancyoutcome pregnancyoutcome;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "mother_uuid", referencedColumnName = "individual_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "mother_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Individual individual;
 	
 	

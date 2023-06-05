@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Audited
 @Entity
-@Table(name="demographic", indexes = {@Index(name="idx_individual_uuid", columnList="individual_uuid")})
+@Table(name="demographic")
 public class Demographic implements Serializable {
 
 	/**
@@ -79,7 +78,7 @@ public class Demographic implements Serializable {
 //	private Individual individual = new Individual();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false, nullable=false)
 	private Fieldworker fieldworker;
 	
 	
