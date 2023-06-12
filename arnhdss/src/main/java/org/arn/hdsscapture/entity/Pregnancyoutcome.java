@@ -26,11 +26,9 @@ public class Pregnancyoutcome {
 	private String uuid;
 	
 	@Column(name = "mother_uuid", nullable = false)
-	@NotAudited
 	private String mother_uuid;
 	
 	@Column(name = "father_uuid", nullable = false)
-	@NotAudited
 	private String father_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
@@ -93,7 +91,6 @@ public class Pregnancyoutcome {
 
 	
 	@Column(name = "visit_uuid", nullable = false)
-	@NotAudited
 	private String visit_uuid;
 	
 	@Column(name = "fw_uuid", nullable = false)
@@ -105,14 +102,17 @@ public class Pregnancyoutcome {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mother_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@NotAudited
 	private Individual individual;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "father_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@NotAudited
 	private Individual individuals;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "visit_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@NotAudited
 	private Visit visit;
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "pregnancyoutcome")

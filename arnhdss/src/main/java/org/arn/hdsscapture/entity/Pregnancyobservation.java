@@ -23,7 +23,6 @@ public class Pregnancyobservation {
 	private String uuid;
 	
 	@Column(name = "individual_uuid", nullable = false)
-	@NotAudited
 	private String individual_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
@@ -36,7 +35,6 @@ public class Pregnancyobservation {
 	private Date expectedDeliveryDate;
 	
 	@Column(name = "visit_uuid", nullable = false)
-	@NotAudited
 	private String visit_uuid;
 	
 	@Column(name = "fw_uuid", nullable = false)
@@ -74,10 +72,12 @@ public class Pregnancyobservation {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@NotAudited
 	private Individual individual;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "visit_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@NotAudited
 	private Visit visit;
 	
 	public Pregnancyobservation() {}

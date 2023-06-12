@@ -24,7 +24,6 @@ public class Residency {
 	private String uuid;
 	
 	@Column(name = "individual_uuid", nullable = false)
-	@NotAudited
 	private String individual_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
@@ -43,11 +42,9 @@ public class Residency {
 	private Integer endType;
 	
 	@Column(name = "socialgroup_uuid", nullable = false)
-	@NotAudited
 	private String socialgroup_uuid;
 	
 	@Column(name = "location_uuid", nullable = false)
-	@NotAudited
 	private String location_uuid;
 	
 	@Column(name = "rltn_head", nullable = false)
@@ -62,15 +59,18 @@ public class Residency {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@NotAudited
 	private Individual individual;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@NotAudited
 	private Socialgroup socialgroup;
 
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "location_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
+	@NotAudited
 	private Location location;
 	
 	public Residency() {}

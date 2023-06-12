@@ -214,3 +214,30 @@ function downloadSes() {
   xhr.send();
 }
 
+
+//Vaccination
+function downloadVac() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/api/task/vaccination', true);
+  xhr.responseType = 'blob';
+
+  xhr.onloadstart = function(e) {
+    document.querySelector('.vac-progress').style.width = '0%';
+  };
+
+  xhr.onprogress = function(e) {
+    if (e.lengthComputable) {
+      var percentComplete = (e.loaded / e.total) * 100;
+      document.querySelector('.vac-progress').style.width = percentComplete + '%';
+      document.querySelector('.vac-progress').setAttribute('aria-valuenow', percentComplete);
+    }
+  };
+
+  xhr.onloadend = function(e) {
+    document.querySelector('.vac-progress').style.width = '100%';
+    document.querySelector('.vacmessage').textContent = 'Vaccination task generated successfully.';
+  };
+
+  xhr.send();
+}
+

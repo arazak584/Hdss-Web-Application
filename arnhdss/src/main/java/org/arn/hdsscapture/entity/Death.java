@@ -46,7 +46,6 @@ public class Death {
 	private Integer deathPlace;
 	
 	@Column(name = "visit_uuid", nullable = false)
-	@NotAudited
 	private String visit_uuid;
 	
 	@Column(name = "fw_uuid", nullable = false)
@@ -58,6 +57,7 @@ public class Death {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "visit_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@NotAudited
 	private Visit visit;
 	
 	public Death() {}

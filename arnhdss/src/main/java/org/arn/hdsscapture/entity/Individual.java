@@ -71,15 +71,13 @@ public class Individual implements Serializable {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
-	@Column(name = "ghanacard", nullable=true, unique=true)
+	@Column(name = "ghanacard", nullable=true)
 	private String ghanacard;
 	
-	@Column(name = "mother_uuid")
-	@NotAudited
+	@Column(name = "mother_uuid", nullable=false)
     private String mother_uuid;
 
-	@Column(name = "father_uuid")
-	@NotAudited
+	@Column(name = "father_uuid", nullable=false)
     private String father_uuid;
 	
 	
@@ -110,6 +108,9 @@ public class Individual implements Serializable {
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
 	private List<Outcome> outcomes = new ArrayList<>();
 	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
+	private List<Amendment> amendments = new ArrayList<>();
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
 	private Fieldworker fieldworker;
@@ -120,10 +121,12 @@ public class Individual implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mother_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@NotAudited
     private Individual mother;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "father_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@NotAudited
     private Individual father;
 	
 	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
@@ -260,7 +263,6 @@ public class Individual implements Serializable {
 	public String toString() {
 		return extId;
 	}
-
 	
 	
 

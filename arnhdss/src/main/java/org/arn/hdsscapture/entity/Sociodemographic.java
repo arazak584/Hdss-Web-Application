@@ -25,11 +25,9 @@ public class Sociodemographic {
     public String socialgroup_uuid;
 	
 	@Column(nullable = false)
-	@NotAudited
     public String individual_uuid;
 	
 	@Column(nullable = false)
-	@NotAudited
     public String location_uuid;
 
 	@Column(nullable = false)
@@ -399,10 +397,12 @@ public class Sociodemographic {
     
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+    @NotAudited
 	private Individual individual;
     
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "location_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+    @NotAudited
 	private Location location;
     
     public Sociodemographic() {}

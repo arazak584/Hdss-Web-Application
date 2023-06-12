@@ -56,6 +56,7 @@ INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUE
 INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUES ('142.00 bytes', 'pregnancy', '2023-05-19 11:33:02', 0, 'application/octet-stream');
 INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUES ('148.00 bytes', 'demographics', '2023-05-19 11:33:04', 0, 'application/octet-stream');
 INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUES ('130.00 bytes', 'ses', '2023-05-19 11:33:05', 0, 'application/octet-stream');
+INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUES ('146.00 bytes', 'vaccination', '2023-05-19 11:33:05', 0, 'application/octet-stream');
 
 
 -- KEYS
@@ -76,6 +77,9 @@ alter table demographic add index FK5B0927480470E9C (individual_uuid), add const
 alter table outcome add index FKBE0C0752948ED5FB (childuuid), add constraint FKBE0C0752948ED5FB foreign key (childuuid) references individual (uuid);
 
 alter table listing add index FKD6922049851605F6 (compextId), add constraint FKD6922049851605F6 foreign key (compextId) references location (compextId);
+alter table vaccination add index FKD6922049851605FV (individual_uuid), add constraint FKD6922049851605FV foreign key (individual_uuid) references individual (uuid);
+
+
 
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('assist', '1', 'Doctor');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('assist', '2', 'Nurse/Midwife');

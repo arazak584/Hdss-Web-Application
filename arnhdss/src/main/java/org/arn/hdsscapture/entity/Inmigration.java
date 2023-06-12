@@ -26,8 +26,7 @@ public class Inmigration {
 	@Column(name = "uuid", nullable = false)
 	private String uuid;
 	
-	@Column(name = "individual_uuid", nullable = false)
-	@NotAudited
+	@Column(name = "individual_uuid", nullable = false)	
 	private String individual_uuid;
 	
 	@Id
@@ -57,7 +56,6 @@ public class Inmigration {
 	private Integer migType;
 	
 	@Column(name = "visit_uuid", nullable = false)
-	@NotAudited
 	private String visit_uuid;
 	
 	@Column(name = "livestock")
@@ -84,10 +82,12 @@ public class Inmigration {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@NotAudited
 	private Individual individual;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "visit_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@NotAudited
 	private Visit visit;
 
 	

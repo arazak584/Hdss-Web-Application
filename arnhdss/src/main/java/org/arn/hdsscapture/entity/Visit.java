@@ -64,7 +64,6 @@ public class Visit implements Serializable {
 	private String fw_uuid;
 	
 	@Column(name = "location_uuid", nullable = false)
-	@NotAudited
 	private String location_uuid;
 	
 	@Column(name = "respondent")
@@ -90,7 +89,8 @@ public class Visit implements Serializable {
 	private Fieldworker fieldworker;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "location_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+	@JoinColumn(name = "location_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
+	@NotAudited
 	private Location location;
 	
 	

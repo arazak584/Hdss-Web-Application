@@ -27,11 +27,9 @@ public class Relationship {
 	private String uuid;
 	
 	@Column(name = "individualA_uuid", nullable = false)
-	@NotAudited
 	private String individualA_uuid;
 	
 	@Column(name = "individualB_uuid", nullable = false)
-	@NotAudited
 	private String individualB_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
@@ -72,10 +70,12 @@ public class Relationship {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "individualA_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
+	@NotAudited
 	private Individual individual;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "individualB_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
+	@NotAudited
 	private Individual individuals;
 
 	

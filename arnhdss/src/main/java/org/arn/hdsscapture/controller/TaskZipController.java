@@ -59,6 +59,9 @@ public class TaskZipController {
         List<Task> sesTasks = tasks.stream()
                 .filter(task -> task.getFileName().equals("ses.zip"))
                 .collect(Collectors.toList());
+        List<Task> vacTasks = tasks.stream()
+                .filter(task -> task.getFileName().equals("vaccination.zip"))
+                .collect(Collectors.toList());
 
         // Create DTOs for each file
         TaskDto locationDto = createDto(locationTasks);
@@ -69,9 +72,10 @@ public class TaskZipController {
         TaskDto pregnancyDto = createDto(pregnancyTasks);
         TaskDto demographyDto = createDto(demographyTasks);
         TaskDto sesDto = createDto(sesTasks);
+        TaskDto vacDto = createDto(vacTasks);
 
         // Add DTOs to list
-        List<TaskDto> dtos = Arrays.asList(locationDto, individualDto, residencyDto, socialgroupDto,relationshipDto,pregnancyDto,demographyDto, sesDto);
+        List<TaskDto> dtos = Arrays.asList(locationDto, individualDto, residencyDto, socialgroupDto,relationshipDto,pregnancyDto,demographyDto, sesDto, vacDto);
 
         // Return the DTOs in the response body
         return ResponseEntity.ok(dtos);

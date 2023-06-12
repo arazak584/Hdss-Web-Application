@@ -50,7 +50,6 @@ public class Socialgroup {
 	private String fw_uuid;
 	
 	@Column(name = "individual_uuid", nullable = false)
-	@NotAudited
 	private String individual_uuid;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -59,10 +58,14 @@ public class Socialgroup {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
+	@NotAudited
 	private Individual individual;
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
 	private List<Residency> residencies = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
+	private List<Vaccination> vaccinations = new ArrayList<>();
 		
 	
 	public Socialgroup() {}

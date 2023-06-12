@@ -87,6 +87,9 @@ public class Fieldworker {
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
 	private List<Visit> visit = new ArrayList<>();
 	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Amendment> amendment = new ArrayList<>();
+	
 
 	
 	public Fieldworker() {}
