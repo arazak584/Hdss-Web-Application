@@ -27,7 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Audited
 @Entity
-@Table(name="individual", indexes = {@Index(name="idx_individual_uuid", columnList="extId")})
+@Table(name="individual", indexes = {@Index(name="idx_individual_uuid", columnList="uuid", unique=true)})
 public class Individual implements Serializable {
 	
 	/**
@@ -36,7 +36,7 @@ public class Individual implements Serializable {
 	private static final long serialVersionUID = -8535563948748501772L;
 
 	@Id
-	@Column(name = "uuid", nullable = false, unique=true)
+	@Column(name = "uuid", nullable = false)
 	private String uuid;
 	
 	@Column(name = "extId", nullable = false, unique=true)

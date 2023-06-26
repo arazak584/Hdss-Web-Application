@@ -36,6 +36,14 @@ public class PregnancyobservationController {
 	
 	@PostMapping("")
 	public DataWrapper<Pregnancyobservation> saveAll(@RequestBody DataWrapper<Pregnancyobservation> data) {
+		List<Pregnancyobservation> observations = data.getData();
+
+	    // Iterate through the observations and set outcome to null if outcome is equal to 1
+	    for (Pregnancyobservation observation : observations) {
+	        if (observation.getOutcome() != null && observation.getOutcome() == 1) {
+	            observation.setOutcome(null);
+	        }
+	    }
 
 		List<Pregnancyobservation> saved =  repo.saveAll(data.getData());
 

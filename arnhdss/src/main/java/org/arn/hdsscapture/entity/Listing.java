@@ -24,16 +24,16 @@ public class Listing implements Serializable {
 	
 	
 	@Id
-	@Column(name = "compextId", nullable = false)
-	private String compextId;
+	@Column(name = "compno", nullable = false)
+	private String compno;
 	
 	@Column(name = "insertDate", nullable = false)
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date insertDate;
 		
-	@Column(name = "compno", nullable = false)
-	private String compno;
+	@Column(name = "compextId", nullable = false)
+	private String compextId;
 
 	
 	@Column(name = "status", nullable = false)

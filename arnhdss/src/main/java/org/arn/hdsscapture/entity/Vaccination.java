@@ -189,6 +189,50 @@ public class Vaccination implements Serializable {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
+	@Column(name = "hcard")
+	private Integer hcard;
+	
+	@Column(name = "reason")
+	private Integer reason;
+	
+	@Column(name = "reason_oth")
+	private String reason_oth;
+	
+	@Column(name = "onet")
+	private Integer onet;
+	
+	@Column(name = "rea")
+	private Integer rea;
+	
+	@Column(name = "rea_oth")
+	private String rea_oth;
+	
+	@Column(name = "hl")
+	private Integer hl;
+	
+	@Column(name = "hod")
+	private Integer hod;
+	
+	@Column(name = "hom")
+	private Integer hom;
+	
+	@Column(name = "nhis")
+	private Integer nhis;
+	
+	@Column(name = "sbf")
+	private Integer sbf;
+	
+	@Column(name = "stm")
+	private Integer stm;
+	
+	@Column(name = "sty")
+	private Integer sty;
+	
+	@Column(name = "admission")
+	private Integer admission;
+	
+	
+	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false, nullable=false)
@@ -485,12 +529,117 @@ public class Vaccination implements Serializable {
 		this.itn = itn;
 	}
 
-	public Fieldworker getFieldworker() {
-		return fieldworker;
+
+	public Integer getHcard() {
+		return hcard;
 	}
 
-	public void setFieldworker(Fieldworker fieldworker) {
-		this.fieldworker = fieldworker;
+	public void setHcard(Integer hcard) {
+		this.hcard = hcard;
+	}
+
+	public Integer getReason() {
+		return reason;
+	}
+
+	public void setReason(Integer reason) {
+		this.reason = reason;
+	}
+
+	public Integer getOnet() {
+		return onet;
+	}
+
+	public void setOnet(Integer onet) {
+		this.onet = onet;
+	}
+
+	public Integer getRea() {
+		return rea;
+	}
+
+	public void setRea(Integer rea) {
+		this.rea = rea;
+	}
+
+	public Integer getHl() {
+		return hl;
+	}
+
+	public void setHl(Integer hl) {
+		this.hl = hl;
+	}
+
+	public Integer getHod() {
+		return hod;
+	}
+
+	public void setHod(Integer hod) {
+		this.hod = hod;
+	}
+
+	public Integer getHom() {
+		return hom;
+	}
+
+	public void setHom(Integer hom) {
+		this.hom = hom;
+	}
+
+	public Integer getNhis() {
+		return nhis;
+	}
+
+	public void setNhis(Integer nhis) {
+		this.nhis = nhis;
+	}
+
+	public Integer getSbf() {
+		return sbf;
+	}
+
+	public void setSbf(Integer sbf) {
+		this.sbf = sbf;
+	}
+
+	public Integer getStm() {
+		return stm;
+	}
+
+	public void setStm(Integer stm) {
+		this.stm = stm;
+	}
+
+	public Integer getSty() {
+		return sty;
+	}
+
+	public void setSty(Integer sty) {
+		this.sty = sty;
+	}
+
+	public String getReason_oth() {
+		return reason_oth;
+	}
+
+	public void setReason_oth(String reason_oth) {
+		this.reason_oth = reason_oth;
+	}
+
+	public String getRea_oth() {
+		return rea_oth;
+	}
+
+	public void setRea_oth(String rea_oth) {
+		this.rea_oth = rea_oth;
+	}
+
+	public Integer getAdmission() {
+		return admission;
+	}
+
+	public void setAdmission(Integer admission) {
+		this.admission = admission;
 	}
 
 	@Override

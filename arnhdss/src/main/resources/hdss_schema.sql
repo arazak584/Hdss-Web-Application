@@ -76,9 +76,10 @@ alter table demographic add index FK5B0927480470E9C (individual_uuid), add const
 -- Outcome
 alter table outcome add index FKBE0C0752948ED5FB (childuuid), add constraint FKBE0C0752948ED5FB foreign key (childuuid) references individual (uuid);
 
-alter table listing add index FKD6922049851605F6 (compextId), add constraint FKD6922049851605F6 foreign key (compextId) references location (compextId);
+alter table listing add index FKD6922049851605F6 (compno), add constraint FKD6922049851605F6 foreign key (compno) references location (compno);
 alter table vaccination add index FKD6922049851605FV (individual_uuid), add constraint FKD6922049851605FV foreign key (individual_uuid) references individual (uuid);
-
+alter table individual ADD UNIQUE INDEX FK6B04D4BEC630DB8 (uuid);
+alter table duplicate ADD UNIQUE INDEX FK6B04D4BEC630DBD (individual_uuid);
 
 
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('assist', '1', 'Doctor');
@@ -398,24 +399,24 @@ INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('P
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('PD_DM_SCORRES', '77', 'Other');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '1', 'Due to family separation (Including Divorce)');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '2', 'Due to health conditions');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '4', 'Due to marriage');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '5', 'I lost my job and income ');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '7', 'Due to retirement');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '8', 'To learn a trade or apprentiship');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '9', 'Moved to own house');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '10', 'Due to Work or transfer by my organization (employer)');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '11', 'Farming');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '13', 'Business/Trade');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '18', 'Returned after completion of education ');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '20', 'Due to climate change (such as changes in temperature, rainfall pattern, increasing levels of greenhouse gases etc)');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '21', 'Natural disaster (such as Famine, drought, flooding etc) ');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '22', 'Due to political unrest or instability (communal, tribal or religious conflict) ');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '28', 'New House');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '29', 'Came with/to relative(s)/parents');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '30', 'Came with spouse');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '31', 'Education/School');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '32', 'MISSEDOUT');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '33', 'Death of benefactor/Guardian');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '3', 'Due to marriage');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '4', 'I lost my job and income ');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '5', 'Due to retirement');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '6', 'To learn a trade or apprentiship');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '7', 'Moved to own house');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '8', 'Due to Work or transfer by my organization (employer)');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '9', 'Farming');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '10', 'Business/Trade');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '11', 'Returned after completion of education ');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '12', 'Due to climate change (such as changes in temperature, rainfall pattern, increasing levels of greenhouse gases etc)');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '13', 'Natural disaster (such as Famine, drought, flooding etc) ');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '14', 'Due to political unrest or instability (communal, tribal or religious conflict) ');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '15', 'New House');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '16', 'Came with/to relative(s)/parents');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '17', 'Came with spouse');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '18', 'Education/School');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '19', 'MISSEDOUT');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '20', 'Death of benefactor/Guardian');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reason', '77', 'Other');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reasonForOutMigration', '1', 'Moved with relative(s)/Parents');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('reasonForOutMigration', '2', 'Farming');
@@ -580,7 +581,38 @@ INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('b
 INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetLoc', 'Lend', 3);
 INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetLoc', 'Destroyed', 4);
 INSERT IGNORE INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('bnetLoc', 'Other', 5);
-
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('nhis', 'Yes, Active', 1);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('nhis', 'Yes, expired', 2);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('nhis', 'No', 3);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('nhis', 'Card not seen', 4);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('HL', 'Immediate', 1);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('HL', 'Later same day', 2);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('HL', 'Day two(2)', 3);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('HL', 'Three or more days', 4);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('HL', 'Never', 5);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('rea', 'Respiratory infection', 1);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('rea', 'Fever', 2);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('rea', 'Diarrhoea', 3);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('rea', 'Accident', 4);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('rea', 'Other', 5);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('onet', 'Always', 1);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('onet', 'Sometimes', 2);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('onet', 'Rainy season', 3);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('onet', 'Dry season', 4);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('onet', 'Never', 5);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('HC', 'Yes seen', 1);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('HC', 'Yes, not seen', 2);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('HC', 'No, never had a card', 3);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('HC', 'No, had card but lost it', 4);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('HC', 'No information', 5);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('reavac', 'Was at health facility to get Vaccine but did not succeed', 1);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('reavac', 'Mother does not know of vaccination schedule', 2);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('reavac', 'Mother considers child too small/sick for vaccination', 3);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('reavac', 'Religious/Cultural reasons', 4);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('reavac', 'Distance to health facility', 5);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('reavac', 'Received but not indicated on card', 6);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('reavac', 'Other', 7);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('reavac', 'Not Applicable', 8);
 
 
 -- Dashboard

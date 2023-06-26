@@ -1,6 +1,7 @@
 package org.arn.hdsscapture.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,9 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Audited
@@ -26,12 +30,18 @@ public class Pregnancyobservation {
 	private String individual_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date insertDate;
 	
 	@Column(name = "recordedDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date recordedDate;
 	
 	@Column(name = "expectedDeliveryDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date expectedDeliveryDate;
 	
 	@Column(name = "visit_uuid", nullable = false)
@@ -64,6 +74,8 @@ public class Pregnancyobservation {
 	private Integer first_preg;//Is this your first Pregnancy?
 	private Integer pregnancyNumber;//Total number of pregnancies to date
 	private Integer outcome;
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date outcome_date;//Select Date of Outcome
 			
 	@ManyToOne(fetch = FetchType.LAZY)

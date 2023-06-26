@@ -49,14 +49,18 @@ public class VaccinationZipController {
 	  List<Vaccination> data = repo.findVaccination();
 
 	  // Convert data to CSV
-	  CsvSchema schema = CsvSchema.builder().addColumn("individual_uuid").addColumn("bcg").addColumn("dob").addColumn("dpt_hepb_hib1")
-			  .addColumn("dpt_hepb_hib2").addColumn("dpt_hepb_hib3").addColumn("fw_uuid").addColumn("insertDate")
-			  .addColumn("ipv").addColumn("itn").addColumn("location_uuid").addColumn("measles_rubella1").addColumn("measles_rubella2")
-			  .addColumn("menA").addColumn("opv0").addColumn("opv1").addColumn("opv2").addColumn("opv3")
-			  .addColumn("pneumo1").addColumn("pneumo2").addColumn("pneumo3").addColumn("rota1")
-			  .addColumn("rota2").addColumn("rota3").addColumn("rtss18").addColumn("rtss6").addColumn("rtss7").addColumn("rtss9")
-			  .addColumn("socialgroup_uuid").addColumn("uuid").addColumn("vitaminA12").addColumn("vitaminA18")
-			  .addColumn("vitaminA6").addColumn("yellow_fever").build();
+	  CsvSchema schema = CsvSchema.builder().addColumn("individual_uuid").addColumn("admission")
+				.addColumn("bcg").addColumn("dob").addColumn("dpt_hepb_hib1").addColumn("dpt_hepb_hib2")
+				.addColumn("dpt_hepb_hib3").addColumn("fw_uuid").addColumn("hcard").addColumn("hl").addColumn("hod")
+				.addColumn("hom").addColumn("insertDate").addColumn("ipv").addColumn("itn").addColumn("location_uuid")
+				.addColumn("measles_rubella1").addColumn("measles_rubella2").addColumn("menA").addColumn("nhis")
+				.addColumn("onet").addColumn("opv0").addColumn("opv1").addColumn("opv2").addColumn("opv3")
+				.addColumn("pneumo1").addColumn("pneumo2").addColumn("pneumo3").addColumn("rea").addColumn("rea_oth")
+				.addColumn("reason").addColumn("reason_oth")
+				.addColumn("rota1").addColumn("rota2").addColumn("rota3").addColumn("rtss18").addColumn("rtss6")
+				.addColumn("rtss7").addColumn("rtss9").addColumn("sbf").addColumn("socialgroup_uuid").addColumn("stm")
+				.addColumn("sty").addColumn("uuid").addColumn("vitaminA12").addColumn("vitaminA18")
+				.addColumn("vitaminA6").addColumn("yellow_fever").build();
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	  StringWriter writer = new StringWriter();
