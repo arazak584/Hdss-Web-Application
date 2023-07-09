@@ -15,26 +15,31 @@
 //Install Mysql on Ubuntu Server
 
 sudo apt update
+sudo wget https://dev.mysql.com/get/mysql-apt-config_0.8.15-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.15-1_all.deb
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 467B942D3A79BD29
+sudo apt update
 sudo apt install mysql-server
 sudo systemctl start mysql.service
-sudo mysql_secure_installation
 sudo mysql
 mysql -u root -p
-CREATE USER 'data'@'localhost' IDENTIFIED BY 'data';
-GRANT ALL PRIVILEGES ON *.* TO 'data'@'localhost' WITH GRANT OPTION;
+CREATE USER 'data'@'%' IDENTIFIED BY 'data';
+GRANT ALL PRIVILEGES ON *.* TO 'data'@'%' WITH GRANT OPTION;
+
 FLUSH PRIVILEGES;
+
 exit
 mysql -u data -p data
 create database hdss;
 
 // Set bind address for docker to connect
-cd /etc/mysql/mysql.conf.d
-sudo nano mysqld.cnf
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 set 
 bind-address = 0.0.0.0
 ctrl + X to save
 restart mysql
 sudo service mysql restart
+sudo mysql
 
 
 //Install app on docker
