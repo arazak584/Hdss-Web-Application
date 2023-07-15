@@ -95,8 +95,7 @@ INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('b
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('birthPlace', '9', 'On the way to clinic/hosptal');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('birthPlace', '3', 'Private maternity home');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('birthPlace', '6', 'Other');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('birthPlace', '7', 'Censored');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('birthPlace', '8', 'CHPS');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('birthPlace', '7', 'CHPS');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('comingfrom', '1', 'Within this community or village');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('comingfrom', '2', 'From another community or village within the HDSS area');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('comingfrom', '3', 'From another community within the Region (Bono East) but not in the HDSS area');
@@ -122,8 +121,6 @@ INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('d
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('deathCause', '8', 'Unknown');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('deathCause', '77', 'Other');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('deathCause', '10', 'Disease, Illness');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('deathCause', '11', 'Accident');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('deathCause', '12', 'Crime');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('deathPlace', '1', 'HOME');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('deathPlace', '2', 'HOSPITAL');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('deathPlace', '3', 'HEALTH CENTER');
@@ -383,7 +380,6 @@ INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('o
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('outcometype', '2', 'Still Birth');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('outcometype', '3', 'Miscarriage');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('outcometype', '4', 'Abortion');
-INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('outcometype', '5', 'Censored');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('OWN_RENT_SCORRES', '1', 'Sole Ownership');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('OWN_RENT_SCORRES', '2', 'Joint Ownership');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('OWN_RENT_SCORRES', '3', 'Family/relation’s house');
