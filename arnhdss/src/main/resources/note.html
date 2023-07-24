@@ -6,6 +6,11 @@
 4. docker tag hdss.jar arazak584/hdss.jar:1.0.0
 5. docker push arazak584/hdss.jar:1.0.0
 
+//Install Java
+1. sudo apt update
+2. sudo apt install openjdk-11-jdk
+3. java --version
+
 
 //Install Docker on Ubuntu Server
 1. Install Ubuntu 18.04 or above
@@ -53,6 +58,12 @@ docker run -p 8080:8080 \
 -e SPRING_DATASOURCE_USERNAME=data \
 -e SPRING_DATASOURCE_PASSWORD=data \
 arazak584/hdss.jar:version
+
+docker run -p 2200:8080 \
+-e SPRING_DATASOURCE_URL=jdbc:mysql://192.168.10.117:3306/hdss \
+-e SPRING_DATASOURCE_USERNAME=data \
+-e SPRING_DATASOURCE_PASSWORD=data \
+arazak584/hdss.jar:v2023.0.3
 
 //Run this for restart when server restarts
 docker update --restart unless-stopped c854b1356724(THIS IS THE IMAGE ID)

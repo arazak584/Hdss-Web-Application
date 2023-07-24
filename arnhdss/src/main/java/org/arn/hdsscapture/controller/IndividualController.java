@@ -3,7 +3,9 @@ package org.arn.hdsscapture.controller;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.arn.hdsscapture.entity.ErrorLog;
 import org.arn.hdsscapture.entity.Individual;
@@ -46,9 +48,18 @@ public class IndividualController {
 	public DataWrapper<Individual> saveAll(@RequestBody DataWrapper<Individual> data) {
 		try {
 
-		List<Individual> saved =  repo.saveAll(data.getData());
-		DataWrapper<Individual> s = new DataWrapper<>();
-		s.setData(saved);
+			// Sort the list of Individual objects by dob in ascending order
+	        List<Individual> sortedIndividuals = data.getData()
+	                .stream()
+	                .sorted(Comparator.comparing(Individual::getDob))
+	                .collect(Collectors.toList());
+
+	        // Save the sorted list of Individual objects
+	        List<Individual> saved = repo.saveAll(sortedIndividuals);
+
+	        // Set the sorted list as the data in the response
+	        DataWrapper<Individual> s = new DataWrapper<>();
+	        s.setData(saved);
 
 		return s;
 		} catch (Exception e) {

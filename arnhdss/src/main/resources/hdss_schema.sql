@@ -334,6 +334,7 @@ INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('m
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('marital', '4', 'Divorced');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('marital', '5', 'Separated');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('marital', '6', 'Cohabitation');
+INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('marital', '7', 'Child/Minor');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('MARITAL_SCORRES', '1', 'Married');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('MARITAL_SCORRES', '2', 'Not married but living with partner (cohabitating)');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('MARITAL_SCORRES', '3', 'Divorced or permanently separated');
