@@ -41,7 +41,10 @@ public class Pregnancyoutcome {
 	private Date conceptionDate;
 	
 	@Column(name = "numberofBirths", nullable = false)
-	private Integer numberofBirths;
+	private Integer numberofBirths; //number of outcomes from specific pregnancy
+	
+	@Column(name = "numberOfLiveBirths", nullable = false)
+	private Integer numberOfLiveBirths;//number of live outcomes from specific pregnancy
 	
 	@Column(name = "b_place")
 	private Integer b_place;
@@ -211,7 +214,16 @@ public class Pregnancyoutcome {
 	public void setNumberofBirths(Integer numberofBirths) {
 		this.numberofBirths = numberofBirths;
 	}
+	
 
+	public Integer getNumberOfLiveBirths() {
+		return numberOfLiveBirths;
+	}
+
+
+	public void setNumberOfLiveBirths(Integer numberOfLiveBirths) {
+		this.numberOfLiveBirths = numberOfLiveBirths;
+	}
 
 
 	public Integer getB_place() {

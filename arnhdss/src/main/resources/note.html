@@ -34,7 +34,8 @@ GRANT ALL PRIVILEGES ON *.* TO 'data'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
 exit
-mysql -u data -p data
+mysql -u data -p
+data
 create database hdss;
 
 // Set bind address for docker to connect
@@ -59,8 +60,8 @@ docker run -p 8080:8080 \
 -e SPRING_DATASOURCE_PASSWORD=data \
 arazak584/hdss.jar:version
 
-docker run -p 2200:8080 \
--e SPRING_DATASOURCE_URL=jdbc:mysql://192.168.10.117:3306/hdss \
+docker run -p 9900:8080 \
+-e SPRING_DATASOURCE_URL=jdbc:mysql://192.168.10.62:3306/hdss \
 -e SPRING_DATASOURCE_USERNAME=data \
 -e SPRING_DATASOURCE_PASSWORD=data \
 arazak584/hdss.jar:v2023.0.3
