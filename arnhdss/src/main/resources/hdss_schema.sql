@@ -516,6 +516,9 @@ INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('T
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('TOILET_FCORRES', '77', 'Other ');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('TOILET_LOC_FCORRES', '1', 'Within the household structure');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('TOILET_LOC_FCORRES', '2', 'Neighbor\'s home/structure');
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('yn_anc', 'Yes', 1);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('yn_anc', 'No', 2);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('yn_anc', 'Yes (Card Not Available)', 3);
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('TOILET_LOC_FCORRES', '3', 'Public toilet');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('TOILET_LOC_FCORRES', '77', 'other');
 INSERT IGNORE INTO codebook (`codeFeature`, `codeValue`, `codeLabel`) VALUES ('TOILET_SHARE_NUM_FCORRES', '1', 'Less than 5 households');
