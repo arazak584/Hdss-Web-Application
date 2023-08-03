@@ -231,6 +231,46 @@ public class Vaccination implements Serializable {
 	@Column(name = "admission")
 	private Integer admission;
 	
+	@Column(name = "bednet")
+	private Integer bednet;//Does your household have a bednet?
+
+	@Column(name = "slpbednet")
+	private Integer slpbednet;//Did the baby sleep under bednet last Night?
+	
+	@Column(name = "chlbednet")
+	private Integer chlbednet;//How many children sleep under the bednet?
+	
+	@Column(name = "weight")
+	private Integer weight;//Weight of child at birth in Kg?
+	
+	@Column(name = "scar")
+	private Integer scar;//Does the child have the BCG scar? (Observe)
+	
+	@Column(name = "admitDate", nullable = true)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date admitDate;//Date of Admission
+	
+	@Column(name = "fever")
+	private Integer fever;//In the last two weeks did the child report Fever
+	
+	@Column(name = "fevertreat")
+	private Integer fevertreat;//Did you seek for treatment
+	
+	@Column(name = "diarrhoea")
+	private Integer diarrhoea;//In the last two weeks did the child report diarrhoea
+	
+	@Column(name = "diarrhoeatreat")
+	private Integer diarrhoeatreat;//Did you seek for treatment
+	
+	@Column(name = "arti")
+	private Integer arti;//In the last two weeks did the child report ARTI
+	
+	@Column(name = "artitreat")
+	private Integer artitreat;//Did you seek for treatment
+	
+	@Column(name = "muac")
+	private Integer muac;//Mid-Upper Arm circumference MUAC
 	
 	
 	
@@ -641,7 +681,114 @@ public class Vaccination implements Serializable {
 	public void setAdmission(Integer admission) {
 		this.admission = admission;
 	}
+	
 
+	public Integer getBednet() {
+		return bednet;
+	}
+
+	public void setBednet(Integer bednet) {
+		this.bednet = bednet;
+	}
+
+	public Integer getSlpbednet() {
+		return slpbednet;
+	}
+
+	public void setSlpbednet(Integer slpbednet) {
+		this.slpbednet = slpbednet;
+	}
+
+	public Integer getChlbednet() {
+		return chlbednet;
+	}
+
+	public void setChlbednet(Integer chlbednet) {
+		this.chlbednet = chlbednet;
+	}
+
+	public Integer getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Integer weight) {
+		this.weight = weight;
+	}
+
+	public Integer getScar() {
+		return scar;
+	}
+
+	public void setScar(Integer scar) {
+		this.scar = scar;
+	}
+
+	public Date getAdmitDate() {
+		return admitDate;
+	}
+
+	public void setAdmitDate(Date admitDate) {
+		this.admitDate = admitDate;
+	}
+
+	public Integer getFever() {
+		return fever;
+	}
+
+	public void setFever(Integer fever) {
+		this.fever = fever;
+	}
+
+	public Integer getFevertreat() {
+		return fevertreat;
+	}
+
+	public void setFevertreat(Integer fevertreat) {
+		this.fevertreat = fevertreat;
+	}
+
+	public Integer getDiarrhoea() {
+		return diarrhoea;
+	}
+
+	public void setDiarrhoea(Integer diarrhoea) {
+		this.diarrhoea = diarrhoea;
+	}
+
+	public Integer getDiarrhoeatreat() {
+		return diarrhoeatreat;
+	}
+
+	public void setDiarrhoeatreat(Integer diarrhoeatreat) {
+		this.diarrhoeatreat = diarrhoeatreat;
+	}
+
+	public Integer getArti() {
+		return arti;
+	}
+
+	public void setArti(Integer arti) {
+		this.arti = arti;
+	}
+
+	public Integer getArtitreat() {
+		return artitreat;
+	}
+
+	public void setArtitreat(Integer artitreat) {
+		this.artitreat = artitreat;
+	}
+
+
+	public Integer getMuac() {
+		return muac;
+	}
+
+	public void setMuac(Integer muac) {
+		this.muac = muac;
+	}
+
+	
 	@Override
 	public String toString() {
 		return individual_uuid;
