@@ -35,6 +35,7 @@ ALTER TABLE sociodemographic ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIM
 ALTER TABLE pregnancyoutcome ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE demographic ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE listing ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+ALTER TABLE vaccination ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 
 
 -- fieldworker
@@ -663,8 +664,8 @@ CREATE TABLE `userregistration`  (
   `email` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updationDate` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `passUdateDate` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `updationDate` timestamp NULL DEFAULT NULL,
+  `passUdateDate` timestamp NULL DEFAULT NULL,
   `approve` int(255) UNSIGNED NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `email`(`email`) USING BTREE

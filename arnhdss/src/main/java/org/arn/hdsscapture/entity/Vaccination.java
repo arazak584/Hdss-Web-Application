@@ -271,8 +271,7 @@ public class Vaccination implements Serializable {
 	
 	@Column(name = "muac")
 	private Integer muac;//Mid-Upper Arm circumference MUAC
-	
-	
+		
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false, nullable=false)
