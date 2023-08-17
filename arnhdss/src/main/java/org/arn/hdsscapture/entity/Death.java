@@ -45,6 +45,9 @@ public class Death {
 	@Column(name = "deathPlace", nullable = false)
 	private Integer deathPlace;
 	
+	@Column(name = "deathPlace_oth")
+	private String deathPlace_oth;
+	
 	@Column(name = "visit_uuid", nullable = false)
 	private String visit_uuid;
 	
@@ -142,6 +145,16 @@ public class Death {
 	public void setFw_uuid(String fw_uuid) {
 		this.fw_uuid = fw_uuid;
 	}
+
+	public String getDeathPlace_oth() {
+		return deathPlace_oth;
+	}
+
+
+	public void setDeathPlace_oth(String deathPlace_oth) {
+		this.deathPlace_oth = deathPlace_oth;
+	}
+
 
 	@Override
 	public String toString() {

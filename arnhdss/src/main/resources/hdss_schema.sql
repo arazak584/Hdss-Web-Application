@@ -88,14 +88,14 @@ INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('assist', '2', 
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('assist', '3', 'TBA');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('assist', '4', 'Relative/Friend');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('assist', '5', 'No One');
-INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('assist', '6', 'Other');
+INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('assist', '77', 'Other');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('birthPlace', '5', 'At home');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('birthPlace', '1', 'Hospital');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('birthPlace', '4', 'Traditional Birth Attendant\'s Home');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('birthPlace', '2', 'Health Center/Clinic');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('birthPlace', '9', 'On the way to clinic/hosptal');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('birthPlace', '3', 'Private maternity home');
-INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('birthPlace', '6', 'Other');
+INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('birthPlace', '77', 'Other');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('birthPlace', '7', 'CHPS');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('comingfrom', '1', 'Within this community or village');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('comingfrom', '2', 'From another community or village within the HDSS area');
@@ -214,7 +214,7 @@ INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('HEAD_HH_FCORRE
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('howdel', '1', 'Normal/Spontaneous');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('howdel', '2', 'Caesarian Section');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('howdel', '3', 'Forceps');
-INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('howdel', '4', 'Other');
+INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('howdel', '77', 'Other');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('INF_OHOLOC', '1', 'KINTAMPO HOSPITAL KINTAMPO');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('INF_OHOLOC', '2', 'ADOM MAT. HOME JEMA');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('INF_OHOLOC', '3', 'JEMA HOSPITAL, JEMA');
@@ -360,7 +360,7 @@ INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('notdel', '11',
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('notdel', '12', 'Afraid to go');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('notdel', '13', 'Long waiting time');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('notdel', '14', 'Religious Reasons');
-INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('notdel', '15', 'Other');
+INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('notdel', '77', 'Other');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('occupation', '1', 'Farmer');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('occupation', '2', 'Employed farmer');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('occupation', '3', 'Merchant');
@@ -587,12 +587,12 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetSou', 'ANC
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetSou', 'Received during mass campaign', 5);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetSou', 'From NGO', 6);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetSou', 'Borrowed', 7);
-INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetSou', 'Other', 8);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetSou', 'Other', 77);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetLoc', 'Still in use', 1);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetLoc', 'Being used by other household members', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetLoc', 'Lend', 3);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetLoc', 'Destroyed', 4);
-INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetLoc', 'Other', 5);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetLoc', 'Other', 77);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('nhis', 'Yes, Active', 1);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('nhis', 'Yes, expired', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('nhis', 'No', 3);
@@ -606,7 +606,7 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('rea', 'Respira
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('rea', 'Fever', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('rea', 'Diarrhoea', 3);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('rea', 'Accident', 4);
-INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('rea', 'Other', 5);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('rea', 'Other', 77);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('onet', 'Always', 1);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('onet', 'Sometimes', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('onet', 'Rainy season', 3);
@@ -623,7 +623,7 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reavac', 'Moth
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reavac', 'Religious/Cultural reasons', 4);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reavac', 'Distance to health facility', 5);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reavac', 'Received but not indicated on card', 6);
-INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reavac', 'Other', 7);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reavac', 'Other', 77);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reavac', 'Not Applicable', 8);
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('scar', '1', 'Yes');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('scar', '2', 'No');
