@@ -1,6 +1,6 @@
 package org.arn.hdsscapture.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,9 +10,12 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Audited
 @Entity
@@ -27,12 +30,18 @@ public class Residency {
 	private String individual_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date insertDate;
 	
 	@Column(name = "startDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
 	
-	@Column(name = "endDate")
+	@Column(name = "endDate", nullable = true)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
 	
 	@Column(name = "startType", nullable = false)
@@ -52,6 +61,16 @@ public class Residency {
 	
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
+	
+	@Column(name = "sttime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date sttime;
+	
+	@Column(name = "edtime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date edtime;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false, nullable=false)
@@ -171,6 +190,26 @@ public class Residency {
 		this.fw_uuid = fw_uuid;
 	}
 	
+	public Date getSttime() {
+		return sttime;
+	}
+
+
+	public void setSttime(Date sttime) {
+		this.sttime = sttime;
+	}
+
+
+	public Date getEdtime() {
+		return edtime;
+	}
+
+
+	public void setEdtime(Date edtime) {
+		this.edtime = edtime;
+	}
+
+
 	@Override
     public String toString() {
         return uuid;

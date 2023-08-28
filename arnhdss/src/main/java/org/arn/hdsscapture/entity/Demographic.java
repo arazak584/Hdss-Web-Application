@@ -36,6 +36,16 @@ public class Demographic implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date insertDate;
 	
+	@Column(name = "sttime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date sttime;
+	
+	@Column(name = "edtime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date edtime;
+	
 	@Column(name = "religion")
 	private Integer religion;
 	
@@ -207,6 +217,22 @@ public class Demographic implements Serializable {
 		this.tribe_oth = tribe_oth;
 	}
 
+
+	public Date getSttime() {
+		return sttime;
+	}
+
+	public void setSttime(Date sttime) {
+		this.sttime = sttime;
+	}
+
+	public Date getEdtime() {
+		return edtime;
+	}
+
+	public void setEdtime(Date edtime) {
+		this.edtime = edtime;
+	}
 
 	@Override
 	public String toString() {

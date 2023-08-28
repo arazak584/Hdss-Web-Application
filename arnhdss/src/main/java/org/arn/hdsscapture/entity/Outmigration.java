@@ -1,6 +1,7 @@
 package org.arn.hdsscapture.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,9 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Audited
@@ -30,9 +34,13 @@ public class Outmigration {
 	private String residency_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date insertDate;
 	
 	@Column(name = "recordedDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date recordedDate;
 	
 	@Column(name = "destination", nullable = false)
@@ -49,6 +57,16 @@ public class Outmigration {
 	
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
+	
+	@Column(name = "sttime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date sttime;
+	
+	@Column(name = "edtime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date edtime;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
@@ -169,6 +187,21 @@ public class Outmigration {
 		this.fw_uuid = fw_uuid;
 	}
 
+	public Date getSttime() {
+		return sttime;
+	}
+
+	public void setSttime(Date sttime) {
+		this.sttime = sttime;
+	}
+
+	public Date getEdtime() {
+		return edtime;
+	}
+
+	public void setEdtime(Date edtime) {
+		this.edtime = edtime;
+	}
 
 	@Override
     public String toString() {

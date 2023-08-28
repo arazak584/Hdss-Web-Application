@@ -56,6 +56,16 @@ public class Relationship {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
+	@Column(name = "sttime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date sttime;
+	
+	@Column(name = "edtime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date edtime;
+	
 	private Integer mar;//Is this the first marriage of the woman?
 	private Integer tnbch;//Total Number of biological children
 	private Integer nchdm;//Number of biological children from this marriage
@@ -246,6 +256,30 @@ public class Relationship {
 	public void setMrank(Integer mrank) {
 		this.mrank = mrank;
 	}
+
+
+	public Date getSttime() {
+		return sttime;
+	}
+
+
+
+	public void setSttime(Date sttime) {
+		this.sttime = sttime;
+	}
+
+
+
+	public Date getEdtime() {
+		return edtime;
+	}
+
+
+
+	public void setEdtime(Date edtime) {
+		this.edtime = edtime;
+	}
+
 
 
 	@Override

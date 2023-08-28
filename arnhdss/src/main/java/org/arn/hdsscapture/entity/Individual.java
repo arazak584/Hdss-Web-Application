@@ -80,6 +80,16 @@ public class Individual implements Serializable {
 	@Column(name = "father_uuid", nullable=false)
     private String father_uuid;
 	
+	@Column(name = "sttime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date sttime;
+	
+	@Column(name = "edtime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date edtime;
+	
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
 	private List<Outmigration> outmigrations = new ArrayList<>();
@@ -257,7 +267,23 @@ public class Individual implements Serializable {
 	public void setGhanacard(String ghanacard) {
 		this.ghanacard = ghanacard;
 	}
+	
+	
+	public Date getSttime() {
+		return sttime;
+	}
 
+	public void setSttime(Date sttime) {
+		this.sttime = sttime;
+	}
+
+	public Date getEdtime() {
+		return edtime;
+	}
+
+	public void setEdtime(Date edtime) {
+		this.edtime = edtime;
+	}
 
 	@Override
 	public String toString() {

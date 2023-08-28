@@ -76,6 +76,16 @@ public class Inmigration {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
+	@Column(name = "sttime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date sttime;
+	
+	@Column(name = "edtime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date edtime;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
 	private Fieldworker fieldworker;
@@ -267,6 +277,26 @@ public class Inmigration {
 		this.fw_uuid = fw_uuid;
 	}
 	
+
+
+	public Date getSttime() {
+		return sttime;
+	}
+
+
+	public void setSttime(Date sttime) {
+		this.sttime = sttime;
+	}
+
+
+	public Date getEdtime() {
+		return edtime;
+	}
+
+
+	public void setEdtime(Date edtime) {
+		this.edtime = edtime;
+	}
 
 
 	@Override

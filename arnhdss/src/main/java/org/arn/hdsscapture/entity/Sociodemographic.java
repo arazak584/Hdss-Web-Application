@@ -1,6 +1,6 @@
 package org.arn.hdsscapture.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,9 +10,12 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Audited
@@ -35,12 +38,16 @@ public class Sociodemographic {
     
 	@Column(nullable = false)
     public String uuid;
-
-    @Column
-    public Date formcompldate;
-
-    @Column
-    public Date insertDate;
+    
+    @Column(name = "formcompldate", nullable = true)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date formcompldate;
+    
+    @Column(name = "insertDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date insertDate;
 
 
     @Column
@@ -390,6 +397,16 @@ public class Sociodemographic {
     public Integer chew_bnut_oecoccur;
     @Column
     public Integer drink_oecoccur;
+    
+    @Column(name = "sttime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date sttime;
+	
+	@Column(name = "edtime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date edtime;
     
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
@@ -1500,6 +1517,25 @@ public class Sociodemographic {
 	}
 	public void setDrink_oecoccur(Integer drink_oecoccur) {
 		this.drink_oecoccur = drink_oecoccur;
+	}
+
+	public Date getSttime() {
+		return sttime;
+	}
+
+
+	public void setSttime(Date sttime) {
+		this.sttime = sttime;
+	}
+
+
+	public Date getEdtime() {
+		return edtime;
+	}
+
+
+	public void setEdtime(Date edtime) {
+		this.edtime = edtime;
 	}
 
 

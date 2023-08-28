@@ -1,7 +1,7 @@
 package org.arn.hdsscapture.entity;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,9 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Audited
@@ -32,12 +35,18 @@ public class Pregnancyoutcome {
 	private String father_uuid;
 	
 	@Column(name = "insertDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date insertDate;
 	
 	@Column(name = "outcomeDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date outcomeDate;
 	
-	@Column(name = "conceptionDate")
+	@Column(name = "conceptionDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date conceptionDate;
 	
 	@Column(name = "numberofBirths", nullable = false)
@@ -48,6 +57,16 @@ public class Pregnancyoutcome {
 	
 	@Column(name = "b_place")
 	private Integer b_place;
+	
+	@Column(name = "sttime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date sttime;
+	
+	@Column(name = "edtime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date edtime;
 	
 	//Why was child not delivered at health facility
 	private Integer not_del;
@@ -498,6 +517,26 @@ public class Pregnancyoutcome {
 		this.fw_uuid = fw_uuid;
 	}
 
+
+
+	public Date getSttime() {
+		return sttime;
+	}
+
+
+	public void setSttime(Date sttime) {
+		this.sttime = sttime;
+	}
+
+
+	public Date getEdtime() {
+		return edtime;
+	}
+
+
+	public void setEdtime(Date edtime) {
+		this.edtime = edtime;
+	}
 
 
 	@Override

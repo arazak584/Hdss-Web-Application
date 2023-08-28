@@ -50,6 +50,16 @@ public class Pregnancyobservation {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
+	@Column(name = "sttime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date sttime;
+	
+	@Column(name = "edtime", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date edtime;
+	
 	private Integer anteNatalClinic;//Have you been to an ANC clinic?
 	private Integer ageOfPregFromPregNotes;//Age of pregnancy from pregnancy notes (In Weeks; Use the information in the ANC Booklet)
 	private Integer estimatedAgeOfPreg;//Number of months pregnant (Use the information in the ANC Booklet)
@@ -423,6 +433,26 @@ public class Pregnancyobservation {
 	public void setOutcome_date(Date outcome_date) {
 		this.outcome_date = outcome_date;
 	}
+	
+	
+	public Date getSttime() {
+		return sttime;
+	}
+
+	public void setSttime(Date sttime) {
+		this.sttime = sttime;
+	}
+
+
+	public Date getEdtime() {
+		return edtime;
+	}
+
+	public void setEdtime(Date edtime) {
+		this.edtime = edtime;
+	}
+
+
 
 
 	@Override
