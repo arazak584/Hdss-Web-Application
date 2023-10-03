@@ -60,6 +60,24 @@ public class Inmigration {
 	
 	@Column(name = "livestock")
 	private Integer livestock;
+	
+	@Column(name = "farm")
+	private Integer farm;
+	
+	@Column(name = "farm_other")
+	private String farm_other;
+	
+	@Column(name = "food_yn")
+	private Integer food_yn;
+	
+	@Column(name = "cash_yn")
+	private Integer cash_yn;
+	
+	@Column(name = "cash_crops")
+	private Integer cash_crops;
+	
+	@Column(name = "livestock_yn")
+	private Integer livestock_yn;
 
 	@Column(name = "acres")
 	private Integer acres;
@@ -76,15 +94,11 @@ public class Inmigration {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
-	@Column(name = "sttime", nullable = true)
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date sttime;
-	
-	@Column(name = "edtime", nullable = true)
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date edtime;
+	@Column(name = "sttime")
+	private String sttime;
+
+	@Column(name = "edtime")
+	private String edtime;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
@@ -195,9 +209,6 @@ public class Inmigration {
 	}
 
 
-
-
-
 	public Integer getMigType() {
 		return migType;
 	}
@@ -279,23 +290,80 @@ public class Inmigration {
 	
 
 
-	public Date getSttime() {
+	public String getSttime() {
 		return sttime;
 	}
 
-
-	public void setSttime(Date sttime) {
+	public void setSttime(String sttime) {
 		this.sttime = sttime;
 	}
 
-
-	public Date getEdtime() {
+	public String getEdtime() {
 		return edtime;
 	}
 
-
-	public void setEdtime(Date edtime) {
+	public void setEdtime(String edtime) {
 		this.edtime = edtime;
+	}
+
+
+	public Integer getFarm() {
+		return farm;
+	}
+
+
+	public void setFarm(Integer farm) {
+		this.farm = farm;
+	}
+
+
+	public String getFarm_other() {
+		return farm_other;
+	}
+
+
+	public void setFarm_other(String farm_other) {
+		this.farm_other = farm_other;
+	}
+
+
+	public Integer getFood_yn() {
+		return food_yn;
+	}
+
+
+	public void setFood_yn(Integer food_yn) {
+		this.food_yn = food_yn;
+	}
+
+
+	public Integer getCash_yn() {
+		return cash_yn;
+	}
+
+
+	public void setCash_yn(Integer cash_yn) {
+		this.cash_yn = cash_yn;
+	}
+
+
+	public Integer getCash_crops() {
+		return cash_crops;
+	}
+
+
+	public void setCash_crops(Integer cash_crops) {
+		this.cash_crops = cash_crops;
+	}
+
+
+	public Integer getLivestock_yn() {
+		return livestock_yn;
+	}
+
+
+	public void setLivestock_yn(Integer livestock_yn) {
+		this.livestock_yn = livestock_yn;
 	}
 
 

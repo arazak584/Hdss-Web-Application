@@ -108,7 +108,8 @@ public class SesZipController {
 				.addColumn("tricycles_fcorres").addColumn("tricycles_num_fcorres").addColumn("tv_fcorres")
 				.addColumn("tv_num_fcorres").addColumn("uuid").addColumn("wash_fcorres").addColumn("wash_num_fcorres")
 				.addColumn("watch_fcorres")
-			  .addColumn("watch_num_fcorres").addColumn("individual_uuid").addColumn("location_uuid").build();
+			  .addColumn("watch_num_fcorres").addColumn("individual_uuid").addColumn("location_uuid")
+			  .addColumn("sttime").addColumn("edtime").build();
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	  StringWriter writer = new StringWriter();

@@ -241,7 +241,7 @@ public class Vaccination implements Serializable {
 	private Integer chlbednet;//How many children sleep under the bednet?
 	
 	@Column(name = "weight")
-	private Integer weight;//Weight of child at birth in Kg?
+	private String weight;//Weight of child at birth in Kg?
 	
 	@Column(name = "scar")
 	private Integer scar;//Does the child have the BCG scar? (Observe)
@@ -271,6 +271,12 @@ public class Vaccination implements Serializable {
 	
 	@Column(name = "muac")
 	private Integer muac;//Mid-Upper Arm circumference MUAC
+	
+	@Column(name = "sttime")
+	private String sttime;
+
+	@Column(name = "edtime")
+	private String edtime;
 		
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -307,7 +313,6 @@ public class Vaccination implements Serializable {
 		this.insertDate = insertDate;
 	}
 
-	
 
 	public String getFw_uuid() {
 		return fw_uuid;
@@ -316,7 +321,6 @@ public class Vaccination implements Serializable {
 	public void setFw_uuid(String fw_uuid) {
 		this.fw_uuid = fw_uuid;
 	}
-	
 	
 	
 	public String getLocation_uuid() {
@@ -706,11 +710,11 @@ public class Vaccination implements Serializable {
 		this.chlbednet = chlbednet;
 	}
 
-	public Integer getWeight() {
+	public String getWeight() {
 		return weight;
 	}
 
-	public void setWeight(Integer weight) {
+	public void setWeight(String weight) {
 		this.weight = weight;
 	}
 
@@ -785,6 +789,22 @@ public class Vaccination implements Serializable {
 
 	public void setMuac(Integer muac) {
 		this.muac = muac;
+	}
+	
+	public String getSttime() {
+		return sttime;
+	}
+
+	public void setSttime(String sttime) {
+		this.sttime = sttime;
+	}
+
+	public String getEdtime() {
+		return edtime;
+	}
+
+	public void setEdtime(String edtime) {
+		this.edtime = edtime;
 	}
 
 	

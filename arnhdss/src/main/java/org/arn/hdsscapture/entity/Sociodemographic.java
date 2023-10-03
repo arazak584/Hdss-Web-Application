@@ -398,15 +398,11 @@ public class Sociodemographic {
     @Column
     public Integer drink_oecoccur;
     
-    @Column(name = "sttime", nullable = true)
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date sttime;
-	
-	@Column(name = "edtime", nullable = true)
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date edtime;
+    @Column(name = "sttime")
+	private String sttime;
+
+	@Column(name = "edtime")
+	private String edtime;
     
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
@@ -1519,22 +1515,19 @@ public class Sociodemographic {
 		this.drink_oecoccur = drink_oecoccur;
 	}
 
-	public Date getSttime() {
+	public String getSttime() {
 		return sttime;
 	}
 
-
-	public void setSttime(Date sttime) {
+	public void setSttime(String sttime) {
 		this.sttime = sttime;
 	}
 
-
-	public Date getEdtime() {
+	public String getEdtime() {
 		return edtime;
 	}
 
-
-	public void setEdtime(Date edtime) {
+	public void setEdtime(String edtime) {
 		this.edtime = edtime;
 	}
 

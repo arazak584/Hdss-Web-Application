@@ -31,6 +31,7 @@ public class Outcome {
 	@Column(name = "type", nullable = false)
 	private Integer type;
 	
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "preg_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	private Pregnancyoutcome pregnancyoutcome;
@@ -84,6 +85,7 @@ public class Outcome {
 	public void setType(Integer type) {
 		this.type = type;
 	}
+	
 
 	@Override
 	public String toString() {

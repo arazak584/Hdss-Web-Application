@@ -53,7 +53,8 @@ public class DemographicZipController {
 	  CsvSchema schema = CsvSchema.builder().addColumn("individual_uuid").addColumn("comp_yrs").addColumn("education").addColumn("fw_uuid")
 			  .addColumn("insertDate").addColumn("marital").addColumn("occupation").addColumn("occupation_oth")
 			  .addColumn("phone1").addColumn("phone2")
-			  .addColumn("religion").addColumn("religion_oth").addColumn("tribe").addColumn("tribe_oth").build();
+			  .addColumn("religion").addColumn("religion_oth").addColumn("tribe").addColumn("tribe_oth")
+			  .addColumn("sttime").addColumn("edtime").build();
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	  StringWriter writer = new StringWriter();

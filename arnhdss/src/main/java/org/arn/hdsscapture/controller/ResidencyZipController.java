@@ -52,7 +52,8 @@ public class ResidencyZipController {
 	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("endDate").addColumn("endType")
 			  .addColumn("fw_uuid").addColumn("insertDate").addColumn("rltn_head")
 			  .addColumn("startDate").addColumn("startType")
-			  .addColumn("individual_uuid").addColumn("location_uuid").addColumn("socialgroup_uuid").build();
+			  .addColumn("individual_uuid").addColumn("location_uuid").addColumn("socialgroup_uuid")
+			  .addColumn("sttime").addColumn("edtime").build();
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	  StringWriter writer = new StringWriter();

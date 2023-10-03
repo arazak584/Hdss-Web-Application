@@ -52,7 +52,7 @@ public class RelationshipZipController {
 	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("aIsToB").addColumn("endDate").addColumn("endType")
 			  .addColumn("fw_uuid").addColumn("individualA_uuid").addColumn("individualB_uuid").addColumn("insertDate").addColumn("lcow").addColumn("mar")
 			  .addColumn("mrank").addColumn("nchdm").addColumn("nwive").addColumn("polygamous")
-			  .addColumn("startDate").addColumn("tnbch").build();
+			  .addColumn("startDate").addColumn("tnbch").addColumn("sttime").addColumn("edtime").build();
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	  StringWriter writer = new StringWriter();

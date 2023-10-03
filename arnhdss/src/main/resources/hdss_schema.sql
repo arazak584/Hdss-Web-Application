@@ -419,7 +419,7 @@ INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('reason', '77',
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Due to family separation (Including Divorce)', 1);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Due to health conditions', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Due to marriage', 3);
-INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'I lost my job and income ', 4);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Lost job and income ', 4);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Due to retirement', 5);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'To learn a trade or apprentiship', 6);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Moved to own house', 7);
@@ -431,15 +431,15 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMi
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Natural disaster (such as Famine, drought, flooding etc) ', 13);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Due to political unrest or instability (communal, tribal or religious conflict) ', 14);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'New House', 15);
-INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Came with/to relative(s)/parents', 16);
-INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Came with spouse', 17);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Went with/to relative(s)/parents', 16);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Went with spouse', 17);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Education/School', 18);
-INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'NOT KNOWN', 66);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Not Known', 66);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Death of benefactor/Guardian', 20);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reasonForOutMigration', 'Other', 77);
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('relationshipType', '2', 'Married');
-INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('relationshipType', '3', 'Separated/Divorced');
-INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('relationshipType', '4', 'Widowed');
+-- INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('relationshipType', '3', 'Separated/Divorced');
+-- INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('relationshipType', '4', 'Widowed');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('relationshipType', '5', 'Living Together');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('relendType', '1', 'Active');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('relendType', '4', 'Dead');
@@ -580,6 +580,7 @@ INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('whereoutside',
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('whereoutside', '8', 'South America');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('whereoutside', '9', 'Asia');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('whereoutside', '10', 'Australia');
+INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('whereoutside', '11', 'Not Known');
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetSou', 'Child Welfare clinic', 1);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetSou', 'Bought it', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('bnetSou', 'Received as a gift', 3);
@@ -628,6 +629,10 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('reavac', 'Not 
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('scar', '1', 'Yes');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('scar', '2', 'No');
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('scar', '3', 'Child not available');
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('cashcrops', 'Cash crops: mango, cashew, cocoa, ginger, tobacco, etc.', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for home consumption', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for sale on market', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for home consumption and sale on market', 3);
 
 
 -- Dashboard

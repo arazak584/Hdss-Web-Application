@@ -58,15 +58,11 @@ public class Pregnancyoutcome {
 	@Column(name = "b_place")
 	private Integer b_place;
 	
-	@Column(name = "sttime", nullable = true)
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date sttime;
-	
-	@Column(name = "edtime", nullable = true)
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date edtime;
+	@Column(name = "sttime")
+	private String sttime;
+
+	@Column(name = "edtime")
+	private String edtime;
 	
 	//Why was child not delivered at health facility
 	private Integer not_del;
@@ -109,7 +105,7 @@ public class Pregnancyoutcome {
 	//How much did the child weigh (estimated baby size)
 	private Integer chd_size;
 	//Record weight in kilograms from Health Card
-	private Integer weig_hcard;
+	private String weig_hcard;
 
 	
 	@Column(name = "visit_uuid", nullable = false)
@@ -482,31 +478,6 @@ public class Pregnancyoutcome {
 		this.chd_weight = chd_weight;
 	}
 
-
-
-	public Integer getChd_size() {
-		return chd_size;
-	}
-
-
-
-	public void setChd_size(Integer chd_size) {
-		this.chd_size = chd_size;
-	}
-
-
-
-	public Integer getWeig_hcard() {
-		return weig_hcard;
-	}
-
-
-
-	public void setWeig_hcard(Integer weig_hcard) {
-		this.weig_hcard = weig_hcard;
-	}
-
-
 	public String getFw_uuid() {
 		return fw_uuid;
 	}
@@ -519,25 +490,37 @@ public class Pregnancyoutcome {
 
 
 
-	public Date getSttime() {
+	public String getSttime() {
 		return sttime;
 	}
 
-
-	public void setSttime(Date sttime) {
+	public void setSttime(String sttime) {
 		this.sttime = sttime;
 	}
 
-
-	public Date getEdtime() {
+	public String getEdtime() {
 		return edtime;
 	}
 
-
-	public void setEdtime(Date edtime) {
+	public void setEdtime(String edtime) {
 		this.edtime = edtime;
 	}
 
+	public Integer getChd_size() {
+		return chd_size;
+	}
+
+	public void setChd_size(Integer chd_size) {
+		this.chd_size = chd_size;
+	}
+
+	public String getWeig_hcard() {
+		return weig_hcard;
+	}
+
+	public void setWeig_hcard(String weig_hcard) {
+		this.weig_hcard = weig_hcard;
+	}
 
 	@Override
 	public String toString() {

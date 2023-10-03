@@ -51,7 +51,8 @@ public class IndividualZipController {
          // Convert data to CSV
       	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("dob").addColumn("dobAspect").addColumn("extId")
                   .addColumn("firstName").addColumn("fw_uuid").addColumn("gender").addColumn("ghanacard").addColumn("insertDate")
-                  .addColumn("lastName").addColumn("otherName").addColumn("father_uuid").addColumn("mother_uuid").build();
+                  .addColumn("lastName").addColumn("otherName").addColumn("father_uuid").addColumn("mother_uuid")
+                  .addColumn("sttime").addColumn("edtime").build();
       	  CsvMapper csvMapper = new CsvMapper();
       	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
       	  StringWriter writer = new StringWriter();

@@ -80,15 +80,11 @@ public class Individual implements Serializable {
 	@Column(name = "father_uuid", nullable=false)
     private String father_uuid;
 	
-	@Column(name = "sttime", nullable = true)
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date sttime;
-	
-	@Column(name = "edtime", nullable = true)
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date edtime;
+	@Column(name = "sttime")
+	private String sttime;
+
+	@Column(name = "edtime")
+	private String edtime;
 	
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
@@ -269,19 +265,19 @@ public class Individual implements Serializable {
 	}
 	
 	
-	public Date getSttime() {
+	public String getSttime() {
 		return sttime;
 	}
 
-	public void setSttime(Date sttime) {
+	public void setSttime(String sttime) {
 		this.sttime = sttime;
 	}
 
-	public Date getEdtime() {
+	public String getEdtime() {
 		return edtime;
 	}
 
-	public void setEdtime(Date edtime) {
+	public void setEdtime(String edtime) {
 		this.edtime = edtime;
 	}
 
