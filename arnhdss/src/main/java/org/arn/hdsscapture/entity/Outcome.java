@@ -31,6 +31,13 @@ public class Outcome {
 	@Column(name = "type", nullable = false)
 	private Integer type;
 	
+	//Was the child weighed at birth?
+	private Integer chd_weight;
+	//How much did the child weigh (estimated baby size)
+	private Integer chd_size;
+	//Record weight in kilograms from Health Card
+	private String weig_hcard;
+	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "preg_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
@@ -84,6 +91,31 @@ public class Outcome {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+	
+
+	public Integer getChd_weight() {
+		return chd_weight;
+	}
+
+	public Integer getChd_size() {
+		return chd_size;
+	}
+
+	public void setChd_size(Integer chd_size) {
+		this.chd_size = chd_size;
+	}
+
+	public String getWeig_hcard() {
+		return weig_hcard;
+	}
+
+	public void setWeig_hcard(String weig_hcard) {
+		this.weig_hcard = weig_hcard;
+	}
+
+	public void setChd_weight(Integer chd_weight) {
+		this.chd_weight = chd_weight;
 	}
 	
 

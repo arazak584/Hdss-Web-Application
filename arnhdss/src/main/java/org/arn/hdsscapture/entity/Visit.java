@@ -69,6 +69,12 @@ public class Visit implements Serializable {
 	@Column(name = "respondent")
 	private String respondent;
 	
+	@Column(name = "sttime")
+	private String sttime;
+
+	@Column(name = "edtime")
+	private String edtime;
+	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "visit")
 	private List<Outmigration> outmigrations = new ArrayList<>();
 	
@@ -191,6 +197,22 @@ public class Visit implements Serializable {
 
 	public void setRespondent(String respondent) {
 		this.respondent = respondent;
+	}
+	
+	public String getSttime() {
+		return sttime;
+	}
+
+	public void setSttime(String sttime) {
+		this.sttime = sttime;
+	}
+
+	public String getEdtime() {
+		return edtime;
+	}
+
+	public void setEdtime(String edtime) {
+		this.edtime = edtime;
 	}
 
 
