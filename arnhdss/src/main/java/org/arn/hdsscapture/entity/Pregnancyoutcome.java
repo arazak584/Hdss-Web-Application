@@ -100,6 +100,16 @@ public class Pregnancyoutcome {
 	private Integer first_rec;
 	//How many times did you take IPT in front of a nurse during the pregnancy?
 	private Integer many_ipt;
+	
+	@Column(name = "pregnancy_uuid")
+	private String pregnancy_uuid;
+	
+	//Was the child weighed at birth?
+		private Integer chd_weight;
+		//How much did the child weigh (estimated baby size)
+		private Integer chd_size;
+		//Record weight in kilograms from Health Card
+		private String weig_hcard;
 
 	
 	@Column(name = "visit_uuid", nullable = false)
@@ -489,6 +499,40 @@ public class Pregnancyoutcome {
 		this.edtime = edtime;
 	}
 	
+	public Integer getChd_weight() {
+		return chd_weight;
+	}
+
+	public Integer getChd_size() {
+		return chd_size;
+	}
+
+	public void setChd_size(Integer chd_size) {
+		this.chd_size = chd_size;
+	}
+
+	public String getWeig_hcard() {
+		return weig_hcard;
+	}
+
+	public void setWeig_hcard(String weig_hcard) {
+		this.weig_hcard = weig_hcard;
+	}
+
+	public void setChd_weight(Integer chd_weight) {
+		this.chd_weight = chd_weight;
+	}
+	
+
+	public String getPregnancy_uuid() {
+		return pregnancy_uuid;
+	}
+
+
+	public void setPregnancy_uuid(String pregnancy_uuid) {
+		this.pregnancy_uuid = pregnancy_uuid;
+	}
+
 
 	@Override
 	public String toString() {

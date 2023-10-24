@@ -80,7 +80,8 @@ alter table outcome add index FKBE0C0752948ED5FB (childuuid), add constraint FKB
 alter table listing add index FKD6922049851605F6 (compno), add constraint FKD6922049851605F6 foreign key (compno) references location (compno);
 alter table vaccination add index FKD6922049851605FV (individual_uuid), add constraint FKD6922049851605FV foreign key (individual_uuid) references individual (uuid);
 alter table individual ADD UNIQUE INDEX FK6B04D4BEC630DB8 (uuid);
-alter table duplicate ADD UNIQUE INDEX FK6B04D4BEC630DBD (individual_uuid);
+alter table duplicate ADD INDEX FK6B04D4BEC630DBD (individual_uuid);
+alter table duplicate ADD INDEX FK6B04D4BEC630DBE (dup_uuid);
 
 
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('assist', '1', 'Doctor');
