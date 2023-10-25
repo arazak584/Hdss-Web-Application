@@ -12,6 +12,9 @@ import javax.persistence.Table;
 public class Vpm {
 	
 	@Id
+	@Column(name = "uuid", nullable = false)
+	private String uuid;
+	
 	@Column(name = "individual_uuid", nullable = false)
 	private String individual_uuid;
 	
@@ -53,6 +56,18 @@ public class Vpm {
 	
 	public Vpm() {}
 	
+	
+
+	public String getUuid() {
+		return uuid;
+	}
+
+
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
 
 	public String getIndividual_uuid() {
 		return individual_uuid;
