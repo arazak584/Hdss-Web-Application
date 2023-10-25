@@ -44,24 +44,61 @@ public class ResidencyController {
 	
 	@PostMapping("")
 	public DataWrapper<Residency> saveAll(@RequestBody DataWrapper<Residency> data) {
-		try {
+	    try {
+	        List<Residency> newResidencyData = data.getData();
 
-		List<Residency> saved =  repo.saveAll(data.getData());
+	        // Iterate through the new residency data
+	        for (Residency newResidency : newResidencyData) {
+	            // Check if the UUID already exists in the database
+	            Residency existingResidency = repo.findById(newResidency.getUuid()).orElse(null);
 
-		DataWrapper<Residency> s = new DataWrapper<>();
-		s.setData(saved);
+	            if (existingResidency != null && existingResidency.getEndType() == 2) {
+	                // Query the database to find any records with the same individual_uuid but different UUID
+	                // and endType equal to 1
+	                List<Residency> conflictingResidencies = repo.findConflictingRecords(newResidency.getIndividual_uuid(), newResidency.getUuid());
 
-		return s;
-		}catch (Exception e) {
-            // Log the API error message and full stack trace into ErrorLog entity
-            String errorMessage = "API Error: " + e.getMessage();
-            String stackTrace = getStackTraceAsString(e);
+	                boolean canUpdate = true;
 
-            logError(errorMessage, stackTrace);
+	                // Check if there are conflicting records with endType 1
+	                for (Residency conflictingResidency : conflictingResidencies) {
+	                    if (conflictingResidency.getEndType() == 1) {
+	                        canUpdate = false;
+	                        break;
+	                    }
+	                }
 
-            throw new DataErrorException(errorMessage, e);
-        }
+	                // If no conflicting records with endType 1 are found, update the record
+	                if (canUpdate) {
+	                	
+	                	// Set the existingResidency to be equal to the newResidency
+	                    existingResidency = newResidency;
+
+	                    // Save the updated record
+	                    repo.save(existingResidency);
+
+	                }
+	            } else {
+	                // If UUID doesn't exist or endType is not 2, simply save the record
+	                repo.save(newResidency);
+	            }
+	        }
+
+	        // Return the saved data
+	        DataWrapper<Residency> s = new DataWrapper<>();
+	        s.setData(newResidencyData);
+
+	        return s;
+	    } catch (Exception e) {
+	        // Log the API error message and full stack trace into ErrorLog entity
+	        String errorMessage = "API Error: " + e.getMessage();
+	        String stackTrace = getStackTraceAsString(e);
+
+	        logError(errorMessage, stackTrace);
+
+	        throw new DataErrorException(errorMessage, e);
+	    }
 	}
+
 	
 	// Helper method to log the error into ErrorLog entity
     private void logError(String errorMessage, String stackTrace) {

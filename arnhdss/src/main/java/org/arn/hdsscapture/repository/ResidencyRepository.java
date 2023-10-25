@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
+import org.springframework.data.repository.query.Param;
 import org.arn.hdsscapture.entity.Residency;
 
 public interface ResidencyRepository extends JpaRepository <Residency, String> {
@@ -22,6 +22,9 @@ public interface ResidencyRepository extends JpaRepository <Residency, String> {
 		    + "AND NOT EXISTS (SELECT 1 FROM hdss.residency m2 "
 		    + "WHERE m2.individual_uuid = residency.individual_uuid AND m2.endtype = 3);")
 		List<Residency> findResidency();
+	
+	@Query("SELECT r FROM Residency r WHERE r.individual_uuid = :individual_uuid AND r.uuid <> :uuid AND r.endType = 1")
+	List<Residency> findConflictingRecords(@Param("individual_uuid") String individual_uuid, @Param("uuid") String uuid);
 
 
 }
