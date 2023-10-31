@@ -36,6 +36,7 @@ ALTER TABLE pregnancyoutcome ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIM
 ALTER TABLE demographic ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE listing ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 ALTER TABLE vaccination ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+ALTER TABLE duplicate ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 
 -- fieldworker
@@ -634,6 +635,7 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('cashcrops', 'C
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for home consumption', 1);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for sale on market', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for home consumption and sale on market', 3);
+INSERT INTO settings (`earliestDate`, `father_age`, `hoh_age`, `mother_age`, `rel_age`) VALUES ('2019-01-01', 12, 14, 12, 12);
 
 
 -- Dashboard

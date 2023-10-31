@@ -6,9 +6,11 @@ import java.util.UUID;
 
 import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Round;
+import org.arn.hdsscapture.entity.Settings;
 import org.arn.hdsscapture.entity.Task;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
+import org.arn.hdsscapture.repository.SettingsRepository;
 import org.arn.hdsscapture.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -210,5 +212,51 @@ public class UtilityController {
 		
 		model.addAttribute("items", items);
 		return "utility/task";
+	}
+	
+	@Autowired
+	SettingsRepository settingsrepo;
+	
+	@GetMapping("/settings")
+	public String findSettings(Model model) {
+		List<Settings> settings = settingsrepo.findAll();
+		model.addAttribute("settings", settings);
+		return "utility/settings_list";
+	}
+	
+	@GetMapping("/settings/edit/{id}")
+	public String editSettings(@PathVariable("id") Integer id, Model model) {
+		List<Settings> optionalSettings = settingsrepo.findBy(id);
+		if (!optionalSettings.isEmpty()) {
+			Settings settings = optionalSettings.get(0);
+			// Add any other necessary data to the model attribute for editing
+			model.addAttribute("settings", settings);
+			return "utility/settings_edit";
+		} else {
+			return "error";
+		}
+	}
+	
+	@PostMapping("/settings/{id}")
+	public String updateSettings(@PathVariable("id") Integer id, @ModelAttribute("settings") Settings settings,
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			// Handle validation errors if necessary
+			return "settings_edit";
+		} else {
+			List<Settings> optionalSettings = settingsrepo.findBy(id);
+			if (!optionalSettings.isEmpty()) {
+				Settings existingSettings = optionalSettings.get(0);
+				existingSettings.setHoh_age(settings.getHoh_age());
+				existingSettings.setMother_age(settings.getMother_age());
+				existingSettings.setFather_age(settings.getFather_age());
+				existingSettings.setRel_age(settings.getRel_age());
+				existingSettings.setEarliestDate(settings.getEarliestDate());
+				settingsrepo.save(existingSettings);
+				return "redirect:/utility/settings";
+			} else {
+				return "error";
+			}
+		}
 	}
 }

@@ -1,11 +1,16 @@
 package org.arn.hdsscapture.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="vpm")
@@ -18,10 +23,17 @@ public class Vpm {
 	@Column(name = "individual_uuid", nullable = false)
 	private String individual_uuid;
 	
+	@Column(name = "insertDate", nullable = true)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date insertDate;
+	
 	@Column(name = "extId", nullable = false)
 	private String extId;
 	
 	@Column(name = "dob", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dob;
 	
 	@Column(name = "gender", nullable = false)
@@ -34,8 +46,10 @@ public class Vpm {
 	private String lastName;
 	
 	@Column(name = "deathDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date deathDate;
-	
+
 	@Column(name = "compno", nullable = false)
 	private String compno;
 	
@@ -53,6 +67,18 @@ public class Vpm {
 	
 	@Column(name = "fieldworker")
 	private String fieldworker;
+	
+	@Column(name = "deathCause", nullable = true)
+	private Integer deathCause;
+	
+	@Column(name = "deathPlace", nullable = true)
+	private Integer deathPlace;
+	
+	@Column(name = "visit_uuid", nullable = true)
+	private String visit_uuid;
+	
+	@Column(name = "fw_uuid", nullable = true)
+	private String fw_uuid;
 	
 	public Vpm() {}
 	
@@ -222,6 +248,65 @@ public class Vpm {
 	public void setFieldworker(String fieldworker) {
 		this.fieldworker = fieldworker;
 	}
+
+	public Date getInsertDate() {
+		return insertDate;
+	}
+
+
+
+	public void setInsertDate(Date insertDate) {
+		this.insertDate = insertDate;
+	}
+	
+	
+	public Integer getDeathCause() {
+		return deathCause;
+	}
+
+
+
+	public void setDeathCause(Integer deathCause) {
+		this.deathCause = deathCause;
+	}
+
+
+
+	public Integer getDeathPlace() {
+		return deathPlace;
+	}
+
+
+
+	public void setDeathPlace(Integer deathPlace) {
+		this.deathPlace = deathPlace;
+	}
+
+
+
+	public String getVisit_uuid() {
+		return visit_uuid;
+	}
+
+
+
+	public void setVisit_uuid(String visit_uuid) {
+		this.visit_uuid = visit_uuid;
+	}
+
+
+
+	public String getFw_uuid() {
+		return fw_uuid;
+	}
+
+
+
+	public void setFw_uuid(String fw_uuid) {
+		this.fw_uuid = fw_uuid;
+	}
+
+
 
 	@Override
 	public String toString() {

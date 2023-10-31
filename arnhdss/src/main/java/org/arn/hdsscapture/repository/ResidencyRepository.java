@@ -25,6 +25,9 @@ public interface ResidencyRepository extends JpaRepository <Residency, String> {
 	
 	@Query("SELECT r FROM Residency r WHERE r.individual_uuid = :individual_uuid AND r.uuid <> :uuid AND r.endType = 1")
 	List<Residency> findConflictingRecords(@Param("individual_uuid") String individual_uuid, @Param("uuid") String uuid);
+	
+	@Query("SELECT r FROM Residency r WHERE r.uuid = :uuid")
+    Residency findByUuid(@Param("uuid") String uuid);
 
 
 }
