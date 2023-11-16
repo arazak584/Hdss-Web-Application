@@ -1,13 +1,18 @@
 package org.arn.hdsscapture.entity;
 
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name =  "round", uniqueConstraints = @UniqueConstraint(columnNames = "roundNumber"))
@@ -21,9 +26,13 @@ public class Round {
 	private Integer roundNumber;
 	
 	@Column(name = "startDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
 	
 	@Column(name = "endDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
 	
 	@Column(name = "remark", nullable = false)

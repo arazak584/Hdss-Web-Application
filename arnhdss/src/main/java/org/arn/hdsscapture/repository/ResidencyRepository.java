@@ -28,6 +28,10 @@ public interface ResidencyRepository extends JpaRepository <Residency, String> {
 	
 	@Query("SELECT r FROM Residency r WHERE r.uuid = :uuid")
     Residency findByUuid(@Param("uuid") String uuid);
+	
+	@Query("SELECT count(r) FROM Residency r WHERE r.endType = 1")
+	Long countResidency();
+
 
 
 }
