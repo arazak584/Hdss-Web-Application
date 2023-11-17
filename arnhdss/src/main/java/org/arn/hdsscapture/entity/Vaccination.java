@@ -37,6 +37,11 @@ public class Vaccination implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date insertDate;
 	
+	@Column(name = "editDate", nullable = false)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date editDate;
+	
 	@Column(name = "location_uuid", nullable=false)
 	private String location_uuid;
 	
@@ -806,8 +811,15 @@ public class Vaccination implements Serializable {
 	public void setEdtime(String edtime) {
 		this.edtime = edtime;
 	}
-
 	
+	public Date getEditDate() {
+		return editDate;
+	}
+
+	public void setEditDate(Date editDate) {
+		this.editDate = editDate;
+	}
+
 	@Override
 	public String toString() {
 		return individual_uuid;

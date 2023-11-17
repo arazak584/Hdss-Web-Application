@@ -44,11 +44,13 @@ function updateDashboard(data) {
     $('#cntvisit').text(data.hhvisit);
     $('#cnthoh').text(data.hh);
     $('#visited').text(data.visit);
+    $('#rvisit').text(data.visit);
     //comp visit
     $('#cntcmp').text(data.comp);
     $('#cmpvisit').text(data.compvisit);
     $('#cpmvisited').text(data.compper);
     $('#cpmnew').text(data.comploc);
+    $('#listing').text(data.compvisit);
     
     $('#cntpreg').text(data.pregs);
     $('#cntdth').text(data.death);
@@ -58,6 +60,10 @@ function updateDashboard(data) {
     $('#cntsoc').text(data.newhh);
     $('#cntloc').text(data.newloc);
     $('#cntvac').text(data.vacc);
+    
+    $('#cntimg').text(data.img);
+    $('#cntomg').text(data.omg);
+    $('#cntoutcome').text(data.outcome);
 }
 
 function renderItems(items) {

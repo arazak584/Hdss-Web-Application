@@ -55,7 +55,7 @@
                                                 <h2><span id="countInd" class="count"></span></h2>
                                             </div>
                                             <div class="icon">
-                                                <i class="ik ik-award"></i>
+                                                <i class="fa fa-users"></i>
                                             </div>
                                         </div>
                                         <small class="text-small mt-10 d-block">
@@ -79,7 +79,7 @@
                                                 <h2><span id="countResContainer" class="count"></span></h2>
                                             </div>
                                             <div class="icon">
-                                                <i class="ik ik-award"></i>
+                                                <i class="fa fa-users"></i>
                                             </div>
                                         </div>
                                         <h6 class="text-small mt-10 d-block">
@@ -101,7 +101,7 @@
                                                 <h2><span id="cnthh" class="count"></span></h2>
                                             </div>
                                             <div class="icon">
-                                                <i class="ik ik-thumbs-up"></i>
+                                                <i class="fa fa-female"></i>
                                             </div>
                                         </div>
                                         <h6 class="text-small mt-10 d-block">
@@ -123,7 +123,7 @@
                                                 <h2><span id="cntcomp" class="count"></span></h2>
                                             </div>
                                             <div class="icon">
-                                                <i class="ik ik-calendar"></i>
+                                                <i class="fa fa-home"></i>
                                             </div>
                                         </div>
                                         <h6 class="text-small mt-10 d-block">
@@ -167,32 +167,32 @@
                                                     <tr>
                                                         <td><h5>1</h5></td>
                                                         <td><h6 class="mb-1">Household Visit</h6></td>
-                                                        <td><h6 class="text-muted"><span th:text="${visit}"></span></h6></td>
+                                                        <td><h6 class="text-muted"><span id="rvisit"></span></h6></td>
                                                         <td><a th:href="@{/hdss/report/visit}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><h5>2</h5></td>
                                                         <td><h6 class="mb-1">Compound Visit</h6></td>
-                                                        <td><h6 class="text-muted"><span th:text="${listing}"></span></h6></td>
+                                                        <td><h6 class="text-muted"><span id="listing"></span></h6></td>
                                                         <td><a th:href = "@{/hdss/report/listing}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><h5>3</h5></td>
                                                         <td><h6 class="mb-1">Inmigration</h6></td>
-                                                        <td><h6 class="text-muted"><span th:text="${img}"></span></h6></td>
-                                                        <td><a th:href = "@{/hdss/report/ind}"><label class="badge badge-success">View Report</label></a></td>
+                                                        <td><h6 class="text-muted"><span id="cntimg"></span></h6></td>
+                                                        <td><a th:href = "@{/hdss/report/inmigration}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><h5>4</h5></td>
                                                         <td><h6 class="mb-1">Outmigration</h6></td>
-                                                        <td><h6 class="text-muted"><span th:text="${omg}"></span></h6></td>
-                                                        <td><label class="badge badge-success">View Report</label></td>
+                                                        <td><h6 class="text-muted"><span id="cntomg"></span></h6></td>
+                                                        <td><a th:href = "@{/hdss/report/outmigration}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><h5>5</h5></td>
                                                         <td><h6 class="mb-1">Pregnancy Outcome</h6></td>
-                                                        <td><h6 class="text-muted"><span th:text="${outcome}"></span></h6></td>
-                                                        <td><label class="badge badge-success">View Report</label></td>
+                                                        <td><h6 class="text-muted"><span id="cntoutcome"></span></h6></td>
+                                                        <td><a th:href = "@{/hdss/report/outcome}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     
                                                 </tbody>
@@ -225,7 +225,7 @@
                                                             <p>Individual</p>
                                                         </td>
                                                         <td class="text-right">
-                                                            <label class="badge badge-warning">View</label>
+                                                            <a th:href="@{/hdss/report/individual}"><label class="badge badge-warning">View</label></a>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -235,7 +235,7 @@
                                                             <p>Household</p>
                                                         </td>
                                                         <td class="text-right">
-                                                            <label class="badge badge-success">View</label>
+                                                            <a th:href="@{/hdss/report/household}"><label class="badge badge-success">View</label></a>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -255,7 +255,7 @@
                                                             <p>Vaccination</p>
                                                         </td>
                                                         <td class="text-right">
-                                                            <label class="badge badge-danger">View</label>
+                                                            <a th:href="@{/hdss/report/vaccination}"><label class="badge badge-danger">View</label></a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -349,7 +349,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
-                                        <p class="mb-30 bg-red lbl-card"><i class="fas fa-database"></i> View Report</p>
+                                        <a th:href = "@{/hdss/report/pregnancy}"><p class="mb-30 bg-red lbl-card"><i class="fas fa-database"></i> View Report</p></a>
                                         <div class="text-center">
                                             <h2 class="mb-0 d-inline-block text-red"><span id="cntpreg" class="count"></span></h2>
                                             <p class="mb-0 d-inline-block">Pregnancy</p>
@@ -361,7 +361,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
-                                        <p class="mb-30 bg-blue lbl-card"><i class="fas fa-database"></i> View Report</p>
+                                        <a th:href = "@{/hdss/report/relationship}"><p class="mb-30 bg-blue lbl-card"><i class="fas fa-database"></i> View Report</p></a>
                                         <div class="text-center">
                                             <h2 class="mb-0 d-inline-block text-blue"><span id="cntrel"></span></h2>
                                             <p class="mb-0 d-inline-block">Relationship</p>
@@ -373,7 +373,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
-                                        <p class="mb-30 bg-green lbl-card"><i class="fas fa-database"></i> View Report</p>
+                                        <a th:href = "@{/hdss/report/death}"><p class="mb-30 bg-green lbl-card"><i class="fas fa-database"></i> View Report</p></a>
                                         <div class="text-center">
                                             <h2 class="mb-0 d-inline-block text-green"><span id="cntdth"></span></h2>
                                             <p class="mb-0 d-inline-block">Death</p>
@@ -385,7 +385,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
-                                        <p class="mb-30 bg-warning lbl-card"><i class="fas fa-database"></i> View Report</p>
+                                        <a th:href = "@{/hdss/report/ses}"><p class="mb-30 bg-warning lbl-card"><i class="fas fa-database"></i> View Report</p></a>
                                         <div class="text-center">
                                             <h2 class="mb-0 d-inline-block text-warning"><span id="cntses"></span></h2>
                                             <p class="mb-0 d-inline-block">SES</p>

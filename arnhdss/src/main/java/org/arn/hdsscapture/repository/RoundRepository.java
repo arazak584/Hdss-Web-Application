@@ -14,7 +14,7 @@ public interface RoundRepository extends JpaRepository <Round, String> {
 	@Query(nativeQuery = true, value = "SELECT * from round ORDER BY roundNumber DESC limit 1")
 	List<Round> findAll();
 	
-	@Query(nativeQuery = true, value = "SELECT * from round ORDER BY roundNumber")
+	@Query(nativeQuery = true, value = "SELECT * from round ORDER BY roundNumber ASC")
 	List<Round> findRound();
 	
 	@Query(nativeQuery = true, value = "SELECT * from round WHERE roundNumber = :roundNumber ORDER BY roundNumber")
@@ -22,6 +22,9 @@ public interface RoundRepository extends JpaRepository <Round, String> {
 	
 	 @Query(nativeQuery = true, value = "SELECT * FROM round r WHERE r.startDate BETWEEN :startDate AND :endDate")
 	List<Round> findRoundsBetweenDates(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
+	 @Query(nativeQuery = true, value = "SELECT MAX(roundNumber) FROM round")
+	 Integer findMaxRoundNumber();
 
 
 }

@@ -11,9 +11,29 @@ import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.ReportRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.views.ListVisitRepository;
+import org.arn.hdsscapture.views.ViewDth;
+import org.arn.hdsscapture.views.ViewDthRepository;
+import org.arn.hdsscapture.views.ViewHoh;
+import org.arn.hdsscapture.views.ViewHohRepository;
+import org.arn.hdsscapture.views.ViewImg;
+import org.arn.hdsscapture.views.ViewImgRepository;
+import org.arn.hdsscapture.views.ViewInd;
+import org.arn.hdsscapture.views.ViewIndRepository;
 import org.arn.hdsscapture.views.ViewListing;
 import org.arn.hdsscapture.views.ViewLocRepository;
 import org.arn.hdsscapture.views.ViewLocation;
+import org.arn.hdsscapture.views.ViewOmg;
+import org.arn.hdsscapture.views.ViewOmgRepository;
+import org.arn.hdsscapture.views.ViewOutcome;
+import org.arn.hdsscapture.views.ViewOutcomeRepository;
+import org.arn.hdsscapture.views.ViewPreg;
+import org.arn.hdsscapture.views.ViewPregRepository;
+import org.arn.hdsscapture.views.ViewRel;
+import org.arn.hdsscapture.views.ViewRelRepository;
+import org.arn.hdsscapture.views.ViewSes;
+import org.arn.hdsscapture.views.ViewSesRepository;
+import org.arn.hdsscapture.views.ViewVac;
+import org.arn.hdsscapture.views.ViewVacRepository;
 import org.arn.hdsscapture.views.ViewVisit;
 import org.arn.hdsscapture.views.ViewVisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +87,10 @@ public class ReportController {
         data.put("newhh", repo.countHH());
         data.put("newperson", repo.countPerson());
         data.put("newloc", repo.countLoc());
+        
+        data.put("img", repo.countImg());
+        data.put("omg", repo.countOmg());
+        data.put("outcome", repo.countOutcome());
 
 
         return ResponseEntity.ok(data);
@@ -75,12 +99,10 @@ public class ReportController {
 	@GetMapping("/report")
 	public String fw(Model model) {
 		//Visit
-		long visit = repo.countVisit();
+//		long visit = repo.countVisit();
 		long listing = repo.countList();
 		//Inmigration
-		long img = repo.countImg();
-		long omg = repo.countOmg();
-		long outcome = repo.countOutcome();
+
 		long preg = repo.countPreg();
 		long dth = repo.countDth();
 		long ses = repo.countSes();
@@ -93,9 +115,6 @@ public class ReportController {
 		model.addAttribute("visit", visit);
 		model.addAttribute("listing", listing);
 		//Inmigration //Outmigration //Outcome //Pregnancy
-		model.addAttribute("img", img);
-		model.addAttribute("omg", omg);
-		model.addAttribute("outcome", outcome);
 		model.addAttribute("preg", preg);
 		model.addAttribute("dth", dth);
 		model.addAttribute("ses", ses);
@@ -199,7 +218,186 @@ public class ReportController {
 
 	    return "report/list";
 	}
+	
+	@Autowired
+	ViewImgRepository img;
+	
+	@GetMapping("/report/inmigration")
+	public String img(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
 
+	    
+	    if (startDate != null && endDate != null) {
+	        List<ViewImg> items = img.Report(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/inmigration";
+	}
+
+	@Autowired
+	ViewOmgRepository omg;
+	
+	@GetMapping("/report/outmigration")
+	public String omg(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+
+	    
+	    if (startDate != null && endDate != null) {
+	        List<ViewOmg> items = omg.Report(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/outmigration";
+	}
+	
+	@Autowired
+	ViewDthRepository dth;
+	
+	@GetMapping("/report/death")
+	public String dth(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+
+	    
+	    if (startDate != null && endDate != null) {
+	        List<ViewDth> items = dth.Report(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/death";
+	}
+	
+	@Autowired
+	ViewPregRepository preg;
+	
+	@GetMapping("/report/pregnancy")
+	public String preg(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+
+	    
+	    if (startDate != null && endDate != null) {
+	        List<ViewPreg> items = preg.Report(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/pregnancy";
+	}
+	
+	@Autowired
+	ViewOutcomeRepository outcome;
+	
+	@GetMapping("/report/outcome")
+	public String outcome(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+
+	    
+	    if (startDate != null && endDate != null) {
+	        List<ViewOutcome> items = outcome.Report(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/outcome";
+	}
+	
+	@Autowired
+	ViewSesRepository ses;
+	
+	@GetMapping("/report/ses")
+	public String ses(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+
+	    
+	    if (startDate != null && endDate != null) {
+	        List<ViewSes> items = ses.Report(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/ses";
+	}
+	
+	@Autowired
+	ViewRelRepository rel;
+	
+	@GetMapping("/report/relationship")
+	public String rel(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+
+	    
+	    if (startDate != null && endDate != null) {
+	        List<ViewRel> items = rel.Report(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/rel";
+	}
+	
+	@Autowired
+	ViewIndRepository individual;
+	
+	@GetMapping("/report/individual")
+	public String individual(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+
+	    
+	    if (startDate != null && endDate != null) {
+	        List<ViewInd> items = individual.Report(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/individual";
+	}
+	
+	@Autowired
+	ViewVacRepository vac;
+	
+	@GetMapping("/report/vaccination")
+	public String vac(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+
+	    
+	    if (startDate != null && endDate != null) {
+	        List<ViewVac> items = vac.Report(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/vaccination";
+	}
+	
+	@Autowired
+	ViewHohRepository hoh;
+	
+	@GetMapping("/report/household")
+	public String hoh(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+
+	    
+	    if (startDate != null && endDate != null) {
+	        List<ViewHoh> items = hoh.Report(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/household";
+	}
 
 	
 }

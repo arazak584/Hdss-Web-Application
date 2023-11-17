@@ -10,11 +10,17 @@ import org.springframework.data.repository.query.Param;
 
 public interface FieldworkerRepository extends JpaRepository <Fieldworker, String> {
 
-	@Query(nativeQuery = true, value = "SELECT * from fieldworker where status=1 ORDER BY username")
+	@Query(nativeQuery = true, value = "SELECT * from fieldworker where status!=0 ORDER BY username")
 	List<Fieldworker> findAll();
 	
-	@Query(nativeQuery = true, value = "SELECT * from fieldworker ORDER BY insertDate")
-	List<Fieldworker> findFieldworker();
+//	@Query(nativeQuery = true, value = "SELECT fw_uuid,insertDate,username,firstName,lastName,Password,Case When status=0 then 'Inactive' when status=1 then 'Active' "
+//			+ " when status=3 then 'Supervisor' else 'Unknown' end as status from fieldworker ORDER BY insertDate")
+//	List<Fieldworker> findFieldworker();
+	
+	@Query(nativeQuery = true, value = "SELECT fw_uuid, insertDate, username, firstName, lastName, Password, "
+            + "CASE WHEN status = 0 THEN 'Inactive' WHEN status = 1 THEN 'Active' WHEN status = 2 THEN 'Supervisor' ELSE 'Unknown' END AS status "
+            + "FROM fieldworker ORDER BY insertDate")
+    List<Fieldworker> findFieldworker();
 	
 	@Query(nativeQuery = true, value = "SELECT * from fieldworker WHERE username = :username ORDER BY username")
 	List<Fieldworker> findFieldworkerByUsername(@Param("username") String username);

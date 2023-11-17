@@ -49,11 +49,11 @@
   
                                   <div class="card">
                                     <div class="card-header d-block">
-                                        <h3>Location</h3> 
-                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'location.xlsx')">Export to Excel</button>
+                                        <h3>Outmigration</h3> 
+                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'outmigration.xlsx')">Export to Excel</button>
                                     </div>
                                     <div class="card-body">
-										<form class="form-inline" method="GET"  action="/hdss/report/location" style="text-align: center;">
+										<form class="form-inline" method="GET"  action="/hdss/report/outmigration" style="text-align: center;">
                                                 <div class="form-group mb-2">
                                                     <input type="date" name="startDate" class="form-control" required>
                                                 </div>
@@ -128,7 +128,7 @@
         <script th:src="@{/js/dashboard.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
         <script th:src="@{/js/index.js}"></script>
-		<script th:src="@{/js/xlsx.full.min.js}"></script>
+        <script th:src="@{/js/xlsx.full.min.js}"></script>
         
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

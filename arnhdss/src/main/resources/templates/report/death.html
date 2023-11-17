@@ -13,6 +13,8 @@
 
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
         
+
+        
         <link rel="stylesheet" th:href="@{/plugins/bootstrap/dist/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
         <link rel="stylesheet" th:href="@{/plugins/icon-kit/dist/css/iconkit.min.css}">
@@ -49,11 +51,11 @@
   
                                   <div class="card">
                                     <div class="card-header d-block">
-                                        <h3>Location</h3> 
-                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'location.xlsx')">Export to Excel</button>
+                                        <h3>Death</h3> 
+                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'death.xlsx')">Export to Excel</button>
                                     </div>
                                     <div class="card-body">
-										<form class="form-inline" method="GET"  action="/hdss/report/location" style="text-align: center;">
+										<form class="form-inline" method="GET"  action="/hdss/report/death" style="text-align: center;">
                                                 <div class="form-group mb-2">
                                                     <input type="date" name="startDate" class="form-control" required>
                                                 </div>
@@ -128,7 +130,7 @@
         <script th:src="@{/js/dashboard.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
         <script th:src="@{/js/index.js}"></script>
-		<script th:src="@{/js/xlsx.full.min.js}"></script>
+        <script th:src="@{/js/xlsx.full.min.js}"></script>
         
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

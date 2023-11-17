@@ -63,24 +63,28 @@
                                     <div class="card-body">
                                         <form class="forms-sample" th:action="@{/utility/fw/{username} (username=${fieldworker.username})}" th:object="${fieldworker}" method="post">
                                             <div class="form-group">
-                                                <label for="roundNumber">USER NAME</label>
+                                                <label>USER NAME</label>
                                                 <input type="text" name="username" th:field ="*{username}" class="form-control" readonly>
                                             </div>
                                             <div class="form-group">
                                                 <label for="startDate">FIRST NAME</label>
-                                                <input type="text" class="form-control"  name="firstname" th:field ="*{firstName}" Placeholder="First Name">
+                                                <input type="text" class="form-control"  name="firstname" th:field ="*{firstName}" Placeholder="First Name" required>
                                             </div>
                                             <div class="form-group">
                                                 <label>LAST NAME</label>
-                                                <input type="text" class="form-control" name="lastname" th:field ="*{lastName}" Placeholder="Last Name">
+                                                <input type="text" class="form-control" name="lastname" th:field ="*{lastName}" Placeholder="Last Name" required>
                                             </div>
                                             <div class="form-group">
                                                 <label>PASSWORD</label>
-                                                <input type="text" class="form-control" name="password" th:field ="*{password}" Placeholder="Enter Pin or Password">
+                                                <input type="text" class="form-control" name="password" th:field ="*{password}" Placeholder="Enter Pin or Password" required>
                                             </div>
                                             <div class="form-group">
                                                 <label>STAFF STATUS</label>
-                                                <input type="text" class="form-control" name="status" th:field ="*{status}" Placeholder="Status of Fieldworker(1=Active, 0=Inactive)">
+                                                    <select class="form-control" name="status" th:field="*{status}" required>
+												        <option value="0" th:selected="${fieldworker.status == 0}">Inactive</option>
+												        <option value="1" th:selected="${fieldworker.status == 1}">Active</option>
+												        <option value="2" th:selected="${fieldworker.status == 2}">Supervisor</option>
+												    </select>
                                             </div>
                                             
                                             <button type="submit" class="btn btn-primary mr-2">Update</button>
