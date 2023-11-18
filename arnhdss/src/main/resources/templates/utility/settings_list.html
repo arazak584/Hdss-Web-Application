@@ -62,7 +62,6 @@
 													<th th:text="#{set.dad}"></th>
 													<th th:text="#{set.rel}"></th>
 													<th th:text="#{set.ear}"></th>
-													<th></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -70,7 +69,7 @@
                                                
                                             </tbody>
                                             </table>
-                                            <button type="button" class="btn btn-success add-row">Add row</button>
+                                            <!--<button type="button" class="btn btn-success add-row">Add row</button>-->
 										      <button type="button" class="btn btn-success save">Save</button>
 										      <button type="button" class="btn btn-secondary refresh">Refresh</button>
                                         </div>
@@ -153,7 +152,6 @@
         tr.append($("<td></td>").append($('<input type="text" class="form-control">').val(father_age)));
         tr.append($("<td></td>").append($('<input type="text" class="form-control">').val(rel_age)));
         tr.append($("<td></td>").append($('<input type="date" class="form-control">').val(earliestDate)));
-        tr.append($("<td></td>").append($('<button type="button" class="btn btn-danger delete-row">X</button>')));
         tbody.append(tr);
       }
 

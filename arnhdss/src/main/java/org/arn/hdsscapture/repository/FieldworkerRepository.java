@@ -3,6 +3,7 @@ package org.arn.hdsscapture.repository;
 import java.util.List;
 
 import org.arn.hdsscapture.entity.Fieldworker;
+import org.arn.hdsscapture.entity.Locationhierarchy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,5 +27,8 @@ public interface FieldworkerRepository extends JpaRepository <Fieldworker, Strin
 	List<Fieldworker> findFieldworkerByUsername(@Param("username") String username);
 	
 	Fieldworker findByUsername(String username);
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM fieldworker Where status=1")
+	List<Fieldworker> fw();
 	
 }

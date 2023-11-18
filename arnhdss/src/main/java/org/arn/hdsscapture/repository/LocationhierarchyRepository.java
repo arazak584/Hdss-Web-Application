@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface LocationhierarchyRepository extends JpaRepository <Locationhierarchy, String> {
 
 	@Query(nativeQuery = true, value = "SELECT * FROM locationhierarchy Where level_uuid='hierarchyLevelId6'")
-	List<String> villages();
+	List<Locationhierarchy> villages();
 
 }

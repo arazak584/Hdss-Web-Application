@@ -7,6 +7,7 @@ import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.entity.Task;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
+import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.repository.SettingsRepository;
 import org.arn.hdsscapture.repository.TaskRepository;
@@ -270,6 +271,17 @@ public class UtilityController {
 //		List<Settings> settings = settingsrepo.findAll();
 //		model.addAttribute("settings", settings);
 		return "utility/settings_list";
+	}
+	
+	@Autowired
+	LocationhierarchyRepository  loc;
+	
+	
+	@GetMapping("/assignment")
+	public String Assignarea(Model model) {
+//		List<Settings> settings = settingsrepo.findAll();
+//		model.addAttribute("settings", settings);
+		return "utility/area_list";
 	}
 
 	

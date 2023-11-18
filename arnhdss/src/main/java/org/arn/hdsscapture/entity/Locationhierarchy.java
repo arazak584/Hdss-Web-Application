@@ -1,5 +1,6 @@
 package org.arn.hdsscapture.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,8 +24,13 @@ import org.hibernate.envers.Audited;
 @Entity
 @Audited
 @Table(name="locationhierarchy", indexes = {@Index(name="idx_hierarchy_uuid", columnList="uuid")})
-public class Locationhierarchy {
+public class Locationhierarchy implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "uuid", nullable = false)
 	private String uuid;
@@ -51,7 +57,7 @@ public class Locationhierarchy {
     public String fw_name;
 		
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fw_name", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	@JoinColumn(name = "fw_name", referencedColumnName = "username", insertable = false, updatable = false)
 	private Fieldworker fieldworker;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -130,9 +136,21 @@ public class Locationhierarchy {
 		this.level_uuid = level_uuid;
 	}
 	
+	
+	public String getFw_name() {
+		return fw_name;
+	}
+
+
+	public void setFw_name(String fw_name) {
+		this.fw_name = fw_name;
+	}
+
+
 	@Override
 	public String toString() {
 		return extId;
 	}
 
+	
 }

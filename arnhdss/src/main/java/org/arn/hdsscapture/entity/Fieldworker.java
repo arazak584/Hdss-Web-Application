@@ -2,6 +2,7 @@ package org.arn.hdsscapture.entity;
 
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +23,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Audited
 @Table(name =  "fieldworker", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
-public class Fieldworker {
+public class Fieldworker implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
     @Column(name = "fw_uuid")
 	public String fw_uuid;
@@ -90,10 +96,6 @@ public class Fieldworker {
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
 	private List<Amendment> amendment = new ArrayList<>();
 	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
-	private List<Locationhierarchy> locationhierarchies = new ArrayList<>();
-	
-
 	
 	public Fieldworker() {}
 

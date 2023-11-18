@@ -28,6 +28,7 @@ public class WebSecurityConfig {
         http.authorizeRequests(requests -> requests
 				.antMatchers("/controls/**").hasRole("CONTROLLER")// can only setup
 				.antMatchers("/pi/**").hasRole("INVESTIGATOR")// can only enter data
+//				.antMatchers("/pi/**").hasAnyRole("INVESTIGATOR","CONTROLLER")// can only enter data
 //				.antMatchers("/**").hasRole("ADMINISTRATOR")// can view audits
                 .anyRequest().authenticated()).formLogin(login -> login
                 		

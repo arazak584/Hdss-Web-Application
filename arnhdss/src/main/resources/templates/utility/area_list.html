@@ -48,45 +48,30 @@
   
                                   <div class="card">
                                     <div class="card-body">
-                                               <a class="btn btn-theme" th:href = "@{/utility/fw/add}"> 
-												   Add Fieldworker
-												  </a>
-												  <!--<a class="btn btn-theme" sec:authorize="hasRole('MYCONTROLLER')" th:href = "@{/utility/fw/add}"> 
-												   Add Fieldworker
-												  </a>-->
-                                        
+										<div class="d-flex justify-content-center buttons-wrapper">
+									    <button id="" class="btn btn-sm btn-info btn-rounded addNewRows">Working Areas</button>
+									  </div>
                                         <div class="dt-responsive">
                                             <table id="order-table"
-                                                   class="table table-striped table-bordered nowrap">
+                                                   class="table table-striped table-bordered nowrap settings-table">
                                                 <thead>
                                                 <tr>
-													<th th:text="#{fw.username}"></th>
-													<th th:text="#{fw.firstname}"></th>
-													<th th:text="#{fw.lastname}"></th>
-													<th th:text="#{fw.password}"></th>
-													<th th:text="#{fw.status}"></th>
-													<th th:text="#{fw.action}"></th>
+													<!--<th>ID</th>-->
+													<th th:text="#{set.subcode}"></th>
+													<th th:text="#{set.level}"></th>
+													<th th:text="#{set.subvillage}"></th>
+													<th th:text="#{set.fw}"></th>
+													<th></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr th:each="item : ${items}">
-											            <td th:text="${item.username}"></td>
-														<td th:text="${item.firstName}"></td>
-														<td th:text="${item.lastName}"></td>
-														<td th:text="${item.password}"></td>
-														<td th:text="${item.status}"></td>
-														<td>
-										                <a th:href="@{/utility/fw/edit/{username}(username=${item.username})}" 
-										                class="btn btn-success btn-sm">Edit</a>
-										
-										            	</td>
-											     </tr>                                                                                
+                                                                                                                        
                                                
                                             </tbody>
-                                                <tfoot>
-                                                
-                                                </tfoot>
                                             </table>
+                                            <button type="button" class="btn btn-success add-row">Add row</button>
+										      <button type="button" class="btn btn-success save">Save</button>
+										      <button type="button" class="btn btn-secondary refresh">Refresh</button>
                                         </div>
                                     </div>
                                 </div>
@@ -139,6 +124,103 @@
         document.getElementById('logoutForm').submit();
     }
 </script>
+
+
+<script th:inline="javascript">
+    function toggleEditMode(settingId) {
+        // Set editMode to true for the corresponding setting
+        var row = document.getElementById('row-' + settingUuid);
+        row.style.backgroundColor = '#e6f7ff'; // Highlight the row
+    }
+
+    function saveSetting(settingId) {
+        // Send an AJAX request to save the setting to the server
+        // Update the row and reset editMode to false
+        var row = document.getElementById('row-' + settingUuid);
+        row.style.backgroundColor = ''; // Reset the background color
+    }
+</script>
+
+<script>
+      function addRow(tbody, uuid, area, extId, level_uuid, name, parent_uuid, town, fw_name, className) {
+        var tr = $("<tr></tr>").attr("data-id", uuid);
+        if (className) {
+          tr.addClass(className);
+        }
+        tr.append($("<td></td>").append($('<input type="text" class="form-control" readonly>').val(extId)));
+        tr.append($("<td></td>").append($('<input type="text" class="form-control" readonly>').val(level_uuid)));
+        tr.append($("<td></td>").append($('<input type="text" class="form-control" readonly>').val(name)));
+        tr.append($("<td></td>").append($('<input type="text" class="form-control">').val(fw_name)));
+        tr.append($("<td></td>").append($('<button type="button" class="btn btn-danger delete-row">X</button>')));
+        tbody.append(tr);
+      }
+
+      function tableRefresh() {
+        var tbody = $(".settings-table tbody");
+        tbody.html("Loading...");
+
+        $.getJSON("/api/hierarchy", function (data) {
+          tbody.html("");
+          data.forEach((el) => {
+            addRow(tbody, el.uuid, el.area, el.extId, el.level_uuid, el.name, el.parent_uuid, el.town, el.fw_name);
+          });
+        });
+      }
+
+      $("button.refresh").click(tableRefresh);
+
+      $("button.add-row").click(function () {
+        var tbody = $(".settings-table tbody");
+        addRow(tbody, null, null, null, null, null, null, null, null, "dirty");
+      });
+
+      $("button.save").click(function () {
+        var arr = [];
+        $(".settings-table tbody tr").each(function () {
+          var row = $(this);
+          if (row.hasClass("dirty") || row.hasClass("deleted")) {
+            var rowData = { uuid: row.attr("data-id") };
+            var keys = ["area", "extId", "level_uuid", "name", "parent_uuid", "town", "fw_name"];
+
+            row.find("input").each(function (idx) {
+              rowData[keys[idx]] = $(this).val();
+            });
+
+            arr.push({
+              action: row.hasClass("deleted") ? "DELETE" : "UPDATE",
+              data: rowData,
+            });
+          }
+        });
+
+        $.ajax({
+          type: "POST",
+          url: '/api/hierarchy',
+          contentType: 'application/json',
+          data: JSON.stringify(arr),
+          success: tableRefresh,
+          error: function(jqXHR, textStatus, errorThrown) {
+            alert('error: ' + jqXHR.responseJSON.message);
+          }
+        });
+
+      });
+
+      $(document).on("click", "button.delete-row", function () {
+        var row = $(this).closest("tr");
+        if (row.attr("data-id")) {
+          row.addClass("deleted");
+        } else {
+          row.remove();
+        }
+      });
+
+      $(document).on("change", ".settings-table tbody input", function () {
+        $(this).closest("tr").addClass("dirty");
+      });
+
+      tableRefresh();
+    </script>
 
         
     </body>

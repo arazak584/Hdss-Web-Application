@@ -28,8 +28,9 @@ public class Locationhierarchylevel {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "locationhierarchylevel")
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "locationhierarchylevel")
 	private List<Locationhierarchy> locationhierarchies = new ArrayList<>();
+
 	
 	public Locationhierarchylevel () {}
 
