@@ -10,6 +10,8 @@ import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.ReportRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
+import org.arn.hdsscapture.views.ActiveHouseholdRepository;
+import org.arn.hdsscapture.views.ActiveHouseholds;
 import org.arn.hdsscapture.views.ListVisitRepository;
 import org.arn.hdsscapture.views.ViewDth;
 import org.arn.hdsscapture.views.ViewDthRepository;
@@ -397,6 +399,28 @@ public class ReportController {
 	    }
 
 	    return "report/household";
+	}
+	
+	@Autowired
+	ActiveHouseholdRepository activehoh;
+	
+	@GetMapping("/report/activehoh")
+	public String activehoh(@RequestParam(name = "village", required = false)  String village,
+	                 Model model) {
+
+		List<String> villages = activehoh.villages();
+		//System.out.println("Villages: " + villages);
+		model.addAttribute("villages", villages);
+	    
+	    if (village != null) {
+	        List<ActiveHouseholds> items = activehoh.Report(village);
+	        model.addAttribute("items", items);
+	    } else {
+	    	List<ActiveHouseholds> items = activehoh.Reports();
+	    	model.addAttribute("items", items);
+	    }
+
+	    return "report/activehoh";
 	}
 
 	

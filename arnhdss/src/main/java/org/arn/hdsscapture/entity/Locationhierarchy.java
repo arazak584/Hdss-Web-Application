@@ -47,6 +47,13 @@ public class Locationhierarchy {
 	@Column(name = "level_uuid")
 	private String level_uuid;
 	
+	@Column(nullable = true)
+    public String fw_name;
+		
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fw_name", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
+	private Fieldworker fieldworker;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "level_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
 	private Locationhierarchylevel locationhierarchylevel;

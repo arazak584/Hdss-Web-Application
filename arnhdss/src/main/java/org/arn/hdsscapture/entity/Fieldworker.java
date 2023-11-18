@@ -90,6 +90,9 @@ public class Fieldworker {
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
 	private List<Amendment> amendment = new ArrayList<>();
 	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Locationhierarchy> locationhierarchies = new ArrayList<>();
+	
 
 	
 	public Fieldworker() {}

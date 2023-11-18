@@ -2,21 +2,15 @@ package org.arn.hdsscapture.controller;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-
 import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Round;
-import org.arn.hdsscapture.entity.Settings;
 import org.arn.hdsscapture.entity.Task;
-import org.arn.hdsscapture.exception.ResourceNotFoundException;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.repository.SettingsRepository;
 import org.arn.hdsscapture.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,10 +18,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+
+
 
 @Controller
 @RequestMapping("/utility")
@@ -269,45 +264,47 @@ public class UtilityController {
 	@Autowired
 	SettingsRepository settingsrepo;
 	
-	@GetMapping("/settings")
+	
+	@GetMapping("/setting")
 	public String findSettings(Model model) {
-		List<Settings> settings = settingsrepo.findAll();
-		model.addAttribute("settings", settings);
+//		List<Settings> settings = settingsrepo.findAll();
+//		model.addAttribute("settings", settings);
 		return "utility/settings_list";
 	}
+
 	
-	@GetMapping("/settings/{id}")
-    public ResponseEntity<Settings> getSettingById(@PathVariable Integer id) {
-        Optional<Settings> settingsOptional = settingsrepo.findById(id);
-
-        if (settingsOptional.isPresent()) {
-            Settings settings = settingsOptional.get();
-            return new ResponseEntity<>(settings, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-
-    @PutMapping("/settings/{id}")
-    public ResponseEntity<Settings> updateSetting(@PathVariable Integer id, @RequestBody Settings updatedSettings) {
-        Optional<Settings> existingSettingsOptional = settingsrepo.findById(id);
-
-        if (existingSettingsOptional.isPresent()) {
-            Settings existingSettings = existingSettingsOptional.get();
-
-            // Update fields with the new values
-            existingSettings.setId(updatedSettings.getId());
-            // Update other fields as needed
-
-            // Save the updated entity
-            settingsrepo.save(existingSettings);
-
-            return new ResponseEntity<>(existingSettings, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+//	@GetMapping("/settings/{id}")
+//    public ResponseEntity<Settings> getSettingById(@PathVariable Integer id) {
+//        Optional<Settings> settingsOptional = settingsrepo.findById(id);
+//
+//        if (settingsOptional.isPresent()) {
+//            Settings settings = settingsOptional.get();
+//            return new ResponseEntity<>(settings, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+//
+//
+//    @PutMapping("/settings/{id}")
+//    public ResponseEntity<Settings> updateSetting(@PathVariable Integer id, @RequestBody Settings updatedSettings) {
+//        Optional<Settings> existingSettingsOptional = settingsrepo.findById(id);
+//
+//        if (existingSettingsOptional.isPresent()) {
+//            Settings existingSettings = existingSettingsOptional.get();
+//
+//            // Update fields with the new values
+//            existingSettings.setId(updatedSettings.getId());
+//            // Update other fields as needed
+//
+//            // Save the updated entity
+//            settingsrepo.save(existingSettings);
+//
+//            return new ResponseEntity<>(existingSettings, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
 	
 //	@GetMapping("/settings/{id}")
