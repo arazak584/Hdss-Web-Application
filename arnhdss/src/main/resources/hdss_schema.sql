@@ -11,14 +11,14 @@ INSERT IGNORE INTO user_table(username, user_email, user_enabled, user_password,
 -- pw: admin
 
 	INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_CONTROLLER', 'Systems Administrator');
-  	INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_COORDINATOR', 'Coordinator');
-    INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_MANAGER', 'Data Manager');
+  INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_COORDINATOR', 'Coordinator');
+  INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_MANAGER', 'Data Manager');
+  INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_VIEWER', 'Viewer');
 
 
-	DELETE FROM user_group WHERE username='webadmin';
-    INSERT IGNORE INTO user_group(username, group_role) values('admin', 'ROLE_CONTROLLER');
-    INSERT IGNORE INTO user_group(username, group_role) values('admin', 'ROLE_COORDINATOR');
-    INSERT IGNORE INTO user_group(username, group_role) values('admin', 'ROLE_MANAGER');
+DELETE FROM user_group WHERE username='webadmin';
+ INSERT IGNORE INTO user_group(username, group_role) values('admin', 'ROLE_CONTROLLER');
+
 
 
 ALTER TABLE visit ADD COLUMN submitDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;

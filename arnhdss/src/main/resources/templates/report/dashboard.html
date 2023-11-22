@@ -29,6 +29,8 @@
         
         <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
         
+        
+        
     </head>
 
     <body>
@@ -45,12 +47,14 @@
 				<!-- Sidebar end -->
                 <div class="main-content">
                     <div class="container-fluid">
+						
                         <div class="row clearfix">
+							
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="widget">
                                     <div class="widget-body">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <div class="state">
+                                            <div class="state" id="div1">
                                                 <h6>Total Individuals</h6>
                                                 <h2><span id="countInd" class="count"></span></h2>
                                             </div>
@@ -160,7 +164,7 @@
                                                         <th>#</th>
                                                         <th>Event</th>
                                                         <th>Total</th>
-                                                        <th>Report</th>
+                                                        <th sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">Report</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -168,31 +172,31 @@
                                                         <td><h5>1</h5></td>
                                                         <td><h6 class="mb-1">Household Visit</h6></td>
                                                         <td><h6 class="text-muted"><span id="rvisit"></span></h6></td>
-                                                        <td><a th:href="@{/hdss/report/visit}"><label class="badge badge-success">View Report</label></a></td>
+                                                        <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href="@{/hdss/report/visit}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><h5>2</h5></td>
                                                         <td><h6 class="mb-1">Compound Visit</h6></td>
                                                         <td><h6 class="text-muted"><span id="listing"></span></h6></td>
-                                                        <td><a th:href = "@{/hdss/report/listing}"><label class="badge badge-success">View Report</label></a></td>
+                                                        <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/listing}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><h5>3</h5></td>
                                                         <td><h6 class="mb-1">Inmigration</h6></td>
                                                         <td><h6 class="text-muted"><span id="cntimg"></span></h6></td>
-                                                        <td><a th:href = "@{/hdss/report/inmigration}"><label class="badge badge-success">View Report</label></a></td>
+                                                        <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/inmigration}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><h5>4</h5></td>
                                                         <td><h6 class="mb-1">Outmigration</h6></td>
                                                         <td><h6 class="text-muted"><span id="cntomg"></span></h6></td>
-                                                        <td><a th:href = "@{/hdss/report/outmigration}"><label class="badge badge-success">View Report</label></a></td>
+                                                        <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/outmigration}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><h5>5</h5></td>
                                                         <td><h6 class="mb-1">Pregnancy Outcome</h6></td>
                                                         <td><h6 class="text-muted"><span id="cntoutcome"></span></h6></td>
-                                                        <td><a th:href = "@{/hdss/report/outcome}"><label class="badge badge-success">View Report</label></a></td>
+                                                        <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/outcome}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     
                                                 </tbody>
@@ -224,7 +228,7 @@
                                                         <td>
                                                             <p>Individual</p>
                                                         </td>
-                                                        <td class="text-right">
+                                                        <td class="text-right" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
                                                             <a th:href="@{/hdss/report/individual}"><label class="badge badge-warning">View</label></a>
                                                         </td>
                                                     </tr>
@@ -234,7 +238,7 @@
                                                         <td>
                                                             <p>Household</p>
                                                         </td>
-                                                        <td class="text-right">
+                                                        <td class="text-right" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
                                                             <a th:href="@{/hdss/report/household}"><label class="badge badge-success">View</label></a>
                                                         </td>
                                                     </tr>
@@ -244,7 +248,7 @@
                                                         <td>
                                                             <p>Compounds</p>
                                                         </td>
-                                                        <td class="text-right">
+                                                        <td class="text-right" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
                                                             <a th:href="@{/hdss/report/location}"><label class="badge badge-danger">View</label></a>
                                                         </td>
                                                     </tr>
@@ -254,7 +258,7 @@
                                                         <td>
                                                             <p>Vaccination</p>
                                                         </td>
-                                                        <td class="text-right">
+                                                        <td class="text-right" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
                                                             <a th:href="@{/hdss/report/vaccination}"><label class="badge badge-danger">View</label></a>
                                                         </td>
                                                     </tr>
@@ -349,7 +353,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
-                                        <a th:href = "@{/hdss/report/pregnancy}"><p class="mb-30 bg-red lbl-card"><i class="fas fa-database"></i> View Report</p></a>
+                                        <a th:href = "@{/hdss/report/pregnancy}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><p class="mb-30 bg-red lbl-card"><i class="fas fa-database"></i> View Report</p></a>
                                         <div class="text-center">
                                             <h2 class="mb-0 d-inline-block text-red"><span id="cntpreg" class="count"></span></h2>
                                             <p class="mb-0 d-inline-block">Pregnancy</p>
@@ -361,7 +365,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
-                                        <a th:href = "@{/hdss/report/relationship}"><p class="mb-30 bg-blue lbl-card"><i class="fas fa-database"></i> View Report</p></a>
+                                        <a th:href = "@{/hdss/report/relationship}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><p class="mb-30 bg-blue lbl-card"><i class="fas fa-database"></i> View Report</p></a>
                                         <div class="text-center">
                                             <h2 class="mb-0 d-inline-block text-blue"><span id="cntrel"></span></h2>
                                             <p class="mb-0 d-inline-block">Relationship</p>
@@ -373,7 +377,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
-                                        <a th:href = "@{/hdss/report/death}"><p class="mb-30 bg-green lbl-card"><i class="fas fa-database"></i> View Report</p></a>
+                                        <a th:href = "@{/hdss/report/death}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><p class="mb-30 bg-green lbl-card"><i class="fas fa-database"></i> View Report</p></a>
                                         <div class="text-center">
                                             <h2 class="mb-0 d-inline-block text-green"><span id="cntdth"></span></h2>
                                             <p class="mb-0 d-inline-block">Death</p>
@@ -385,7 +389,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
-                                        <a th:href = "@{/hdss/report/ses}"><p class="mb-30 bg-warning lbl-card"><i class="fas fa-database"></i> View Report</p></a>
+                                        <a th:href = "@{/hdss/report/ses}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><p class="mb-30 bg-warning lbl-card"><i class="fas fa-database"></i> View Report</p></a>
                                         <div class="text-center">
                                             <h2 class="mb-0 d-inline-block text-warning"><span id="cntses"></span></h2>
                                             <p class="mb-0 d-inline-block">SES</p>
@@ -447,6 +451,32 @@
     function logout() {
         document.getElementById('logoutForm').submit();
     }
+</script>
+
+<script>
+  // Make an AJAX request to fetch data for div 1
+  const div = document.getElementById('div1');
+  const progressBar = div.querySelector('.progress-bar');
+  const progress = progressBar.querySelector('.progress');
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://example.com/data.json');
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      // Update the progress bar to 100%
+      progress.style.transform = 'rotate(360deg)';
+
+      // Hide and remove the progress bar
+      progressBar.style.display = 'none';
+      progressBar.parentNode.removeChild(progressBar);
+
+      // Display the loaded data
+      div.querySelector('p').textContent = JSON.parse(xhr.responseText).data;
+    } else {
+      console.error('Error fetching data:', xhr.statusText);
+    }
+  };
+  xhr.send();
 </script>
 
         

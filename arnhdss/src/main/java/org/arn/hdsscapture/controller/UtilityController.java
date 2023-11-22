@@ -1,9 +1,22 @@
 package org.arn.hdsscapture.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+
+import javax.transaction.Transactional;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.arn.hdsscapture.entity.Fieldworker;
+import org.arn.hdsscapture.entity.Locationhierarchy;
 import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.entity.Task;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
@@ -11,6 +24,7 @@ import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.repository.SettingsRepository;
 import org.arn.hdsscapture.repository.TaskRepository;
+import org.arn.hdsscapture.views.ActiveHouseholds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +35,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 
 
@@ -43,6 +60,19 @@ public class UtilityController {
 		
 
 		return "utility/fw_list";
+	}
+	
+	@GetMapping("/activefw")
+	public String activefw(Model model
+			) {
+		List<Fieldworker> items = repo.fw();
+
+		//System.err.println("Size of list " + items.size());
+		
+		model.addAttribute("items", items);
+		
+
+		return "report/activefw";
 	}
 
 	@GetMapping("/fw/add")
@@ -273,175 +303,21 @@ public class UtilityController {
 		return "utility/settings_list";
 	}
 	
-	@Autowired
 	LocationhierarchyRepository  loc;
+	@Autowired
+    public UtilityController(LocationhierarchyRepository loc) {
+        this.loc = loc;
+    }
 	
 	
 	@GetMapping("/assignment")
 	public String Assignarea(Model model) {
-//		List<Settings> settings = settingsrepo.findAll();
-//		model.addAttribute("settings", settings);
+//		List<Locationhierarchy> hierarchy = loc.villages();
+//		model.addAttribute("hierarchy", hierarchy);
 		return "utility/area_list";
 	}
+	
 
-	
-//	@GetMapping("/settings/{id}")
-//    public ResponseEntity<Settings> getSettingById(@PathVariable Integer id) {
-//        Optional<Settings> settingsOptional = settingsrepo.findById(id);
-//
-//        if (settingsOptional.isPresent()) {
-//            Settings settings = settingsOptional.get();
-//            return new ResponseEntity<>(settings, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-//
-//
-//    @PutMapping("/settings/{id}")
-//    public ResponseEntity<Settings> updateSetting(@PathVariable Integer id, @RequestBody Settings updatedSettings) {
-//        Optional<Settings> existingSettingsOptional = settingsrepo.findById(id);
-//
-//        if (existingSettingsOptional.isPresent()) {
-//            Settings existingSettings = existingSettingsOptional.get();
-//
-//            // Update fields with the new values
-//            existingSettings.setId(updatedSettings.getId());
-//            // Update other fields as needed
-//
-//            // Save the updated entity
-//            settingsrepo.save(existingSettings);
-//
-//            return new ResponseEntity<>(existingSettings, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-
-	
-//	@GetMapping("/settings/{id}")
-//	public ResponseEntity<Settings> getTableRow(@PathVariable Integer id) {
-//	    Optional<Settings> settingsOptional = settingsrepo.findById(id);
-//
-//	    if (settingsOptional.isPresent()) {
-//	        Settings settings = settingsOptional.get();
-//	        return new ResponseEntity<>(settings, HttpStatus.OK);
-//	    } else {
-//	        throw new ResourceNotFoundException("Table row not found", null, id);
-//	    }
-//	}
-//
-//	
-//	@PostMapping("/settings/{id}")
-//    public ResponseEntity<String> saveTableRow(@ModelAttribute Settings settings) {
-//        try {
-//        	settingsrepo.save(settings);
-//            return new ResponseEntity<>("Table row updated successfully", HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>("Error updating table row: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-//	
-//	
-//	
-//	@GetMapping("/settings/edit/{id}")
-//	public String editSettings(@PathVariable("id") Integer id, Model model) {
-//		List<Settings> optionalSettings = settingsrepo.findBy(id);
-//		if (!optionalSettings.isEmpty()) {
-//			Settings settings = optionalSettings.get(0);
-//			// Add any other necessary data to the model attribute for editing
-//			model.addAttribute("settings", settings);
-//			return "utility/settings_edit";
-//		} else {
-//			return "error";
-//		}
-//	}
-	
-//	@PostMapping("/settings/{id}")
-//	public String updateSettings(@PathVariable("id") Integer id, @ModelAttribute("settings") Settings settings,
-//			BindingResult result, Model model) {
-//		if (result.hasErrors()) {
-//			// Handle validation errors if necessary
-//			return "settings_edit";
-//		} else {
-//			List<Settings> optionalSettings = settingsrepo.findBy(id);
-//			if (!optionalSettings.isEmpty()) {
-//				Settings existingSettings = optionalSettings.get(0);
-//				existingSettings.setHoh_age(settings.getHoh_age());
-//				existingSettings.setMother_age(settings.getMother_age());
-//				existingSettings.setFather_age(settings.getFather_age());
-//				existingSettings.setRel_age(settings.getRel_age());
-//				existingSettings.setEarliestDate(settings.getEarliestDate());
-//				settingsrepo.save(existingSettings);
-//				return "redirect:/utility/settings";
-//			} else {
-//				return "error";
-//			}
-//		}
-//	}
-	
-//	@PostMapping("/settings/{id}")
-//	public String updateSetting(@PathVariable("id") Integer id, @ModelAttribute("settings") Settings settings,
-//	        BindingResult result, Model model) {
-//	    // Validate if the ID is valid
-//	    if (id == null || settings == null) {
-//	        model.addAttribute("error", "Invalid request. Please provide a valid ID and settings data.");
-//	        return "error";
-//	    }
-//
-//	    if (result.hasErrors()) {
-//	        // Handle validation errors if necessary
-//	        return "settings_list";
-//	    } else {
-//	        List<Settings> optionalSettings = settingsrepo.findBy(id);
-//	        if (!optionalSettings.isEmpty()) {
-//	            Settings existingSettings = optionalSettings.get(0);
-//	            // Update the existing settings
-//	            existingSettings.setHoh_age(settings.getHoh_age());
-//	            existingSettings.setMother_age(settings.getMother_age());
-//	            existingSettings.setFather_age(settings.getFather_age());
-//	            existingSettings.setRel_age(settings.getRel_age());
-//	            existingSettings.setEarliestDate(settings.getEarliestDate());
-//	            settingsrepo.save(existingSettings);
-//	            return "redirect:/utility/settings";
-//	        } else {
-//	            model.addAttribute("error", "Settings with ID " + id + " not found.");
-//	            return "error";
-//	        }
-//	    }
-//	}
-//
-//	
-//	@PutMapping("/settings/{id}")
-//	public String updateSettings(@PathVariable("id") Integer id, @ModelAttribute("settings") Settings settings,
-//	        BindingResult result, Model model) {
-//	    // Validate if the ID is valid
-//	    if (id == null || settings == null) {
-//	        model.addAttribute("error", "Invalid request. Please provide a valid ID and settings data.");
-//	        return "error";
-//	    }
-//
-//	    if (result.hasErrors()) {
-//	        // Handle validation errors if necessary
-//	        return "settings_list";
-//	    } else {
-//	        List<Settings> optionalSettings = settingsrepo.findBy(id);
-//	        if (!optionalSettings.isEmpty()) {
-//	            Settings existingSettings = optionalSettings.get(0);
-//	            // Update the existing settings
-//	            existingSettings.setHoh_age(settings.getHoh_age());
-//	            existingSettings.setMother_age(settings.getMother_age());
-//	            existingSettings.setFather_age(settings.getFather_age());
-//	            existingSettings.setRel_age(settings.getRel_age());
-//	            existingSettings.setEarliestDate(settings.getEarliestDate());
-//	            settingsrepo.save(existingSettings);
-//	            return "redirect:/utility/settings";
-//	        } else {
-//	            model.addAttribute("error", "Settings with ID " + id + " not found.");
-//	            return "error";
-//	        }
-//	    }
-//	}
 
 	
 	

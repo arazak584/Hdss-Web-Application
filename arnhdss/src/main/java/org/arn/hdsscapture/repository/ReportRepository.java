@@ -87,6 +87,33 @@ public interface ReportRepository extends JpaRepository <Visit, String> {
     @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from location v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countLoc();
     
+    @Query(nativeQuery = true, value ="SELECT COUNT(a.uuid) from individual a LEFT JOIN residency b on a.uuid=b.individual_uuid\r\n"
+    		+ "where b.individual_uuid IS NULL AND a.uuid!='UNK'")
+    Long noMem();
+    
+    @Query(nativeQuery = true, value ="SELECT COUNT(*) from socialgroup a INNER JOIN individual b on a.individual_uuid=b.uuid\r\n"
+    		+ "where TIMESTAMPDIFF(YEAR,dob,CURDATE())<(select hoh_age from settings)")
+    Long Minor();
+    
+    @Query(nativeQuery = true, value ="SELECT COUNT(*) FROM (SELECT individual_uuid FROM residency WHERE endType = 1 GROUP BY individual_uuid \r\n"
+    		+ "HAVING COUNT(individual_uuid) > 1 ) AS duplicates")
+    Long Dupres();
+    
+    @Query(nativeQuery = true, value ="SELECT COUNT(a.uuid) from individual a INNER JOIN residency b on a.uuid=b.individual_uuid\r\n"
+    		+ "where a.dob>startDate")
+    Long Dobs();
+    
+    @Query(nativeQuery = true, value ="SELECT COUNT(individual_uuid) FROM (SELECT individual_uuid, startDate, endDate,\r\n"
+    		+ "LAG(endDate) OVER (PARTITION BY individual_uuid ORDER BY startDate) AS prev_endDate\r\n"
+    		+ "FROM residency) AS subquery	WHERE startDate < prev_endDate")
+    Long Lag();
+    
+    @Query(nativeQuery = true, value ="SELECT COUNT(DISTINCT socialgroup_uuid) FROM individual AS a INNER JOIN residency AS b ON a.uuid = b.individual_uuid\r\n"
+    		+ "WHERE b.endType = 1 AND b.socialgroup_uuid IN ( SELECT socialgroup_uuid FROM residency AS b2\r\n"
+    		+ "INNER JOIN individual AS a2 ON b2.individual_uuid = a2.uuid WHERE b2.endType = 1\r\n"
+    		+ "GROUP BY socialgroup_uuid HAVING MAX(TIMESTAMPDIFF(YEAR, a2.dob, CURDATE())) < (select hoh_age from settings))")
+    Long Minors();
+    
     
 
 }

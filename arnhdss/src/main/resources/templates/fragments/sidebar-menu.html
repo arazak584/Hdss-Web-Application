@@ -10,36 +10,50 @@
                     <div class="sidebar-content">
                         <div class="nav-container">
                             <nav id="main-menu-navigation" class="navigation-main">
-                                <div class="nav-lavel">Navigation</div>
+                                <div class="nav-lavel"><b>[[${#httpServletRequest.remoteUser}]]</b></div>
                                 <div class="nav-item active">
                                     <a th:href="@{/hdss/report}"><i class="ik ik-bar-chart-2"></i><span>Dashboard</span></a>
                                 </div>
                                 <!--<div class="nav-item">
                                     <a href="pages/navbar.html"><i class="ik ik-menu"></i><span>Navigation</span> <span class="badge badge-success">New</span></a>
                                 </div>-->
-                                <div class="nav-item has-sub">
+                                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">
                                     <a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Configuration</span> <!--<span class="badge badge-danger">150+</span>--></a>
                                     <div class="submenu-content">
                                         <a th:href="@{/utility/task}" class="menu-item">Task</a>
                                         <a th:href="@{/utility/setting}" class="menu-item">Parameters</a>
-                                        <a th:href="@{/controls/users}" class="menu-item">Users</a>
+                                        <a th:href="@{/controls/users}" class="menu-item" sec:authorize="hasAnyRole('CONTROLLER')">Users</a>
                                         <a th:href="@{/utility/fw}" class="menu-item">Fieldworker</a>
                                         <a th:href="@{/utility/round}" class="menu-item">Round</a>
                                     </div>
                                 </div>
                                 <!--<div class="nav-lavel">UI Element</div>-->
                                 <div class="nav-item has-sub">
-                                    <a href="#"><i class="ik ik-box"></i><span>Work Schedule</span></a>
+                                    <a href="#"><i class="ik ik-box"></i><span>Utility</span></a>
                                     <div class="submenu-content">
-                                        <a href="#" th:href="@{/hdss/report/activehoh}" class="menu-item">Households</a>
-                                        <a href="#" th:href="@{/utility/assignment}" class="menu-item">Work Area</a>
-                                        <a href="#" class="menu-item">Unvisited Locations</a>
-                                        <a href="#" class="menu-item">Queries</a>
+                                        <a sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" href="#" th:href="@{/hdss/report/activehoh}" class="menu-item">Households</a>
+                                        <!--<a href="#" th:href="@{/utility/assignment}" class="menu-item">Work Area</a>-->
+                                        <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/utility/activefw}" class="menu-item">Active Fieldworkers</a>
+                                        <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/file/assign}" class="menu-item">Work Assign</a>
+                                        <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/hdss/report/unvisited}" class="menu-item">Unvisited Locations</a>
+                                        <a href="#" th:href="@{/hdss/report/search}" class="menu-item">Search</a>
+                                    </div>
+                                </div>
+                                <!--<div class="nav-lavel">Queries</div>-->
+                                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
+                                    <a href="#" ><i class="fa fa-exclamation-triangle"></i><span>Queries</span><span class="badge badge-danger" id="error"></span></a>
+                                    <div class="submenu-content">
+                                        <a href="#" th:href="@{/hdss/query/nomembership}" class="menu-item">No Membership<span class="badge badge-danger" id="nomemb"></span></a>
+                                        <a href="#" th:href="@{/hdss/query/lagging}" class="menu-item">Lagging Date<span class="badge badge-danger" id="lag"></span></a>
+                                        <a href="#" th:href="@{/hdss/query/dob}" class="menu-item">DOB> StartDate<span class="badge badge-danger" id="dobs"></span></a>
+                                        <a href="#" th:href="@{/hdss/query/residency}" class="menu-item">Duplicate Residency<span class="badge badge-danger" id="dupres"></span></a>
+                                         <a th:href="@{/hdss/query/minorhoh}" class="menu-item">Minor HOH<span class="badge badge-danger" id="minor"></span></a>
+                                         <a th:href="@{/hdss/query/minors}" class="menu-item">Minors Only<span class="badge badge-danger" id="minors"></span></a>
                                     </div>
                                 </div>
                                 <!--Report 
                                 <div class="nav-lavel">Report</div>-->
-                                <div class="nav-item has-sub">
+                                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
                                     <a href="#"><i class="ik ik-pie-chart"></i><span>Report</span></a>
                                     <div class="submenu-content">
                                         <a href="#" th:href="@{/hdss/report/visit}" class="menu-item">Household Visit</a>
@@ -54,19 +68,19 @@
                                         <a th:href = "@{/hdss/report/household}" class="menu-item">Socialgroup</a>
                                     </div>
                                 </div>
-                                <div class="nav-item has-sub">
+                                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">
                                     <a href="#"><i class="ik ik-edit"></i><span>Forms</span></a>
                                     <div class="submenu-content">
                                         <a href="#" class="menu-item">Update</a>
                                     </div>
                                 </div>
-                                <div class="nav-item has-sub">
+                                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">
                                     <a href="#"><i class="ik ik-edit"></i><span>ODK Forms</span></a>
                                     <div class="submenu-content">
                                         <a href="#" class="menu-item">Extra Forms</a>
                                     </div>
                                 </div>
-                                <div class="nav-item has-sub">
+                                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">
                                     <a href="#"><i class="ik ik-inbox"></i><span>Approvals</span> <span class="badge badge-success">Future</span></a>
                                     <div class="submenu-content">
                                         <a href="#" class="menu-item">Approvals</a>

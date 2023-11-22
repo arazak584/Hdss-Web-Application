@@ -14,12 +14,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Immutable
-@Table(name="preg")
-public class ViewPreg {
+@Table(name="freport")
+public class FieldReport {
 	
 	@Id
-	@Column(name = "uuid", nullable = false)
-	private String uuid;
+	private String id;
 	
 	@Column(name = "Fieldworker", nullable = false)
 	private String Fieldworker;
@@ -42,16 +41,20 @@ public class ViewPreg {
 	
 	private Long total;
 
-	public ViewPreg() {
+	public FieldReport() {
 	}
 
-	public String getUuid() {
-		return uuid;
+	public String getId() {
+		return id;
 	}
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+
+
+	public void setId(String id) {
+		this.id = id;
 	}
+
+
 
 	public String getFieldworker() {
 		return Fieldworker;
@@ -85,14 +88,19 @@ public class ViewPreg {
 		this.username = username;
 	}
 
+	
 	public String getName() {
 		return name;
 	}
 
+
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+
+
 	public Long getTotal() {
         return total;
     }

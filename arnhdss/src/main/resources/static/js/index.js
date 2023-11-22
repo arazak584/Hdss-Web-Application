@@ -6,9 +6,23 @@ function ExportToExcel(type, fn, dl) {
 
     // Iterate over all pages and gather data
     var allRows = [];
+    var seenRowIds = new Set();
+
     for (var i = 0; i < table.page.info().pages; i++) {
         table.page(i).draw('page');
         var rows = table.rows({ search: 'applied' }).data().toArray();
+
+        // Filter out rows that have already been added
+        rows = rows.filter(row => {
+            // Use a unique identifier for each row
+            var rowId = generateRowId(row);
+            if (!seenRowIds.has(rowId)) {
+                seenRowIds.add(rowId);
+                return true;
+            }
+            return false;
+        });
+
         allRows.push(...rows);
     }
 
@@ -26,4 +40,11 @@ function ExportToExcel(type, fn, dl) {
     return dl ?
         XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
         XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+}
+
+// Function to generate a unique identifier for each row
+function generateRowId(row) {
+    // Customize this based on your data structure to generate a unique identifier
+    // Example: Concatenate values from different columns
+    return row.join('-');
 }

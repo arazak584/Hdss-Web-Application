@@ -55,12 +55,14 @@
                                     </div>
                                     <div class="card-body">
 										  <form class="form-inline" method="GET" action="/hdss/report/activehoh" style="text-align: center;">
-										    <div class="form-group mx-sm-3 mb-4">
+										    <div class="form-group mx-sm-3 mb-2">
 										     <select name="village" class="form-control">
 											 <option th:each="village : ${villages}" th:value="${village}" th:text="${village}"></option>
 											</select>
 										    </div>
-										    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+										    <div class="form-group mx-sm-3 mb-2">
+										    <button type="submit" class="btn btn-theme">Submit</button>
+										    </div>
 										</form>
 
 

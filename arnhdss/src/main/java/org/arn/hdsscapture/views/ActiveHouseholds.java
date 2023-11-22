@@ -28,9 +28,9 @@ public class ActiveHouseholds {
 	@Column(name = "subvillage", nullable = false)
 	private String subvillage;
 	
-	private Integer households;
+	private String households;
 	
-	private Integer compounds;
+	private String compounds;
 
 	public ActiveHouseholds() {
 	}
@@ -67,19 +67,19 @@ public class ActiveHouseholds {
 		this.subvillage = subvillage;
 	}
 
-	public Integer getHouseholds() {
+	public String getHouseholds() {
 		return households;
 	}
 
-	public void setHouseholds(Integer households) {
+	public void setHouseholds(String households) {
 		this.households = households;
 	}
 
-	public Integer getCompounds() {
+	public String getCompounds() {
 		return compounds;
 	}
 
-	public void setCompounds(Integer compounds) {
+	public void setCompounds(String compounds) {
 		this.compounds = compounds;
 	}
 

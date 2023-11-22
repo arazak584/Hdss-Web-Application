@@ -1,6 +1,8 @@
 package org.arn.hdsscapture.controller;
 
 import java.security.Principal;
+import java.util.Optional;
+
 import org.arn.hdsscapture.entity.UserTable;
 import org.arn.hdsscapture.repository.GroupTableRepository;
 import org.arn.hdsscapture.repository.UserTableRepository;
@@ -62,7 +64,6 @@ public class ControlsController {
 		model.addAttribute("usercreate", "active");
 		model.addAttribute("user_groups", groupRepo.findAll());
 
-
 		if (success != null) {
 			model.addAttribute("success", "Saved successfully");
 		}
@@ -89,7 +90,6 @@ public class ControlsController {
 			model.addAttribute("users", "active");
 			model.addAttribute("usercreate", "active");
 			model.addAttribute("user_groups", groupRepo.findAll());
-
 
 			return "controls/user-list";
 		}
@@ -124,7 +124,20 @@ public class ControlsController {
 	public String editUser(Principal principal, @ModelAttribute("selected") UserTable selected,
 			@PathVariable("id") String user_id) {
 
-		userRepo.save(selected);
+		UserTable existingUser = userRepo.findById(user_id).orElse(null);
+
+		if (existingUser != null) {
+			// Update only non-sensitive fields (excluding password)
+			existingUser.setUser_fname(selected.getUser_fname());
+			existingUser.setUser_lname(selected.getUser_lname());
+			existingUser.setUser_enabled(selected.isUser_enabled());
+			existingUser.setGroups(selected.getGroups());
+
+			// Save the updated user
+			userRepo.save(existingUser);
+		}
+
+//		userRepo.save(selected);
 
 		return "redirect:/controls/users/" + user_id + "?success=yes";
 	}
@@ -133,12 +146,12 @@ public class ControlsController {
 	public String editUserPassword(Principal principal, final Model model, @PathVariable("id") String user_id,
 			@RequestParam(name = "success", required = false) String success) {
 
-		UserTable user = userRepo.findById(user_id).get();
+		UserTable user = userRepo.findById(user_id).orElse(null);
 
 		model.addAttribute("selected", user);
 		model.addAttribute("usr", "active");
 
-		if (user_id.equals(user.getUser_email()))
+		if (user_id.equals(user.getUsername()))
 			model.addAttribute("currentuser", "currentuser");
 
 		if (success != null) {
@@ -150,30 +163,84 @@ public class ControlsController {
 
 	@PostMapping("/users/{id}/password")
 	public String editUserPassword(Principal principal, @ModelAttribute("selected") UserTable selected,
-			BindingResult results) {
+			@PathVariable("id") String user_id, BindingResult results) {
 
-		if (selected.getUser_email() == principal.getName()) {
+		if (selected.getUsername()!= null) {
+			
+			UserTable check = userRepo.findById(selected.getUsername()).orElse(null);
 
-			UserTable check = userRepo.findById(selected.getUser_email()).get();
-
-			if (selected.getCur_password() != check.getUser_password()) {
-				results.rejectValue("current_password", "wrong.password", "Current password is incorrect");
-			}
+			if (selected.getCur_password() != null && check != null &&
+	                !bCrypt.matches(selected.getCur_password(), check.getUser_password())) {
+	            results.rejectValue("current_password", "wrong.password", "Current password is incorrect");
+	        }
 
 			if (results.hasErrors()) {
 				return "controls/user-update-password";
 			}
 
+			String password = selected.getUser_password();
+			String encodedPassword = bCrypt.encode(password);
+			check.setUser_password(encodedPassword);
+
+			userRepo.save(check);
+			return "redirect:/controls/users/" + user_id + "/password?success=1";
+		}else {
+			return "redirect:/controls/users/" + user_id + "/password";
+			
 		}
 
-		userRepo.save(selected);
+	}
+	
+	@GetMapping("/password")
+	public String showPasswordChangeForm(Model model, Principal principal) {
+		
+		//System.out.println("Entered username: " + principal.getName());
+	    // Retrieve the email of the currently logged-in user
+	    String userName = principal.getName();
 
-		return "redirect:/controls/users/{id}/password?success=1";
+	    // Create a new UserTable object and set the email
+	    UserTable user = new UserTable();
+	    user.setUsername(userName);
+
+	    // Add the user to the model
+	    model.addAttribute("selected", user);
+
+	    return "controls/person-update-password";
+	}
+	
+	@PostMapping("/password")
+	public String updateUserPassword(Principal principal, @ModelAttribute("selected") UserTable selected,
+			 BindingResult results) {
+		
+//		System.out.println("Entered username print: " + principal.getName());
+//		System.out.println("Entered username selected: " + selected.getUsername());
+//	    System.out.println("Submitted current password: " + selected.getCur_password());
+
+		if (selected.getUsername() != null) {
+			System.out.println("Entered username selected: " + selected.getUsername());
+			UserTable check = userRepo.findById(selected.getUsername()).orElse(null);
+			//System.out.println("User found: " + (check != null ? check.getUsername() : "null"));
+
+			if (selected.getCur_password() != null && check != null &&
+	                !bCrypt.matches(selected.getCur_password(), check.getUser_password())) {
+	            results.rejectValue("current_password", "wrong.password", "Current password is incorrect");
+	        }
+
+			if (results.hasErrors()) {
+				return "controls/person-update-password";
+			}
+
+			String password = selected.getUser_password();
+			String encodedPassword = bCrypt.encode(password);
+			check.setUser_password(encodedPassword);
+
+			userRepo.save(check);
+			return "redirect:/controls/password?success=1";
+		}else {
+			return "redirect:/controls/password?error=1";
+			
+		}
 
 	}
 
-
-	/// SITES//////////////////////////////////
-	
-
-}// end class
+}

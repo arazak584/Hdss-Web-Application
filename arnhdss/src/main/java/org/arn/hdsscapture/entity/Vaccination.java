@@ -37,7 +37,7 @@ public class Vaccination implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date insertDate;
 	
-	@Column(name = "editDate", nullable = false)
+	@Column(name = "editDate", nullable = true)
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date editDate;

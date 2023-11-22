@@ -61,7 +61,6 @@
 													<th th:text="#{set.level}"></th>
 													<th th:text="#{set.subvillage}"></th>
 													<th th:text="#{set.fw}"></th>
-													<th></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -69,7 +68,7 @@
                                                
                                             </tbody>
                                             </table>
-                                            <button type="button" class="btn btn-success add-row">Add row</button>
+                                            <!--<button type="button" class="btn btn-success add-row">Add row</button>-->
 										      <button type="button" class="btn btn-success save">Save</button>
 										      <button type="button" class="btn btn-secondary refresh">Refresh</button>
                                         </div>
@@ -150,8 +149,32 @@
         tr.append($("<td></td>").append($('<input type="text" class="form-control" readonly>').val(extId)));
         tr.append($("<td></td>").append($('<input type="text" class="form-control" readonly>').val(level_uuid)));
         tr.append($("<td></td>").append($('<input type="text" class="form-control" readonly>').val(name)));
-        tr.append($("<td></td>").append($('<input type="text" class="form-control">').val(fw_name)));
-        tr.append($("<td></td>").append($('<button type="button" class="btn btn-danger delete-row">X</button>')));
+        
+
+    var selectElement = $('<select class="form-control"></select>');
+
+	// Adding a default disabled option
+	selectElement.append('<option value="" selected disabled>Select Fieldworker</option>');
+	
+	// Fetching data from the API and populating the options
+	$.getJSON("/api/fieldworker/fw", function (data) {
+	    data.forEach(function (item) {
+	        var option = $("<option></option>")
+	            .attr("value", item.username)
+	            .text(item.firstName + ' ' + item.lastName);
+	        selectElement.append(option);
+	    });
+	
+	    // Setting the selected value (if available)
+	    if (fw_name) {
+	        selectElement.val(fw_name);
+	    }
+	});
+	
+	tr.append($("<td></td>").append(selectElement));
+
+        
+        //tr.append($("<td></td>").append($('<button type="button" class="btn btn-danger delete-row">X</button>')));
         tbody.append(tr);
       }
 

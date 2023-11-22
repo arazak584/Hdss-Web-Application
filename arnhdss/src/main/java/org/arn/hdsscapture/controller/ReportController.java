@@ -12,32 +12,10 @@ import org.arn.hdsscapture.repository.ReportRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.views.ActiveHouseholdRepository;
 import org.arn.hdsscapture.views.ActiveHouseholds;
-import org.arn.hdsscapture.views.ListVisitRepository;
-import org.arn.hdsscapture.views.ViewDth;
-import org.arn.hdsscapture.views.ViewDthRepository;
-import org.arn.hdsscapture.views.ViewHoh;
-import org.arn.hdsscapture.views.ViewHohRepository;
-import org.arn.hdsscapture.views.ViewImg;
-import org.arn.hdsscapture.views.ViewImgRepository;
-import org.arn.hdsscapture.views.ViewInd;
-import org.arn.hdsscapture.views.ViewIndRepository;
-import org.arn.hdsscapture.views.ViewListing;
-import org.arn.hdsscapture.views.ViewLocRepository;
-import org.arn.hdsscapture.views.ViewLocation;
-import org.arn.hdsscapture.views.ViewOmg;
-import org.arn.hdsscapture.views.ViewOmgRepository;
-import org.arn.hdsscapture.views.ViewOutcome;
-import org.arn.hdsscapture.views.ViewOutcomeRepository;
-import org.arn.hdsscapture.views.ViewPreg;
-import org.arn.hdsscapture.views.ViewPregRepository;
-import org.arn.hdsscapture.views.ViewRel;
-import org.arn.hdsscapture.views.ViewRelRepository;
-import org.arn.hdsscapture.views.ViewSes;
-import org.arn.hdsscapture.views.ViewSesRepository;
-import org.arn.hdsscapture.views.ViewVac;
-import org.arn.hdsscapture.views.ViewVacRepository;
-import org.arn.hdsscapture.views.ViewVisit;
-import org.arn.hdsscapture.views.ViewVisitRepository;
+import org.arn.hdsscapture.views.FieldReport;
+import org.arn.hdsscapture.views.FieldRepository;
+import org.arn.hdsscapture.views.IndividualSearch;
+import org.arn.hdsscapture.views.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -55,10 +33,13 @@ public class ReportController {
 	@Autowired
 	ReportRepository repo;
 	
+	@Autowired
+	FieldRepository rep;
+	
 	@GetMapping("/asyncReport")
     public ResponseEntity<Map<String, Object>> getAsyncReport() {
         Map<String, Object> data = new HashMap<>();
-        data.put("items", visit.findAll());
+        data.put("items", rep.findAll());
         //Residency
         data.put("countRes", repo.countResidency());
         data.put("perres", repo.perRES());
@@ -93,7 +74,13 @@ public class ReportController {
         data.put("img", repo.countImg());
         data.put("omg", repo.countOmg());
         data.put("outcome", repo.countOutcome());
-
+        //Query
+        data.put("nomemb", repo.noMem());
+        data.put("minor", repo.Minor());
+        data.put("dupres", repo.Dupres());
+        data.put("dobs", repo.Dobs());
+        data.put("lag", repo.Lag());
+        data.put("minors", repo.Minors());
 
         return ResponseEntity.ok(data);
     }
@@ -114,7 +101,7 @@ public class ReportController {
 		
 
 		//visit
-		model.addAttribute("visit", visit);
+		//model.addAttribute("visit", visit);
 		model.addAttribute("listing", listing);
 		//Inmigration //Outmigration //Outcome //Pregnancy
 		model.addAttribute("preg", preg);
@@ -165,9 +152,7 @@ public class ReportController {
 
 	    return "report/round";
 	}
-	
-	@Autowired
-	ViewLocRepository loc;
+
 	
 	@GetMapping("/report/location")
 	public String location(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -177,16 +162,14 @@ public class ReportController {
 	    //List<ViewLocation> items = repo.locReport();
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewLocation> items = loc.locReport(startDate, endDate);
+	        List<FieldReport> items = rep.Loc(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
 
 	    return "report/location";
 	}
-	
-	@Autowired
-	ViewVisitRepository visit;
+
 	
 	@GetMapping("/report/visit")
 	public String visit(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -195,16 +178,14 @@ public class ReportController {
 
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewVisit> items = visit.visitReport(startDate, endDate);
+	        List<FieldReport> items = rep.Vis(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
 
 	    return "report/visit";
 	}
-	
-	@Autowired
-	ListVisitRepository list;
+
 	
 	@GetMapping("/report/listing")
 	public String listing(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -213,16 +194,14 @@ public class ReportController {
 
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewListing> items = list.Report(startDate, endDate);
+	        List<FieldReport> items = rep.List(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
 
 	    return "report/list";
 	}
-	
-	@Autowired
-	ViewImgRepository img;
+
 	
 	@GetMapping("/report/inmigration")
 	public String img(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -231,7 +210,7 @@ public class ReportController {
 
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewImg> items = img.Report(startDate, endDate);
+	        List<FieldReport> items = rep.Img(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
@@ -239,8 +218,7 @@ public class ReportController {
 	    return "report/inmigration";
 	}
 
-	@Autowired
-	ViewOmgRepository omg;
+
 	
 	@GetMapping("/report/outmigration")
 	public String omg(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -249,7 +227,7 @@ public class ReportController {
 
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewOmg> items = omg.Report(startDate, endDate);
+	        List<FieldReport> items = rep.Omg(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
@@ -257,8 +235,7 @@ public class ReportController {
 	    return "report/outmigration";
 	}
 	
-	@Autowired
-	ViewDthRepository dth;
+
 	
 	@GetMapping("/report/death")
 	public String dth(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -267,7 +244,7 @@ public class ReportController {
 
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewDth> items = dth.Report(startDate, endDate);
+	        List<FieldReport> items = rep.Dth(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
@@ -275,8 +252,7 @@ public class ReportController {
 	    return "report/death";
 	}
 	
-	@Autowired
-	ViewPregRepository preg;
+	
 	
 	@GetMapping("/report/pregnancy")
 	public String preg(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -285,16 +261,14 @@ public class ReportController {
 
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewPreg> items = preg.Report(startDate, endDate);
+	        List<FieldReport> items = rep.Preg(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
 
 	    return "report/pregnancy";
 	}
-	
-	@Autowired
-	ViewOutcomeRepository outcome;
+
 	
 	@GetMapping("/report/outcome")
 	public String outcome(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -303,16 +277,14 @@ public class ReportController {
 
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewOutcome> items = outcome.Report(startDate, endDate);
+	        List<FieldReport> items = rep.Outcome(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
 
 	    return "report/outcome";
 	}
-	
-	@Autowired
-	ViewSesRepository ses;
+
 	
 	@GetMapping("/report/ses")
 	public String ses(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -321,16 +293,14 @@ public class ReportController {
 
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewSes> items = ses.Report(startDate, endDate);
+	        List<FieldReport> items = rep.Ses(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
 
 	    return "report/ses";
 	}
-	
-	@Autowired
-	ViewRelRepository rel;
+
 	
 	@GetMapping("/report/relationship")
 	public String rel(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -339,16 +309,14 @@ public class ReportController {
 
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewRel> items = rel.Report(startDate, endDate);
+	        List<FieldReport> items = rep.Rel(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
 
 	    return "report/rel";
 	}
-	
-	@Autowired
-	ViewIndRepository individual;
+
 	
 	@GetMapping("/report/individual")
 	public String individual(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -357,16 +325,14 @@ public class ReportController {
 
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewInd> items = individual.Report(startDate, endDate);
+	        List<FieldReport> items = rep.Ind(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
 
 	    return "report/individual";
 	}
-	
-	@Autowired
-	ViewVacRepository vac;
+
 	
 	@GetMapping("/report/vaccination")
 	public String vac(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -375,16 +341,14 @@ public class ReportController {
 
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewVac> items = vac.Report(startDate, endDate);
+	        List<FieldReport> items = rep.Vac(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
 
 	    return "report/vaccination";
 	}
-	
-	@Autowired
-	ViewHohRepository hoh;
+
 	
 	@GetMapping("/report/household")
 	public String hoh(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -393,7 +357,7 @@ public class ReportController {
 
 	    
 	    if (startDate != null && endDate != null) {
-	        List<ViewHoh> items = hoh.Report(startDate, endDate);
+	        List<FieldReport> items = rep.Hoh(startDate, endDate);
 	        model.addAttribute("items", items);
 	    } else {
 	    }
@@ -421,6 +385,44 @@ public class ReportController {
 	    }
 
 	    return "report/activehoh";
+	}
+	
+	@GetMapping("/report/unvisited")
+	public String unvisited(@RequestParam(name = "village", required = false)  String village,
+	                 Model model) {
+
+		List<String> villages = activehoh.villages();
+		//System.out.println("Villages: " + villages);
+		model.addAttribute("villages", villages);
+	    
+	    if (village != null) {
+	        List<ActiveHouseholds> items = activehoh.Unvisited(village);
+	        model.addAttribute("items", items);
+	    } else {
+//	    	List<ActiveHouseholds> items = activehoh.Unvisit();
+//	    	model.addAttribute("items", items);
+	    }
+
+	    return "report/unvisited";
+	}
+	
+	@Autowired
+	SearchRepository search;
+	
+	@GetMapping("/report/search")
+	public String search(@RequestParam(name = "village", required = false)  String village,
+	                 Model model) {
+
+	    
+	    if (village != null) {
+	        List<IndividualSearch> items = search.Report(village);
+	        model.addAttribute("items", items);
+	    } else {
+//	    	List<ActiveHouseholds> items = activehoh.Reports();
+//	    	model.addAttribute("items", items);
+	    }
+
+	    return "report/search";
 	}
 
 	

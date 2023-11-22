@@ -64,6 +64,15 @@ function updateDashboard(data) {
     $('#cntimg').text(data.img);
     $('#cntomg').text(data.omg);
     $('#cntoutcome').text(data.outcome);
+    //Query
+    $('#nomemb').text(data.nomemb);
+    $('#minor').text(data.minor);
+    $('#dupres').text(data.dupres);
+    $('#dobs').text(data.dobs);
+    $('#lag').text(data.lag);
+    $('#minors').text(data.minors);
+    
+    $('#error').text(data.nomemb+data.minor+data.dupres+data.dobs+data.lag+data.minors);
 }
 
 function renderItems(items) {
