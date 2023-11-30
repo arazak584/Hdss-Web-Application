@@ -49,10 +49,10 @@ public class IndividualZipController {
             List<Individual> data = repo.findAll();
             
          // Convert data to CSV
-      	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("dob").addColumn("dobAspect").addColumn("extId")
+      	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("dob").addColumn("dobAspect").addColumn("edtime").addColumn("extId")
                   .addColumn("firstName").addColumn("fw_uuid").addColumn("gender").addColumn("ghanacard").addColumn("insertDate")
                   .addColumn("lastName").addColumn("otherName").addColumn("father_uuid").addColumn("mother_uuid")
-                  .addColumn("sttime").addColumn("edtime").build();
+                  .addColumn("sttime").build();
       	  CsvMapper csvMapper = new CsvMapper();
       	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
       	  StringWriter writer = new StringWriter();

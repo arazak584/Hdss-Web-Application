@@ -1,30 +1,20 @@
 package org.arn.hdsscapture.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-import javax.transaction.Transactional;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.arn.hdsscapture.entity.Codebook;
 import org.arn.hdsscapture.entity.Fieldworker;
-import org.arn.hdsscapture.entity.Locationhierarchy;
 import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.entity.Task;
+import org.arn.hdsscapture.odk.OdkRepository;
+import org.arn.hdsscapture.odk.ODK;
+import org.arn.hdsscapture.repository.CodebookRepository;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
-import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.repository.SettingsRepository;
 import org.arn.hdsscapture.repository.TaskRepository;
-import org.arn.hdsscapture.views.ActiveHouseholds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,9 +25,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 
 
@@ -193,33 +180,6 @@ public class UtilityController {
 	    return "utility/round_add";
 	}
 
-
-
-//	@PostMapping("/round")
-//	public String saveRound(@ModelAttribute("rounds") Round round, Model model) {
-//	    // Generate a UUID for the Fieldworker's ID
-//	    String uuid = UUID.randomUUID().toString();
-//	    String uuidString = uuid.replaceAll("-", "");
-//	    
-//	    // Set the ID of the Fieldworker object
-//	    round.setUuid(uuidString);
-//
-//	    // Validate startDate and endDate
-//	    if (round.getStartDate() != null && round.getEndDate() != null && round.getEndDate().before(round.getStartDate())) {
-//	        // Handle the case where endDate is before startDate (validation failed)
-//	        // Add an error message to the model
-//	        model.addAttribute("error", "Invalid date range. Please make sure the end date is not before the start date.");
-//	        
-//	        // Return the same view without redirecting
-//	        return "utility/round_add";
-//	    }
-//
-//	    // Save the Round object using the repository
-//	    roundrepo.save(round);
-//
-//	    // Redirect to the "/utility/round/add" URL with a success parameter
-//	    return "redirect:/utility/round/add?success";
-//	}
 	
 	@PostMapping("/round")
     public String saveRound(@ModelAttribute("round") Round round, BindingResult bindingResult, Model model) {
@@ -303,12 +263,7 @@ public class UtilityController {
 		return "utility/settings_list";
 	}
 	
-	LocationhierarchyRepository  loc;
-	@Autowired
-    public UtilityController(LocationhierarchyRepository loc) {
-        this.loc = loc;
-    }
-	
+
 	
 	@GetMapping("/assignment")
 	public String Assignarea(Model model) {
@@ -316,6 +271,135 @@ public class UtilityController {
 //		model.addAttribute("hierarchy", hierarchy);
 		return "utility/area_list";
 	}
+	
+	
+	@Autowired
+	OdkRepository odkrepo;
+	
+	@Autowired
+	CodebookRepository codebook;
+
+	@GetMapping("/extra-forms")
+	public String findOdk(Model model) {
+		
+		List<ODK> items = odkrepo.findAll();
+		
+		
+		model.addAttribute("items", items);
+		return "utility/odk_list";
+	}
+
+	@GetMapping("/extra-forms/add")
+	public String addODK(Model model,
+	                       @RequestParam(name = "success", required = false) String success, String error) {
+	    ODK odk = new ODK();
+	    
+	    List<Codebook> items = codebook.odk_gender();
+//	    gender.forEach(codebook -> System.out.println("Codebook: " + codebook));
+		model.addAttribute("items", items);
+		
+	    List<Codebook> modules = codebook.modules();
+		model.addAttribute("modules", modules);
+		
+		List<Codebook> enabled = codebook.enabled();
+		model.addAttribute("enabled", enabled);
+
+	    model.addAttribute("odk", odk);
+
+	    if (success != null) {
+	        model.addAttribute("success", "Successfully saved. " + success);
+	    }
+	    
+	    if (error != null) {
+	        model.addAttribute("error", "formID already Exists " + error);
+	    }
+
+	    return "utility/odk_add";
+	}
+
+	
+	@PostMapping("/extra-forms")
+    public String saveOdk(@ModelAttribute("odk") ODK odk, BindingResult bindingResult, Model model) {
+		
+	    List<Codebook> items = codebook.odk_gender();
+		model.addAttribute("items", items);
+		
+	    List<Codebook> modules = codebook.modules();
+		model.addAttribute("modules", modules);
+		
+		List<Codebook> enabled = codebook.enabled();
+		model.addAttribute("enabled", enabled);
+		
+		boolean formIDExists = odkrepo.findByformID(odk.getFormID()).isPresent();
+
+		if (formIDExists) {
+			//bindingResult.rejectValue("formID", "formID.exists");
+			model.addAttribute("error", "Form ID Exists");
+            return "utility/odk_add";
+		}
+
+		if (odk.insertDate == null) {
+			odk.insertDate = new Date();
+		}
+ 
+
+        // Save the Round object using the repository
+        odkrepo.save(odk);
+
+        return "redirect:/utility/extra-forms/add?success";
+    }
+
+
+
+	@GetMapping("/extra-forms/edit/{id}")
+	public String editOdk(@PathVariable("id") Integer id, Model model) {
+		List<ODK> optionalOdk = odkrepo.findID(id);
+		if (!optionalOdk.isEmpty()) {
+			ODK odk = optionalOdk.get(0);
+			
+		    List<Codebook> items = codebook.odk_gender();
+			model.addAttribute("items", items);
+			
+		    List<Codebook> modules = codebook.modules();
+			model.addAttribute("modules", modules);
+			
+			List<Codebook> enabled = codebook.enabled();
+			model.addAttribute("enabled", enabled);
+			// Add any other necessary data to the model attribute for editing
+			model.addAttribute("odk", odk);
+			return "utility/odk_edit";
+		} else {
+			return "error";
+		}
+	}
+
+	@PostMapping("/extra-forms/{id}")
+	public String updateOdk(@PathVariable("id") Integer id, @ModelAttribute("round") ODK odk,
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			// Handle validation errors if necessary
+			return "odk_edit";
+		} else {
+			List<ODK> optionalOdk = odkrepo.findID(id);
+			if (!optionalOdk.isEmpty()) {
+				ODK existingOdk = optionalOdk.get(0);
+				existingOdk.setFormID(odk.getFormID());
+				//existingOdk.setInsertDate(odk.getInsertDate());
+				existingOdk.setFormName(odk.getFormName());
+				existingOdk.setFormDesc(odk.getFormDesc());
+				existingOdk.setGender(odk.getGender());
+				existingOdk.setEnabled(odk.getEnabled());
+				existingOdk.setModules(odk.getModules());
+				existingOdk.setMinAge(odk.getMinAge());
+				existingOdk.setMaxAge(odk.getMaxAge());
+				odkrepo.save(existingOdk);
+				return "redirect:/utility/extra-forms";
+			} else {
+				return "error";
+			}
+		}
+	}
+
 	
 
 

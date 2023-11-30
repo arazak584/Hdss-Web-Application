@@ -27,12 +27,15 @@ public class WebSecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests(requests -> requests
 //				.antMatchers("/controls/**").hasAnyRole("CONTROLLER","MANAGER")// can only setup
-//				.antMatchers("/pi/**").hasRole("INVESTIGATOR")// can only enter data
-//				.antMatchers("/pi/**").hasAnyRole("INVESTIGATOR","CONTROLLER")// can only enter data
+				.antMatchers("/api/**").authenticated()
+//				.antMatchers("/api/**").hasAnyRole("CONTROLLER","MANAGER","VIEWER","COORDINATOR")
 //				.antMatchers("/**").hasRole("ADMINISTRATOR")// can view audits
-                .anyRequest().authenticated()).formLogin(login -> login
-                		
+                .anyRequest().permitAll())
+                
+                .httpBasic(withDefaults())
+        		.formLogin(login -> login                		
                 .loginPage("/login")
+                .defaultSuccessUrl("/hdss/report")
                 .failureUrl("/login?error")
                 .permitAll())
         		.logout(logout -> logout
@@ -54,10 +57,13 @@ public class WebSecurityConfig {
 		return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailService)
 				.passwordEncoder(bCryptPasswordEncoder).and().build();
 	}
+	
+
 
 	@Bean
 	WebSecurityCustomizer ignoringCustomizer() {
-		return (web) -> web.ignoring().antMatchers("/h2-console/**", "/img/**", "/webjars/**", "/api/**");
+		return (web) -> web.ignoring().antMatchers("/h2-console/**", "/img/**", "/webjars/**");
+		//return (web) -> web.ignoring().antMatchers("/h2-console/**", "/img/**", "/webjars/**", "/api/**");
 	}
 
 }

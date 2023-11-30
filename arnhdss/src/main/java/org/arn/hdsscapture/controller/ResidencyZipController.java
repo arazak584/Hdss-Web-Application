@@ -49,11 +49,11 @@ public class ResidencyZipController {
 	  List<Residency> data = repo.findResidency();
 
 	  // Convert data to CSV
-	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("endDate").addColumn("endType")
+	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("edtime").addColumn("endDate").addColumn("endType")
 			  .addColumn("fw_uuid").addColumn("insertDate").addColumn("rltn_head")
 			  .addColumn("startDate").addColumn("startType")
 			  .addColumn("individual_uuid").addColumn("location_uuid").addColumn("socialgroup_uuid")
-			  .addColumn("sttime").addColumn("edtime").build();
+			  .addColumn("sttime").build();
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	  StringWriter writer = new StringWriter();

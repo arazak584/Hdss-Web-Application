@@ -52,7 +52,33 @@ public class ReportController {
         //Compounds
         data.put("countcomp", repo.countCompound());
         data.put("percomp", repo.perComp());
-        //HH VISIT
+        
+
+
+        return ResponseEntity.ok(data);
+    }
+	
+	@GetMapping("/asyncReport/query")
+    public ResponseEntity<Map<String, Object>> getAsyncQuery() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("items", rep.findAll());
+        //Query
+        data.put("nomemb", repo.noMem());
+        data.put("minor", repo.Minor());
+        data.put("dupres", repo.Dupres());
+        data.put("dobs", repo.Dobs());
+        data.put("lag", repo.Lag());
+        data.put("minors", repo.Minors());
+
+        return ResponseEntity.ok(data);
+    }
+	
+	@GetMapping("/asyncReport/report")
+    public ResponseEntity<Map<String, Object>> getAsyncReports() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("items", rep.findAll());
+        //Report
+      //HH VISIT
         data.put("hh", repo.countSocialgroup());
         data.put("hhvisit", repo.hhVisit());
         data.put("visit", repo.countVisit());
@@ -74,13 +100,6 @@ public class ReportController {
         data.put("img", repo.countImg());
         data.put("omg", repo.countOmg());
         data.put("outcome", repo.countOutcome());
-        //Query
-        data.put("nomemb", repo.noMem());
-        data.put("minor", repo.Minor());
-        data.put("dupres", repo.Dupres());
-        data.put("dobs", repo.Dobs());
-        data.put("lag", repo.Lag());
-        data.put("minors", repo.Minors());
 
         return ResponseEntity.ok(data);
     }
@@ -89,27 +108,27 @@ public class ReportController {
 	public String fw(Model model) {
 		//Visit
 //		long visit = repo.countVisit();
-		long listing = repo.countList();
-		//Inmigration
-
-		long preg = repo.countPreg();
-		long dth = repo.countDth();
-		long ses = repo.countSes();
-		long vac = repo.countVac();
-		long ind = repo.countInd();
-		double perind = repo.perInd();
-		
-
-		//visit
-		//model.addAttribute("visit", visit);
-		model.addAttribute("listing", listing);
-		//Inmigration //Outmigration //Outcome //Pregnancy
-		model.addAttribute("preg", preg);
-		model.addAttribute("dth", dth);
-		model.addAttribute("ses", ses);
-		model.addAttribute("vac", vac);
-		model.addAttribute("ind", ind);
-		model.addAttribute("perind", perind);
+//		long listing = repo.countList();
+//		//Inmigration
+//
+//		long preg = repo.countPreg();
+//		long dth = repo.countDth();
+//		long ses = repo.countSes();
+//		long vac = repo.countVac();
+//		long ind = repo.countInd();
+//		double perind = repo.perInd();
+//		
+//
+//		//visit
+//		//model.addAttribute("visit", visit);
+//		model.addAttribute("listing", listing);
+//		//Inmigration //Outmigration //Outcome //Pregnancy
+//		model.addAttribute("preg", preg);
+//		model.addAttribute("dth", dth);
+//		model.addAttribute("ses", ses);
+//		model.addAttribute("vac", vac);
+//		model.addAttribute("ind", ind);
+//		model.addAttribute("perind", perind);
 		
 
 		return "report/dashboard";

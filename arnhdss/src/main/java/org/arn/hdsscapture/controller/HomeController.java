@@ -1,13 +1,17 @@
 package org.arn.hdsscapture.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/utility/util")
+@RequestMapping("/home")
 public class HomeController {
 
-	
+	@GetMapping("")
+    public String redirectAfterLogin() {
+        return "redirect:/hdss/report";
+    }
 	
 	
 }

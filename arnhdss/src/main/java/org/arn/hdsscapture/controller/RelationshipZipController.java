@@ -49,10 +49,10 @@ public class RelationshipZipController {
 	  List<Relationship> data = repo.findRelationship();
 
 	  // Convert data to CSV
-	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("aIsToB").addColumn("endDate").addColumn("endType")
+	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("aIsToB").addColumn("edtime").addColumn("endDate").addColumn("endType")
 			  .addColumn("fw_uuid").addColumn("individualA_uuid").addColumn("individualB_uuid").addColumn("insertDate").addColumn("lcow").addColumn("mar")
 			  .addColumn("mrank").addColumn("nchdm").addColumn("nwive").addColumn("polygamous")
-			  .addColumn("startDate").addColumn("tnbch").addColumn("sttime").addColumn("edtime").build();
+			  .addColumn("startDate").addColumn("sttime").addColumn("tnbch").build();
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	  StringWriter writer = new StringWriter();

@@ -60,5 +60,5 @@ public class CodebookController {
 	void delete(@PathVariable("id") Integer id) {
 		repo.deleteById(id);
 	}
-
+	
 }

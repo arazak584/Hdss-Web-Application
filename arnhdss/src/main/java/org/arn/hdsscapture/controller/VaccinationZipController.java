@@ -52,7 +52,7 @@ public class VaccinationZipController {
 		CsvSchema schema = CsvSchema.builder().addColumn("individual_uuid").addColumn("admission")
 				.addColumn("admitDate").addColumn("arti").addColumn("artitreat").addColumn("bcg").addColumn("bednet")
 				.addColumn("chlbednet").addColumn("diarrhoea").addColumn("diarrhoeatreat").addColumn("dob")
-				.addColumn("dpt_hepb_hib1").addColumn("dpt_hepb_hib2").addColumn("dpt_hepb_hib3").addColumn("fever")
+				.addColumn("dpt_hepb_hib1").addColumn("dpt_hepb_hib2").addColumn("dpt_hepb_hib3").addColumn("editDate").addColumn("edtime").addColumn("fever")
 				.addColumn("fevertreat").addColumn("fw_uuid").addColumn("hcard").addColumn("hl").addColumn("hod")
 				.addColumn("hom").addColumn("insertDate").addColumn("ipv").addColumn("itn").addColumn("location_uuid")
 				.addColumn("measles_rubella1").addColumn("measles_rubella2").addColumn("menA").addColumn("muac")
@@ -61,8 +61,8 @@ public class VaccinationZipController {
 				.addColumn("rea_oth").addColumn("reason").addColumn("reason_oth").addColumn("rota1").addColumn("rota2")
 				.addColumn("rota3").addColumn("rtss18").addColumn("rtss6").addColumn("rtss7").addColumn("rtss9")
 				.addColumn("sbf").addColumn("scar").addColumn("slpbednet").addColumn("socialgroup_uuid")
-				.addColumn("stm").addColumn("sty").addColumn("uuid").addColumn("vitaminA12").addColumn("vitaminA18")
-				.addColumn("vitaminA6").addColumn("weight").addColumn("yellow_fever").addColumn("sttime").addColumn("edtime").addColumn("editDate").build();
+				.addColumn("stm").addColumn("sttime").addColumn("sty").addColumn("uuid").addColumn("vitaminA12").addColumn("vitaminA18")
+				.addColumn("vitaminA6").addColumn("weight").addColumn("yellow_fever").build();
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	  StringWriter writer = new StringWriter();

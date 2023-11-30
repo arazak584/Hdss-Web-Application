@@ -1,13 +1,13 @@
 INSERT IGNORE INTO user_table(username, user_email, user_enabled, user_password, user_fname, user_lname)
-    VALUES (
-        'admin'
-	    , 'webadmin@hdss.com'
-	    , true
-	    , '$2a$10$SLlNbnvkIqatweZxewyZUeF6yrGexjppQpJgntGXCxWMQCaT3ORdi'
-	    , 'Administrator'
-	    , 'System'
-    );
+ VALUES ('admin', 'webadmin@hdss.com', true , '$2a$10$yyKs9u0XmrcxE9smecE3Q.mgIA4ade7UOlObCh2pthIdQktqrYrdK' , 'Administrator', 'System');
 
+INSERT IGNORE INTO user_table(username, user_email, user_enabled, user_password, user_fname, user_lname)
+ VALUES ('data', 'data@hdss.com', true , '$2a$10$SLlNbnvkIqatweZxewyZUeF6yrGexjppQpJgntGXCxWMQCaT3ORdi' , 'Data', 'Synchronization'); 
+
+-- User : admin
+-- Pwd: Hdss@!234
+
+-- User: data
 -- pw: admin
 
 	INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_CONTROLLER', 'Systems Administrator');
@@ -16,8 +16,8 @@ INSERT IGNORE INTO user_table(username, user_email, user_enabled, user_password,
   INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_VIEWER', 'Viewer');
 
 
-DELETE FROM user_group WHERE username='webadmin';
  INSERT IGNORE INTO user_group(username, group_role) values('admin', 'ROLE_CONTROLLER');
+ INSERT IGNORE INTO user_group(username, group_role) values('data', 'ROLE_VIEWER');
 
 
 
@@ -636,6 +636,13 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'L
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for sale on market', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for home consumption and sale on market', 3);
 INSERT INTO settings (`earliestDate`, `father_age`, `hoh_age`, `mother_age`, `rel_age`) VALUES ('2019-01-01', 12, 14, 12, 12);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('modules', 'HDSS', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('modules', 'Covid', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('enabled', 'True', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('enabled', 'False', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('odk_gender', 'Male', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('odk_gender', 'Female', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('odk_gender', 'All', 3);
 
 
 -- Dashboard

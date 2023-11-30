@@ -41,7 +41,7 @@
                                 </div>
                                 <!--<div class="nav-lavel">Queries</div>-->
                                 <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
-                                    <a href="#" ><i class="fa fa-exclamation-triangle"></i><span>Queries</span><span class="badge badge-danger" id="error"></span></a>
+                                    <a href="#" ><i class="fa fa-exclamation-triangle"></i><span>Queries</span><span class="badge badge-danger" id="errors"></span></a>
                                     <div class="submenu-content">
                                         <a href="#" th:href="@{/hdss/query/nomembership}" class="menu-item">No Membership<span class="badge badge-danger" id="nomemb"></span></a>
                                         <a href="#" th:href="@{/hdss/query/lagging}" class="menu-item">Lagging Date<span class="badge badge-danger" id="lag"></span></a>
@@ -77,7 +77,7 @@
                                 <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">
                                     <a href="#"><i class="ik ik-edit"></i><span>ODK Forms</span></a>
                                     <div class="submenu-content">
-                                        <a href="#" class="menu-item">Extra Forms</a>
+                                        <a href="#" th:href = "@{/utility/extra-forms}" class="menu-item">Extra Forms</a>
                                     </div>
                                 </div>
                                 <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">

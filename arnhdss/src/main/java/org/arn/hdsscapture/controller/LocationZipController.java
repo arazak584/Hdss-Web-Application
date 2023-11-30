@@ -49,10 +49,10 @@ public class LocationZipController {
 	  List<Location> data = repo.findAll();
 
 	  // Convert data to CSV
-	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("accuracy").addColumn("compextId").addColumn("compno")
+	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("accuracy").addColumn("compextId").addColumn("compno").addColumn("edtime")
 			  .addColumn("fw_uuid").addColumn("insertDate").addColumn("latitude").addColumn("locationLevel_uuid").addColumn("locationName")
 			  .addColumn("locationType").addColumn("longitude").addColumn("status")
-			  .addColumn("sttime").addColumn("edtime").build();  		  
+			  .addColumn("sttime").build();  		  
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	  StringWriter writer = new StringWriter();

@@ -29,12 +29,11 @@
         <link rel="stylesheet" th:href="@{/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
         
         <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
-		
         
     </head>
 
     <body>
-       
+       <div th:if="${exceptionMsg}" class="alert alert-danger" th:text="${exceptionMsg}"></div>
 
         <div class="wrapper">
             <!-- header start-->
@@ -48,47 +47,67 @@
                 <div class="main-content">
   
                                   <div class="card">
-                                    <div class="card-header d-block">
-                                        <h3>Location Assignment</h3> 
-                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'assign.xlsx')">Export to Excel</button>
-                                    </div>
+									  <div th:if="${exceptionMsg}" class="alert alert-danger" th:text="${exceptionMsg}"></div>
+                                    
                                     <div class="card-body">
-										<form class="form-inline" method="POST" action="/file/assign/upload" enctype="multipart/form-data" style="text-align: center;" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">                         
-                                                <div class="form-group mx-sm-3 mb-2">
-                                                 <input type="file" name="file" id="file" class="form-control" accept=".xlsx" required>
-                                                </div>
-                                                <div class="form-group mx-sm-3 mb-2">
-                                                <button type="submit" class="btn btn-theme">Submit</button>
-                                                </div>
-                                            </form>
-
-                                        <div class="dt-responsive">
-                                            <table id="order-table"
-                                                   class="table table-striped table-bordered nowrap">
-                                                <thead>
-                                                <tr>
-                                                    <th th:text="#{loc.uuid}"></th>
-													<th th:text="#{loc.extId}"></th>
-													<th th:text="#{fw.village}"></th>
-													<th th:text="#{loc.fw_name}"></th>
-													<th th:text="#{loc.parent}"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr th:each="item : ${items}">
-											            <td th:text="${item.uuid}"></td>
-											            <td th:text="${item.extId}"></td>
-											            <td th:text="${item.name}"></td>
-											            <td th:text="${item.fw_name}"></td>
-											            <td th:text="${item.parent_uuid}"></td>
-											            </tr>                                                                                
-                                               
-                                            </tbody>
-                                                <tfoot>
-                                                
-                                                </tfoot>
-                                            </table>
-                                        </div>
+										
+								<div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header"><h3>Extra Form</h3></div>
+                                    <!-- success message -->
+									<div th:if="${success}">
+									    <div class="alert alert-info">
+									        [[${success}]] <span th:text="${formID}"></span>!
+									    </div>
+									</div>
+                                    <div class="card-body">
+                                        <form class="forms-sample" th:action="@{/utility/extra-forms/{id} (id=${odk.id})}" th:object="${odk}" method="post">
+                                            <div class="form-group">
+                                                <label th:text="#{odk.formid}"></label>
+                                                <input type="text" name="formID" th:field ="*{formID}" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label th:text="#{odk.forname}"></label>
+                                                <input type="text" class="form-control"  name="formName" th:field ="*{formName}" Placeholder="Enter Form Name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label th:text="#{odk.desc}"></label>
+                                                <input type="text" class="form-control" name="formDesc" th:field ="*{formDesc}" Placeholder="Form Description" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label th:text="#{odk.min}"></label>
+                                                <input type="text" class="form-control" name="minAge" th:field ="*{minAge}" Placeholder="Enter Minimum Age" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label th:text="#{odk.max}"></label>
+                                                <input type="text" class="form-control" name="maxAge" th:field ="*{maxAge}" Placeholder="Enter Maximum Age" required>
+                                            </div>
+                                           <div class="form-group">
+											   <label th:text="#{odk.gender}"></label>
+										     <select name="gender" class="form-control" th:field="*{gender}" required>
+										        <option th:each="item : ${items}" th:value="${item.codeValue}" th:text="${item.codeLabel}"></option>
+										    </select>
+										    </div>
+										    <div class="form-group">
+											   <label th:text="#{odk.modules}"></label>
+										     <select name="modules" class="form-control" th:field="*{modules}" required>
+										        <option th:each="item : ${modules}" th:value="${item.codeValue}" th:text="${item.codeLabel}"></option>
+										    </select>
+										    </div>
+										    <div class="form-group">
+											   <label th:text="#{odk.enabled}"></label>
+										     <select name="enabled" class="form-control" th:field="*{enabled}" required>
+										        <option th:each="item : ${enabled}" th:value="${item.codeValue}" th:text="${item.codeLabel}"></option>
+										    </select>
+										    </div>
+                                            
+                                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                            <!--<button class="btn btn-light">Cancel</button>-->
+                                          </form>
+                                    </div>
+                                </div>
+                            </div>
+                                   
                                     </div>
                                 </div>
   
@@ -124,8 +143,6 @@
         <script th:src="@{/dist/js/theme.min.js}"></script>
         <script th:src="@{/js/dashboard.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
-        <script th:src="@{/js/index.js}"></script>
-        <script th:src="@{/js/xlsx.full.min.js}"></script>
         
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -142,7 +159,6 @@
         document.getElementById('logoutForm').submit();
     }
 </script>
-
 
         
     </body>
