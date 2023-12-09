@@ -30,7 +30,7 @@ public class WebSecurityConfig {
 				.antMatchers("/api/**").authenticated()
 //				.antMatchers("/api/**").hasAnyRole("CONTROLLER","MANAGER","VIEWER","COORDINATOR")
 //				.antMatchers("/**").hasRole("ADMINISTRATOR")// can view audits
-                .anyRequest().permitAll())
+                .anyRequest().authenticated())
                 
                 .httpBasic(withDefaults())
         		.formLogin(login -> login                		

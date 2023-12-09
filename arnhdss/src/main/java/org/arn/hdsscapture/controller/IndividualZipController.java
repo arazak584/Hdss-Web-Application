@@ -15,6 +15,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.arn.hdsscapture.entity.Individual;
 import org.arn.hdsscapture.entity.Task;
+import org.arn.hdsscapture.projection.IndividualProjection;
 import org.arn.hdsscapture.repository.IndividualRepository;
 import org.arn.hdsscapture.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +47,14 @@ public class IndividualZipController {
     public ResponseEntity<String> downloadData() {
         try {
             // Retrieve data from database
-            List<Individual> data = repo.findAll();
+            List<IndividualProjection> data = repo.findIndividual();
             
          // Convert data to CSV
       	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("dob").addColumn("dobAspect").addColumn("edtime").addColumn("extId")
                   .addColumn("firstName").addColumn("fw_uuid").addColumn("gender").addColumn("ghanacard").addColumn("insertDate")
                   .addColumn("lastName").addColumn("otherName").addColumn("father_uuid").addColumn("mother_uuid")
-                  .addColumn("sttime").build();
+                  .addColumn("sttime").addColumn("endType").addColumn("startDate").addColumn("endDate").addColumn("compno")
+                  .addColumn("village").addColumn("residency").addColumn("socialgroup").addColumn("hohID").build();
       	  CsvMapper csvMapper = new CsvMapper();
       	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
       	  StringWriter writer = new StringWriter();

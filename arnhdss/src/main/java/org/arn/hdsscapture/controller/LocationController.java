@@ -9,6 +9,7 @@ import org.arn.hdsscapture.entity.ErrorLog;
 import org.arn.hdsscapture.entity.Location;
 import org.arn.hdsscapture.exception.DataErrorException;
 import org.arn.hdsscapture.exception.DataNotFoundException;
+import org.arn.hdsscapture.projection.LocationProjection;
 import org.arn.hdsscapture.repository.ErrorLogRepository;
 import org.arn.hdsscapture.repository.LocationRepository;
 import org.arn.hdsscapture.utils.DataWrapper;
@@ -32,11 +33,11 @@ public class LocationController {
 	ErrorLogRepository errorLogRepository;
 	
 	@GetMapping("")
-	public DataWrapper<Location> findAll() {
+	public DataWrapper<LocationProjection> findAll() {
 
-		List<Location> data = repo.findAll();
+		List<LocationProjection> data = repo.findLocation();
 
-		DataWrapper<Location> w = new DataWrapper<>();
+		DataWrapper<LocationProjection> w = new DataWrapper<>();
 		w.setData(data);
 
 		return w;

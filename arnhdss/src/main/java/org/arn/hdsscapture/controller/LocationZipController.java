@@ -15,6 +15,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.arn.hdsscapture.entity.Location;
 import org.arn.hdsscapture.entity.Task;
+import org.arn.hdsscapture.projection.LocationProjection;
 import org.arn.hdsscapture.repository.LocationRepository;
 import org.arn.hdsscapture.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +47,13 @@ public class LocationZipController {
 	public ResponseEntity<String> downloadLocation() {
 		try {
 	  // Retrieve data from database
-	  List<Location> data = repo.findAll();
+	  List<LocationProjection> data = repo.findLocation();
 
 	  // Convert data to CSV
 	  CsvSchema schema = CsvSchema.builder().addColumn("uuid").addColumn("accuracy").addColumn("compextId").addColumn("compno").addColumn("edtime")
 			  .addColumn("fw_uuid").addColumn("insertDate").addColumn("latitude").addColumn("locationLevel_uuid").addColumn("locationName")
 			  .addColumn("locationType").addColumn("longitude").addColumn("status")
-			  .addColumn("sttime").build();  		  
+			  .addColumn("sttime").addColumn("vill_extId").build();  		  
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	  StringWriter writer = new StringWriter();

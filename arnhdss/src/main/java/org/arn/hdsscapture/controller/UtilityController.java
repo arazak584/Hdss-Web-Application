@@ -298,8 +298,8 @@ public class UtilityController {
 //	    gender.forEach(codebook -> System.out.println("Codebook: " + codebook));
 		model.addAttribute("items", items);
 		
-	    List<Codebook> modules = codebook.modules();
-		model.addAttribute("modules", modules);
+//	    List<Codebook> modules = codebook.modules();
+//		model.addAttribute("modules", modules);
 		
 		List<Codebook> enabled = codebook.enabled();
 		model.addAttribute("enabled", enabled);
@@ -324,8 +324,8 @@ public class UtilityController {
 	    List<Codebook> items = codebook.odk_gender();
 		model.addAttribute("items", items);
 		
-	    List<Codebook> modules = codebook.modules();
-		model.addAttribute("modules", modules);
+//	    List<Codebook> modules = codebook.modules();
+//		model.addAttribute("modules", modules);
 		
 		List<Codebook> enabled = codebook.enabled();
 		model.addAttribute("enabled", enabled);
@@ -360,8 +360,8 @@ public class UtilityController {
 		    List<Codebook> items = codebook.odk_gender();
 			model.addAttribute("items", items);
 			
-		    List<Codebook> modules = codebook.modules();
-			model.addAttribute("modules", modules);
+//		    List<Codebook> modules = codebook.modules();
+//			model.addAttribute("modules", modules);
 			
 			List<Codebook> enabled = codebook.enabled();
 			model.addAttribute("enabled", enabled);
@@ -389,7 +389,6 @@ public class UtilityController {
 				existingOdk.setFormDesc(odk.getFormDesc());
 				existingOdk.setGender(odk.getGender());
 				existingOdk.setEnabled(odk.getEnabled());
-				existingOdk.setModules(odk.getModules());
 				existingOdk.setMinAge(odk.getMinAge());
 				existingOdk.setMaxAge(odk.getMaxAge());
 				odkrepo.save(existingOdk);

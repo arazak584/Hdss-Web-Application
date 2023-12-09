@@ -50,9 +50,6 @@ public class ODK implements Serializable {
 	@Column(name = "enabled", nullable = false)
 	public String enabled;
 	
-	@Column(name = "modules", nullable = false)
-	public String modules;
-	
 	@Column(name = "minAge", nullable = false)
 	public Integer minAge;
 	
@@ -131,16 +128,6 @@ public class ODK implements Serializable {
 
 	public void setEnabled(String enabled) {
 		this.enabled = enabled;
-	}
-
-
-	public String getModules() {
-		return modules;
-	}
-
-
-	public void setModules(String modules) {
-		this.modules = modules;
 	}
 
 

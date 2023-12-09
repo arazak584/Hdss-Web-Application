@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -77,6 +78,10 @@ public class Location implements Serializable {
 
 	@Column(name = "edtime")
 	private String edtime;
+	
+	@Transient
+	@Column(name = "vill_extId")
+	private String vill_extId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
@@ -221,6 +226,7 @@ public class Location implements Serializable {
 	public void setEdtime(String edtime) {
 		this.edtime = edtime;
 	}
+
 
 
 	@Override

@@ -51,7 +51,7 @@ public class ReportController {
         data.put("perhh", repo.perHH());
         //Compounds
         data.put("countcomp", repo.countCompound());
-        data.put("percomp", repo.perComp());
+        data.put("percomp", repo.perLoc());
         
 
 

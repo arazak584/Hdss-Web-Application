@@ -89,12 +89,6 @@
 										    </select>
 										    </div>
 										    <div class="form-group">
-											   <label th:text="#{odk.modules}"></label>
-										     <select name="modules" class="form-control" th:field="*{modules}" required>
-										        <option th:each="item : ${modules}" th:value="${item.codeValue}" th:text="${item.codeLabel}"></option>
-										    </select>
-										    </div>
-										    <div class="form-group">
 											   <label th:text="#{odk.enabled}"></label>
 										     <select name="enabled" class="form-control" th:field="*{enabled}" required>
 										        <option th:each="item : ${enabled}" th:value="${item.codeValue}" th:text="${item.codeLabel}"></option>

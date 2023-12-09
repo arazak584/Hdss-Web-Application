@@ -66,7 +66,6 @@
 													<th th:text="#{odk.min}"></th>
 													<th th:text="#{odk.max}"></th>
 													<th th:text="#{odk.gender}"></th>
-													<th th:text="#{odk.modules}"></th>
 													<th th:text="#{odk.enabled}"></th>
 													<th th:text="#{fw.action}"></th>
                                                 </tr>
@@ -79,7 +78,6 @@
 														<td th:text="${item.minAge}"></td>
 														<td th:text="${item.maxAge}"></td>
 														<td th:text="${item.gender}"></td>
-														<td th:text="${item.modules}"></td>
 														<td th:text="${item.enabled}"></td>
 														<td>
 										                <a th:href="@{/utility/extra-forms/edit/{id}(id=${item.id})}" 

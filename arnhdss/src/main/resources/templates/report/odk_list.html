@@ -64,7 +64,6 @@
 													<th th:text="#{odk.min}"></th>
 													<th th:text="#{odk.max}"></th>
 													<th th:text="#{odk.gender}"></th>
-													<th th:text="#{odk.modules}"></th>
 													<th th:text="#{odk.enabled}"></th>
                                                 </tr>
                                                 </thead>
@@ -146,7 +145,7 @@
 </script>
 
 <script>
-      function addRow(tbody, id, formID, insertDate, formName, formDesc, minAge, maxAge, gender, modules, enabled, className) {
+      function addRow(tbody, id, formID, insertDate, formName, formDesc, minAge, maxAge, gender, enabled, className) {
         var tr = $("<tr></tr>").attr("data-id", id);
         if (className) {
           tr.addClass(className);
@@ -176,25 +175,7 @@
 	    }
 	});	
 	tr.append($("<td></td>").append(selectGender));
-	
-	//Modules
-	var selectModules = $('<select class="form-control"></select>');
-	// Adding a default disabled option
-	selectModules.append('<option value="" selected disabled>Select Option</option>');	
-	// Fetching data from the API and populating the options
-	$.getJSON("/api/codebook/modules", function (data) {
-	    data.forEach(function (item) {
-	        var option = $("<option></option>")
-	            .attr("value", item.codeValue)
-	            .text(item.codeLabel);
-	        selectModules.append(option);
-	    });	
-	    // Setting the selected value (if available)
-	    if (modules) {
-	        selectModules.val(modules);
-	    }
-	});	
-	tr.append($("<td></td>").append(selectModules));
+
 	
 	//Enabled
 	var selectEnabled = $('<select class="form-control"></select>');
@@ -226,7 +207,7 @@
         $.getJSON("/api/odk", function (data) {
           tbody.html("");
           data.forEach((el) => {
-            addRow(tbody, el.id, el.formID, insertDate, el.formName, el.formDesc , el.minAge, el.maxAge, el.gender , el.modules, el.enabled);
+            addRow(tbody, el.id, el.formID, insertDate, el.formName, el.formDesc , el.minAge, el.maxAge, el.gender , el.enabled);
           });
         });
       }
@@ -235,7 +216,7 @@
 
       $("button.add-row").click(function () {
         var tbody = $(".settings-table tbody");
-        addRow(tbody, null, null, null, null, null, null, null, null, null, null, "dirty");
+        addRow(tbody, null, null, null, null, null, null, null, null,  null, "dirty");
       });
 
       $("button.save").click(function () {
@@ -244,7 +225,7 @@
           var row = $(this);
           if (row.hasClass("dirty") || row.hasClass("deleted")) {
             var rowData = { uuid: row.attr("data-id") };
-            var keys = ["formID", "insertDate","formName", "formDesc" , "minAge", "maxAge", "gender" , "modules", "enabled"];
+            var keys = ["formID", "insertDate","formName", "formDesc" , "minAge", "maxAge", "gender" , "enabled"];
 
             row.find("input").each(function (idx) {
               rowData[keys[idx]] = $(this).val();

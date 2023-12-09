@@ -54,8 +54,8 @@ function updateResidents(data) {
     //Compounds
     $('#cntcomp').text(data.countcomp);
     $('#pertcomp').text(data.percomp);
-    $('#mycomp').css('width', data.comploc + '%');
-    $('#mycomp').attr('aria-valuenow', data.comploc);   
+    $('#mycomp').css('width', data.percomp + '%');
+    $('#mycomp').attr('aria-valuenow', data.percomp);   
     //Socialgroup
     $('#cnthh').text(data.counthh);
     $('#perthh').text(data.perhh);

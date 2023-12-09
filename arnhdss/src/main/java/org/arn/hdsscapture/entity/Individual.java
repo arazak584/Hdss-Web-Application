@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -86,6 +87,35 @@ public class Individual implements Serializable {
 	@Column(name = "edtime")
 	private String edtime;
 	
+	@Transient
+	@Column(name = "endType")
+	private Integer endType;
+	@Transient
+	@Column(name = "startDate", nullable = true)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startDate;
+	@Transient
+	@Column(name = "endDate", nullable = true)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date endDate;
+	@Transient
+	@Column(name = "compno")
+	private String compno;
+	@Transient
+	@Column(name = "village")
+	private String village;
+	@Transient
+	@Column(name = "residency")
+	private String residency;
+	@Transient
+	@Column(name = "socialgroup")
+	private String socialgroup;
+	@Transient
+	@Column(name = "hohID")
+	private String hohID;
+	
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
 	private List<Outmigration> outmigrations = new ArrayList<>();
@@ -94,7 +124,7 @@ public class Individual implements Serializable {
 	private List<Inmigration> inmigrations = new ArrayList<>();
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
-	private List<Residency> residency = new ArrayList<>();
+	private List<Residency> residencys = new ArrayList<>();
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
 	private List<Pregnancyobservation> pregnancyobservations = new ArrayList<>();
