@@ -33,7 +33,7 @@ public class VisitController {
 	@GetMapping("")
 	public DataWrapper<Visit> findAll() {
 
-		List<Visit> data = repo.findAll();
+		List<Visit> data = repo.findV();
 
 		DataWrapper<Visit> w = new DataWrapper<>();
 		w.setData(data);

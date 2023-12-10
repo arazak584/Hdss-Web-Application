@@ -187,11 +187,18 @@ public class UtilityController {
 	    String uuid = UUID.randomUUID().toString();
 	    String uuidString = uuid.replaceAll("-", "");
 	    
+	    Round rond = roundrepo.endD();
+	    
 	    // Set the ID of the Fieldworker object
 	    round.setUuid(uuidString);
         // Your validation logic here, if needed
         if (round.getStartDate() != null && round.getEndDate() != null && round.getEndDate().before(round.getStartDate())) {
             model.addAttribute("error", "Invalid date range. Please make sure the end date is not before the start date.");
+            return "utility/round_add";
+        } 
+        
+        if(round.getStartDate().before(rond.getEndDate())) {
+        	model.addAttribute("error", "Invalid date range. Start date is before previous end date.");
             return "utility/round_add";
         }
 

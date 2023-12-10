@@ -52,8 +52,12 @@
                                         <h3>Location Assignment</h3> 
                                         <button id="btn-export" onclick="ExportToExcel('xlsx', 'assign.xlsx')">Export to Excel</button>
                                     </div>
+
                                     <div class="card-body">
-										<form class="form-inline" method="POST" action="/file/assign/upload" enctype="multipart/form-data" style="text-align: center;" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">                         
+										<form class="form-inline" method="POST" action="/file/assign/upload" enctype="multipart/form-data" style="text-align: center;" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">
+											<div th:if="${error}" class="mx-sm-3 mb-2">
+										        <p style="color: red;" th:text="${error}"></p>
+										    	</div>                         
                                                 <div class="form-group mx-sm-3 mb-2">
                                                  <input type="file" name="file" id="file" class="form-control" accept=".xlsx" required>
                                                 </div>

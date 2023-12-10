@@ -13,7 +13,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Locationhierarchy;
+import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +37,8 @@ public class AssignController {
         this.loc = loc;
     }
 	
-
+	@Autowired
+	FieldworkerRepository fwrepo;
 	
 	@GetMapping("")
 	public String activehoh(Model model) {
@@ -70,20 +73,31 @@ public class AssignController {
 	        int fwNameColumnIndex = findColumnIndex(headerRow, "fw_name");
 
 	        if (extIdColumnIndex != -1 && fwNameColumnIndex != -1) {
-	            for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
-	                Row row = sheet.getRow(rowIndex);
+	        	for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
+	        	    Row row = sheet.getRow(rowIndex);
 
-	                String extId = row.getCell(extIdColumnIndex).getStringCellValue();
-	                String newFwname = row.getCell(fwNameColumnIndex).getStringCellValue();
+	        	    String extId = row.getCell(extIdColumnIndex).getStringCellValue();
+	        	    String newFwname = row.getCell(fwNameColumnIndex).getStringCellValue();
 
-	                Optional<Locationhierarchy> optionalItem = loc.findByExtId(extId);
+	        	    // Check if the fw_name exists in the related entity
+	        	    List<Fieldworker> relatedEntity = fwrepo.findFieldworkerByUsername(newFwname);
 
-	                optionalItem.ifPresent(item -> {
-	                    // Update the fw_name field
-	                    item.setFw_name(newFwname);
-	                    updatedItems.add(item); // Add the updated item to the list
-	                });
-	            }
+	        	    if (!relatedEntity.isEmpty()) {
+	        	        Optional<Locationhierarchy> optionalItem = loc.findByExtId(extId);
+
+	        	        optionalItem.ifPresent(item -> {
+	        	            // Update the fw_name field
+	        	            item.setFw_name(newFwname);
+	        	            updatedItems.add(item); // Add the updated item to the list
+	        	        });
+	        	    } else {
+	        	        // Handle the case where fw_name is not found in the related entity
+	        	    	System.out.println("Fwname-Error: " + newFwname);
+	        	        model.addAttribute("error", "Error: '" + newFwname + "' not a Registered Fieldworker.");
+	        	        //return "redirect:/file/assign"; 
+	        	        return "report/assign";
+	        	    }
+	        	}
 
 	            // Save the updated Locationhierarchy items
 	            loc.saveAll(updatedItems);
