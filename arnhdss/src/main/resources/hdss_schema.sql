@@ -635,7 +635,7 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('cashcrops', 'C
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for home consumption', 1);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for sale on market', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for home consumption and sale on market', 3);
-INSERT INTO settings (`earliestDate`, `father_age`, `hoh_age`, `mother_age`, `rel_age`) VALUES ('2019-01-01', 12, 14, 12, 12);
+INSERT INTO settings (`earliestDate`, `father_age`, `hoh_age`, `mother_age`, `rel_age`, `updates`, `enumeration`) VALUES ('2018-01-01', 12, 14, 12, 12,true,false);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('modules', 'HDSS', 1);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('modules', 'Covid', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('enabled', 'True', 1);

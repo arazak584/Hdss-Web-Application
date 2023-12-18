@@ -1,6 +1,7 @@
 package org.arn.hdsscapture.entity;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,14 +12,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="settings")
-public class Settings {
+public class Settings implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
+	@NotNull
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
@@ -39,6 +47,11 @@ public class Settings {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date earliestDate;
 	
+	@Column(nullable = false)
+	private boolean updates;
+	
+	@Column(nullable = false)
+	private boolean enumeration;	
 	
 	public Settings() {}
 
@@ -92,5 +105,22 @@ public class Settings {
 		this.earliestDate = earliestDate;
 	}
 
+	public boolean isUpdates() {
+		return updates;
+	}
+
+	public void setUpdates(boolean updates) {
+		this.updates = updates;
+	}
+
+	public boolean isEnumeration() {
+		return enumeration;
+	}
+
+	public void setEnumeration(boolean enumeration) {
+		this.enumeration = enumeration;
+	}
+
+	
 
 }

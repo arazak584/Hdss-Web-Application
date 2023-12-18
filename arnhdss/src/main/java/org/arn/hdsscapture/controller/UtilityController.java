@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.arn.hdsscapture.entity.Codebook;
 import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Round;
+import org.arn.hdsscapture.entity.Settings;
 import org.arn.hdsscapture.entity.Task;
 import org.arn.hdsscapture.odk.OdkRepository;
 import org.arn.hdsscapture.odk.ODK;
@@ -408,7 +409,69 @@ public class UtilityController {
 
 	
 
+	@Autowired
+	SettingsRepository setrepo;
 
+	@GetMapping("/parameters")
+	public String settings(Model model
+			) {
+		List<Settings> items = setrepo.findAll();
+
+		//System.err.println("Size of list " + items.size());
+		
+		model.addAttribute("items", items);
+		
+
+		return "utility/settings";
+	}
 	
+	
+	@GetMapping("/parameters/edit/{id}")
+	public String editParameters(@PathVariable("id") Integer id, Model model) {
+		List<Settings> optionalSettings = setrepo.findBy(id);
+		if (!optionalSettings.isEmpty()) {
+			Settings settings = optionalSettings.get(0);
+			// Add any other necessary data to the model attribute for editing
+			model.addAttribute("settings", settings);
+			return "utility/settings_edit";
+		} else {
+			// Handle case where Fieldworker object is not found
+			return "error";
+		}
+	}
+
+	@PostMapping("/parameters/{id}")
+	public String updateSettings(@PathVariable("id") Integer id,
+			@ModelAttribute("settings") Settings settings, BindingResult result, Model model) {
+		
+		if (settings.isUpdates() == true && settings.isEnumeration() == true) {
+            model.addAttribute("error", "Update & Enumeration Cannot run Concurrently");
+            return "utility/settings_edit";
+        }
+		
+		
+		if (result.hasErrors()) {
+			// Handle validation errors if necessary
+			return "utility/settings_edit";
+		} else {
+			List<Settings> optionalSettings = setrepo.findBy(id);
+			if (!optionalSettings.isEmpty()) {
+				Settings existingSettings = optionalSettings.get(0);
+				existingSettings.setEarliestDate(settings.getEarliestDate());
+				existingSettings.setEnumeration(settings.isEnumeration());
+				existingSettings.setFather_age(settings.getFather_age());
+				existingSettings.setHoh_age(settings.getHoh_age());
+				existingSettings.setMother_age(settings.getMother_age());
+				existingSettings.setRel_age(settings.getRel_age());
+				existingSettings.setUpdates(settings.isUpdates());
+				// Update any other necessary properties of the object
+				setrepo.save(existingSettings);
+				return "redirect:/utility/parameters";
+			} else {
+				// Handle case where Fieldworker object is not found
+				return "error";
+			}
+		}
+	}
 	
 }
