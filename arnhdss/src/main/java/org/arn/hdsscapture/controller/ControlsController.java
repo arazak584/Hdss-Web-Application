@@ -1,7 +1,6 @@
 package org.arn.hdsscapture.controller;
 
 import java.security.Principal;
-import java.util.Optional;
 
 import org.arn.hdsscapture.entity.UserTable;
 import org.arn.hdsscapture.repository.GroupTableRepository;
@@ -75,6 +74,7 @@ public class ControlsController {
 	public String addUser(Principal principal, final Model model, @ModelAttribute("selected") UserTable selected,
 			BindingResult result) {
 
+		//String username = selected.getUsername().toLowerCase();
 		boolean userExists = userRepo.findById(selected.getUsername()).isPresent();
 		boolean emailExists = userRepo.findByUserEmail(selected.getUser_email()).isPresent();
 
@@ -97,6 +97,7 @@ public class ControlsController {
 		String password = selected.getUser_password();
 		String encodedPassword = bCrypt.encode(password);
 		selected.setUser_password(encodedPassword);
+		//selected.setUsername(username);
 
 		userRepo.save(selected);
 

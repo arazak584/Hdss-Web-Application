@@ -1,6 +1,7 @@
 package org.arn.hdsscapture;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.arn.hdsscapture.entity.GroupTable;
@@ -26,12 +27,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    	
+    	 String lowercaseUsername = username.toLowerCase();
+    	 
+         Optional<UserTable> userOptional = api.findByUsernameIgnoreCase(lowercaseUsername);
+         
+         if (!userOptional.isPresent()) {
+             throw new UsernameNotFoundException(username);
+         }
+//
+//        if (!api.findById(username).isPresent()) {
+//            throw new UsernameNotFoundException(username);
+//        }
 
-        if (!api.findById(username).isPresent()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        final UserTable json = api.findById(username).get();
+//        final UserTable json = api.findById(username).get();
+        final UserTable json = userOptional.get();
         
         if(!json.isUser_enabled()) {
             throw new UsernameNotFoundException(username);        	
@@ -42,8 +52,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority(elem.getGroup_role()));
 
         }
+        
 
-        return new User(json.getUsername(), json.getUser_password(), json.isUser_enabled(),true,true,true, grantedAuthorities);
+        return new User(lowercaseUsername, json.getUser_password(), json.isUser_enabled(),true,true,true, grantedAuthorities);
+        //return new User(json.getUsername(), json.getUser_password(), json.isUser_enabled(),true,true,true, grantedAuthorities);
 
     }
 
