@@ -1,10 +1,10 @@
 package org.arn.hdsscapture.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -57,29 +57,33 @@ public class DemographicZipController {
 			  .build();
 	  CsvMapper csvMapper = new CsvMapper();
 	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	  StringWriter writer = new StringWriter();
-	  csvMapper.writer(schema).with(formatter).writeValues(writer).writeAll(data);
-	  String csv = writer.toString();
 	  
-	// Get the total number of records in the CSV file
-	  int total = data.size();
+	  
+	// Create a ByteArrayOutputStream to store the ZIP file content
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      try (ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(baos))) {
+          // Create a new ZIP entry for the CSV file
+          ZipEntry entry = new ZipEntry("demographics.csv");
+          zos.putNextEntry(entry);
 
-	  // Zip the CSV file
-	  ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      ZipOutputStream zos = new ZipOutputStream(baos);
-      ZipEntry entry = new ZipEntry("demographics.csv");
-      zos.putNextEntry(entry);
-      zos.write(csv.getBytes());
-      zos.closeEntry();
-      zos.close();
-	  
-   // Get zip file data
+          // Iterate through data and stream CSV content directly to the ZIP file
+          for (Demographic item : data) {
+              String csvRow = csvMapper.writer(schema).with(formatter).writeValueAsString(item);
+              zos.write(csvRow.getBytes());
+          }
+
+          // Close the ZIP entry
+          zos.closeEntry();
+      }
+  	  
+      // Get zip file data
       byte[] zipData = baos.toByteArray();
-   // Get zip file size
+      // Get zip file size
       long zipSizeBytes = baos.size();
       String zipSize = getSizeString(zipSizeBytes);
-      
-   // Create the "hdss_zips" directory if it doesn't exist
+  
+  
+   // Create the "zips" directory if it doesn't exist
       String directoryPath = "hdss_zips";
       File directory = new File(directoryPath);
       if (!directory.exists()) {
@@ -87,8 +91,8 @@ public class DemographicZipController {
               return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create directory");
           }
       }
-      
-   // Write zip file to the directory
+
+      // Write zip file to the directory
       String filePath = directoryPath + File.separator + "demographics.zip";
       try (FileOutputStream fos = new FileOutputStream(filePath)) {
           fos.write(zipData);
@@ -96,27 +100,26 @@ public class DemographicZipController {
           e.printStackTrace();
           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save file");
       }
-      
+  
    // Insert or update task entity
       Optional<Task> optionalTask = taskRepository.findByFileName("demographics");
       if (optionalTask.isPresent()) {
-          // update the existing zipfile entity with the new file data
+          // Update the existing zipfile entity with the new file data
           Task task = optionalTask.get();
           task.setTimestamp(LocalDateTime.now());
-          task.setType(MediaType.APPLICATION_OCTET_STREAM_VALUE);        
+          task.setType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
           task.setData(zipSize);
-          task.setTotal(total);
+          task.setTotal(data.size());
           taskRepository.save(task);
           return ResponseEntity.status(HttpStatus.OK).body("File updated successfully");
-          
       } else {
-          // create a new zipfile entity and save it to the database
+          // Create a new zipfile entity and save it to the database
           Task task = new Task();
           task.setTimestamp(LocalDateTime.now());
           task.setFileName("demographics");
           task.setType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
           task.setData(zipSize);
-          task.setTotal(total);
+          task.setTotal(data.size());
           taskRepository.save(task);
           return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully");
       }

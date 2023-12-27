@@ -44,7 +44,7 @@ public class WebSecurityConfig {
         		.permitAll());
 
         http.csrf(withDefaults());
-        http.csrf().disable();
+        //http.csrf().disable();
         http.headers(headers -> headers.frameOptions().disable());
 
       return http.build();

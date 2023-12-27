@@ -12,4 +12,4 @@ public class ArnhdssApplication {
 		SpringApplication.run(ArnhdssApplication.class, args);
 	}
 
-} 
+}
