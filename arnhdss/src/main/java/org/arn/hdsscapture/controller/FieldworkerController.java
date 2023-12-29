@@ -3,7 +3,6 @@ package org.arn.hdsscapture.controller;
 import java.util.List;
 
 import org.arn.hdsscapture.entity.Fieldworker;
-import org.arn.hdsscapture.entity.Locationhierarchy;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.utils.DataWrapper;
 import org.springframework.beans.factory.annotation.Autowired;

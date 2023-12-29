@@ -77,6 +77,8 @@ public class Duplicate implements Serializable {
     public String dup2_fname;
     @Column(nullable = true)
     public String dup2_lname;
+    @Column(nullable = true)
+    public Integer complete;
     
     public Duplicate() {}
 
@@ -222,6 +224,14 @@ public class Duplicate implements Serializable {
 
 	public void setDup2_lname(String dup2_lname) {
 		this.dup2_lname = dup2_lname;
+	}
+
+	public Integer getComplete() {
+		return complete;
+	}
+
+	public void setComplete(Integer complete) {
+		this.complete = complete;
 	}
 
 	@Override

@@ -9,6 +9,6 @@ import org.arn.hdsscapture.entity.Relationship;
 
 public interface RelationshipRepository extends JpaRepository <Relationship, String> {
 
-	@Query(nativeQuery = true, value = "SELECT * from relationship WHERE endType=1")
-	List<Relationship> findRelationship();
+	@Query(nativeQuery = true, value = "SELECT * from relationship WHERE endType=1 LIMIT ?1 OFFSET ?2")
+	List<Relationship> findRelationship(int pageSize, int offset);
 }

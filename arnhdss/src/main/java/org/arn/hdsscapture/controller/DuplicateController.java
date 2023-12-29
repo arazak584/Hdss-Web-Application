@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.arn.hdsscapture.entity.Duplicate;
 import org.arn.hdsscapture.entity.ErrorLog;
@@ -44,11 +45,26 @@ public class DuplicateController {
 	@PostMapping("")
 	public DataWrapper<Duplicate> saveAll(@RequestBody DataWrapper<Duplicate> data) {
 		try {
+			List<Duplicate> duplicatesToSave = data.getData();
+	        
+	        for (Duplicate duplicate : duplicatesToSave) {
+	            Optional<Duplicate> existingDuplicateOptional = repo.findById(duplicate.getIndividual_uuid());
+	            Duplicate existingDuplicate = existingDuplicateOptional.orElse(null);
 
-		List<Duplicate> saved =  repo.saveAll(data.getData());
-
-		DataWrapper<Duplicate> s = new DataWrapper<>();
-		s.setData(saved);
+	            if (existingDuplicate != null && existingDuplicate.getComplete() == 1 && duplicate.getComplete()==1) {
+	                repo.save(existingDuplicate);
+	            } else if (existingDuplicate != null && existingDuplicate.getComplete() == 1 && duplicate.getComplete()==2) {
+	            	repo.delete(existingDuplicate);
+	            	continue;
+	            } else if (existingDuplicate == null && duplicate.getComplete() == 1) {
+	                repo.save(duplicate);
+	            }else if (existingDuplicate == null && duplicate.getComplete() == 2) {
+	            	
+	            }
+	        }
+	        
+	        DataWrapper<Duplicate> s = new DataWrapper<>();
+	        s.setData(duplicatesToSave);
 
 		return s;
 		} catch (Exception e) {

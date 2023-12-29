@@ -60,5 +60,11 @@ public interface QueryRepository extends JpaRepository <Queries, String> {
 			+ "AND a.extId!= :query")
 	List<Queries> Minors(@Param("query") String query);
 	
+	@Query(nativeQuery = true, value = "SELECT a.extId as id,concat(a.firstName,' ',a.lastName)id1,outcomeDate as id2,b.insertDate as id3,concat(d.firstName,' ',d.lastName)id4,NULL as id5,NULL as id6,NULL as id7,NULL as id8 from individual a INNER JOIN pregnancyoutcome b ON a.uuid=b.mother_uuid\r\n"
+			+ "LEFT JOIN outcome c on b.uuid=c.preg_uuid \r\n"
+			+ "INNER JOIN fieldworker d on b.fw_uuid=d.fw_uuid WHERE preg_uuid IS NULL \r\n"
+			+ "AND a.extId!= :query")
+	List<Queries> Outcome(@Param("query") String query);
+	
 	
 }

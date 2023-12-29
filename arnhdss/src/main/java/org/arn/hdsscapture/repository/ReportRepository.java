@@ -114,6 +114,10 @@ public interface ReportRepository extends JpaRepository <Visit, String> {
     		+ "GROUP BY socialgroup_uuid HAVING MAX(TIMESTAMPDIFF(YEAR, a2.dob, CURDATE())) < (select hoh_age from settings))")
     Long Minors();
     
+    @Query(nativeQuery = true, value ="SELECT COUNT(DISTINCT a.uuid) FROM pregnancyoutcome AS a LEFT JOIN outcome AS b ON a.uuid = b.preg_uuid\r\n"
+    		+ "WHERE b.preg_uuid is null")
+    Long Outcome();
+    
     
 
 }

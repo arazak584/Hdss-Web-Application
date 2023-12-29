@@ -35,7 +35,7 @@ public class LocationController {
 	@GetMapping("")
 	public DataWrapper<LocationProjection> findAll() {
 
-		List<LocationProjection> data = repo.findLocation();
+		List<LocationProjection> data = repo.findLocations();
 
 		DataWrapper<LocationProjection> w = new DataWrapper<>();
 		w.setData(data);

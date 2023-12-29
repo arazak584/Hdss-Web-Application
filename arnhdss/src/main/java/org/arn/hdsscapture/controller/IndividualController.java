@@ -11,7 +11,6 @@ import org.arn.hdsscapture.entity.ErrorLog;
 import org.arn.hdsscapture.entity.Individual;
 import org.arn.hdsscapture.exception.DataErrorException;
 import org.arn.hdsscapture.exception.DataNotFoundException;
-import org.arn.hdsscapture.projection.IndividualProjection;
 import org.arn.hdsscapture.repository.ErrorLogRepository;
 import org.arn.hdsscapture.repository.IndividualRepository;
 import org.arn.hdsscapture.utils.DataWrapper;
@@ -35,11 +34,11 @@ public class IndividualController {
 	ErrorLogRepository errorLogRepository;
 	
 	@GetMapping("")
-	public DataWrapper<IndividualProjection> findAll() {
+	public DataWrapper<Individual> findAll() {
 
-		List<IndividualProjection> data = repo.findIndividual();
+		List<Individual> data = repo.findAll();
 
-		DataWrapper<IndividualProjection> w = new DataWrapper<>();
+		DataWrapper<Individual> w = new DataWrapper<>();
 		w.setData(data);
 
 		return w;

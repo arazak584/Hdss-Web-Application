@@ -20,8 +20,8 @@ public interface PregnancyobservationRepository extends JpaRepository <Pregnancy
 	        + "FROM hdss.pregnancyobservation GROUP BY individual_uuid) pregnancyobservation "
 	        + "WHERE m1.recordedDate = pregnancyobservation.recordedDate "
 	        + "AND m1.individual_uuid = pregnancyobservation.individual_uuid "
-	        + "AND m1.recordedDate >= DATE_SUB(CURRENT_DATE(), INTERVAL 3 YEAR)")
-	List<Pregnancyobservation> findPregnancy();
+	        + "AND m1.recordedDate >= DATE_SUB(CURRENT_DATE(), INTERVAL 5 YEAR) LIMIT ?1 OFFSET ?2")
+	List<Pregnancyobservation> findPregnancy(int pageSize, int offset);
 
 
 

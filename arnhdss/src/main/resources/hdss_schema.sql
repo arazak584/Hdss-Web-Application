@@ -1,11 +1,11 @@
 INSERT IGNORE INTO user_table(username, user_email, user_enabled, user_password, user_fname, user_lname)
- VALUES ('admin', 'webadmin@hdss.com', true , '$2a$10$yyKs9u0XmrcxE9smecE3Q.mgIA4ade7UOlObCh2pthIdQktqrYrdK' , 'Administrator', 'System');
+ VALUES ('admin', 'webadmin@hdss.com', true , '$2a$10$SLlNbnvkIqatweZxewyZUeF6yrGexjppQpJgntGXCxWMQCaT3ORdi' , 'Administrator', 'System');
 
 INSERT IGNORE INTO user_table(username, user_email, user_enabled, user_password, user_fname, user_lname)
  VALUES ('data', 'data@hdss.com', true , '$2a$10$SLlNbnvkIqatweZxewyZUeF6yrGexjppQpJgntGXCxWMQCaT3ORdi' , 'Data', 'Synchronization'); 
 
 -- User : admin
--- Pwd: Hdss@!234
+-- Pwd: admin
 
 -- User: data
 -- pw: admin

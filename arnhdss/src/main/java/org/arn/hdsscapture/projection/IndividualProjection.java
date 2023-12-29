@@ -20,12 +20,8 @@ String getGhanacard();
 String getSttime();
 String getEdtime();
 Integer getEndType();
-Date getStartDate();
-Date getEndDate();
 String getCompno();
 String getVillage();
-String getResidency();
-String getSocialgroup();
 String getHohID();
 
 }

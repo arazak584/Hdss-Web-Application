@@ -1,13 +1,18 @@
 package org.arn.hdsscapture.controller;
 
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.zip.ZipEntry;
@@ -28,11 +33,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 @RestController
 public class SesZipController {
+	
+	private static final int BATCH_SIZE = 20000;
+	private List<Integer> recordsPerBatch = new ArrayList<>();
 	
 	@Autowired
 	SesRepository repo;
@@ -44,12 +53,146 @@ public class SesZipController {
 	@ResponseBody
 	@Scheduled(cron = "0 0 5 * * *") // execute at 05:00 AM every day
 	public ResponseEntity<String> downloadData(){
-		try {
-	  // Retrieve data from database
-	  List<Sociodemographic> data = repo.findSes();
+        try {
+            String directoryPath = "hdss_zips";
+            File directory = new File(directoryPath);
 
-	  // Convert data to CSV
-	  CsvSchema schema = CsvSchema.builder().addColumn("socialgroup_uuid")
+            if (!directory.exists() && !directory.mkdirs()) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create directory");
+            }
+
+            // Clear the existing CSV file
+            clearCsvFile(directoryPath);
+
+            int page = 0;
+            int pageSize = BATCH_SIZE;
+            boolean hasMoreData = true;
+            
+
+            while (hasMoreData) {
+                try {
+                    List<Sociodemographic> dataBatch = repo.findSes(pageSize, page * pageSize);
+
+                    if (dataBatch.isEmpty()) {
+                        hasMoreData = false;
+                        break;
+                    }
+                    // Create a temporary CSV file for each batch
+                    String tempCsvFilePath = directoryPath + File.separator + "temp_ses_" + page + ".csv";
+                    List<String> csvRows = new ArrayList<>();
+
+                    for (Sociodemographic item : dataBatch) {
+                        String csvRow = convertToCsvRow(item);
+                        csvRows.add(csvRow);
+                    }
+
+                    // Write CSV for the current batch
+                    writeCsv(tempCsvFilePath, csvRows);
+                    recordsPerBatch.add(dataBatch.size());
+
+                    page++;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    hasMoreData = false;
+                }
+            }
+
+            // Zip all temporary CSV files after processing all batches
+            zipTemporaryCsvFiles(directoryPath, page);
+
+            // Save or update task information
+            saveOrUpdateTask(directoryPath, page * BATCH_SIZE);
+
+            return ResponseEntity.ok("Process completed successfully");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to generate and zip files");
+        }
+    }
+	
+	private void clearCsvFile(String directoryPath) {
+        try {
+            String csvFilePath = directoryPath + File.separator + "ses.csv";
+            File csvFile = new File(csvFilePath);
+
+            if (csvFile.exists()) {
+                // Delete the existing CSV file
+                csvFile.delete();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void writeCsv(String csvFilePath, List<String> csvRows) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(csvFilePath, true))) {
+            for (String csvRow : csvRows) {
+                writer.println(csvRow.trim());  // Trim each line before writing
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+private void zipTemporaryCsvFiles(String directoryPath, int totalBatches) {
+    try {
+        String zipFilePath = directoryPath + File.separator + "ses.zip";
+        String combinedCsvFilePath = directoryPath + File.separator + "combined_ses.csv";
+
+        try (ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(zipFilePath)))) {
+            for (int i = 0; i < totalBatches; i++) {
+                String tempCsvFilePath = directoryPath + File.separator + "temp_ses_" + i + ".csv";
+                File tempCsvFile = new File(tempCsvFilePath);
+
+                if (tempCsvFile.exists()) {
+                    // Append the content of each temporary CSV file to the combined CSV file
+                    appendCsvToFile(combinedCsvFilePath, tempCsvFilePath);
+
+                    // Delete the temporary CSV file
+                    tempCsvFile.delete();
+                }
+            }
+
+            // Zip the combined CSV file
+            ZipEntry entry = new ZipEntry("ses.csv");
+            zos.putNextEntry(entry);
+
+            byte[] content = Files.readAllBytes(Paths.get(combinedCsvFilePath));
+            zos.write(content);
+
+            zos.closeEntry();
+        }
+
+        // Delete the combined CSV file after zipping
+        File combinedCsvFile = new File(combinedCsvFilePath);
+        if (combinedCsvFile.exists()) {
+            combinedCsvFile.delete();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+private void appendCsvToFile(String destinationFilePath, String sourceFilePath) {
+    try (PrintWriter writer = new PrintWriter(new FileWriter(destinationFilePath, true));
+         BufferedReader reader = new BufferedReader(new FileReader(sourceFilePath))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            writer.println(line);
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
+
+private String convertToCsvRow(Sociodemographic item) throws JsonProcessingException {
+    CsvSchema schema = CsvSchema.builder()
+    		.addColumn("socialgroup_uuid")
 			  .addColumn("aircon_fcorres").addColumn("aircon_num_fcorres").addColumn("animal_othr_fcorres").addColumn("animal_othr_num_fcorres")
 			  .addColumn("animal_othr_spfy_fcorres").addColumn("bike_fcorres").addColumn("bike_num_fcorres").addColumn("blender_fcorres")
 			  .addColumn("blender_num_fcorres").addColumn("boat_fcorres").addColumn("boat_num_fcorres").addColumn("cabinets_fcorres")
@@ -107,79 +250,59 @@ public class SesZipController {
 				.addColumn("toilet_spfy_fcorres").addColumn("tractor_fcorres").addColumn("tractor_num_fcorres")
 				.addColumn("tricycles_fcorres").addColumn("tricycles_num_fcorres").addColumn("tv_fcorres")
 				.addColumn("tv_num_fcorres").addColumn("uuid").addColumn("wash_fcorres").addColumn("wash_num_fcorres")
-				.addColumn("watch_fcorres").addColumn("watch_num_fcorres").build();
-	  CsvMapper csvMapper = new CsvMapper();
-	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	  
-	// Create a ByteArrayOutputStream to store the ZIP file content
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      try (ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(baos))) {
-          // Create a new ZIP entry for the CSV file
-          ZipEntry entry = new ZipEntry("ses.csv");
-          zos.putNextEntry(entry);
+				.addColumn("watch_fcorres").addColumn("watch_num_fcorres")
+            .build();
+    CsvMapper csvMapper = new CsvMapper();
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    return csvMapper.writer(schema).with(formatter).writeValueAsString(item);
+}
 
-          // Iterate through data and stream CSV content directly to the ZIP file
-          for (Sociodemographic item : data) {
-              String csvRow = csvMapper.writer(schema).with(formatter).writeValueAsString(item);
-              zos.write(csvRow.getBytes());
-          }
 
-          // Close the ZIP entry
-          zos.closeEntry();
-      }
-  	  
-      // Get zip file data
-      byte[] zipData = baos.toByteArray();
-      // Get zip file size
-      long zipSizeBytes = baos.size();
-      String zipSize = getSizeString(zipSizeBytes);
-  
-  
-   // Create the "zips" directory if it doesn't exist
-      String directoryPath = "hdss_zips";
-      File directory = new File(directoryPath);
-      if (!directory.exists()) {
-          if (!directory.mkdirs()) {
-              return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create directory");
-          }
-      }
+private void saveOrUpdateTask(String directoryPath, int totalRecords) {
+    try {
+        Optional<Task> optionalTask = taskRepository.findByFileName("ses");
+        Task task;
+        if (optionalTask.isPresent()) {
+            // Update the existing zipfile entity with the new file data
+            task = optionalTask.get();
+        } else {
+            // Create a new zipfile entity and save it to the database
+            task = new Task();
+            task.setFileName("ses");
+        }
 
-      // Write zip file to the directory
-      String filePath = directoryPath + File.separator + "ses.zip";
-      try (FileOutputStream fos = new FileOutputStream(filePath)) {
-          fos.write(zipData);
-      } catch (IOException e) {
-          e.printStackTrace();
-          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save file");
-      }
-  
-   // Insert or update task entity
-      Optional<Task> optionalTask = taskRepository.findByFileName("ses");
-      if (optionalTask.isPresent()) {
-          // Update the existing zipfile entity with the new file data
-          Task task = optionalTask.get();
-          task.setTimestamp(LocalDateTime.now());
-          task.setType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-          task.setData(zipSize);
-          task.setTotal(data.size());
-          taskRepository.save(task);
-          return ResponseEntity.status(HttpStatus.OK).body("File updated successfully");
-      } else {
-          // Create a new zipfile entity and save it to the database
-          Task task = new Task();
-          task.setTimestamp(LocalDateTime.now());
-          task.setFileName("ses");
-          task.setType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-          task.setData(zipSize);
-          task.setTotal(data.size());
-          taskRepository.save(task);
-          return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully");
-      }
-  } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file");
-  }
+        task.setTimestamp(LocalDateTime.now());
+        task.setType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        task.setData(getSizeString(calculateZipFileSize(directoryPath)));
+        
+        // Correct the total records count based on the actual number of records processed
+        int actualRecords = calculateTotalRecords();
+        task.setTotal(actualRecords);
 
-	}
+        taskRepository.save(task);
+
+        // Log or print a message indicating the success of the operation
+        System.out.println("File " + (optionalTask.isPresent() ? "updated" : "uploaded") + " successfully");
+    } catch (Exception e) {
+        // Log or print the error message
+        e.printStackTrace();
+    }
+}
+
+private int calculateTotalRecords() {
+    return recordsPerBatch.stream().mapToInt(Integer::intValue).sum();
+}
+
+private long calculateZipFileSize(String directoryPath) {
+    String zipFilePath = directoryPath + File.separator + "ses.zip";
+    File zipFile = new File(zipFilePath);
+
+    if (zipFile.exists()) {
+        return zipFile.length();
+    } else {
+        return 0; // Return 0 if the ZIP file doesn't exist
+    }
+}
 	
 	@GetMapping("/api/zip/ses")
     public ResponseEntity<ByteArrayResource> downloadZipFile() {
@@ -219,7 +342,7 @@ public class SesZipController {
         return response;
     }
     
-    private String getSizeString(long size) {
+	private String getSizeString(long size) {
         String[] units = {"bytes", "KB", "MB"};
         int unitIndex = 0;
         double sizeValue = size;
@@ -229,7 +352,11 @@ public class SesZipController {
             unitIndex++;
         }
 
-        return String.format("%.2f %s", sizeValue, units[unitIndex]);
+        if (units.length > 0) {
+            return String.format("%.2f %s", sizeValue, units[unitIndex]);
+        } else {
+            return "Invalid unit configuration";
+        }
     }
 
 

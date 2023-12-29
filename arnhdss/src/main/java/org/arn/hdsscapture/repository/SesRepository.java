@@ -8,8 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface SesRepository extends JpaRepository <Sociodemographic, String> {
 	
-	@Query(nativeQuery = true, value = "SELECT a.* from sociodemographic a inner join residency b on "
-			+ "a.socialgroup_uuid=b.socialgroup_uuid where b.endType=1 group by a.socialgroup_uuid;")
-	List<Sociodemographic> findSes();
+	@Query(nativeQuery = true, value = "SELECT a.* FROM sociodemographic a INNER JOIN residency b ON a.socialgroup_uuid = b.socialgroup_uuid "
+	        + "WHERE b.endType = 1 GROUP BY a.socialgroup_uuid LIMIT ?1 OFFSET ?2")
+	List<Sociodemographic> findSes(int pageSize, int offset);
+
 
 }

@@ -26,8 +26,9 @@ function updateDashboard(data) {
     $('#dobs').text(data.dobs);
     $('#lag').text(data.lag);
     $('#minors').text(data.minors);
+    $('#out').text(data.out);
     
-    $('#errors').text(data.nomemb+data.minor+data.dupres+data.dobs+data.lag+data.minors);
+    $('#errors').text(data.nomemb+data.minor+data.dupres+data.dobs+data.lag+data.minors+data.out);
 }
 
 function renderItems(items) {

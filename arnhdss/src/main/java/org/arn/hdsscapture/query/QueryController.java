@@ -87,5 +87,17 @@ public class QueryController {
 
 	    return "query/minors";
 	}
+	
+	@GetMapping("/outcome")
+	public String outcome(@RequestParam(name = "query", required = false)  String query,
+	                 Model model) {	    
+	    if (query != null) {
+	        List<Queries> items = repo.Outcome(query);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "query/outcome";
+	}
 
 }
