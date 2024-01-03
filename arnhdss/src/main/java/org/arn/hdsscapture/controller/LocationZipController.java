@@ -41,7 +41,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 public class LocationZipController {
 	
 	private static final int BATCH_SIZE = 20000;
-	private List<Integer> recordsPerBatch = new ArrayList<>();
+	private List<Integer> locCount = new ArrayList<>();
 	
 	@Autowired
 	LocationRepository repo;
@@ -88,7 +88,7 @@ public class LocationZipController {
 
                     // Write CSV for the current batch
                     writeCsv(tempCsvFilePath, csvRows);
-                    recordsPerBatch.add(dataBatch.size());
+                    locCount.add(dataBatch.size());
 
                     page++;
 
@@ -235,7 +235,7 @@ public class LocationZipController {
     }
 	
 	private int calculateTotalRecords() {
-        return recordsPerBatch.stream().mapToInt(Integer::intValue).sum();
+        return locCount.stream().mapToInt(Integer::intValue).sum();
     }
 	
 	private long calculateZipFileSize(String directoryPath) {

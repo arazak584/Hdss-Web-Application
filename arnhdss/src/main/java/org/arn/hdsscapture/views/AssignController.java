@@ -32,6 +32,7 @@ public class AssignController {
 
 	
 	LocationhierarchyRepository  loc;
+	
 	@Autowired
     public AssignController(LocationhierarchyRepository loc) {
         this.loc = loc;

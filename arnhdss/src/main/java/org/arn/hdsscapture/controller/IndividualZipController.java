@@ -41,7 +41,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 public class IndividualZipController {
 	
 	private static final int BATCH_SIZE = 20000;
-	private List<Integer> recordsPerBatch = new ArrayList<>();
+	private List<Integer> indCount = new ArrayList<>();
 	
 
     @Autowired
@@ -89,7 +89,7 @@ public class IndividualZipController {
 
                     // Write CSV for the current batch
                     writeCsv(tempCsvFilePath, csvRows);
-                    recordsPerBatch.add(dataBatch.size());
+                    indCount.add(dataBatch.size());
 
                     page++;
 
@@ -238,7 +238,7 @@ public class IndividualZipController {
     }
     
     private int calculateTotalRecords() {
-        return recordsPerBatch.stream().mapToInt(Integer::intValue).sum();
+        return indCount.stream().mapToInt(Integer::intValue).sum();
     }
 
     

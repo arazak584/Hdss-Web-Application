@@ -41,7 +41,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 public class VaccinationZipController {
 	
 	private static final int BATCH_SIZE = 20000;
-	private List<Integer> recordsPerBatch = new ArrayList<>();
+	private List<Integer> vacCount = new ArrayList<>();
 	
 	@Autowired
 	VaccinationRepository repo;
@@ -88,7 +88,7 @@ public class VaccinationZipController {
 
                     // Write CSV for the current batch
                     writeCsv(tempCsvFilePath, csvRows);
-                    recordsPerBatch.add(dataBatch.size());
+                    vacCount.add(dataBatch.size());
 
                     page++;
 
@@ -246,7 +246,7 @@ private void saveOrUpdateTask(String directoryPath, int totalRecords) {
 }
 
 private int calculateTotalRecords() {
-    return recordsPerBatch.stream().mapToInt(Integer::intValue).sum();
+    return vacCount.stream().mapToInt(Integer::intValue).sum();
 }
 
 private long calculateZipFileSize(String directoryPath) {
