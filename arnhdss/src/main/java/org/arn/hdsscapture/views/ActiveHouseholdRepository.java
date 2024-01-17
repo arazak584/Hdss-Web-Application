@@ -12,7 +12,7 @@ public interface ActiveHouseholdRepository extends JpaRepository <ActiveHousehol
 	@Query(nativeQuery = true, value = "SELECT * from acthoh WHERE village= :village  ORDER BY subvillage")
 	List<ActiveHouseholds> Reportd(@Param("village") String village);
 	
-	@Query(nativeQuery = true, value = "SELECT DISTINCT name as village FROM locationhierarchy Where level_uuid='hierarchyLevelId5'")
+	@Query(nativeQuery = true, value = "SELECT DISTINCT name as village FROM locationhierarchy Where level_uuid='hierarchyLevelId5' ORDER BY name")
 	List<String> villages();
 	
 	@Query(nativeQuery = true, value = "SELECT * from acthoh")

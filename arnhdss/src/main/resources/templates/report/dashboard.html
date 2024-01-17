@@ -26,6 +26,7 @@
         <link rel="stylesheet" th:href="@{/plugins/owl.carousel/dist/assets/owl.carousel.min.css}">
         <link rel="stylesheet" th:href="@{/plugins/owl.carousel/dist/assets/owl.theme.default.min.css}">
         <link rel="stylesheet" th:href="@{/dist/css/theme.min.css}">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         
         <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
         
@@ -399,21 +400,51 @@
                                 </div>
                             </div>
                             <!-- ticket, proj, clent end -->
-
-							
+                            
+                            
+                          <!-- Population -->  
+   							
 						</div>
 						
-						<!--<div class="col-lg-12 col-xl-8">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3>Line Chart</h3>
-                                    </div>
-                                    <div class="card-block text-center">
-                                        <div id="lineChartCanvas" class="chart-shadow" style="height:400px"></div>
-                                    </div>
+						  <!--<div class="card">
+                            <div class="card-body">
+								<div class="dt-responsive">
+                                <table id="order-table" class="table table-striped nowrap settings-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="nosort" width="10">
+                                                <label class="custom-control custom-checkbox m-0">
+                                                    <input type="checkbox" class="custom-control-input" id="selectall" name="" value="option2">
+                                                    <span class="custom-control-label">&nbsp;</span>
+                                                </label>
+                                            </th>
+                                            <th>Age Group</th>
+                                            <th>Population</th>
+                                            <th>Male</th>
+                                            <th>Female</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="item : ${items}">
+                                            <td>
+                                                <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input select_all_child" id="" name="" value="option2">
+                                                    <span class="custom-control-label">&nbsp;</span>
+                                                </label>
+                                            </td>
+                                            <td th:text="${item.AgeGroup}"></td>
+                                            <td th:text="${item.Population}"></td>
+                                            <td th:text="${item.Male}"></td>
+                                            <td th:text="${item.Female}"></td>
+                                            
+                                        </tr>                                      
+                                    </tbody>
+                                </table>
                                 </div>
-                            </div>-->
-                        
+                            </div>
+                        </div>-->
+			
 
                     </div>
                 </div>
@@ -448,6 +479,7 @@
         <script th:src="@{/dist/js/theme.min.js}"></script>
         <script th:src="@{/js/dashboard.js}"></script>
         <script th:src="@{/js/dashboards.js}"></script>
+        <script th:src="@{/js/pyramid.js}"></script>
         
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -490,6 +522,43 @@
   };
   xhr.send();
 </script>
+
+<script>
+      function addRow(tbody, ageGroup, pop, male, female, className) {
+        var tr = $("<tr></tr>").attr("data-id", ageGroup);
+        if (className) {
+          tr.addClass(className);
+        }
+        tr.append($("<td></td>").append($('<input type="text" class="form-control" readonly>').val(ageGroup)));
+        tr.append($("<td></td>").append($('<input type="text" class="form-control"> readonly').val(pop)));
+        tr.append($("<td></td>").append($('<input type="text" class="form-control">').val(male)));
+        tr.append($("<td></td>").append($('<input type="text" class="form-control">').val(female)));
+        tbody.append(tr);
+      }
+
+      function tableRefresh() {
+        var tbody = $(".settings-table tbody");
+        tbody.html("Loading...");
+
+        $.getJSON("/api/pyramid", function (data) {
+          tbody.html("");
+          data.forEach((el) => {
+            addRow(tbody, el.ageGroup, el.pop, el.male, el.female);
+          });
+        });
+      }
+
+      $("button.refresh").click(tableRefresh);
+
+      $("button.add-row").click(function () {
+        var tbody = $(".settings-table tbody");
+        addRow(tbody, null, null, null, null, "dirty");
+      });
+
+
+
+      tableRefresh();
+    </script>
 
         
     </body>

@@ -56,7 +56,7 @@ public interface FieldRepository extends JpaRepository <FieldReport, String> {
 			+ "WHERE a.insertDate BETWEEN :startDate AND :endDate GROUP BY username,name ORDER BY Fieldworker,total")
 	List<FieldReport> Vis(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
-	@Query(nativeQuery = true, value = "SELECT a.uuid as id,concat(b.firstName,' ',b.lastName)as Fieldworker,count(compno) as total,\r\n"
+	@Query(nativeQuery = true, value = "SELECT a.compno as id,concat(b.firstName,' ',b.lastName)as Fieldworker,count(compno) as total,\r\n"
 			+ "a.insertDate,date(a.submitDate)submitDate,village as name,CASE when a.`status`=1 then 'Active' \r\n"
 			+ "when a.`status`=2 then 'Commercial' when a.`status`=3 then 'Could not locate' when a.`status`=4 then 'Deserted/Broken' \r\n"
 			+ "when a.`status`=5 then 'Incomplete' \r\n"

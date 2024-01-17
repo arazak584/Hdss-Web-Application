@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.arn.hdsscapture.CacheConfig;
 import org.arn.hdsscapture.entity.Locationhierarchy;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.utils.DataWrapper;
 import org.arn.hdsscapture.utils.HierarchyUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +33,11 @@ public class HierarchylevelController {
         this.repo = repo;
     }
 	
+	@Autowired
+	CacheConfig cacheManager;
+	
 	@GetMapping("/all")
+	@Cacheable(value = "codebook", key = "'codebook'", cacheManager = "cacheManager")
 	public DataWrapper<Locationhierarchy> findAll() {
 
 		List<Locationhierarchy> data = repo.findAll();

@@ -3,10 +3,12 @@ package org.arn.hdsscapture.controller;
 
 import java.util.List;
 
+import org.arn.hdsscapture.CacheConfig;
 import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.utils.DataWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +25,11 @@ public class RoundController {
 	@Autowired
 	RoundRepository repo;
 	
+	@Autowired
+	CacheConfig cacheManager;
+	
 	@GetMapping("/api/round")
+	@Cacheable(value = "codebook", key = "'codebook'", cacheManager = "cacheManager")
 	public DataWrapper<Round> findAll() {
 
 		List<Round> data = repo.findAll();

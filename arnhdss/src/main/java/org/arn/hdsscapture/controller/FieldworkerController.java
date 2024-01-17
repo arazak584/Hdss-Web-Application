@@ -2,10 +2,12 @@ package org.arn.hdsscapture.controller;
 
 import java.util.List;
 
+import org.arn.hdsscapture.CacheConfig;
 import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.utils.DataWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +24,11 @@ public class FieldworkerController {
 	@Autowired
 	FieldworkerRepository repo;
 	
+	@Autowired
+	CacheConfig cacheManager;
+	
 	@GetMapping("")
+	@Cacheable(value = "codebook", key = "'codebook'", cacheManager = "cacheManager")
 	public DataWrapper<Fieldworker> findAll() {
 
 		List<Fieldworker> data = repo.findAll();

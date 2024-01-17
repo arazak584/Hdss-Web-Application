@@ -2,11 +2,14 @@ package org.arn.hdsscapture.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,7 +25,10 @@ import org.arn.hdsscapture.entity.Task;
 import org.arn.hdsscapture.projection.LocationProjection;
 import org.arn.hdsscapture.repository.LocationRepository;
 import org.arn.hdsscapture.repository.TaskRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,6 +42,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheStats;
 
 @RestController
 public class LocationZipController {
@@ -249,44 +257,86 @@ public class LocationZipController {
         }
     }
 	
-	
-	 @GetMapping("/api/zip/location")
-	    public ResponseEntity<ByteArrayResource> downloadZipFile() {
-	        // Find task entity by filename
-	        Optional<Task> optionalTask = taskRepository.findByFileName("locations");
-	        if (!optionalTask.isPresent()) {
-	            return ResponseEntity.notFound().build();
-	        }
+	private static final Logger logger = LoggerFactory.getLogger(LocationZipController.class);
 
-	        //Task task = optionalTask.get();
-	        
-	        // Retrieve the ZIP file from the directory
-	        String directoryPath = "hdss_zips";
-	        String filePath = directoryPath + File.separator + "location.zip";
-	        File zipFile = new File(filePath);
+    private final Cache<String, ByteArrayResource> zipFileCache;
+    
+    public LocationZipController(Cache<String, ByteArrayResource> zipFileCache) {
+        this.zipFileCache = zipFileCache;
 
-	        // Create a ByteArrayResource from the ZIP file
-	        ByteArrayResource resource;
-	        try {
-	            resource = new ByteArrayResource(Files.readAllBytes(zipFile.toPath()));
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	        }
+    }
 
-	        // Build response headers
-	        HttpHeaders headers = new HttpHeaders();
-	        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"location.zip\"");
-	        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
-	        headers.setContentLength(zipFile.length());
+    @Cacheable(value = "locationZipCache", key = "'location'")
+    @GetMapping("/api/zip/location")
+    public ResponseEntity<ByteArrayResource> downloadZipFile() {
+    	CacheStats cacheStats = zipFileCache.stats();
+        System.out.println("Cache Hits: " + cacheStats.hitCount());
+        System.out.println("Cache Misses: " + cacheStats.missCount());
+        // Find task entity by filename
+        Optional<Task> optionalTask = taskRepository.findByFileName("locations");
+        if (!optionalTask.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
 
-	        // Build response entity
-	        ResponseEntity<ByteArrayResource> response = ResponseEntity.ok()
-	                .headers(headers)
-	                .body(resource);
+        String cacheKey = "location";
+        ByteArrayResource cachedResource = zipFileCache.getIfPresent(cacheKey);
 
-	        return response;
-	    }
+        if (cachedResource != null) {
+        	System.out.println("Cache Result: " + cachedResource);
+            // Serve from the cache
+            return buildResponseEntity(cachedResource);
+        }else {
+        	System.out.println("Cache Result False ");
+        }
+
+        // Retrieve the ZIP file from the directory
+        String directoryPath = "hdss_zips";
+        String filePath = directoryPath + File.separator + "location.zip";
+        File zipFile = new File(filePath);
+
+        if (!zipFile.exists()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Initialize the resource outside the try block
+        ByteArrayResource resource;
+
+        // Read the ZIP file into a ByteArrayResource
+        try (InputStream inputStream = new FileInputStream(zipFile);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                byteArrayOutputStream.write(buffer, 0, bytesRead);
+            }
+
+            resource = new ByteArrayResource(byteArrayOutputStream.toByteArray());
+
+        } catch (IOException e) {
+            logger.error("Error reading ZIP file", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+        // Use the resource when building the response entity
+        return buildResponseEntity(resource);
+    }
+
+    // Move the buildResponseEntity method inside the LocationZipController class
+    private ResponseEntity<ByteArrayResource> buildResponseEntity(ByteArrayResource resource) {
+        // Build response headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"location.zip\"");
+        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        headers.setContentLength(resource.contentLength());
+
+        // Build response entity
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(resource);
+    }
+
 	 
 	 private String getSizeString(long size) {
 	        String[] units = {"bytes", "KB", "MB"};

@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.arn.hdsscapture.entity.Fieldworker;
+import org.arn.hdsscapture.entity.Population;
 import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
+import org.arn.hdsscapture.repository.PopulationRepository;
 import org.arn.hdsscapture.repository.ReportRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.views.ActiveHouseholdRepository;
@@ -36,10 +38,13 @@ public class ReportController {
 	@Autowired
 	FieldRepository rep;
 	
+	@Autowired
+	FieldworkerRepository field;
+	
 	@GetMapping("/asyncReport")
     public ResponseEntity<Map<String, Object>> getAsyncReport() {
         Map<String, Object> data = new HashMap<>();
-        data.put("items", rep.findAll());
+        data.put("items", field.findAll());
         //Residency
         data.put("countRes", repo.countResidency());
         data.put("perres", repo.perRES());
@@ -61,7 +66,7 @@ public class ReportController {
 	@GetMapping("/asyncReport/query")
     public ResponseEntity<Map<String, Object>> getAsyncQuery() {
         Map<String, Object> data = new HashMap<>();
-        data.put("items", rep.findAll());
+        data.put("items", field.findAll());
         //Query
         data.put("nomemb", repo.noMem());
         data.put("minor", repo.Minor());
@@ -77,7 +82,7 @@ public class ReportController {
 	@GetMapping("/asyncReport/report")
     public ResponseEntity<Map<String, Object>> getAsyncReports() {
         Map<String, Object> data = new HashMap<>();
-        data.put("items", rep.findAll());
+        data.put("items", field.findAll());
         //Report
       //HH VISIT
         data.put("hh", repo.countSocialgroup());
@@ -107,6 +112,11 @@ public class ReportController {
 
 	@GetMapping("/report")
 	public String fw(Model model) {
+		
+//		List<Population> items = pop.pyramid();
+//		System.err.println("Size of list " + items.size());
+//		
+//		model.addAttribute("items", items);
 		//Visit
 //		long visit = repo.countVisit();
 //		long listing = repo.countList();
@@ -134,7 +144,7 @@ public class ReportController {
 
 		return "report/dashboard";
 	}
-	
+
 	
 	@Autowired
 	FieldworkerRepository repos;
@@ -443,6 +453,19 @@ public class ReportController {
 	    }
 
 	    return "report/search";
+	}
+	
+	@Autowired
+	PopulationRepository poprepo;
+	
+	@GetMapping("/report/pop")
+	public String pop(Model model) {
+
+	        List<Population> items = poprepo.pyramid();
+	        //System.err.println("Size of list " + items.size());
+	        model.addAttribute("items", items);	 
+
+	    return "report/pop";
 	}
 
 	

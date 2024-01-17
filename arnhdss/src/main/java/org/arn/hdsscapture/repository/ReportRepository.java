@@ -1,10 +1,10 @@
 package org.arn.hdsscapture.repository;
 
+import org.arn.hdsscapture.entity.Fieldworker;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.arn.hdsscapture.entity.Visit;
 
-public interface ReportRepository extends JpaRepository <Visit, String> {
+public interface ReportRepository extends JpaRepository <Fieldworker, String> {
 
 
 	
@@ -117,6 +117,8 @@ public interface ReportRepository extends JpaRepository <Visit, String> {
     @Query(nativeQuery = true, value ="SELECT COUNT(DISTINCT a.uuid) FROM pregnancyoutcome AS a LEFT JOIN outcome AS b ON a.uuid = b.preg_uuid\r\n"
     		+ "WHERE b.preg_uuid is null")
     Long Outcome();
+    
+    
     
     
 

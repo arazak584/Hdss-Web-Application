@@ -50,47 +50,28 @@
   
                                   <div class="card">
                                     <div class="card-header d-block">
-                                        <h3>Individual Search</h3> 
-                                        <button id="btn-export" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')" onclick="ExportToExcel('xlsx', 'search.xlsx')">Export to Excel</button>
+                                        <h3>Population</h3> 
+                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'population.xlsx')">Export to Excel</button>
                                     </div>
                                     <div class="card-body">
-										  <form class="form-inline" method="GET" action="/hdss/report/search" style="text-align: center;">
-										    <div class="form-group mx-sm-3 mb-2">
-                                                 <input type="text" name="village" class="form-control" required>
-                                                </div>
-										    <div class="form-group mx-sm-3 mb-2">
-										    <button type="submit" class="btn btn-theme">Submit</button>
-										    </div>
-										</form>
-
-
+										 
                                         <div class="dt-responsive">
-                                            <table id="order-table"
-                                                   class="table table-striped table-bordered nowrap" data-order='[[8, "asc"]]'>
+                                            <table id="order-table" class="table table-striped table-bordered nowrap" data-order='[[0, "asc"]]'>
                                                 <thead>
                                                 <tr>
-                                                    <th th:text="#{permid}"></th>
-													<th th:text="#{ind.compno}"></th>
-													<th th:text="#{ind.dob}"></th>
-													<th th:text="#{ind.name}"></th>
-													<th th:text="#{ind.gender}"></th>
-													<th th:text="#{ind.mpermid}"></th>
-													<th th:text="#{ind.mname}"></th>
-													<th th:text="#{ind.status}"></th>
-													<th th:text="#{ind.village}"></th>
+                                                    <th>Age Group</th>
+		                                            <th>Population</th>
+		                                            <th>Male</th>
+		                                            <th>Female</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr th:each="item : ${items}">
-											            <td th:text="${item.permid}"></td>
-											            <td th:text="${item.compno}"></td>
-											            <td th:text="${item.dob}"></td>
-											            <td th:text="${item.name}"></td>
-											            <td th:text="${item.gender}"></td>
-											            <td th:text="${item.motherid}"></td>
-											            <td th:text="${item.mothername}"></td>
-											            <td th:text="${item.endType}"></td>
-											            <td th:text="${item.village}"></td>
+											            <td th:text="${item.ageGroup}"></td>
+											            <td th:text="${item.pop}"></td>
+											            <td th:text="${item.male}"></td>
+											            <td th:text="${item.female}"></td>
+											            
 											            </tr>                                                                                
                                                
                                             </tbody>

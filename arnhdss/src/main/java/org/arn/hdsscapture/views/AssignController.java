@@ -77,8 +77,11 @@ public class AssignController {
 	        	for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 	        	    Row row = sheet.getRow(rowIndex);
 
-	        	    String extId = row.getCell(extIdColumnIndex).getStringCellValue();
-	        	    String newFwname = row.getCell(fwNameColumnIndex).getStringCellValue();
+	        	    Cell extIdCell = row.getCell(extIdColumnIndex);
+	        	    Cell fwNameCell = row.getCell(fwNameColumnIndex);
+
+	        	    String extId = extIdCell != null ? extIdCell.getStringCellValue() : "";
+	        	    String newFwname = fwNameCell != null ? fwNameCell.getStringCellValue() : "";
 
 	        	    // Check if the fw_name exists in the related entity
 	        	    List<Fieldworker> relatedEntity = fwrepo.findFieldworkerByUsername(newFwname);
