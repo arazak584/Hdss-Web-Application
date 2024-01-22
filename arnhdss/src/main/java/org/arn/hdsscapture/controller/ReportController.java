@@ -98,6 +98,7 @@ public class ReportController {
         data.put("death", repo.countDth());
         data.put("rel", repo.countRel());
         data.put("sess", repo.countSes());
+        data.put("eses", repo.countoldSes());
         data.put("vacc", repo.countVac());
         data.put("newhh", repo.countHH());
         data.put("newperson", repo.countPerson());
@@ -329,6 +330,21 @@ public class ReportController {
 	    }
 
 	    return "report/ses";
+	}
+	
+	@GetMapping("/report/edit-ses")
+	public String sesOld(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+
+	    
+	    if (startDate != null && endDate != null) {
+	        List<FieldReport> items = rep.SesEdit(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/edit_ses";
 	}
 
 	

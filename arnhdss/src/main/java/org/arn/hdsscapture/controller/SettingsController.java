@@ -34,7 +34,7 @@ public class SettingsController {
 	CacheConfig cacheManager;
 	
 	@GetMapping("/parameter")
-	@Cacheable(value = "codebook", key = "'codebook'", cacheManager = "cacheManager")
+	@Cacheable(value = "settings", key = "'settings'", cacheManager = "cacheManager")
 	public DataWrapper<Settings> findAll() {
 
 		List<Settings> data = repo.findAll();

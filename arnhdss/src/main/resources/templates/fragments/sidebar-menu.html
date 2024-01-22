@@ -82,7 +82,7 @@
                                         <a href="#" th:href = "@{/utility/extra-forms}" class="menu-item">Extra Forms</a>
                                     </div>
                                 </div>-->
-                                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">
+                                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
                                     <a href="#"><i class="ik ik-inbox"></i><span>Approvals</span> <span class="badge badge-success">Future</span></a>
                                     <div class="submenu-content">
                                         <a href="#" class="menu-item">Approvals</a>

@@ -29,7 +29,7 @@ public class RoundController {
 	CacheConfig cacheManager;
 	
 	@GetMapping("/api/round")
-	@Cacheable(value = "codebook", key = "'codebook'", cacheManager = "cacheManager")
+	@Cacheable(value = "round", key = "'round'", cacheManager = "cacheManager")
 	public DataWrapper<Round> findAll() {
 
 		List<Round> data = repo.findAll();

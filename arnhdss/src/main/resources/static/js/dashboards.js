@@ -81,6 +81,7 @@ function updateReport(data) {
     $('#cntdth').text(data.death);
     $('#cntrel').text(data.rel);
     $('#cntses').text(data.sess);
+    $('#cnteses').text(data.eses);
     $('#cntperson').text(data.newperson);
     $('#cntsoc').text(data.newhh);
     $('#cntloc').text(data.newloc);

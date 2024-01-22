@@ -16,7 +16,7 @@ public class CacheConfig {
     @Bean
     Cache<String, ByteArrayResource> zipFileCache() {
         return CacheBuilder.newBuilder()
-                .maximumSize(10) // Adjust the maximum size based on your requirements
+                .maximumSize(20) // Adjust the maximum size based on your requirements
                 .expireAfterWrite(1, TimeUnit.HOURS)
                 .build();
     }

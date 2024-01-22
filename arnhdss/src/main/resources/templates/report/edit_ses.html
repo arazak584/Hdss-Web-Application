@@ -50,27 +50,12 @@
                 <div class="main-content">
   
                                   <div class="card">
-									  
-									 <div class="col-lg-3 col-md-6 col-sm-12">
-                                <div class="widget bg-purple">
-                                    <div class="widget-header">
-                                        <h3 class="widget-title">Updated SES</h3>
-                                        <div class="widget-tools pull-right">
-                                            <button type="button" class="btn btn-widget-tool minimize-widget ik ik-plus"></button>
-                                        </div>
-                                    </div>
-                                    <div class="widget-body">
-                                        <a th:href = "@{/hdss/report/edit-ses}"> <h3 id="cnteses" class="text-light"></h3></a>
-                                    </div>
-                                </div>
-                            </div>
-									  
                                     <div class="card-header d-block">
                                         <h3>Socio Economic Status</h3> 
-                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'ses.xlsx')">Export to Excel</button>
+                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'ses_old.xlsx')">Export to Excel</button>
                                     </div>
                                     <div class="card-body">
-										<form class="form-inline" method="GET"  action="/hdss/report/ses" style="text-align: center;">
+										<form class="form-inline" method="GET"  action="/hdss/report/edit-ses" style="text-align: center;">
                                                 <div class="form-group mb-2">
                                                     <input type="date" name="startDate" class="form-control" required>
                                                 </div>
@@ -80,8 +65,6 @@
                                                 <div class="form-group mx-sm-3 mb-2">
                                                 <button type="submit" class="btn btn-theme">Submit</button>
                                                 </div>
-                                                
-                                                
                                             </form>
 
                                         <div class="dt-responsive">
@@ -147,7 +130,6 @@
         <script th:src="@{/js/charts.js}"></script>
         <script th:src="@{/dist/js/theme.min.js}"></script>
         <script th:src="@{/js/dashboard.js}"></script>
-        <script th:src="@{/js/dashboards.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
         <script th:src="@{/js/index.js}"></script>
         <script th:src="@{/js/xlsx.full.min.js}"></script>

@@ -82,6 +82,15 @@ public interface FieldRepository extends JpaRepository <FieldReport, String> {
 			+ "WHERE a.insertDate BETWEEN :startDate AND :endDate GROUP BY Fieldworker,name ORDER BY Fieldworker,total")
 	List<FieldReport> Ses(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
+	@Query(nativeQuery = true, value = "SELECT a.uuid as id,concat(b.firstName,' ',b.lastName)as Fieldworker,username,count(a.socialgroup_uuid) as total,\r\n"
+			+ "max(a.formcompldate)insertDate,max(date(a.insertDate))submitDate,e.name\r\n"
+			+ "FROM sociodemographic a INNER JOIN fieldworker b ON a.fw_uuid=b.fw_uuid\r\n"
+			+ "INNER JOIN location d on a.location_uuid=d.uuid\r\n"
+			+ "INNER JOIN locationhierarchy e on d.locationLevel_uuid=e.uuid\r\n"
+			+ "WHERE a.formcompldate BETWEEN :startDate AND :endDate AND\r\n"
+			+ "a.insertDate < (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) GROUP BY Fieldworker,name ORDER BY Fieldworker,total")
+	List<FieldReport> SesEdit(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+	
 	@Query(nativeQuery = true, value = "SELECT a.uuid as id,concat(b.firstName,' ',b.lastName)as Fieldworker,username,count(a.uuid) as total,\r\n"
 			+ "max(a.insertDate)insertDate,max(date(a.submitDate))submitDate,e.name\r\n"
 			+ "FROM individual a INNER JOIN fieldworker b ON a.fw_uuid=b.fw_uuid\r\n"
