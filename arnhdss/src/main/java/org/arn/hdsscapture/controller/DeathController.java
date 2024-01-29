@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.arn.hdsscapture.entity.Death;
 import org.arn.hdsscapture.entity.ErrorLog;
@@ -46,7 +47,27 @@ public class DeathController {
 	public DataWrapper<Death> saveAll(@RequestBody DataWrapper<Death> data) {
 		try {
 
-		List<Death> saved =  repo.saveAll(data.getData());
+		List<Death> saved =  data.getData();
+		
+		for (Death death : saved) {
+            Optional<Death> existingDeathOptional = repo.findById(death.getIndividual_uuid());
+            Death existingDeath = existingDeathOptional.orElse(null);
+
+            if (existingDeath != null && existingDeath.getComplete() == 1 && death.getComplete()==1) {
+                repo.save(existingDeath);
+            } else if (existingDeath != null && existingDeath.getComplete() == 1 && death.getComplete()==2) {
+            	repo.delete(existingDeath);
+            	continue;
+            } else if (existingDeath == null && death.getComplete() == 1) {
+                repo.save(death);
+            }else if (existingDeath == null && death.getComplete() == 2) {
+            	
+            }else if (existingDeath != null && death.getComplete() == 0) {
+            	
+            }else if (existingDeath == null && death.getComplete() == 0) {
+            	
+            }
+        }
 
 		DataWrapper<Death> s = new DataWrapper<>();
 		s.setData(saved);

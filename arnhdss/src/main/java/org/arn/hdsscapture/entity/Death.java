@@ -60,6 +60,9 @@ public class Death {
 	@Column(name = "edtime")
 	private String edtime;
 	
+	@Column(nullable = true)
+    public Integer complete;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false, nullable=false)
 	private Fieldworker fieldworker;
@@ -175,6 +178,14 @@ public class Death {
 
 	public void setEdtime(String edtime) {
 		this.edtime = edtime;
+	}
+	
+	public Integer getComplete() {
+		return complete;
+	}
+
+	public void setComplete(Integer complete) {
+		this.complete = complete;
 	}
 
 

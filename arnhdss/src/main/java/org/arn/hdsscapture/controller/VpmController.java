@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.arn.hdsscapture.entity.ErrorLog;
 import org.arn.hdsscapture.entity.Vpm;
@@ -46,7 +47,29 @@ public class VpmController {
 	public DataWrapper<Vpm> saveAll(@RequestBody DataWrapper<Vpm> data) {
 		try {
 
-		List<Vpm> saved =  repo.saveAll(data.getData());
+		List<Vpm> saved =  data.getData();
+		
+		
+		for (Vpm death : saved) {
+            Optional<Vpm> existingDeathOptional = repo.findById(death.getUuid());
+            Vpm existingDeath = existingDeathOptional.orElse(null);
+
+            if (existingDeath != null && existingDeath.getComplete() == 1 && death.getComplete()==1) {
+                repo.save(existingDeath);
+            } else if (existingDeath != null && existingDeath.getComplete() == 1 && death.getComplete()==2) {
+            	repo.delete(existingDeath);
+            	continue;
+            } else if (existingDeath == null && death.getComplete() == 1) {
+                repo.save(death);
+            }else if (existingDeath == null && death.getComplete() == 2) {
+            	
+            }else if (existingDeath != null && death.getComplete() == 0) {
+            	
+            }else if (existingDeath == null && death.getComplete() == 0) {
+            	
+            }
+        }
+		
 
 		DataWrapper<Vpm> s = new DataWrapper<>();
 		s.setData(saved);

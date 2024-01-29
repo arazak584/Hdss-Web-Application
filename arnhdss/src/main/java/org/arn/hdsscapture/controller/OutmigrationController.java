@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.arn.hdsscapture.entity.ErrorLog;
 import org.arn.hdsscapture.entity.Outmigration;
@@ -51,29 +52,42 @@ public class OutmigrationController {
         try {
             List<Outmigration> newOutmigrationData = data.getData();
 
-            for (Outmigration newOutmigration : newOutmigrationData) {
-                // Check if the UUID already exists in the database
-                Outmigration existingOutmigration = repo.findById(newOutmigration.getUuid()).orElse(null);
-
-                if (existingOutmigration != null) {
-                    // Check if the Outmigration exists and has a residency_uuid
-                    if (existingOutmigration.getResidency_uuid() != null) {
-                        // Query the database to find the associated Residency record
-                        Residency associatedResidency = residencyRepository.findByUuid(existingOutmigration.getResidency_uuid());
-
-                        if (associatedResidency != null && associatedResidency.getEndDate() != null) {
-                            // Update the recordedDate in the existing Outmigration
-                            existingOutmigration.setRecordedDate(associatedResidency.getEndDate());
-
-                            // Save the updated Outmigration
-                            repo.save(existingOutmigration);
-                        }
-                    }
-                } else {
-                    // This is a new Outmigration record, you can create it and set recordedDate as needed
-                    repo.save(newOutmigration);
+            
+            for (Outmigration omg : newOutmigrationData) {  
+            	
+            	Optional<Outmigration> existingOmgOptional = repo.findById(omg.getResidency_uuid());
+                Outmigration existingOmg = existingOmgOptional.orElse(null);
+                
+                if (existingOmg != null && existingOmg.getComplete() == 1 && omg.getComplete()==1) {
+                	System.out.println("Updating existing record...");
+                    repo.save(existingOmg);
+                } else if (existingOmg != null && existingOmg.getComplete() == 1 && omg.getComplete()==2) {
+                	System.out.println("Deleting existing record...");
+                	repo.delete(existingOmg);
+                	continue;
+                } else if (existingOmg == null && omg.getComplete() == 1) {
+                	System.out.println("Save new record...");
+                    repo.save(omg);
+                }else if (existingOmg == null && omg.getComplete() == 2) {
+                	System.out.println("Condition for omg.getComplete() == 2 is true...");                	
+                }else if (existingOmg != null && omg.getComplete() == 0) {
+                	System.out.println("Condition for omg.getComplete() == 0 is true...");
+                	
+                }else if (existingOmg == null && omg.getComplete() == 0) {
+                	System.out.println("Condition for omg.getComplete() == 0 is true...");
+                	
                 }
-
+                
+                else if (existingOmg != null && existingOmg.getResidency_uuid() != null) {
+                	Residency associatedResidency = residencyRepository.findByUuid(existingOmg.getResidency_uuid());
+                    if (associatedResidency != null && associatedResidency.getEndDate() != null) {
+                        existingOmg.setRecordedDate(associatedResidency.getEndDate());
+                        System.out.println("Updating End Date for existingOmg...");
+                        repo.save(existingOmg);
+                    }
+                }                
+     
+              
             }
 
             // Return the saved data

@@ -60,6 +60,10 @@ public class DuplicateController {
 	                repo.save(duplicate);
 	            }else if (existingDuplicate == null && duplicate.getComplete() == 2) {
 	            	
+	            }else if (existingDuplicate != null && duplicate.getComplete() == 0) {
+	            	
+	            }else if (existingDuplicate == null && duplicate.getComplete() == 0) {
+	            	
 	            }
 	        }
 	        

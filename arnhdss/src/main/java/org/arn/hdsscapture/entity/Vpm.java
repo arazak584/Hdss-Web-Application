@@ -80,6 +80,9 @@ public class Vpm {
 	@Column(name = "fw_uuid", nullable = true)
 	private String fw_uuid;
 	
+	@Column(nullable = true)
+    public Integer complete;
+	
 	public Vpm() {}
 	
 	
@@ -304,6 +307,14 @@ public class Vpm {
 
 	public void setFw_uuid(String fw_uuid) {
 		this.fw_uuid = fw_uuid;
+	}
+	
+	public Integer getComplete() {
+		return complete;
+	}
+
+	public void setComplete(Integer complete) {
+		this.complete = complete;
 	}
 
 

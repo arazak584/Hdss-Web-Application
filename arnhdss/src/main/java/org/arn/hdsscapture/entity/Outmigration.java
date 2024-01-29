@@ -64,6 +64,9 @@ public class Outmigration {
 	@Column(name = "edtime")
 	private String edtime;
 	
+	@Column(nullable = true)
+    public Integer complete;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	@NotAudited
@@ -197,6 +200,14 @@ public class Outmigration {
 
 	public void setEdtime(String edtime) {
 		this.edtime = edtime;
+	}
+	
+	public Integer getComplete() {
+		return complete;
+	}
+
+	public void setComplete(Integer complete) {
+		this.complete = complete;
 	}
 
 	@Override
