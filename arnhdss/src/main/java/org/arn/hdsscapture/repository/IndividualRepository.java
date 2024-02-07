@@ -3,6 +3,7 @@ package org.arn.hdsscapture.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.arn.hdsscapture.entity.Individual;
 import org.arn.hdsscapture.projection.IndividualProjection;
@@ -22,6 +23,9 @@ public interface IndividualRepository extends JpaRepository <Individual, String>
 	        + "SELECT *, NULL AS endType, NULL AS compno, NULL AS village, "
 	        + " NULL AS hohID FROM individual WHERE extId='UNK' LIMIT ?1 OFFSET ?2")
 	List<IndividualProjection> findIndividual(int pageSize, int offset);
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM individual WHERE extId = :extId")
+	Optional<Individual> findByExtId(String extId);
 
 }
 

@@ -112,8 +112,11 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
     Long Lag();
     
     @Query(nativeQuery = true, value ="SELECT COUNT(DISTINCT socialgroup_uuid) FROM individual AS a INNER JOIN residency AS b ON a.uuid = b.individual_uuid\r\n"
-    		+ "WHERE b.endType = 1 AND b.socialgroup_uuid IN ( SELECT socialgroup_uuid FROM residency AS b2\r\n"
-    		+ "INNER JOIN individual AS a2 ON b2.individual_uuid = a2.uuid WHERE b2.endType = 1\r\n"
+    		+ "LEFT JOIN `duplicate` z on a.uuid=z.dup_uuid LEFT JOIN `duplicate` x on a.uuid=x.dup1_uuid \r\n"
+    		+ "LEFT JOIN `duplicate` y on a.uuid=y.dup2_uuid WHERE b.endType = 1 AND z.dup_uuid is null AND x.dup1_uuid is null \r\n"
+    		+ "AND y.dup2_uuid is null AND b.socialgroup_uuid IN ( SELECT 	socialgroup_uuid FROM residency AS b2\r\n"
+    		+ "INNER JOIN individual AS a2 ON b2.individual_uuid = a2.uuid 			\r\n"
+    		+ "WHERE b2.endType = 1\r\n"
     		+ "GROUP BY socialgroup_uuid HAVING MAX(TIMESTAMPDIFF(YEAR, a2.dob, CURDATE())) < (select hoh_age from settings))")
     Long Minors();
     

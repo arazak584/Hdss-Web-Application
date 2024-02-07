@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.arn.hdsscapture.entity.ErrorLog;
@@ -49,17 +50,50 @@ public class IndividualController {
 		try {
 
 			// Sort the list of Individual objects by dob in ascending order
-	        List<Individual> sortedIndividuals = data.getData()
+			List<Individual> sortedIndividuals = data.getData()
 	                .stream()
 	                .sorted(Comparator.comparing(Individual::getDob))
 	                .collect(Collectors.toList());
 
-	        // Save the sorted list of Individual objects
-	        List<Individual> saved = repo.saveAll(sortedIndividuals);
+	        for (Individual individual : sortedIndividuals) {
+	            Optional<Individual> existingInd = repo.findById(individual.getUuid());
+	            Individual existingS = existingInd.orElse(null);
 
-	        // Set the sorted list as the data in the response
+	            if (existingS != null) {
+	                // UUID exists
+	                if (existingS.getExtId().equals(individual.getExtId())) {
+	                    // Incoming ExtId matches existing, update the existing Individual
+	                    repo.save(existingS);
+	                } else {
+	                    // Incoming ExtId doesn't match existing, check if it exists for another UUID
+	                    Optional<Individual> existingByExtId = repo.findByExtId(individual.getExtId());
+	                    Individual existingByExtIdS = existingByExtId.orElse(null);
+
+	                    if (existingByExtIdS != null && !existingByExtIdS.getUuid().equals(individual.getUuid())) {
+	                        // Incoming ExtId exists for another UUID, increment last three digits
+	                        incrementLastThreeDigits(individual);
+	                    }
+
+	                    // Save as updated record
+	                    repo.save(individual);
+	                }
+	            } else {
+	                // UUID doesn't exist
+	                Optional<Individual> existingByExtId = repo.findByExtId(individual.getExtId());
+	                Individual existingByExtIdS = existingByExtId.orElse(null);
+
+	                if (existingByExtIdS != null) {
+	                    // ExtId exists for another UUID, increment last three digits
+	                    incrementLastThreeDigits(individual);
+	                }
+
+	                // Save as new record
+	                repo.save(individual);
+	            }
+	        }
+
 	        DataWrapper<Individual> s = new DataWrapper<>();
-	        s.setData(saved);
+	        s.setData(sortedIndividuals);
 
 		return s;
 		} catch (Exception e) {
@@ -72,6 +106,21 @@ public class IndividualController {
             throw new DataErrorException(errorMessage, e);
         }
 	}
+	
+	private void incrementLastThreeDigits(Individual individual) {
+	    // Extract the last three digits from extId
+	    String extId = individual.getExtId();
+	    String lastThreeDigits = extId.substring(extId.length() - 3);
+	    // Increment the last three digits
+	    int incrementedValue = Integer.parseInt(lastThreeDigits) + 1;
+	    // Ensure the incremented value does not exceed 999
+	    incrementedValue = incrementedValue % 1000;
+	    // Format the incremented value to have three digits
+	    String formattedIncrementedValue = String.format("%03d", incrementedValue);
+	    // Replace the last three digits in extId
+	    individual.setExtId(extId.substring(0, extId.length() - 3) + formattedIncrementedValue);
+	}
+    
 	
 	// Helper method to log the error into ErrorLog entity
     private void logError(String errorMessage, String stackTrace) {

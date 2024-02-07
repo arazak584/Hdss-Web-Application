@@ -54,10 +54,11 @@ public interface QueryRepository extends JpaRepository <Queries, String> {
 	
 	@Query(nativeQuery = true, value = "SELECT a.uuid as id,groupName as id1,d.extId as id4,compno as id5,a.insertDate as id2,a.dob as id3,a.firstName as id6,a.firstName as id7,a.firstName as id8 FROM individual AS a INNER JOIN residency AS b ON a.uuid = b.individual_uuid\r\n"
 			+ "INNER JOIN location c on b.location_uuid=c.uuid INNER JOIN socialgroup d on b.socialgroup_uuid=d.uuid\r\n"
-			+ "WHERE b.endType = 1 AND b.socialgroup_uuid IN ( SELECT socialgroup_uuid FROM residency AS b2\r\n"
+			+ "LEFT JOIN `duplicate` z on a.uuid=z.dup_uuid LEFT JOIN `duplicate` x on a.uuid=x.dup1_uuid \r\n"
+			+ "LEFT JOIN `duplicate` y on a.uuid=y.dup2_uuid WHERE b.endType = 1 AND z.dup_uuid is null AND x.dup1_uuid is null \r\n"
+			+ "AND y.dup2_uuid is null AND b.socialgroup_uuid IN (SELECT socialgroup_uuid FROM residency AS b2\r\n"
 			+ "INNER JOIN individual AS a2 ON b2.individual_uuid = a2.uuid WHERE b2.endType = 1\r\n"
-			+ "GROUP BY socialgroup_uuid HAVING MAX(TIMESTAMPDIFF(YEAR, a2.dob, CURDATE())) < (select hoh_age from settings))\r\n"
-			+ "AND a.extId!= :query")
+			+ "GROUP BY socialgroup_uuid HAVING MAX(TIMESTAMPDIFF(YEAR, a2.dob, CURDATE())) < (select hoh_age from settings)) AND a.extId!= :query GROUP BY d.extId")
 	List<Queries> Minors(@Param("query") String query);
 	
 	@Query(nativeQuery = true, value = "SELECT a.extId as id,concat(a.firstName,' ',a.lastName)id1,outcomeDate as id2,b.insertDate as id3,concat(d.firstName,' ',d.lastName)id4,NULL as id5,NULL as id6,NULL as id7,NULL as id8 from individual a INNER JOIN pregnancyoutcome b ON a.uuid=b.mother_uuid\r\n"

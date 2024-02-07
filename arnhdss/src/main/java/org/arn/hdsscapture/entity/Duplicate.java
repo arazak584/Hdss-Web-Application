@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,7 +16,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Audited
-@Table(name="duplicate")
+@Table(name="duplicate", indexes = {@Index(name="dup_uuid", columnList="dup_uuid", unique=false),
+		@Index(name = "dup1_uuid", columnList = "dup1_uuid", unique = false),
+		@Index(name = "dup2_uuid", columnList = "dup2_uuid", unique = false)})
 public class Duplicate implements Serializable {
 
 	/**

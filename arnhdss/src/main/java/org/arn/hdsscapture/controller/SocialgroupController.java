@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.arn.hdsscapture.entity.ErrorLog;
 import org.arn.hdsscapture.entity.Socialgroup;
@@ -46,7 +47,46 @@ public class SocialgroupController {
 	public DataWrapper<Socialgroup> saveAll(@RequestBody DataWrapper<Socialgroup> data) {
 		try {
 
-		List<Socialgroup> saved =  repo.saveAll(data.getData());
+		List<Socialgroup> saved =  data.getData();
+		
+		for (Socialgroup socialgroup : saved) {
+		    Optional<Socialgroup> existingSocialgroup = repo.findById(socialgroup.getUuid());
+		    Socialgroup existingS = existingSocialgroup.orElse(null);
+
+		    if (existingS != null) {
+		        // UUID exists
+		        if (existingS.getExtId().equals(socialgroup.getExtId())) {
+		            // Incoming ExtId matches existing, update the existing Socialgroup
+		            repo.save(existingS);
+		        } else {
+		            // Incoming ExtId doesn't match existing, check if it exists for another UUID
+		            Optional<Socialgroup> existingByExtId = repo.findByExtId(socialgroup.getExtId());
+		            Socialgroup existingByExtIdS = existingByExtId.orElse(null);
+
+		            if (existingByExtIdS != null && !existingByExtIdS.getUuid().equals(socialgroup.getUuid())) {
+		                // Incoming ExtId exists for another UUID, increment last two digits
+		                incrementLastTwoDigits(socialgroup);
+		            }
+
+		            // Save as updated record
+		            repo.save(socialgroup);
+		        }
+		    } else {
+		        // UUID doesn't exist
+		        Optional<Socialgroup> existingByExtId = repo.findByExtId(socialgroup.getExtId());
+		        Socialgroup existingByExtIdS = existingByExtId.orElse(null);
+
+		        if (existingByExtIdS != null) {
+		            // ExtId exists for another UUID, increment last two digits
+		            incrementLastTwoDigits(socialgroup);
+		        }
+
+		        // Save as new record
+		        repo.save(socialgroup);
+		    }
+		}
+
+		
 
 		DataWrapper<Socialgroup> s = new DataWrapper<>();
 		s.setData(saved);
@@ -62,6 +102,22 @@ public class SocialgroupController {
             throw new DataErrorException(errorMessage, e);
         }
 	}
+	
+    
+	private void incrementLastTwoDigits(Socialgroup socialgroup) {
+	    // Extract the last two digits from extId
+	    String extId = socialgroup.getExtId();
+	    String lastTwoDigits = extId.substring(extId.length() - 2);	    
+	    // Increment the last two digits
+	    int incrementedValue = Integer.parseInt(lastTwoDigits) + 1;	    
+	    // Ensure the incremented value does not exceed 99
+	    incrementedValue = incrementedValue % 100;	    
+	    // Format the incremented value to have two digits
+	    String formattedIncrementedValue = String.format("%02d", incrementedValue);	    
+	    // Replace the last two digits in extId
+	    socialgroup.setExtId(extId.substring(0, extId.length() - 2) + formattedIncrementedValue);
+	}
+
 	
 	// Helper method to log the error into ErrorLog entity
     private void logError(String errorMessage, String stackTrace) {
@@ -79,6 +135,7 @@ public class SocialgroupController {
         e.printStackTrace(pw);
         return sw.toString();
     }
+
 	
 	@PostMapping("/save")
 	public Socialgroup save(@RequestBody Socialgroup socialgroup) {

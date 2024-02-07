@@ -52,21 +52,33 @@ public class DeathController {
 		for (Death death : saved) {
             Optional<Death> existingDeathOptional = repo.findById(death.getIndividual_uuid());
             Death existingDeath = existingDeathOptional.orElse(null);
-
-            if (existingDeath != null && existingDeath.getComplete() == 1 && death.getComplete()==1) {
-                repo.save(existingDeath);
-            } else if (existingDeath != null && existingDeath.getComplete() == 1 && death.getComplete()==2) {
-            	repo.delete(existingDeath);
-            	continue;
-            } else if (existingDeath == null && death.getComplete() == 1) {
+            
+            if (existingDeath != null) {
+            	if (existingDeath.getComplete() == null && death.getComplete()==1) {
+            		System.out.println("Updating existing record 1...");
+            		repo.save(existingDeath);
+            	}else if (existingDeath.getComplete() == 1 && death.getComplete()==1) {
+            		System.out.println("Updating existing record 2...");
+                    repo.save(existingDeath);
+                }else if (existingDeath.getComplete() == 1 && death.getComplete()==2) {
+                	System.out.println("Deleting existing record...");
+                	repo.delete(existingDeath);
+                	continue;
+                }else if (death.getComplete() == 0) {     	
+               } 
+            } else { 
+            	if (existingDeath == null ) {
+            		if (death.getComplete() == 1) {
+            	System.out.println("Save New...");
                 repo.save(death);
-            }else if (existingDeath == null && death.getComplete() == 2) {
+            	}else if (death.getComplete() == 2) {
             	
-            }else if (existingDeath != null && death.getComplete() == 0) {
+            }else if (death.getComplete() == 0) {
             	
-            }else if (existingDeath == null && death.getComplete() == 0) {
-            	
+            } 
             }
+		}
+
         }
 
 		DataWrapper<Death> s = new DataWrapper<>();

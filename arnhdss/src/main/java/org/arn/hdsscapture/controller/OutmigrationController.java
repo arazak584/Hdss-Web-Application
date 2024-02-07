@@ -58,34 +58,70 @@ public class OutmigrationController {
             	Optional<Outmigration> existingOmgOptional = repo.findById(omg.getResidency_uuid());
                 Outmigration existingOmg = existingOmgOptional.orElse(null);
                 
-                if (existingOmg != null && existingOmg.getComplete() == 1 && omg.getComplete()==1) {
-                	System.out.println("Updating existing record...");
-                    repo.save(existingOmg);
-                } else if (existingOmg != null && existingOmg.getComplete() == 1 && omg.getComplete()==2) {
-                	System.out.println("Deleting existing record...");
-                	repo.delete(existingOmg);
-                	continue;
-                } else if (existingOmg == null && omg.getComplete() == 1) {
-                	System.out.println("Save new record...");
-                    repo.save(omg);
-                }else if (existingOmg == null && omg.getComplete() == 2) {
-                	System.out.println("Condition for omg.getComplete() == 2 is true...");                	
-                }else if (existingOmg != null && omg.getComplete() == 0) {
-                	System.out.println("Condition for omg.getComplete() == 0 is true...");
-                	
-                }else if (existingOmg == null && omg.getComplete() == 0) {
-                	System.out.println("Condition for omg.getComplete() == 0 is true...");
-                	
-                }
-                
-                else if (existingOmg != null && existingOmg.getResidency_uuid() != null) {
-                	Residency associatedResidency = residencyRepository.findByUuid(existingOmg.getResidency_uuid());
-                    if (associatedResidency != null && associatedResidency.getEndDate() != null) {
-                        existingOmg.setRecordedDate(associatedResidency.getEndDate());
-                        System.out.println("Updating End Date for existingOmg...");
+                if (existingOmg != null) {
+                	if (existingOmg.getComplete() == null && omg.getComplete()==1) {
+                		System.out.println("Updating existing record...");
                         repo.save(existingOmg);
+                	}else if (existingOmg.getComplete() == 1 && omg.getComplete()==1) {
+                		System.out.println("Updating existing record...");
+                        repo.save(existingOmg);
+                	}else if (existingOmg.getComplete() == 1 && omg.getComplete()==2) {
+                    	System.out.println("Deleting existing record...");
+                    	repo.delete(existingOmg);
+                    	continue;
+                    }else if (omg.getComplete() == 0) {
+                    	System.out.println("Condition for omg.getComplete() == 0 is true...");
+                    	
+                    }else if (existingOmg.getResidency_uuid() != null) {
+                    	Residency associatedResidency = residencyRepository.findByUuid(existingOmg.getResidency_uuid());
+                        if (associatedResidency != null && associatedResidency.getEndDate() != null) {
+                            existingOmg.setRecordedDate(associatedResidency.getEndDate());
+                            System.out.println("Updating End Date for existingOmg...");
+                            repo.save(existingOmg);
+                        }
                     }
-                }                
+                	
+                }else {
+                	if ( existingOmg == null ) {               		
+                		if (omg.getComplete() == 1) {
+                			System.out.println("Save new record...");
+                            repo.save(omg);	
+                		}else if (omg.getComplete() == 2) {
+                			
+                		}else if (omg.getComplete() == 0) {
+                			
+                		}
+                	}
+                }
+//                
+//                if (existingOmg != null && existingOmg.getComplete() == 1 && omg.getComplete()==1) {
+//                	System.out.println("Updating existing record...");
+//                    repo.save(existingOmg);
+//                } else if (existingOmg != null && existingOmg.getComplete() == 1 && omg.getComplete()==2) {
+//                	System.out.println("Deleting existing record...");
+//                	repo.delete(existingOmg);
+//                	continue;
+//                } else if (existingOmg == null && omg.getComplete() == 1) {
+//                	System.out.println("Save new record...");
+//                    repo.save(omg);
+//                }else if (existingOmg == null && omg.getComplete() == 2) {
+//                	System.out.println("Condition for omg.getComplete() == 2 is true...");                	
+//                }else if (existingOmg != null && omg.getComplete() == 0) {
+//                	System.out.println("Condition for omg.getComplete() == 0 is true...");
+//                	
+//                }else if (existingOmg == null && omg.getComplete() == 0) {
+//                	System.out.println("Condition for omg.getComplete() == 0 is true...");
+//                	
+//                }
+//                
+//                else if (existingOmg != null && existingOmg.getResidency_uuid() != null) {
+//                	Residency associatedResidency = residencyRepository.findByUuid(existingOmg.getResidency_uuid());
+//                    if (associatedResidency != null && associatedResidency.getEndDate() != null) {
+//                        existingOmg.setRecordedDate(associatedResidency.getEndDate());
+//                        System.out.println("Updating End Date for existingOmg...");
+//                        repo.save(existingOmg);
+//                    }
+//                }                
      
               
             }
