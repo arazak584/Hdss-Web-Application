@@ -26,20 +26,32 @@ function ExportToExcel(type, fn, dl) {
         allRows.push(...rows);
     }
 
+    // Convert numeric values to numbers in the data array
+    allRows = allRows.map(row => row.map(cell => {
+        // Attempt to parse as a number, fallback to original value
+        return isNaN(cell) ? cell : Number(cell);
+    }));
+
     // Add the header and rows to the worksheet
     var wsData = [header, ...allRows];
 
-    // Create a worksheet
+    // Create a worksheet with column types
     var ws = XLSX.utils.aoa_to_sheet(wsData);
+
+    // Set the column types to 'n' (numeric) for all columns
+    //ws['!cols'] = header.map(() => ({ t: 'n' }));
 
     // Create a workbook and add the worksheet
     var wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet 1');
+    XLSX.utils.book_append_sheet(wb, ws, 'data');
 
     // Save or download the workbook
-    return dl ?
-        XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+    if (dl) {
+        var wbout = XLSX.write(wb, { bookType: type, bookSST: true, type: 'binary' });
+        saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), fn || ('MySheetName.' + (type || 'xlsx')));
+    } else {
         XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+    }
 }
 
 // Function to generate a unique identifier for each row
@@ -47,4 +59,12 @@ function generateRowId(row) {
     // Customize this based on your data structure to generate a unique identifier
     // Example: Concatenate values from different columns
     return row.join('-');
+}
+
+// Function to convert data to array buffer
+function s2ab(s) {
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
 }
