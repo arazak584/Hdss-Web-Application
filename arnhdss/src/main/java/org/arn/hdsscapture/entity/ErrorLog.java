@@ -16,6 +16,9 @@ public class ErrorLog {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
+	
+	@Column
+	public String recordUuid;
 
 	public String errorMessage;
 	public LocalDateTime timestamp;
@@ -54,6 +57,14 @@ public class ErrorLog {
 
 	public void setStackTrace(String stackTrace) {
 		this.stackTrace = stackTrace;
+	}
+
+	public String getRecordUuid() {
+		return recordUuid;
+	}
+
+	public void setRecordUuid(String recordUuid) {
+		this.recordUuid = recordUuid;
 	}
     
     

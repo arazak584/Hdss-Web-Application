@@ -56,10 +56,10 @@ public class DeathController {
             if (existingDeath != null) {
             	if (existingDeath.getComplete() == null && death.getComplete()==1) {
             		System.out.println("Updating existing record 1...");
-            		repo.save(existingDeath);
+            		repo.save(death);
             	}else if (existingDeath.getComplete() == 1 && death.getComplete()==1) {
             		System.out.println("Updating existing record 2...");
-                    repo.save(existingDeath);
+                    repo.save(death);
                 }else if (existingDeath.getComplete() == 1 && death.getComplete()==2) {
                 	System.out.println("Deleting existing record...");
                 	repo.delete(existingDeath);

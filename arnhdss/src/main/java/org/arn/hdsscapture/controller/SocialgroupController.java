@@ -56,6 +56,8 @@ public class SocialgroupController {
 		    if (existingS != null) {
 		        // UUID exists
 		        if (existingS.getExtId().equals(socialgroup.getExtId())) {
+		        	existingS.setGroupName(socialgroup.getGroupName());
+		        	existingS.setIndividual_uuid(socialgroup.getIndividual_uuid());
 		            // Incoming ExtId matches existing, update the existing Socialgroup
 		            repo.save(existingS);
 		        } else {

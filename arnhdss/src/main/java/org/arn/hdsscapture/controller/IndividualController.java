@@ -63,6 +63,12 @@ public class IndividualController {
 	                // UUID exists
 	                if (existingS.getExtId().equals(individual.getExtId())) {
 	                    // Incoming ExtId matches existing, update the existing Individual
+	                	existingS.setFirstName(individual.getFirstName());
+	                	existingS.setLastName(individual.getLastName());
+	                	existingS.setGender(individual.getGender());
+	                	existingS.setOtherName(individual.getOtherName());
+	                	existingS.setDob(individual.getDob());
+	                	existingS.setGhanacard(individual.getGhanacard());
 	                    repo.save(existingS);
 	                } else {
 	                    // Incoming ExtId doesn't match existing, check if it exists for another UUID

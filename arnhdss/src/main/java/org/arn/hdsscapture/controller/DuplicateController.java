@@ -52,7 +52,7 @@ public class DuplicateController {
 	            Duplicate existingDuplicate = existingDuplicateOptional.orElse(null);
 
 	            if (existingDuplicate != null && existingDuplicate.getComplete() == 1 && duplicate.getComplete()==1) {
-	                repo.save(existingDuplicate);
+	                repo.save(duplicate);
 	            } else if (existingDuplicate != null && existingDuplicate.getComplete() == 1 && duplicate.getComplete()==2) {
 	            	repo.delete(existingDuplicate);
 	            	continue;
