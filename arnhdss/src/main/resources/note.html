@@ -33,6 +33,7 @@ CREATE USER 'data'@'%' IDENTIFIED BY 'data';
 GRANT ALL PRIVILEGES ON *.* TO 'data'@'%' WITH GRANT OPTION;
 
 FLUSH PRIVILEGES;
+ALTER USER 'data'@'%' IDENTIFIED WITH 'mysql_native_password' BY 'data';
 
 exit
 mysql -u data -p
@@ -70,3 +71,29 @@ arazak584/hdss.jar:v2023.0.3
 //Run this for restart when server restarts
 docker update --restart unless-stopped c854b1356724(THIS IS THE IMAGE ID)
 docker update --restart unless-stopped dd42dd09c4f6
+
+
+//RUN IT AS JAR FILE
+sudo nano /etc/systemd/system/hdss.service
+
+//Paste the ff
+[Unit]
+Description=HDSS Application
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/java -jar /home/khdss/Downloads/hdss.jar
+WorkingDirectory=/home/khdss/Downloads/
+Restart=always
+User=khdss
+Group=khdss
+
+[Install]
+WantedBy=multi-user.target
+
+//Run the ff
+sudo systemctl daemon-reload
+sudo systemctl start hdss
+sudo systemctl enable hdss
+sudo systemctl status hdss
+
