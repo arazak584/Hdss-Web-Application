@@ -106,9 +106,16 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
     		+ "where a.dob>startDate")
     Long Dobs();
     
-    @Query(nativeQuery = true, value ="SELECT COUNT(individual_uuid) FROM (SELECT individual_uuid, startDate, endDate,\r\n"
-    		+ "LAG(endDate) OVER (PARTITION BY individual_uuid ORDER BY startDate) AS prev_endDate\r\n"
-    		+ "FROM residency) AS subquery	WHERE startDate < prev_endDate")
+//    @Query(nativeQuery = true, value ="SELECT COUNT(individual_uuid) FROM (SELECT individual_uuid, startDate, endDate,\r\n"
+//    		+ "LAG(endDate) OVER (PARTITION BY individual_uuid ORDER BY startDate) AS prev_endDate\r\n"
+//    		+ "FROM residency) AS subquery	WHERE startDate < prev_endDate")
+//    Long Lag();
+    
+    //Mysql 5
+    @Query(nativeQuery = true, value ="SELECT COUNT(individual_uuid) FROM ( SELECT a.individual_uuid,a.startDate,a.endDate,\r\n"
+    		+ "(SELECT MAX(b.endDate) FROM residency b WHERE b.individual_uuid = a.individual_uuid \r\n"
+    		+ "AND b.startDate < a.startDate) AS prev_endDate FROM residency a\r\n"
+    		+ ") AS subquery WHERE startDate < prev_endDate")
     Long Lag();
     
     @Query(nativeQuery = true, value ="SELECT COUNT(DISTINCT socialgroup_uuid) FROM individual AS a INNER JOIN residency AS b ON a.uuid = b.individual_uuid\r\n"

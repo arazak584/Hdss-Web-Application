@@ -8,14 +8,27 @@ import org.springframework.data.repository.query.Param;
 
 public interface QueryRepository extends JpaRepository <Queries, String> {
 	
-	@Query(nativeQuery = true, value = "SELECT a.uuid as id,a.extId as id1, groupName as id4,dob as id2,a.insertDate as id3,b.extId as id8, b.extId AS id5, compno as id6,concat(x.firstName,' ',x.lastName) as id7\r\n"
+//	@Query(nativeQuery = true, value = "SELECT a.uuid as id,a.extId as id1, groupName as id4,dob as id2,a.insertDate as id3,b.extId as id8, b.extId AS id5, compno as id6,concat(x.firstName,' ',x.lastName) as id7\r\n"
+//			+ "FROM socialgroup a INNER JOIN individual b ON a.individual_uuid = b.uuid\r\n"
+//			+ "INNER JOIN fieldworker x on a.fw_uuid=x.fw_uuid\r\n"
+//			+ "LEFT JOIN (SELECT *, ROW_NUMBER() OVER (PARTITION BY individual_uuid ORDER BY startDate DESC) AS rn\r\n"
+//			+ "FROM residency) c ON b.uuid = c.individual_uuid AND c.rn = 1\r\n"
+//			+ "INNER JOIN location d ON c.location_uuid = d.uuid WHERE TIMESTAMPDIFF(YEAR, dob, CURDATE()) < (select hoh_age from settings)\r\n"
+//			+ "AND a.extId!= :query")
+//	List<Queries> Minor(@Param("query") String query);
+	
+	//Mysql 5
+	@Query(nativeQuery = true, value = "SELECT a.uuid as id,a.extId as id1, groupName as id4,dob as id2,a.insertDate as id3,\r\n"
+			+ "b.extId as id8, b.extId AS id5, compno as id6,CONCAT(x.firstName, ' ', x.lastName) as id7\r\n"
 			+ "FROM socialgroup a INNER JOIN individual b ON a.individual_uuid = b.uuid\r\n"
-			+ "INNER JOIN fieldworker x on a.fw_uuid=x.fw_uuid\r\n"
-			+ "LEFT JOIN (SELECT *, ROW_NUMBER() OVER (PARTITION BY individual_uuid ORDER BY startDate DESC) AS rn\r\n"
-			+ "FROM residency) c ON b.uuid = c.individual_uuid AND c.rn = 1\r\n"
-			+ "INNER JOIN location d ON c.location_uuid = d.uuid WHERE TIMESTAMPDIFF(YEAR, dob, CURDATE()) < (select hoh_age from settings)\r\n"
+			+ "INNER JOIN fieldworker x ON a.fw_uuid = x.fw_uuid LEFT JOIN \r\n"
+			+ "residency c ON b.uuid = c.individual_uuid AND c.startDate = (SELECT MAX(startDate) \r\n"
+			+ "FROM residency WHERE individual_uuid = b.uuid) INNER JOIN \r\n"
+			+ "location d ON c.location_uuid = d.uuid WHERE \r\n"
+			+ "TIMESTAMPDIFF(YEAR, dob, CURDATE()) < (SELECT hoh_age FROM settings)\r\n"
 			+ "AND a.extId!= :query")
 	List<Queries> Minor(@Param("query") String query);
+	
 	
 	@Query(nativeQuery = true, value = "SELECT a.uuid as id,a.extId as id1,concat(a.firstName,' ',a.lastName)as id4,"
 			+ "gender as id5,dob as id3,a.insertDate as id2,concat(c.firstName,' ',c.lastName)as id6,a.extId as id7,a.extId as id8 from individual a LEFT JOIN residency b on a.uuid=b.individual_uuid\r\n"
@@ -31,25 +44,47 @@ public interface QueryRepository extends JpaRepository <Queries, String> {
 			+ "AND a.extId!= :query")
 	List<Queries> Dob(@Param("query") String query);
 	
-	@Query(nativeQuery = true, value = "SELECT uuid as id,extId as id8,individual_uuid as id1, name as id4, startDate as id2, endType as id5, dob as id3, compno as id6,fw as id7\r\n"
-			+ "FROM (SELECT a.uuid,extId,individual_uuid, startDate, endDate, \r\n"
-			+ "CASE WHEN endType = 1 THEN 'Active' END AS endType, \r\n"
-			+ "dob, compno, concat(b.firstName,' ',b.lastName)name,concat(d.firstName,' ',d.lastName)fw,\r\n"
-			+ "COUNT(*) OVER(PARTITION BY individual_uuid) AS duplicates_count\r\n"
+//	@Query(nativeQuery = true, value = "SELECT uuid as id,extId as id8,individual_uuid as id1, name as id4, startDate as id2, endType as id5, dob as id3, compno as id6,fw as id7\r\n"
+//			+ "FROM (SELECT a.uuid,extId,individual_uuid, startDate, endDate, \r\n"
+//			+ "CASE WHEN endType = 1 THEN 'Active' END AS endType, \r\n"
+//			+ "dob, compno, concat(b.firstName,' ',b.lastName)name,concat(d.firstName,' ',d.lastName)fw,\r\n"
+//			+ "COUNT(*) OVER(PARTITION BY individual_uuid) AS duplicates_count\r\n"
+//			+ "FROM residency a INNER JOIN individual b ON a.individual_uuid = b.uuid\r\n"
+//			+ "INNER JOIN location c ON a.location_uuid = c.uuid\r\n"
+//			+ "INNER JOIN fieldworker d on a.fw_uuid=d.fw_uuid\r\n"
+//			+ "WHERE endType = 1\r\n"
+//			+ ") AS duplicates WHERE duplicates_count > 1\r\n"
+//			+ "AND extId!= :query")
+//	List<Queries> Dup(@Param("query") String query);
+	
+	//Mysql 5
+	@Query(nativeQuery = true, value = "SELECT uuid as id,extId as id8,individual_uuid as id1,name as id4,startDate as id2,endType AS id5,\r\n"
+			+ "dob as id3,compno as id6,fw as id7\r\n"
+			+ "FROM (SELECT a.uuid,extId,individual_uuid,startDate,endDate,CASE WHEN endType = 1 THEN 'Active' END AS endType,\r\n"
+			+ "dob,compno,CONCAT(b.firstName, ' ', b.lastName) as name,CONCAT(d.firstName, ' ', d.lastName) as fw,\r\n"
+			+ "(SELECT COUNT(*) FROM residency WHERE individual_uuid = a.individual_uuid AND endType = 1) AS duplicates_count\r\n"
 			+ "FROM residency a INNER JOIN individual b ON a.individual_uuid = b.uuid\r\n"
-			+ "INNER JOIN location c ON a.location_uuid = c.uuid\r\n"
-			+ "INNER JOIN fieldworker d on a.fw_uuid=d.fw_uuid\r\n"
-			+ "WHERE endType = 1\r\n"
-			+ ") AS duplicates WHERE duplicates_count > 1\r\n"
-			+ "AND extId!= :query")
+			+ "INNER JOIN location c ON a.location_uuid = c.uuid INNER JOIN \r\n"
+			+ "fieldworker d ON a.fw_uuid = d.fw_uuid WHERE endType = 1) AS duplicates WHERE duplicates_count > 1\r\n"
+			+ "AND extId != :query")
 	List<Queries> Dup(@Param("query") String query);
 	
-	@Query(nativeQuery = true, value = "SELECT uuid as id,extId as id1,individual_uuid as id4,startDate as id2,endDate as id3,name as id5,\r\n"
-			+ "prev_endDate as id6,firstName as id7,firstName as id8 \r\n"
-			+ "FROM (SELECT firstName,a.uuid,extId,individual_uuid, startDate, endDate,concat(b.firstName,' ',b.lastName)name,\r\n"
-			+ "LAG(endDate) OVER (PARTITION BY individual_uuid ORDER BY startDate) AS prev_endDate\r\n"
-			+ "FROM residency a INNER JOIN individual b ON a.individual_uuid = b.uuid) AS subquery WHERE startDate < prev_endDate\r\n"
-			+ "AND extId!= :query")
+//	@Query(nativeQuery = true, value = "SELECT uuid as id,extId as id1,individual_uuid as id4,startDate as id2,endDate as id3,name as id5,\r\n"
+//			+ "prev_endDate as id6,firstName as id7,firstName as id8 \r\n"
+//			+ "FROM (SELECT firstName,a.uuid,extId,individual_uuid, startDate, endDate,concat(b.firstName,' ',b.lastName)name,\r\n"
+//			+ "LAG(endDate) OVER (PARTITION BY individual_uuid ORDER BY startDate) AS prev_endDate\r\n"
+//			+ "FROM residency a INNER JOIN individual b ON a.individual_uuid = b.uuid) AS subquery WHERE startDate < prev_endDate\r\n"
+//			+ "AND extId!= :query")
+//	List<Queries> Lag(@Param("query") String query);
+	
+	@Query(nativeQuery = true, value = "SELECT uuid as id,extId as id1,individual_uuid as id4,startDate as id2,endDate as id3,\r\n"
+			+ "name as id5,prev_endDate as id6,name as id7,name as id8\r\n"
+			+ "FROM (SELECT a.uuid,extId,individual_uuid,startDate,endDate,CONCAT(b.firstName, ' ', b.lastName) as name,\r\n"
+			+ "(SELECT MAX(endDate) FROM residency AS r2 WHERE r2.individual_uuid = a.individual_uuid \r\n"
+			+ "AND r2.startDate < a.startDate) AS prev_endDate FROM \r\n"
+			+ "residency a INNER JOIN individual b ON a.individual_uuid = b.uuid\r\n"
+			+ ") AS subquery WHERE startDate < prev_endDate\r\n"
+			+ "AND extId != :query")
 	List<Queries> Lag(@Param("query") String query);
 	
 	@Query(nativeQuery = true, value = "SELECT a.uuid as id,groupName as id1,d.extId as id4,compno as id5,a.insertDate as id2,a.dob as id3,a.firstName as id6,a.firstName as id7,a.firstName as id8 FROM individual AS a INNER JOIN residency AS b ON a.uuid = b.individual_uuid\r\n"
