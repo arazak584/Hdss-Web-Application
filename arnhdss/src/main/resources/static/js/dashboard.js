@@ -27,8 +27,9 @@ function updateDashboard(data) {
     $('#lag').text(data.lag);
     $('#minors').text(data.minors);
     $('#out').text(data.out);
+    $('#dthoh').text(data.dthoh);
     
-    $('#errors').text(data.nomemb+data.minor+data.dupres+data.dobs+data.lag+data.minors+data.out);
+    $('#errors').text(data.nomemb+data.minor+data.dupres+data.dobs+data.lag+data.minors+data.out+data.dthoh);
 }
 
 function renderItems(items) {

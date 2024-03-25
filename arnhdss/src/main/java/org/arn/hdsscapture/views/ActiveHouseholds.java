@@ -29,6 +29,8 @@ public class ActiveHouseholds {
 	private String households;
 	
 	private String compounds;
+	
+	private String pop;
 
 	public ActiveHouseholds() {
 	}
@@ -79,6 +81,14 @@ public class ActiveHouseholds {
 
 	public void setCompounds(String compounds) {
 		this.compounds = compounds;
+	}
+
+	public String getPop() {
+		return pop;
+	}
+
+	public void setPop(String pop) {
+		this.pop = pop;
 	}
 
 	

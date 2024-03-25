@@ -29,11 +29,12 @@
         <link rel="stylesheet" th:href="@{/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
         
         <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
+		
         
     </head>
 
     <body>
-       <div th:if="${exceptionMsg}" class="alert alert-danger" th:text="${exceptionMsg}"></div>
+       
 
         <div class="wrapper">
             <!-- header start-->
@@ -47,54 +48,45 @@
                 <div class="main-content">
   
                                   <div class="card">
-									  <div th:if="${exceptionMsg}" class="alert alert-danger" th:text="${exceptionMsg}"></div>
-                                    
-                                    <div class="card-body">
-										
-								<div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header"><h3>Update Fieldworker</h3></div>
-                                    <!-- success message -->
-									<div th:if="${success}">
-									    <div class="alert alert-info">
-									        Updated Successfully!
-									    </div>
-									</div>
-                                    <div class="card-body">
-                                        <form class="forms-sample" th:action="@{/utility/fw/{username} (username=${fieldworker.username})}" th:object="${fieldworker}" method="post">
-                                            <div class="form-group">
-                                                <label>USER NAME</label>
-                                                <input type="text" name="username" th:field ="*{username}" class="form-control" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="startDate">FIRST NAME</label>
-                                                <input type="text" class="form-control"  name="firstname" th:field ="*{firstName}" Placeholder="First Name" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>LAST NAME</label>
-                                                <input type="text" class="form-control" name="lastname" th:field ="*{lastName}" Placeholder="Last Name" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>PASSWORD</label>
-                                                <input type="text" class="form-control" name="password" th:field ="*{password}" Placeholder="Enter Pin or Password" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>STAFF STATUS</label>
-                                                    <select class="form-control" name="status" th:field="*{status}" required>
-												        <option value="0" th:selected="${fieldworker.status == 0}">Inactive</option>
-												        <option value="1" th:selected="${fieldworker.status == 1}">Active</option>
-												        <option value="2" th:selected="${fieldworker.status == 2}">Supervisor</option>
-												        <option value="3" th:selected="${fieldworker.status == 3}">Training</option>
-												    </select>
-                                            </div>
-                                            
-                                            <button type="submit" class="btn btn-primary mr-2">Update</button>
-                                            <!--<button class="btn btn-light">Cancel</button>-->
-                                          </form>
+                                    <div class="card-header d-block">
+                                        <h3>Dead Head of Household</h3> 
+                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'dth_hoh.xlsx')">Export to Excel</button>
                                     </div>
-                                </div>
-                            </div>
-                                   
+                                    <div class="card-body">
+										<form class="form-inline" method="GET"  action="/hdss/query/dthoh" style="text-align: center;">                                       
+                                                 <input type="text" name="query" class="form-control" value="query" required readonly hidden>
+                                                <button type="submit" class="btn btn-theme">Generate Query</button>
+                                            </form>
+
+                                        <div class="dt-responsive">
+                                            <table id="order-table"
+                                                   class="table table-striped table-bordered nowrap">
+                                                <thead>
+                                                <tr>
+                                                    <th th:text="#{hhid}"></th>
+													<th th:text="#{name}"></th>
+													<th th:text="#{compno}"></th>
+													<th th:text="#{visitDate}"></th>
+													<th th:text="#{dod}"></th>
+													<th th:text="#{fw}"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="item : ${items}">
+											            <td th:text="${item.id}"></td>
+											            <td th:text="${item.id1}"></td>
+											            <td th:text="${item.id5}"></td>
+											            <td th:text="${item.id2}"></td>	
+											            <td th:text="${item.id3}"></td>											            
+											            <td th:text="${item.id4}"></td>
+											            </tr>                                                                                
+                                               
+                                            </tbody>
+                                                <tfoot>
+                                                
+                                                </tfoot>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
   
@@ -130,6 +122,8 @@
         <script th:src="@{/dist/js/theme.min.js}"></script>
         <script th:src="@{/js/dashboard.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
+        <script th:src="@{/js/index.js}"></script>
+        <script th:src="@{/js/xlsx.full.min.js}"></script>
         
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -146,6 +140,7 @@
         document.getElementById('logoutForm').submit();
     }
 </script>
+
 
         
     </body>

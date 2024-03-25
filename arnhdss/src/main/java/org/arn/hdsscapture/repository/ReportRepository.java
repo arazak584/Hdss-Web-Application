@@ -106,23 +106,23 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
     		+ "where a.dob>startDate")
     Long Dobs();
     
-//    @Query(nativeQuery = true, value ="SELECT COUNT(individual_uuid) FROM (SELECT individual_uuid, startDate, endDate,\r\n"
-//    		+ "LAG(endDate) OVER (PARTITION BY individual_uuid ORDER BY startDate) AS prev_endDate\r\n"
-//    		+ "FROM residency) AS subquery	WHERE startDate < prev_endDate")
-//    Long Lag();
-    
-    //Mysql 5
-    @Query(nativeQuery = true, value ="SELECT COUNT(individual_uuid) FROM ( SELECT a.individual_uuid,a.startDate,a.endDate,\r\n"
-    		+ "(SELECT MAX(b.endDate) FROM residency b WHERE b.individual_uuid = a.individual_uuid \r\n"
-    		+ "AND b.startDate < a.startDate) AS prev_endDate FROM residency a\r\n"
-    		+ ") AS subquery WHERE startDate < prev_endDate")
+    @Query(nativeQuery = true, value ="SELECT COUNT(individual_uuid) FROM (SELECT individual_uuid, startDate, endDate,\r\n"
+    		+ "LAG(endDate) OVER (PARTITION BY individual_uuid ORDER BY startDate) AS prev_endDate\r\n"
+    		+ "FROM residency) AS subquery	WHERE startDate < prev_endDate")
     Long Lag();
+    
+//    //Mysql 5
+//    @Query(nativeQuery = true, value ="SELECT COUNT(individual_uuid) FROM ( SELECT a.individual_uuid,a.startDate,a.endDate,\r\n"
+//    		+ "(SELECT MAX(b.endDate) FROM residency b WHERE b.individual_uuid = a.individual_uuid \r\n"
+//    		+ "AND b.startDate < a.startDate) AS prev_endDate FROM residency a\r\n"
+//    		+ ") AS subquery WHERE startDate < prev_endDate")
+//    Long Lag();
     
     @Query(nativeQuery = true, value ="SELECT COUNT(DISTINCT socialgroup_uuid) FROM individual AS a INNER JOIN residency AS b ON a.uuid = b.individual_uuid\r\n"
     		+ "LEFT JOIN `duplicate` z on a.uuid=z.dup_uuid LEFT JOIN `duplicate` x on a.uuid=x.dup1_uuid \r\n"
     		+ "LEFT JOIN `duplicate` y on a.uuid=y.dup2_uuid WHERE b.endType = 1 AND z.dup_uuid is null AND x.dup1_uuid is null \r\n"
     		+ "AND y.dup2_uuid is null AND b.socialgroup_uuid IN ( SELECT 	socialgroup_uuid FROM residency AS b2\r\n"
-    		+ "INNER JOIN individual AS a2 ON b2.individual_uuid = a2.uuid 			\r\n"
+    		+ "INNER JOIN individual AS a2 ON b2.individual_uuid = a2.uuid\r\n"
     		+ "WHERE b2.endType = 1\r\n"
     		+ "GROUP BY socialgroup_uuid HAVING MAX(TIMESTAMPDIFF(YEAR, a2.dob, CURDATE())) < (select hoh_age from settings))")
     Long Minors();
@@ -131,7 +131,9 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
     		+ "WHERE b.preg_uuid is null")
     Long Outcome();
     
-    
+    @Query(nativeQuery = true, value ="SELECT COUNT(DISTINCT a.uuid) FROM socialgroup a INNER JOIN death b\r\n"
+    		+ "ON a.individual_uuid=b.individual_uuid  WHERE a.uuid IN (SELECT socialgroup_uuid FROM residency WHERE endType=1)")
+    Long dthhoh();
     
     
 

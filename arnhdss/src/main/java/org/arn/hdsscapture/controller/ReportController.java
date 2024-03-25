@@ -75,6 +75,7 @@ public class ReportController {
         data.put("lag", repo.Lag());
         data.put("minors", repo.Minors());
         data.put("out", repo.Outcome());
+        data.put("dthoh", repo.dthhoh());
 
         return ResponseEntity.ok(data);
     }

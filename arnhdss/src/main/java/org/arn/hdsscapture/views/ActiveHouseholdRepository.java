@@ -20,7 +20,7 @@ public interface ActiveHouseholdRepository extends JpaRepository <ActiveHousehol
 	
 	@Query(nativeQuery = true, value = "SELECT h.name as District,e.extId as villcode,f.name as village,e.name as subvillage,\r\n"
 			+ "count(DISTINCT a.socialgroup_uuid)as households,\r\n"
-			+ "count(DISTINCT a.location_uuid)as compounds\r\n"
+			+ "count(DISTINCT a.location_uuid)as compounds,count(DISTINCT a.uuid)as pop\r\n"
 			+ "from residency a inner join socialgroup b on a.socialgroup_uuid=b.uuid\r\n"
 			+ "inner join location d on a.location_uuid=d.uuid\r\n"
 			+ "left join locationhierarchy e on d.locationLevel_uuid=e.uuid\r\n"
@@ -34,7 +34,7 @@ public interface ActiveHouseholdRepository extends JpaRepository <ActiveHousehol
 	
 	@Query(nativeQuery = true, value = "SELECT h.name as District,e.extId as villcode,f.name as village,e.name as subvillage,\r\n"
 			+ "count(DISTINCT a.socialgroup_uuid)as households,\r\n"
-			+ "count(DISTINCT a.location_uuid)as compounds\r\n"
+			+ "count(DISTINCT a.location_uuid)as compounds,count(DISTINCT a.uuid)as pop\r\n"
 			+ "from residency a inner join socialgroup b on a.socialgroup_uuid=b.uuid\r\n"
 			+ "inner join location d on a.location_uuid=d.uuid\r\n"
 			+ "left join locationhierarchy e on d.locationLevel_uuid=e.uuid\r\n"

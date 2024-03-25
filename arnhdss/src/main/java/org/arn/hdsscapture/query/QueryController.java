@@ -99,5 +99,17 @@ public class QueryController {
 
 	    return "query/outcome";
 	}
+	
+	@GetMapping("/dthoh")
+	public String dthoh(@RequestParam(name = "query", required = false)  String query,
+	                 Model model) {	    
+	    if (query != null) {
+	        List<Queries> items = repo.DthHOH(query);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "query/dthoh";
+	}
 
 }

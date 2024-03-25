@@ -18,7 +18,7 @@ public interface FieldworkerRepository extends JpaRepository <Fieldworker, Strin
 //	List<Fieldworker> findFieldworker();
 	
 	@Query(nativeQuery = true, value = "SELECT fw_uuid, insertDate, username, firstName, lastName, Password, "
-            + "CASE WHEN status = 0 THEN 'Inactive' WHEN status = 1 THEN 'Active' WHEN status = 2 THEN 'Supervisor' ELSE 'Unknown' END AS status "
+            + "CASE WHEN status = 0 THEN 'Inactive' WHEN status = 1 THEN 'Active' WHEN status = 2 THEN 'Supervisor' WHEN status = 3 THEN 'Training' ELSE 'Unknown' END AS status "
             + "FROM fieldworker ORDER BY insertDate")
     List<Fieldworker> findFieldworker();
 	
