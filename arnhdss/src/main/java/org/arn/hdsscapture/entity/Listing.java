@@ -24,6 +24,10 @@ public class Listing implements Serializable {
 	
 	
 	@Id
+	@Column(name = "location_uuid", nullable = false)
+	private String location_uuid;
+	
+	
 	@Column(name = "compno", nullable = false)
 	private String compno;
 	
@@ -111,6 +115,14 @@ public class Listing implements Serializable {
 	@Override
 	public String toString() {
 		return compextId;
+	}
+
+	public String getLocation_uuid() {
+		return location_uuid;
+	}
+
+	public void setLocation_uuid(String location_uuid) {
+		this.location_uuid = location_uuid;
 	}
 	
 	

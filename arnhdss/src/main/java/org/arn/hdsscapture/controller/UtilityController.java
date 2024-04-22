@@ -464,6 +464,7 @@ public class UtilityController {
 				existingSettings.setMother_age(settings.getMother_age());
 				existingSettings.setRel_age(settings.getRel_age());
 				existingSettings.setUpdates(settings.isUpdates());
+				existingSettings.setSesDate(settings.getSesDate());
 				// Update any other necessary properties of the object
 				setrepo.save(existingSettings);
 				return "redirect:/utility/parameters";

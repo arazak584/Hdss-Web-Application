@@ -161,6 +161,12 @@ private void zipTemporaryCsvFiles(String directoryPath, int totalBatches) {
 
                     // Delete the temporary CSV file
                     tempCsvFile.delete();
+                }else {
+                    // If the temporary CSV file does not exist, create an empty CSV file
+                    createEmptyCsvFile(tempCsvFilePath);
+
+                    // Append the empty CSV file to the combined CSV file
+                    appendCsvToFile(combinedCsvFilePath, tempCsvFilePath);
                 }
             }
 
@@ -409,5 +415,13 @@ private ResponseEntity<ByteArrayResource> buildResponseEntity(ByteArrayResource 
         }
     }
 
+	
+	private void createEmptyCsvFile(String csvFilePath) {
+	    try (PrintWriter writer = new PrintWriter(new FileWriter(csvFilePath))) {
+	        // Empty CSV file does not require any data rows
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
 
 }

@@ -47,6 +47,11 @@ public class Settings implements Serializable{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date earliestDate;
 	
+	@Column(name = "sesDate", nullable = true)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date sesDate;
+	
 	@Column(nullable = false)
 	private boolean updates;
 	
@@ -121,6 +126,13 @@ public class Settings implements Serializable{
 		this.enumeration = enumeration;
 	}
 
+	public Date getSesDate() {
+		return sesDate;
+	}
+
+	public void setSesDate(Date sesDate) {
+		this.sesDate = sesDate;
+	}
 	
 
 }

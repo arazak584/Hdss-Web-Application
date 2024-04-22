@@ -26,11 +26,24 @@ function ExportToExcel(type, fn, dl) {
         allRows.push(...rows);
     }
 
+
     // Convert numeric values to numbers in the data array
-    allRows = allRows.map(row => row.map(cell => {
+    //allRows = allRows.map(row => row.map(cell => {
         // Attempt to parse as a number, fallback to original value
-        return isNaN(cell) ? cell : Number(cell);
-    }));
+       // return isNaN(cell) ? cell : Number(cell);
+    //}));
+    // Convert numeric values to numbers in the data array
+	allRows = allRows.map(row => row.map(cell => {
+	    // If cell is null or not a number, keep it as it is
+	    if (cell === null || cell === "") {
+	        return cell; // Return empty string for null or empty values
+	    } else if (!isNaN(cell)) {
+	        return Number(cell); // Parse as number if it's a numeric string
+	    } else {
+	        return cell; // Return original value for non-numeric strings
+	    }
+	}));
+
 
     // Add the header and rows to the worksheet
     var wsData = [header, ...allRows];

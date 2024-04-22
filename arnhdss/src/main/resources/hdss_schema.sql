@@ -78,11 +78,20 @@ alter table demographic add index FK5B0927480470E9C (individual_uuid), add const
 -- Outcome
 alter table outcome add index FKBE0C0752948ED5FB (childuuid), add constraint FKBE0C0752948ED5FB foreign key (childuuid) references individual (uuid);
 
-alter table listing add index FKD6922049851605F6 (compno), add constraint FKD6922049851605F6 foreign key (compno) references location (compno);
+-- Listing
+alter table listing add index FKD6922049851605F6 (location_uuid), add constraint FKD6922049851605F6 foreign key (location_uuid) references location (uuid);
+alter table listing ADD INDEX FK6B05D4BEC630DBE (compno);
+
+-- Pregnancy Outcome
+alter table pregnancyoutcome add index FKBE0C0752948ED6FB (pregnancy_uuid), add constraint FKBE0C0752948ED6FB foreign key (pregnancy_uuid) references pregnancyobservation (uuid);
+
+
 alter table vaccination add index FKD6922049851605FV (individual_uuid), add constraint FKD6922049851605FV foreign key (individual_uuid) references individual (uuid);
 alter table individual ADD UNIQUE INDEX FK6B04D4BEC630DB8 (uuid);
 alter table duplicate ADD INDEX FK6B04D4BEC630DBD (individual_uuid);
 alter table duplicate ADD INDEX FK6B04D4BEC630DBE (dup_uuid);
+alter table duplicate ADD INDEX FK6B04D4BEC630DBF (dup1_uuid);
+alter table duplicate ADD INDEX FK6B04D4BEC630DBG (dup2_uuid);
 
 
 INSERT INTO codebook (codeFeature, codeValue, codeLabel) VALUES ('assist', '1', 'Doctor');

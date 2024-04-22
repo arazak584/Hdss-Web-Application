@@ -8,6 +8,8 @@ import java.util.Map;
 import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Population;
 import org.arn.hdsscapture.entity.Round;
+import org.arn.hdsscapture.query.Queries;
+import org.arn.hdsscapture.query.QueryRepository;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.PopulationRepository;
 import org.arn.hdsscapture.repository.ReportRepository;
@@ -40,6 +42,9 @@ public class ReportController {
 	
 	@Autowired
 	FieldworkerRepository field;
+	
+	@Autowired
+	QueryRepository queryrepo;
 	
 	@GetMapping("/asyncReport")
     public ResponseEntity<Map<String, Object>> getAsyncReport() {
@@ -111,9 +116,19 @@ public class ReportController {
 
         return ResponseEntity.ok(data);
     }
+	
+
 
 	@GetMapping("/report")
-	public String fw(Model model) {
+	public String fw(@RequestParam(name = "query", required = false)  String query,Model model) {
+		
+		if (query != null) {
+	        List<Queries> items = queryrepo.Compvisit(query);
+	        model.addAttribute("items", items);
+		}else {
+			
+		}
+	   
 		
 //		List<Population> items = pop.pyramid();
 //		System.err.println("Size of list " + items.size());
@@ -438,7 +453,7 @@ public class ReportController {
 	public String unvisited(@RequestParam(name = "village", required = false)  String village,
 	                 Model model) {
 
-		List<String> villages = activehoh.villages();
+		List<String> villages = activehoh.subvillages();
 		//System.out.println("Villages: " + villages);
 		model.addAttribute("villages", villages);
 	    

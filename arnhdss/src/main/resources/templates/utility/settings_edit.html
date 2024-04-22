@@ -87,6 +87,10 @@
                                                 <input type="text" class="form-control" name="rel_age" th:field ="*{rel_age}" required>
                                             </div>
                                             <div class="form-group">
+                                                <label>Minimum SES Date</label>
+                                                <input type="date" name="sesDate" th:field ="*{sesDate}" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
                                                 <label>Update</label>
                                                     <select class="form-control" name="updates" th:field="*{updates}" required>
 												        <option value="true" th:selected="${settings.updates == 0}">Active</option>

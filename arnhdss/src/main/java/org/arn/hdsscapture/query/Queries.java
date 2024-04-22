@@ -47,6 +47,9 @@ public class Queries {
 	
 	@Column(name = "id8", nullable = true)
 	private String id8;
+	
+	@Column(name = "id9", nullable = true)
+	private String id9;
 
 	public Queries() {
 	}
@@ -123,6 +126,14 @@ public class Queries {
 
 	public void setId8(String id8) {
 		this.id8 = id8;
+	}
+
+	public String getId9() {
+		return id9;
+	}
+
+	public void setId9(String id9) {
+		this.id9 = id9;
 	}
 
 	
