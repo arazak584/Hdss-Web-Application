@@ -212,7 +212,7 @@ public class IndividualZipController {
                 .addColumn("uuid").addColumn("dob").addColumn("dobAspect").addColumn("edtime").addColumn("extId")
                 .addColumn("firstName").addColumn("fw_uuid").addColumn("gender").addColumn("ghanacard").addColumn("insertDate")
                 .addColumn("lastName").addColumn("otherName").addColumn("father_uuid").addColumn("mother_uuid")
-                .addColumn("sttime").addColumn("endType").addColumn("compno").addColumn("village").addColumn("hohID")
+                .addColumn("sttime").addColumn("endType").addColumn("compno").addColumn("village").addColumn("hohID").addColumn("phone1")
                 .build();
         CsvMapper csvMapper = new CsvMapper();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

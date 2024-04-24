@@ -115,6 +115,9 @@ public class Individual implements Serializable {
 	@Transient
 	@Column(name = "hohID")
 	private String hohID;
+	@Transient
+	@Column(name = "phone1")
+	private String phone1;
 	
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")

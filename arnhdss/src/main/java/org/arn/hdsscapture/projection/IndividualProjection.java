@@ -23,5 +23,6 @@ Integer getEndType();
 String getCompno();
 String getVillage();
 String getHohID();
+String getPhone1();
 
 }
