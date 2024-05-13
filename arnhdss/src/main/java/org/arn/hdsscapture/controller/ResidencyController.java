@@ -51,8 +51,21 @@ public class ResidencyController {
 	        for (Residency newResidency : newResidencyData) {
 	            // Check if the UUID already exists in the database
 	            Residency existingResidency = repo.findById(newResidency.getUuid()).orElse(null);
+	            
+	            if (existingResidency != null && existingResidency.getEndType() == 1) {
+	            	System.out.println("Condition met");
+	                // Update the existing residency with the new data
+	                existingResidency.setSocialgroup_uuid(newResidency.getSocialgroup_uuid());
+	                existingResidency.setStartDate(newResidency.getStartDate());
+	                existingResidency.setEndDate(newResidency.getEndDate());
+	                existingResidency.setEndType(newResidency.getEndType());
+	                existingResidency.setRltn_head(newResidency.getRltn_head());
+	                // Update any other fields as needed
+	                System.out.println(existingResidency);
 
-	            if (existingResidency != null && existingResidency.getEndType() == 2) {
+	                // Save the updated record
+	                repo.save(existingResidency);
+	            } else if (existingResidency != null && existingResidency.getEndType() == 2) {
 	                // Query the database to find any records with the same individual_uuid but different UUID
 	                // and endType equal to 1
 	                List<Residency> conflictingResidencies = repo.findConflictingRecords(newResidency.getIndividual_uuid(), newResidency.getUuid());
