@@ -526,7 +526,7 @@ public class UtilityController {
 
 	    String userName = principal.getName();
 	    // Set the ID
-	    item.setUuid(uuidString);
+	    item.setUuid(uuid);
 	    item.setInsertDate(new Date());
 	    if (item.getFw_uuid() == null || item.getFw_uuid().isEmpty()) {
             item.setFw_uuid(userName);

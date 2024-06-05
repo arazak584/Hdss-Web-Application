@@ -655,4 +655,11 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('enabled', 'Fal
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('odk_gender', 'Male', 1);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('odk_gender', 'Female', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('odk_gender', 'All', 3);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('itemlist', 'Health Facility', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('itemlist', 'Drug/Pharmacy Shop', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('itemlist', 'Radio/Information Centre', 3);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('itemlist', 'Educational Institution', 4);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('itemlist', 'Netwotk (ISP)', 5);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('itemlist', 'Market', 6);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('itemlist', 'Fuel Station', 7);
 
