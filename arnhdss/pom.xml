@@ -35,10 +35,10 @@
     	</dependency>
 
     <!-- Logback as the implementation of SLF4J -->
-    <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-    </dependency>
+	    <dependency>
+	        <groupId>ch.qos.logback</groupId>
+	        <artifactId>logback-classic</artifactId>
+	    </dependency>
 
 		<dependency>
 		    <groupId>mysql</groupId>

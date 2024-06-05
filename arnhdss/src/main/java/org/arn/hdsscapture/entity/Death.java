@@ -63,6 +63,20 @@ public class Death {
 	@Column(nullable = true)
     public Integer complete;
 	
+	@Column(name = "comment", nullable = true, length = 1000)
+	private String comment;
+	
+	@Column(name = "status", nullable = false)
+	private Integer status = 0;
+	
+	@Column(name = "supervisor", nullable = true)
+	private String supervisor;
+	
+	@Column(name = "approveDate", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date approveDate;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false, nullable=false)
 	private Fieldworker fieldworker;
@@ -186,6 +200,47 @@ public class Death {
 
 	public void setComplete(Integer complete) {
 		this.complete = complete;
+	}
+
+	
+
+	public String getComment() {
+		return comment;
+	}
+
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+
+	public Integer getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+
+	public String getSupervisor() {
+		return supervisor;
+	}
+
+
+	public void setSupervisor(String supervisor) {
+		this.supervisor = supervisor;
+	}
+
+
+	public Date getApproveDate() {
+		return approveDate;
+	}
+
+
+	public void setApproveDate(Date approveDate) {
+		this.approveDate = approveDate;
 	}
 
 

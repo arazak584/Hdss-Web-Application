@@ -1,0 +1,263 @@
+<!doctype html>
+<html th:fragment="layout(title, links, scripts, content, subnav)" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title th:text="#{app.title}"></title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
+
+
+
+	<link rel="stylesheet" th:href="@{/plugins/bootstrap/dist/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+	<link rel="stylesheet" th:href="@{/plugins/icon-kit/dist/css/iconkit.min.css}">
+	<link rel="stylesheet" th:href="@{/plugins/ionicons/dist/css/ionicons.min.css}">
+	<link rel="stylesheet" th:href="@{/plugins/perfect-scrollbar/css/perfect-scrollbar.css}">
+	<link rel="stylesheet" th:href="@{/dist/css/theme.min.css}">
+
+
+</head>
+
+<body>
+
+
+	<div class="wrapper">
+		<div th:insert="fragments/header"></div>
+
+		<div class="page-wrap">
+			<div class="app-sidebar colored">
+				<div th:insert="fragments/sidebar-menu"></div>
+			</div>
+
+
+			<div class="main-content">
+				<div class="container-fluid">
+					<div class="page-header">
+						<div class="row align-items-end">
+							<div class="col-lg-8">
+								<div class="page-header-title">
+									<i class="ik ik-edit bg-blue"></i>
+									<div class="d-inline">
+										<h5>Outmigration</h5>
+										<!--<span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>-->
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<nav class="breadcrumb-container" aria-label="breadcrumb">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item">
+											<a th:href="@{/hdss/approval}"><i class="ik ik-home"></i></a>
+										</li>
+										<li class="breadcrumb-item"><a th:href="@{/hdss/approval/omglist}">Outmigration</a></li>
+										<li class="breadcrumb-item active" aria-current="page">Components</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="card">
+								
+								<div class="card-body">
+									<form class="forms-sample" th:action="@{/hdss/approval/omg/{uuid} (uuid=${item.uuid})}"
+										th:object="${item}">
+										<div class="form-group" hidden>
+											<label for="exampleInputUsername1">Uuid</label>
+											<input type="text" class="form-control" id="exampleInputUsername1" th:field="*{uuid}" readonly >
+										</div>
+										
+										<div class="form-group" th:if="${item.destination}">
+											<label th:text="#{destination}"></label>
+											<select name="destination" class="form-control" th:field="*{destination}" readonly style="pointer-events: none;">
+												<option th:each="codebook : ${destination}" th:value="${codebook.codeValue}"
+													th:text="${codebook.codeLabel}"></option>
+											</select>
+										</div>
+										
+										<div class="form-group" th:if="${item.reason}">
+											<label th:text="#{reasons}"></label>
+											<select name="reason" class="form-control" th:field="*{reason}" readonly style="pointer-events: none;">
+												<option th:each="codebook : ${reason}" th:value="${codebook.codeValue}"
+													th:text="${codebook.codeLabel}"></option>
+											</select>
+										</div>
+										<div class="form-group" th:if="${item.reason_oth}">
+											<label th:text="#{other}"></label>
+											<input type="text" class="form-control" id="exampleInputUsername1"
+												th:field="*{reason_oth}" readonly>
+										</div>
+										
+										<div class="form-group" th:if="${item.recordedDate}">
+											<label th:text="#{omgdate}"></label>
+											<input type="text" class="form-control" id="exampleInputUsername1"
+												th:field="*{recordedDate}" readonly>
+										</div>
+
+										
+
+
+									</form>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="card" style="min-height: 484px;">
+								<!--<div class="card-header">
+									<h3>Approval Form</h3>
+								</div>-->
+								<div class="card-body">
+									<form class="forms-sample" th:action="@{/hdss/approval/omg/{uuid} (uuid=${item.uuid})}" th:object="${item}" method="post">
+										<div class="form-group">
+											<input type="text" class="form-control" id="exampleInputUsername1" th:field="*{uuid}" readonly>
+										</div>
+										
+										<div class="form-group row" th:if="${item.approveDate}">
+
+											<div class="col-sm-9">
+												<input type="datetime" class="form-control" id="exampleInputUsername2"
+													th:field="*{approveDate}" placeholder="Date" readonly>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="exampleInputEmail3">Supervisor</label>
+													<input type="text" class="form-control" id="exampleInputEmail3"
+														th:field="*{supervisor}" placeholder="Supervisor" readonly>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="status">Status</label>
+													<select class="form-control" id="status" name="status"
+														th:field="*{status}" required onchange="toggleCommentField()">
+														<option value="0" th:selected="${item.status == 0}">Pending
+														</option>
+														<option value="1" th:selected="${item.status == 1}">Approved
+														</option>
+														<option value="2" th:selected="${item.status == 2}">Rejected
+														</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<fieldset class="form-group" id="commentField" style="display:none;">
+											<label for="comment">Comment</label>
+											<textarea class="form-control" id="comment" th:field="*{comment}"
+												rows="4"></textarea>
+										</fieldset>
+
+										<button type="submit" class="btn btn-primary mr-2">Submit</button>
+										<button class="btn btn-light"><a th:href="@{/hdss/approval/omglist}">Cancel</a></button>
+										
+										<hr>
+										
+										<div class="row">
+											<div class="col-md-6" th:if="${item.fw_uuid}">
+												<div class="form-group">
+													<label th:text="#{item.fw}"></label>
+													<input type="text" class="form-control" id="fw_uuid" th:field="*{fw_uuid}"  readonly>
+												</div>
+											</div>
+											<div class="col-md-6" th:if="${item.individual_uuid}">
+												<div class="form-group">
+													<label th:text="#{item.name}"></label>
+													<input type="text" class="form-control" id="individual_uuid" th:field="*{individual_uuid}"  readonly>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-md-6" th:if="${item.visit_uuid}">
+												<div class="form-group">
+													<label th:text="#{item.compo}"></label>
+													<input type="text" class="form-control" id="visit_uuid" th:field="*{visit_uuid}"  readonly>
+												</div>
+											</div>
+											<div class="col-md-6" th:if="${item.sttime}">
+												<div class="form-group">
+													<label th:text="#{ind.dob}"></label>
+													<input type="text" class="form-control" id="sttime" th:field="*{sttime}"  readonly>
+												</div>
+											</div>
+										</div>
+										
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+				</div>
+			</div>
+
+
+
+			<div th:insert="fragments/footer"></div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>window.jQuery || document.write('<script th:src="@{/src/js/vendor/jquery-3.3.1.min.js}"><\/script>')</script>
+	<script th:src="@{/plugins/popper.js/dist/umd/popper.min.js}"></script>
+	<script th:src="@{/plugins/bootstrap/dist/js/bootstrap.min.js}"></script>
+	<script th:src="@{/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js}"></script>
+	<script th:src="@{/dist/js/theme.min.js}"></script>
+	<script th:src="@{/js/dashboard.js}"></script>
+	<script th:src="@{/js/form-components.js}"></script>
+
+
+	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+	<script>
+			(function (b, o, i, l, e, r) {
+				b.GoogleAnalyticsObject = l; b[l] || (b[l] =
+					function () {(b[l].q = b[l].q || []).push(arguments)}); b[l].l = +new Date;
+				e = o.createElement(i); r = o.getElementsByTagName(i)[0];
+				e.src = 'https://www.google-analytics.com/analytics.js';
+				r.parentNode.insertBefore(e, r)
+			}(window, document, 'script', 'ga'));
+		ga('create', 'UA-XXXXX-X', 'auto'); ga('send', 'pageview');
+	</script>
+
+	<script>
+		function logout() {
+			document.getElementById('logoutForm').submit();
+		}
+	</script>
+
+	<script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
+
+	<script>
+		function toggleCommentField() {
+			var status = $('#status').val();
+			if (status === '2') { // Use strict comparison (===)
+				$('#commentField').show('fade');
+			} else {
+				$('#commentField').hide('fade');
+			}
+		}
+
+		// Call toggleCommentField on page load to handle initial state
+		toggleCommentField();
+	</script>
+
+
+
+</body>
+
+</html>

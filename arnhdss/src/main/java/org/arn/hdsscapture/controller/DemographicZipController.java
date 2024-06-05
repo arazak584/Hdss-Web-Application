@@ -214,6 +214,7 @@ private String convertToCsvRow(Demographic item) throws JsonProcessingException 
             .addColumn("insertDate").addColumn("marital").addColumn("occupation").addColumn("occupation_oth")
             .addColumn("phone1").addColumn("phone2")
             .addColumn("religion").addColumn("religion_oth").addColumn("sttime").addColumn("tribe").addColumn("tribe_oth")
+            .addColumn("comment").addColumn("status").addColumn("supervisor").addColumn("approveDate")
             .build();
     CsvMapper csvMapper = new CsvMapper();
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

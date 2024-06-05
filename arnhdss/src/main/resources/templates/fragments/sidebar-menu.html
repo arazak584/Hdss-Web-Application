@@ -25,6 +25,7 @@
                                         <a th:href="@{/controls/users}" class="menu-item" sec:authorize="hasAnyRole('CONTROLLER')">Users</a>
                                         <a th:href="@{/utility/fw}" class="menu-item">Fieldworker</a>
                                         <a th:href="@{/utility/round}" class="menu-item">Round</a>
+                                        <a th:href="@{/utility/codebook}" class="menu-item">Codebook</a>
                                     </div>
                                 </div>
                                 <!--<div class="nav-lavel">UI Element</div>-->
@@ -36,6 +37,8 @@
                                         <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/utility/activefw}" class="menu-item">Active Fieldworkers</a>
                                         <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/file/assign}" class="menu-item">Work Assign</a>
                                         <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/hdss/report/unvisited}" class="menu-item">Unvisited Locations</a>
+                                        <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/utility/community}" class="menu-item">Community Report</a>
+
                                         <a href="#" th:href="@{/hdss/report/search}" class="menu-item">Search</a>
                                     </div>
                                 </div>
@@ -84,9 +87,10 @@
                                     </div>
                                 </div>-->
                                 <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
-                                    <a href="#"><i class="ik ik-inbox"></i><span>Approvals</span> <span class="badge badge-success">Future</span></a>
+                                    <a href="#"><i class="ik ik-inbox"></i><span>Approvals</span> <span class="badge badge-success">In Progress</span></a>
                                     <div class="submenu-content">
-                                        <a href="#" class="menu-item">Approvals</a>
+                                        <a href="#" class="menu-item" th:href="@{/hdss/approval}">Approvals</a>
+                                        <!--<a href="#" th:href="@{/hdss/approval/imglist}" class="menu-item">Inmigration</a>-->
                                     </div>
                                 </div>
                                <!-- <div class="nav-item has-sub">

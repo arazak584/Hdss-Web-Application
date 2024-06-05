@@ -1,0 +1,309 @@
+<!doctype html>
+<html th:fragment="layout(title, links, scripts, content, subnav)" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title  th:text="#{app.title}"></title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
+        
+        <link rel="stylesheet" th:href="@{/plugins/bootstrap/dist/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+        <link rel="stylesheet" th:href="@{/plugins/icon-kit/dist/css/iconkit.min.css}">
+        <link rel="stylesheet" th:href="@{/plugins/ionicons/dist/css/ionicons.min.css}">
+        <link rel="stylesheet" th:href="@{/plugins/perfect-scrollbar/css/perfect-scrollbar.css}">
+        <link rel="stylesheet" th:href="@{/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
+        <link rel="stylesheet" th:href="@{/plugins/jvectormap/jquery-jvectormap.css}">
+        <link rel="stylesheet" th:href="@{/plugins/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css}">
+        <link rel="stylesheet" th:href="@{/plugins/weather-icons/css/weather-icons.min.css}">
+        <link rel="stylesheet" th:href="@{/plugins/c3/c3.min.css}">
+        <link rel="stylesheet" th:href="@{/plugins/owl.carousel/dist/assets/owl.carousel.min.css}">
+        <link rel="stylesheet" th:href="@{/plugins/owl.carousel/dist/assets/owl.theme.default.min.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/theme.min.css}">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+        <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
+        <script th:src="@{/js/xlsx.full.min.js}"></script>
+        
+        
+        
+    </head>
+
+    <body>
+       
+
+        <div class="wrapper">
+            <!-- header start-->
+			<div th:insert="fragments/header"></div>
+				<!-- header end -->
+
+            <div class="page-wrap">
+				<!-- Sidebar end-->
+			<div th:insert="fragments/sidebar-menu"></div>
+				<!-- Sidebar end -->
+                <div class="main-content">
+                    <div class="container-fluid">
+						
+                       <!-- Application Sales start -->
+                            <div class="col-md-12">
+                                <div class="card table-card">
+                                    <div class="card-header">
+                                        <h3>#</h3>
+                                        <div class="card-header-right">
+                                            <ul class="list-unstyled card-option">
+                                                <li><i class="ik ik-chevron-left action-toggle"></i></li>
+                                                <li><i class="ik ik-minus minimize-card"></i></li>
+                                                <li><i class="ik ik-x close-card"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-block p-b-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-borderless mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Event</th>
+                                                        <th>Pending</th>
+                                                        <th>Approved</th>
+                                                        <th>Rejected</th>
+                                                        <th>Resolved</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-inline-block align-middle">
+                                                                <h6>Inmigration</h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-blue" id="img0"></td>
+                                                        <td class="text-blue" id="img1"></td>
+                                                        <td class="text-blue" id="img2"></td>
+                                                        <td class="text-blue" id="img3"></td>
+                                                        <td>
+															<a th:href="@{/hdss/approval/imglist}"><label class="badge badge-success">View</label></a>
+														</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-inline-block align-middle">
+                                                                <h6>Outmigration</h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-blue" id="omg0"></td>
+                                                        <td class="text-blue" id="omg1"></td>
+                                                        <td class="text-blue" id="omg2"></td>
+                                                        <td class="text-blue" id="omg3"></td>
+                                                        <td>
+															<a th:href="@{/hdss/approval/omglist}"><label class="badge badge-success">View</label></a>
+														</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-inline-block align-middle">
+                                                                <h6>Death</h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-blue" id="dth0"></td>
+                                                        <td class="text-blue" id="dth1"></td>
+                                                        <td class="text-blue" id="dth2"></td>
+                                                        <td class="text-blue" id="dth3"></td>
+                                                        <td>
+															<a th:href="@{/hdss/approval/dthlist}"><label class="badge badge-success">View</label></a>
+														</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-inline-block align-middle">
+                                                                <h6>Pregnancy</h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-blue" id="preg0"></td>
+                                                        <td class="text-blue" id="preg1"></td>
+                                                        <td class="text-blue" id="preg2"></td>
+                                                        <td class="text-blue" id="preg3"></td>
+                                                         <td>
+															<a th:href="@{/hdss/approval/preglist}"><label class="badge badge-success">View</label></a>
+														</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-inline-block align-middle">
+                                                                <h6>Outcome</h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-blue" id="out0"></td>
+                                                        <td class="text-blue" id="out1"></td>
+                                                        <td class="text-blue" id="out2"></td>
+                                                        <td class="text-blue" id="out3"></td>
+                                                         <td>
+															<a th:href="@{/hdss/approval/outcomelist}"><label class="badge badge-success">View</label></a>
+														</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-inline-block align-middle">
+                                                                <h6>Demographic</h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-blue" id="demo0"></td>
+                                                        <td class="text-blue" id="demo1"></td>
+                                                        <td class="text-blue" id="demo2"></td>
+                                                        <td class="text-blue" id="demo3"></td>
+                                                         <td>
+															<a th:href="@{/hdss/approval/demolist}"><label class="badge badge-success">View</label></a>
+														</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-inline-block align-middle">
+                                                                <h6>Relationship</h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-blue" id="rel0"></td>
+                                                        <td class="text-blue" id="rel1"></td>
+                                                        <td class="text-blue" id="rel2"></td>
+                                                        <td class="text-blue" id="rel3"></td>
+                                                         <td>
+															<a th:href="@{/hdss/approval/rellist}"><label class="badge badge-success">View</label></a>
+														</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="text-right">
+                                            <a href="#!" class=" b-b-primary text-primary">View all Events</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Application Sales end -->
+			
+
+                    </div>
+                </div>
+
+
+				<!--Footer-->
+                <div th:insert="fragments/footer"></div>
+                
+            </div>
+        </div>
+        
+       
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>window.jQuery || document.write('<script th:src="@{/src/js/vendor/jquery-3.3.1.min.js}"><\/script>')</script>
+        <script th:src="@{/plugins/popper.js/dist/umd/popper.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/dist/js/bootstrap.min.js}"></script>
+        <script th:src="@{/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js}"></script>
+        <script th:src="@{/plugins/screenfull/dist/screenfull.js}"></script>
+        <script th:src="@{/plugins/datatables.net/js/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/jvectormap/jquery-jvectormap.min.js}"></script>
+        <script th:src="@{/plugins/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js}"></script>
+        <script th:src="@{/plugins/moment/moment.js}"></script>
+        <script th:src="@{/plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js}"></script>
+        <script th:src="@{/plugins/d3/dist/d3.min.js}"></script>
+        <script th:src="@{/plugins/c3/c3.min.js}"></script>
+        <script th:src="@{/js/tables.js}"></script>
+        <script th:src="@{/js/widgets.js}"></script>
+        <script th:src="@{/js/charts.js}"></script>
+        <script th:src="@{/dist/js/theme.min.js}"></script>
+        <script th:src="@{/js/dashboard.js}"></script>
+        <script th:src="@{/js/approval.js}"></script>
+        <script th:src="@{/js/datatables.js}"></script>
+        <script th:src="@{/js/index.js}"></script>
+        
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+        </script>
+        
+<script>
+    function logout() {
+        document.getElementById('logoutForm').submit();
+    }
+</script>
+
+<script>
+  // Make an AJAX request to fetch data for div 1
+  const div = document.getElementById('div1');
+  const progressBar = div.querySelector('.progress-bar');
+  const progress = progressBar.querySelector('.progress');
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://example.com/data.json');
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      // Update the progress bar to 100%
+      progress.style.transform = 'rotate(360deg)';
+
+      // Hide and remove the progress bar
+      progressBar.style.display = 'none';
+      progressBar.parentNode.removeChild(progressBar);
+
+      // Display the loaded data
+      div.querySelector('p').textContent = JSON.parse(xhr.responseText).data;
+    } else {
+      console.error('Error fetching data:', xhr.statusText);
+    }
+  };
+  xhr.send();
+</script>
+
+<script>
+      function addRow(tbody, ageGroup, pop, male, female, className) {
+        var tr = $("<tr></tr>").attr("data-id", ageGroup);
+        if (className) {
+          tr.addClass(className);
+        }
+        tr.append($("<td></td>").append($('<input type="text" class="form-control" readonly>').val(ageGroup)));
+        tr.append($("<td></td>").append($('<input type="text" class="form-control"> readonly').val(pop)));
+        tr.append($("<td></td>").append($('<input type="text" class="form-control">').val(male)));
+        tr.append($("<td></td>").append($('<input type="text" class="form-control">').val(female)));
+        tbody.append(tr);
+      }
+
+      function tableRefresh() {
+        var tbody = $(".settings-table tbody");
+        tbody.html("Loading...");
+
+        $.getJSON("/api/pyramid", function (data) {
+          tbody.html("");
+          data.forEach((el) => {
+            addRow(tbody, el.ageGroup, el.pop, el.male, el.female);
+          });
+        });
+      }
+
+      $("button.refresh").click(tableRefresh);
+
+      $("button.add-row").click(function () {
+        var tbody = $(".settings-table tbody");
+        addRow(tbody, null, null, null, null, "dirty");
+      });
+
+
+
+      tableRefresh();
+    </script>
+
+        
+    </body>
+</html>

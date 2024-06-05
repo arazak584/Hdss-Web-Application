@@ -66,6 +66,9 @@ public class Visit implements Serializable {
 	@Column(name = "location_uuid", nullable = false)
 	private String location_uuid;
 	
+	@Column(name = "socialgroup_uuid", nullable = true)
+	private String socialgroup_uuid;
+	
 	@Column(name = "respondent")
 	private String respondent;
 	
@@ -213,6 +216,15 @@ public class Visit implements Serializable {
 
 	public void setEdtime(String edtime) {
 		this.edtime = edtime;
+	}
+
+	public String getSocialgroup_uuid() {
+		return socialgroup_uuid;
+	}
+
+
+	public void setSocialgroup_uuid(String socialgroup_uuid) {
+		this.socialgroup_uuid = socialgroup_uuid;
 	}
 
 

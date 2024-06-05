@@ -97,7 +97,7 @@ public interface FieldRepository extends JpaRepository <FieldReport, String> {
 			+ "INNER JOIN residency c on a.uuid=c.individual_uuid\r\n"
 			+ "INNER JOIN location d on c.location_uuid=d.uuid\r\n"
 			+ "INNER JOIN locationhierarchy e on d.locationLevel_uuid=e.uuid\r\n"
-			+ "WHERE c.endType=1 AND a.insertDate BETWEEN :startDate AND :endDate GROUP BY Fieldworker,name ORDER BY Fieldworker,total")
+			+ "WHERE a.insertDate BETWEEN :startDate AND :endDate GROUP BY Fieldworker,name ORDER BY Fieldworker,total")
 	List<FieldReport> Ind(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
 	@Query(nativeQuery = true, value = "SELECT a.uuid as id,concat(b.firstName,' ',b.lastName)as Fieldworker,username,count(a.uuid) as total,\r\n"
@@ -106,7 +106,7 @@ public interface FieldRepository extends JpaRepository <FieldReport, String> {
 			+ "INNER JOIN residency c on a.individualA_uuid=c.individual_uuid\r\n"
 			+ "INNER JOIN location d on c.location_uuid=d.uuid\r\n"
 			+ "INNER JOIN locationhierarchy e on d.locationLevel_uuid=e.uuid\r\n"
-			+ "WHERE c.endType=1 AND a.insertDate BETWEEN :startDate AND :endDate GROUP BY Fieldworker,name ORDER BY Fieldworker,total")
+			+ "WHERE a.insertDate BETWEEN :startDate AND :endDate GROUP BY Fieldworker,name ORDER BY Fieldworker,total")
 	List<FieldReport> Rel(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
 	@Query(nativeQuery = true, value = "SELECT a.uuid as id,concat(b.firstName,' ',b.lastName)as Fieldworker,username,count(a.uuid) as total,\r\n"
@@ -124,7 +124,7 @@ public interface FieldRepository extends JpaRepository <FieldReport, String> {
 			+ "INNER JOIN residency c on a.uuid=c.socialgroup_uuid\r\n"
 			+ "INNER JOIN location d on c.location_uuid=d.uuid\r\n"
 			+ "INNER JOIN locationhierarchy e on d.locationLevel_uuid=e.uuid \r\n"
-			+ "WHERE c.endType=1 AND a.insertDate BETWEEN :startDate AND :endDate GROUP BY Fieldworker,name ORDER BY Fieldworker,total")
+			+ "WHERE a.insertDate BETWEEN :startDate AND :endDate GROUP BY Fieldworker,name ORDER BY Fieldworker,total")
 	List<FieldReport> Hoh(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
 

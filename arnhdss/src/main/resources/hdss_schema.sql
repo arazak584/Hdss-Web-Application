@@ -82,6 +82,9 @@ alter table outcome add index FKBE0C0752948ED5FB (childuuid), add constraint FKB
 alter table listing add index FKD6922049851605F6 (location_uuid), add constraint FKD6922049851605F6 foreign key (location_uuid) references location (uuid);
 alter table listing ADD INDEX FK6B05D4BEC630DBE (compno);
 
+-- visit
+alter table visit add index FKBE0C0752948ED5FV (socialgroup_uuid), add constraint FKBE0C0752948ED5FV foreign key (socialgroup_uuid) references socialgroup (uuid);
+
 -- Pregnancy Outcome
 alter table pregnancyoutcome add index FKBE0C0752948ED6FB (pregnancy_uuid), add constraint FKBE0C0752948ED6FB foreign key (pregnancy_uuid) references pregnancyobservation (uuid);
 

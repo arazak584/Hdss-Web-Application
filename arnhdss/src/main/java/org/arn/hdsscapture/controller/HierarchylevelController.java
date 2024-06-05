@@ -37,7 +37,7 @@ public class HierarchylevelController {
 	CacheConfig cacheManager;
 	
 	@GetMapping("/all")
-	@Cacheable(value = "hierarchy", key = "'hierarchy'", cacheManager = "cacheManager")
+	//@Cacheable(value = "hierarchy", key = "'hierarchy'", cacheManager = "cacheManager")
 	public DataWrapper<Locationhierarchy> findAll() {
 
 		List<Locationhierarchy> data = repo.findAll();

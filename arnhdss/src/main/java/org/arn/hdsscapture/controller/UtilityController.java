@@ -1,10 +1,12 @@
 package org.arn.hdsscapture.controller;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.arn.hdsscapture.entity.Codebook;
+import org.arn.hdsscapture.entity.CommunityReport;
 import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.entity.Settings;
@@ -12,7 +14,9 @@ import org.arn.hdsscapture.entity.Task;
 import org.arn.hdsscapture.odk.OdkRepository;
 import org.arn.hdsscapture.odk.ODK;
 import org.arn.hdsscapture.repository.CodebookRepository;
+import org.arn.hdsscapture.repository.CommunityRepository;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
+import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.repository.SettingsRepository;
 import org.arn.hdsscapture.repository.TaskRepository;
@@ -36,6 +40,8 @@ public class UtilityController {
 
 	@Autowired
 	FieldworkerRepository repo;
+	@Autowired
+	CodebookRepository code;
 
 	@GetMapping("/fw")
 	public String fw(Model model
@@ -470,6 +476,226 @@ public class UtilityController {
 				return "redirect:/utility/parameters";
 			} else {
 				// Handle case where Fieldworker object is not found
+				return "error";
+			}
+		}
+	}
+	
+	
+	
+	@Autowired
+	CommunityRepository comrepo;
+	@Autowired
+	LocationhierarchyRepository locrepo;
+
+	// Community
+	@GetMapping("/community")
+	public String findCom(Model model) {
+		List<CommunityReport> items = comrepo.findAll();
+		model.addAttribute("items", items);
+		Community(model);
+		return "utility/community_list";
+	}
+
+	@GetMapping("/community/add")
+	public String addCommunity(Model model,
+	                       @RequestParam(name = "success", required = false) String success, Principal principal) {
+		CommunityReport item = new CommunityReport();
+		
+		String userName = principal.getName();
+
+        if (item.getFw_uuid() == null || item.getFw_uuid().isEmpty()) {
+            item.setFw_uuid(userName);
+        }
+
+	    model.addAttribute("item", item);
+
+	    if (success != null) {
+	        model.addAttribute("success", "Successfully saved");
+	    }
+	    Community(model);
+	    return "utility/community_add";
+	}
+
+	
+	@PostMapping("/community")
+    public String saveCommunity(@ModelAttribute("item") CommunityReport item, BindingResult bindingResult, Model model, Principal principal) {
+		 //Generate a UUID for the Fieldworker's ID
+	    String uuid = UUID.randomUUID().toString();
+	    String uuidString = uuid.replaceAll("-", "");
+
+	    String userName = principal.getName();
+	    // Set the ID
+	    item.setUuid(uuidString);
+	    item.setInsertDate(new Date());
+	    if (item.getFw_uuid() == null || item.getFw_uuid().isEmpty()) {
+            item.setFw_uuid(userName);
+        }
+
+        // Save the Round object using the repository
+        comrepo.save(item);
+
+        return "redirect:/utility/community/add?success";
+    }
+
+
+
+	@GetMapping("/community/edit/{uuid}")
+	public String editCom(@PathVariable("uuid") String uuid, Model model) {
+		List<CommunityReport> optionalCom = comrepo.findCom(uuid);
+		if (!optionalCom.isEmpty()) {
+			CommunityReport item = optionalCom.get(0);
+			// Add any other necessary data to the model attribute for editing
+			model.addAttribute("item", item);
+			Community(model);
+			return "utility/community_edit";
+		} else {
+			return "error";
+		}
+	}
+	
+	private void Community(Model model) {
+        model.addAttribute("community", locrepo.community());
+        model.addAttribute("itemlist", code.itemlist());
+    }
+
+	@PostMapping("/community/{uuid}")
+	public String updateCom(@PathVariable("uuid") String uuid, @ModelAttribute("item") CommunityReport item,
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			// Handle validation errors if necessary
+			return "community_edit";
+		} else {
+			List<CommunityReport> optionalItem = comrepo.findCom(uuid);
+			if (!optionalItem.isEmpty()) {
+				CommunityReport existingItem = optionalItem.get(0);
+				existingItem.setName(item.getName());
+				existingItem.setCommunity(item.getCommunity());
+				existingItem.setDescription(item.getDescription());
+				existingItem.setName(item.getName());
+				comrepo.save(existingItem);
+				return "redirect:/utility/community";
+			} else {
+				return "error";
+			}
+		}
+	}
+	
+	
+
+
+	// Codebook
+	@GetMapping("/codebook")
+	public String findCode(Model model) {
+		List<Codebook> items = code.findAll();
+		model.addAttribute("items", items);
+		
+		return "utility/codebook_list";
+	}
+
+	@GetMapping("/codebook/add")
+	public String addCode(Model model,
+	                       @RequestParam(name = "success", required = false) String success) {
+		Codebook item = new Codebook();
+
+	    model.addAttribute("item", item);
+
+	    if (success != null) {
+	        model.addAttribute("success", "Codebook entry added successfully ");
+	    }
+	    Code(model);
+	    return "utility/codebook_add";
+	}
+	
+	@PostMapping("/codebook")
+    public String saveCodebook(@ModelAttribute("item") Codebook item, BindingResult bindingResult, Model model) {
+		 //Generate a UUID for the Fieldworker's ID
+		if (item.getCodeFeature() != null && item.getCodeValue() != null) {
+            // Check if a Codebook with the same CodeFeature and CodeValue already exists
+            if (code.codeErr(item.getCodeFeature(), item.getCodeValue()) > 0) {
+                model.addAttribute("error", "Code Value with the same Value and Code Feature already exists.");
+                Code(model);
+                return "utility/codebook_add";
+            }
+        }
+
+
+        // Save the Round object using the repository
+        code.save(item);
+        ///model.addAttribute("success", "Codebook entry added successfully ");
+
+        return "redirect:/utility/codebook/add?success";
+    }
+	
+	@GetMapping("/codebook/adds")
+	public String addCodeV(Model model,
+	                       @RequestParam(name = "success", required = false) String success) {
+		Codebook item = new Codebook();
+
+	    model.addAttribute("item", item);
+
+	    if (success != null) {
+	        model.addAttribute("success", "Codebook Variable added successfully " );
+	    }
+	    return "utility/codebook_adds";
+	}
+
+	@PostMapping("/codebooks")
+    public String saveCodebookv(@ModelAttribute("item") Codebook item, BindingResult bindingResult, Model model) {
+		 //Generate a UUID for the Fieldworker's ID
+		if (item.getCodeFeature() != null && item.getCodeValue() != null) {
+            // Check if a Codebook with the same CodeFeature and CodeValue already exists
+            if (code.codeErrs(item.getCodeFeature()) > 0) {
+                model.addAttribute("error", "Code Feature already exists.");
+                Code(model);
+                return "utility/codebook_adds";
+            }
+        }
+
+
+        // Save the Round object using the repository
+        code.save(item);
+        ///model.addAttribute("success", "Codebook entry added successfully ");
+
+        return "redirect:/utility/codebook/adds?success";
+    }
+
+
+
+	@GetMapping("/codebook/edit/{uuid}")
+	public String editCode(@PathVariable("uuid") String uuid, Model model) {
+		List<Codebook> optionalCom = code.findCode(uuid);
+		if (!optionalCom.isEmpty()) {
+			Codebook item = optionalCom.get(0);
+			// Add any other necessary data to the model attribute for editing
+			model.addAttribute("item", item);
+			Code(model);
+			return "utility/codebook_edit";
+		} else {
+			return "error";
+		}
+	}
+	
+	private void Code(Model model) {
+        model.addAttribute("codeFeature", code.codeFeature());
+    }
+
+	@PostMapping("/codebook/{uuid}")
+	public String updateCom(@PathVariable("uuid") String uuid, @ModelAttribute("item") Codebook item,
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			// Handle validation errors if necessary
+			return "codebook_edit";
+		} else {
+			List<Codebook> optionalItem = code.findCode(uuid);
+			if (!optionalItem.isEmpty()) {
+				Codebook existingItem = optionalItem.get(0);
+				existingItem.setCodeFeature(item.getCodeFeature());
+				existingItem.setCodeLabel(item.getCodeLabel());
+				existingItem.setCodeValue(item.getCodeValue());
+				code.save(existingItem);
+				return "redirect:/utility/codebook";
+			} else {
 				return "error";
 			}
 		}

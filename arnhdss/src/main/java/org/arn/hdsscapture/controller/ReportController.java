@@ -99,6 +99,10 @@ public class ReportController {
         data.put("compvisit", repo.countList());
         data.put("compper", repo.perComp());
         data.put("comploc", repo.perLoc());
+        
+        data.put("comp1", repo.visit());
+        data.put("comp2", repo.hhAct());
+        data.put("comp3", repo.hhNot());
 
         data.put("pregs", repo.countPreg());
         data.put("death", repo.countDth());

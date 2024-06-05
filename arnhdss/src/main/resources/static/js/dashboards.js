@@ -77,6 +77,10 @@ function updateReport(data) {
     $('#cpmnew').text(data.comploc);
     $('#listing').text(data.compvisit);
     
+    //$('#allvisit').text(data.comp1/data.comp2+data.comp3);
+    $('#allvisit').text(((data.comp1 / (data.comp2 + data.comp3)) * 100).toFixed(2) + '%');
+    $('#allhh').text(data.comp2+data.comp3);
+    
     $('#cntpreg').text(data.pregs);
     $('#cntdth').text(data.death);
     $('#cntrel').text(data.rel);

@@ -14,6 +14,9 @@ public interface LocationhierarchyRepository extends JpaRepository <Locationhier
 	@Query(nativeQuery = true, value = "SELECT * FROM locationhierarchy Where level_uuid='hierarchyLevelId6' ORDER BY name")
 	List<Locationhierarchy> villages();
 	
+	@Query(nativeQuery = true, value = "SELECT * FROM locationhierarchy Where level_uuid='hierarchyLevelId5' ORDER BY name")
+	List<Locationhierarchy> community();
+	
 	@Query(nativeQuery = true, value = "SELECT * from locationhierarchy Where level_uuid='hierarchyLevelId6'"
 			+ " extId = :extId")
 	List<Locationhierarchy> findByExtIds(@Param("extId") String extId);

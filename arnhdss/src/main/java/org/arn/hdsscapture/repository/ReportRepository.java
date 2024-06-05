@@ -26,7 +26,7 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
 			+ "(SELECT count(DISTINCT z.socialgroup_uuid) from residency z where z.endType=1)*100,2) as done")
     Double perHH();
 	
-	@Query(nativeQuery = true, value ="SELECT count(*) FROM location")
+	@Query(nativeQuery = true, value ="SELECT count(DISTINCT b.location_uuid) FROM location a INNER JOIN residency b on a.uuid=b.location_uuid Where b.endType = 1 ")
 	Long countCompound();
 	
 	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.compno) from listing v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
@@ -74,6 +74,16 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
 	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.extId) from visit v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
 			+ "(SELECT count(DISTINCT socialgroup_uuid) from residency where endType=1)*100,2) as done")
     Double hhVisit();
+	
+	@Query(nativeQuery = true, value ="SELECT count(DISTINCT v.extId) from visit v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	Long visit();
+	
+	@Query(nativeQuery = true, value ="SELECT count(DISTINCT socialgroup_uuid) from residency where endType=1;")
+	Long hhAct();
+	
+	@Query(nativeQuery = true, value ="SELECT count(DISTINCT v.socialgroup_uuid) from visit v JOIN residency r ON v.socialgroup_uuid = r.socialgroup_uuid where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) "
+			+ " AND NOT EXISTS (SELECT 1 FROM residency r2 WHERE r2.socialgroup_uuid = v.socialgroup_uuid AND r2.endType = 1 );")
+	Long hhNot();
     
     @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.extId) from visit v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countVisit();
@@ -81,7 +91,7 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
     @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from relationship v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countRel();
     
-    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from socialgroup v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from socialgroup v INNER JOIN residency a on v.uuid=a.socialgroup_uuid where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countHH();
     
     @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from individual v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")

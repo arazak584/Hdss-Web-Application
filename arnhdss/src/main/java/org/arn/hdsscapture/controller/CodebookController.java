@@ -28,7 +28,7 @@ public class CodebookController {
 	CacheConfig cacheManager;
 	
 	@GetMapping("")
-	@Cacheable(value = "codebook", key = "'codebook'", cacheManager = "cacheManager")
+	//@Cacheable(value = "codebook", key = "'codebook'", cacheManager = "cacheManager")
 	public DataWrapper<Codebook> findAll() {
 
 		List<Codebook> data = repo.findAll();

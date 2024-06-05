@@ -212,12 +212,12 @@ public class PregnancyobservationZipController {
 				.addColumn("medicineforpregnancy").addColumn("outcome").addColumn("outcome_date").addColumn("own_bnet")
 			  .addColumn("pregnancyNumber").addColumn("recordedDate").addColumn("slp_bednet").addColumn("trt_bednet").addColumn("ttinjection")
 			.addColumn("why_no").addColumn("why_no_other").addColumn("individual_uuid").addColumn("sttime").addColumn("visit_uuid")
+			.addColumn("comment").addColumn("status").addColumn("supervisor").addColumn("approveDate")
              .build();
      CsvMapper csvMapper = new CsvMapper();
      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
      return csvMapper.writer(schema).with(formatter).writeValueAsString(item);
  }
-
  
  private void saveOrUpdateTask(String directoryPath, int totalRecords) {
      try {

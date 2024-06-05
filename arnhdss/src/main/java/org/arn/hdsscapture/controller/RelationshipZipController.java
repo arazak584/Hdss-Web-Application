@@ -211,6 +211,7 @@ private String convertToCsvRow(Relationship item) throws JsonProcessingException
 			  .addColumn("fw_uuid").addColumn("individualA_uuid").addColumn("individualB_uuid").addColumn("insertDate").addColumn("lcow").addColumn("mar")
 			  .addColumn("mrank").addColumn("nchdm").addColumn("nwive").addColumn("polygamous")
 			  .addColumn("startDate").addColumn("sttime").addColumn("tnbch")
+			  .addColumn("comment").addColumn("status").addColumn("supervisor").addColumn("approveDate")
             .build();
     CsvMapper csvMapper = new CsvMapper();
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

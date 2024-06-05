@@ -28,7 +28,7 @@ public class FieldworkerController {
 	CacheConfig cacheManager;
 	
 	@GetMapping("")
-	@Cacheable(value = "fieldworker", key = "'fieldworker'", cacheManager = "cacheManager")
+	//@Cacheable(value = "fieldworker", key = "'fieldworker'", cacheManager = "cacheManager")
 	public DataWrapper<Fieldworker> findAll() {
 
 		List<Fieldworker> data = repo.findAll();
