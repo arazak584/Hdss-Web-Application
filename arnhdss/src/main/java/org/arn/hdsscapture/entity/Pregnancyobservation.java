@@ -63,7 +63,7 @@ public class Pregnancyobservation {
 	private String attend_you_other;//Other, Specify
 	private Integer first_rec;//How many months pregnant were you when you first received antenatal care for this pregnancy
 	private Integer anc_visits;//How many Antenatal care visits have you made for this pregnancy
-	private Integer why_no;//In no, Why?
+	private Integer why_no;//If no, Why?
 	private String why_no_other;//Other, Specify
 	private Integer own_bnet;//Do you have a bed net?
 	private Integer how_many;//How many?

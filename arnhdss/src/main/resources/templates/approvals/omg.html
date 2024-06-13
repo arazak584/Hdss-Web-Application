@@ -57,7 +57,7 @@
 										<li class="breadcrumb-item">
 											<a th:href="@{/hdss/approval}"><i class="ik ik-home"></i></a>
 										</li>
-										<li class="breadcrumb-item"><a th:href="@{/hdss/approval/omglist}">Outmigration</a></li>
+										<li class="breadcrumb-item"><a th:href="@{/hdss/approval/omglist(fw=${fw})}">Outmigration</a></li>
 										<li class="breadcrumb-item active" aria-current="page">Components</li>
 									</ol>
 								</nav>
@@ -119,6 +119,7 @@
 								</div>-->
 								<div class="card-body">
 									<form class="forms-sample" th:action="@{/hdss/approval/omg/{uuid} (uuid=${item.uuid})}" th:object="${item}" method="post">
+										<input type="hidden" name="fw" th:value="${fw}" />
 										<div class="form-group">
 											<input type="text" class="form-control" id="exampleInputUsername1" th:field="*{uuid}" readonly>
 										</div>
@@ -161,7 +162,9 @@
 										</fieldset>
 
 										<button type="submit" class="btn btn-primary mr-2">Submit</button>
-										<button class="btn btn-light"><a th:href="@{/hdss/approval/omglist}">Cancel</a></button>
+										<a th:href="@{/hdss/approval/omglist(fw=${fw})}">
+										    <button type="button" class="btn btn-cancel ml-2">Cancel</button>
+										</a>
 										
 										<hr>
 										
@@ -191,6 +194,7 @@
 												<div class="form-group">
 													<label th:text="#{ind.dob}"></label>
 													<input type="text" class="form-control" id="sttime" th:field="*{sttime}"  readonly>
+													<span style="color: green;" class="input-group-text" th:text="'(' + ${item.edtime} + ' years)'"></span>
 												</div>
 											</div>
 										</div>

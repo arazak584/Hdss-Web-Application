@@ -7,7 +7,9 @@ import java.util.UUID;
 
 import org.arn.hdsscapture.entity.Codebook;
 import org.arn.hdsscapture.entity.CommunityReport;
+import org.arn.hdsscapture.entity.DataDictionary;
 import org.arn.hdsscapture.entity.Fieldworker;
+import org.arn.hdsscapture.entity.Relationship;
 import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.entity.Settings;
 import org.arn.hdsscapture.entity.Task;
@@ -15,8 +17,10 @@ import org.arn.hdsscapture.odk.OdkRepository;
 import org.arn.hdsscapture.odk.ODK;
 import org.arn.hdsscapture.repository.CodebookRepository;
 import org.arn.hdsscapture.repository.CommunityRepository;
+import org.arn.hdsscapture.repository.DictionaryRepository;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.LocationhierarchyRepository;
+import org.arn.hdsscapture.repository.RelationshipRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.repository.SettingsRepository;
 import org.arn.hdsscapture.repository.TaskRepository;
@@ -42,6 +46,8 @@ public class UtilityController {
 	FieldworkerRepository repo;
 	@Autowired
 	CodebookRepository code;
+	@Autowired
+	DictionaryRepository dic;
 
 	@GetMapping("/fw")
 	public String fw(Model model
@@ -701,4 +707,96 @@ public class UtilityController {
 		}
 	}
 	
+	
+	//Data Dictionary
+	@GetMapping("/dictionary")
+	public String findDic(@RequestParam(name = "ev", required = false)  String ev,Model model) {
+		
+		List<DataDictionary> fws = dic.findEid();
+		//System.out.println("Villages: " + villages);
+		model.addAttribute("fws", fws);
+		
+		if(ev !=null ) {
+		List<DataDictionary> items = dic.findEvent(ev);
+		model.addAttribute("items", items);
+		model.addAttribute("selected", ev);
+		}else {
+			
+		}
+		
+		
+		return "utility/dictionary_list";
+	}
+	
+
+
+	@GetMapping("/dictionary/add")
+	public String addDic(Model model,
+	                       @RequestParam(name = "success", required = false) String success, Principal principal) {
+		DataDictionary item = new DataDictionary();
+		
+		//List of items in dropdown
+		List<DataDictionary> fws = dic.findEid();
+		model.addAttribute("fws", fws);
+
+	    model.addAttribute("item", item);
+
+	    if (success != null) {
+	        model.addAttribute("success", "Successfully saved");
+	    }
+	    Community(model);
+	    return "utility/community_add";
+	}
+
+	
+	@PostMapping("/dictionary")
+    public String saveDic(@ModelAttribute("item") DataDictionary item, BindingResult bindingResult, Model model, Principal principal) {
+		 //Generate a UUID for the Fieldworker's ID
+	   		   
+
+        // Save the Round object using the repository
+        dic.save(item);
+
+        return "redirect:/utility/dictionary/add?success";
+    }
+
+
+	@GetMapping("/dictionary/edit/{uuid}")
+	public String editDic(@PathVariable("uuid") Integer uuid,@RequestParam(name = "ev", required = false) String ev, Model model) {
+		List<DataDictionary> optionalCom = dic.findId(uuid);
+		if (!optionalCom.isEmpty()) {
+			DataDictionary item = optionalCom.get(0);
+			// Add any other necessary data to the model attribute for editing
+			model.addAttribute("item", item);
+			model.addAttribute("ev", ev);
+			return "utility/dictionary_edit";
+		} else {
+			return "error";
+		}
+	}
+	
+
+	@PostMapping("/dictionary/{uuid}")
+	public String updateDict(@PathVariable("uuid") Integer uuid,@RequestParam(name = "ev", required = false) String ev, @ModelAttribute("item") DataDictionary item,
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("ev", ev);
+			// Handle validation errors if necessary
+			return "dictionary_edit";
+		} else {
+			List<DataDictionary> optionalItem = dic.findId(uuid);
+			if (!optionalItem.isEmpty()) {
+				DataDictionary existingItem = optionalItem.get(0);
+				existingItem.setEvent(item.getEvent());
+				existingItem.setQuestion(item.getQuestion());
+				existingItem.setOptions(item.getOptions());
+				dic.save(existingItem);
+				return "redirect:/utility/dictionary?ev=" + ev;
+			} else {
+				return "error";
+			}
+		}
+	}
+
+
 }

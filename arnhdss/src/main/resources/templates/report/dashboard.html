@@ -27,6 +27,7 @@
         <link rel="stylesheet" th:href="@{/plugins/owl.carousel/dist/assets/owl.theme.default.min.css}">
         <link rel="stylesheet" th:href="@{/dist/css/theme.min.css}">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" th:href="@{/css/spinner.css}">
         
         <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
         <script th:src="@{/js/xlsx.full.min.js}"></script>
@@ -37,6 +38,9 @@
 
     <body>
        
+       <div id="loadingSpinner">
+        <div class="loader"></div>
+    	</div>
 
         <div class="wrapper">
             <!-- header start-->
@@ -486,6 +490,7 @@
         <script th:src="@{/js/dashboards.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
         <script th:src="@{/js/index.js}"></script>
+        <script th:src="@{/js/approval.js}"></script>
         
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

@@ -27,7 +27,7 @@ public interface FieldworkerRepository extends JpaRepository <Fieldworker, Strin
 	
 	Fieldworker findByUsername(String username);
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM fieldworker Where status=1")
+	@Query(nativeQuery = true, value = "SELECT * FROM fieldworker Where status=1 order by firstName,lastName")
 	List<Fieldworker> fw();
 	
 }

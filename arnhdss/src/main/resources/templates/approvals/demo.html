@@ -57,7 +57,7 @@
 										<li class="breadcrumb-item">
 											<a th:href="@{/hdss/approval}"><i class="ik ik-home"></i></a>
 										</li>
-										<li class="breadcrumb-item"><a th:href="@{/hdss/approval/demolist}">Demographic</a></li>
+										<li class="breadcrumb-item"><a th:href="@{/hdss/approval/demolist(fw=${fw})}">Demographic</a></li>
 										<li class="breadcrumb-item active" aria-current="page">Components</li>
 									</ol>
 								</nav>
@@ -160,12 +160,12 @@
 													</select>
 												</div>
 											</div>
-											<div class="col-md-6" th:if="${item.phone1}">
+											<!--<div class="col-md-6" th:if="${item.phone1}">
 												<div class="form-group">
 													<label th:text="#{phone1}"></label>
 													<input type="text" class="form-control" id="phone1" th:field="*{phone1}"  readonly>
 												</div>
-											</div>
+											</div>-->
 										</div>
 
 
@@ -181,6 +181,7 @@
 								</div>-->
 								<div class="card-body">
 									<form class="forms-sample" th:action="@{/hdss/approval/demo/{uuid} (uuid=${item.individual_uuid})}" th:object="${item}" method="post">
+										<input type="hidden" name="fw" th:value="${fw}" />
 										<div class="form-group">
 											<input type="text" class="form-control" id="exampleInputUsername1" th:field="*{individual_uuid}" readonly>
 										</div>
@@ -223,7 +224,9 @@
 										</fieldset>
 
 										<button type="submit" class="btn btn-primary mr-2">Submit</button>
-										<button class="btn btn-light"><a th:href="@{/hdss/approval/demolist}">Cancel</a></button>
+										<a th:href="@{/hdss/approval/demolist(fw=${fw})}">
+										    <button type="button" class="btn btn-cancel ml-2">Cancel</button>
+										</a>
 										
 										<hr>
 										
@@ -253,6 +256,7 @@
 												<div class="form-group">
 													<label th:text="#{ind.dob}"></label>
 													<input type="text" class="form-control" id="sttime" th:field="*{sttime}"  readonly>
+													<span style="color: green;" class="input-group-text" th:text="'(' + ${item.phone1} + ' years)'"></span>
 												</div>
 											</div>
 										</div>

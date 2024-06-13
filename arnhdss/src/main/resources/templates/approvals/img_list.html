@@ -67,7 +67,21 @@
   
                                   <div class="card">
                                     <div class="card-body">
-										<a th:href="@{/hdss/approval}"> <button class="btn btn-cancel">Cancel</button></a>
+										<form class="form-inline" method="GET" action="/hdss/approval/imglist" style="text-align: center;">
+										    <div class="form-group mx-sm-3 mb-2">
+										     <select name="fw" class="form-control select2">
+											<option value="">Select User</option>			 
+											 <option th:each="fw : ${fws}" th:value="${fw.fw_uuid}" th:text="${fw.firstName + ' ' + fw.lastName}"
+											 th:selected="${fw.fw_uuid == selectedFw}"></option>
+											 <!--<option th:each="fw : ${fws}" th:value="${fw.fw_uuid}" th:text="${fw.firstName + ' ' + fw.lastName}"
+											 th:selected="${fw.firstName + ' ' + fw.lastName == selectedFw}"></option>-->
+											</select>
+										    </div>
+										    <div class="form-group mx-sm-3 mb-2">
+										    <button type="submit" class="btn btn-theme">Submit</button>
+										    <button type="button" class="btn btn-cancel ml-2" onclick="window.location.href='/hdss/approval'">Cancel</button>
+										    </div>
+										</form>
                                                <!--<a th:href="@{/utility/round/add}"> <button class="btn btn-theme">Add Round</button></a>-->
                                         <div class="dt-responsive">
                                             <table id="order-table"
@@ -87,7 +101,7 @@
 											            <td th:text="${item.visit_uuid}"></td>
 											            <td th:text="${item.insertDate}"></td>
 											            <td th:text="${item.residency_uuid}"></td>
-											            <td th:text="${item.fw_uuid}"></td>
+											            <td th:text="${item.individual_uuid}"></td>
 											            <td th:classappend="${item.status == null ? 'status-pending' : item.status == 1 ? 'status-approved' : item.status == 2 ? 'status-rejected' : item.status == 3 ? 'status-resolved' : 'status-pending'}"
 									                        th:text="${item.status == null ? 'Pending' : item.status == 1 ? 'Approved' : item.status == 2 ? 'Rejected' : item.status == 3 ? 'Resolved' : 'Pending'}">
 									                    </td>
@@ -95,7 +109,7 @@
 											            <!--<td th:text="${item.status}"></td>-->
 											            
 											            <td>
-											                <a th:href="@{/hdss/approval/edit/{uuid}(uuid=${item.uuid})}" 
+											                <a th:href="@{/hdss/approval/edit/{uuid}(uuid=${item.uuid}, fw=${selectedFw})}" 
 											                class="btn btn-primary btn-sm">View</a>
 											
 											            </td>

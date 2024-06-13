@@ -57,7 +57,7 @@
 										<li class="breadcrumb-item">
 											<a th:href="@{/hdss/approval}"><i class="ik ik-home"></i></a>
 										</li>
-										<li class="breadcrumb-item"><a th:href="@{/hdss/approval/outcomelist}">Outcome</a></li>
+										<li class="breadcrumb-item"><a th:href="@{/hdss/approval/outcomelist(fw=${fw})}">Outcome</a></li>
 										<li class="breadcrumb-item active" aria-current="page">Components</li>
 									</ol>
 								</nav>
@@ -227,12 +227,12 @@
 											</div>
 										</div>
 										
-											<div class="col-md-6" th:if="${item.first_rec}">
+											<!--<div class="col-md-6" th:if="${item.first_rec}">
 												<div class="form-group">
 													<label th:text="#{first_rec}"></label>
 													<input type="text" class="form-control" id="first_rec" th:field="*{first_rec}"  readonly>
 												</div>
-											</div>
+											</div>-->
 										
 							
 										
@@ -315,6 +315,7 @@
 								</div>-->
 								<div class="card-body">
 									<form class="forms-sample" th:action="@{/hdss/approval/outcome/{uuid} (uuid=${item.uuid})}" th:object="${item}" method="post">
+										<input type="hidden" name="fw" th:value="${fw}" />
 										<div class="form-group">
 											<input type="text" class="form-control" id="exampleInputUsername1" th:field="*{uuid}" readonly>
 										</div>
@@ -357,7 +358,9 @@
 										</fieldset>
 
 										<button type="submit" class="btn btn-primary mr-2">Submit</button>
-										<button class="btn btn-light"><a th:href="@{/hdss/approval/outcomelist}">Cancel</a></button>
+										<a th:href="@{/hdss/approval/outcomelist(fw=${fw})}">
+										    <button type="button" class="btn btn-cancel ml-2">Cancel</button>
+										</a>
 										
 										<hr>
 										
@@ -387,6 +390,7 @@
 												<div class="form-group">
 													<label th:text="#{ind.dob}"></label>
 													<input type="text" class="form-control" id="sttime" th:field="*{sttime}"  readonly>
+													<span style="color: green;" class="input-group-text" th:text="'(' + ${item.first_rec} + ' years)'"></span>
 												</div>
 											</div>
 										</div>

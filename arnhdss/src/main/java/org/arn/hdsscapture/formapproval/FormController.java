@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.arn.hdsscapture.entity.Death;
 import org.arn.hdsscapture.entity.Demographic;
+import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Inmigration;
 import org.arn.hdsscapture.entity.Outmigration;
 import org.arn.hdsscapture.entity.Pregnancyobservation;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -104,10 +106,22 @@ public class FormController {
 	InmigrationRepository imgrepo;
 
 	@GetMapping("/approval/imglist")
-	public String search(Model model) {
-
-	        List<Inmigration> items = imgrepo.findImg();
+	public String search(@RequestParam(name = "fw", required = false)  String fw,Model model) {
+		
+		List<Fieldworker> fws = field.fw();
+		//System.out.println("Villages: " + villages);
+		model.addAttribute("fws", fws);
+    	
+    	
+		if (fw != null) {
+			List<Inmigration> items = imgrepo.findImg(fw);
 	        model.addAttribute("items", items);
+	        model.addAttribute("selectedFw", fw);
+		}else {
+			List<Inmigration> items = imgrepo.findImgs();
+	        model.addAttribute("items", items);
+			model.addAttribute("selectedFw", "Select ");
+		}
 
 
 	    return "approvals/img_list";
@@ -115,7 +129,7 @@ public class FormController {
 
 
 	@GetMapping("/approval/edit/{uuid}")
-    public String editImg(@PathVariable("uuid") String uuid, Model model, Principal principal) {
+    public String editImg(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
         List<Inmigration> optionalImg = imgrepo.findByUuid(uuid);
 
         if (!optionalImg.isEmpty()) {
@@ -129,7 +143,7 @@ public class FormController {
             }
 
             model.addAttribute("item", item);
-
+            model.addAttribute("fw", fw);
             // Populate model with codebook data
             populateModelWithCodebookData(model);
 
@@ -151,9 +165,10 @@ public class FormController {
     }
 
     @PostMapping("/approval/{uuid}")
-    public String updateImg(@PathVariable("uuid") String uuid, @ModelAttribute("item") Inmigration item,
+    public String updateImg(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Inmigration item,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
+        	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
             return "approvals/img";
         } else {
@@ -171,7 +186,7 @@ public class FormController {
                 }
                 
                 imgrepo.save(existingImg);
-                return "redirect:/hdss/approval/imglist"; // Corrected redirect URL
+                return "redirect:/hdss/approval/imglist?fw=" + fw;
             } else {
                 return "error"; // Handle the case when the Inmigration with the given UUID is not found
             }
@@ -182,10 +197,23 @@ public class FormController {
 	OutmigrationRepository omgrepo;
     
     @GetMapping("/approval/omglist")
-	public String omg(Model model) {
-
-	        List<Outmigration> items = omgrepo.findItem();
-	        model.addAttribute("items", items);
+	public String omg(@RequestParam(name = "fw", required = false)  String fw,Model model) {
+        
+	        List<Fieldworker> fws = field.fw();
+			//System.out.println("Villages: " + villages);
+			model.addAttribute("fws", fws);
+	    	
+	    	
+			if (fw != null) {
+				List<Outmigration> items = omgrepo.findItem(fw);
+		        model.addAttribute("items", items);
+		        model.addAttribute("selectedFw", fw);
+			}else {
+				model.addAttribute("selectedFw", "Select User");
+				List<Outmigration> items = omgrepo.findItems();
+		        model.addAttribute("items", items);
+				
+			}
 
 
 	    return "approvals/omg_list";
@@ -193,7 +221,7 @@ public class FormController {
 
 
 	@GetMapping("/approval/omg/{uuid}")
-    public String editOmg(@PathVariable("uuid") String uuid, Model model, Principal principal) {
+    public String editOmg(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
         List<Outmigration> optionalImg = omgrepo.findByUuid(uuid);
 
         if (!optionalImg.isEmpty()) {
@@ -207,7 +235,7 @@ public class FormController {
             }
 
             model.addAttribute("item", item);
-
+            model.addAttribute("fw", fw);
             // Populate model with codebook data
             OmgCodebookData(model);
 
@@ -223,9 +251,10 @@ public class FormController {
     }
 
     @PostMapping("/approval/omg/{uuid}")
-    public String updateOmg(@PathVariable("uuid") String uuid, @ModelAttribute("item") Outmigration item,
+    public String updateOmg(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Outmigration item,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
+        	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
             return "approvals/omg";
         } else {
@@ -242,7 +271,7 @@ public class FormController {
                     existingImg.setComment(item.getComment());
                 }
                 omgrepo.save(existingImg);
-                return "redirect:/hdss/approval/omglist"; // Corrected redirect URL
+                return "redirect:/hdss/approval/omglist?fw=" + fw;
             } else {
                 return "error"; // Handle the case when the Inmigration with the given UUID is not found
             }
@@ -254,10 +283,22 @@ public class FormController {
 	DeathRepository dthrepo;
     
     @GetMapping("/approval/dthlist")
-	public String dth(Model model) {
-
-	        List<Death> items = dthrepo.findItem();
-	        model.addAttribute("items", items);
+	public String dth(@RequestParam(name = "fw", required = false)  String fw,Model model) {	        
+	        
+	        List<Fieldworker> fws = field.fw();
+			//System.out.println("Villages: " + villages);
+			model.addAttribute("fws", fws);
+	    	
+	    	
+			if (fw != null) {
+				List<Death> items = dthrepo.findItem(fw);
+		        model.addAttribute("items", items);
+		        model.addAttribute("selectedFw", fw);
+			}else {
+				List<Death> items = dthrepo.findItems();
+		        model.addAttribute("items", items);
+				model.addAttribute("selectedFw", "Select User");
+			}
 
 
 	    return "approvals/dth_list";
@@ -265,7 +306,7 @@ public class FormController {
 
 
 	@GetMapping("/approval/dth/{uuid}")
-    public String editDth(@PathVariable("uuid") String uuid, Model model, Principal principal) {
+    public String editDth(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
         List<Death> optionalImg = dthrepo.findByUuid(uuid);
 
         if (!optionalImg.isEmpty()) {
@@ -279,7 +320,7 @@ public class FormController {
             }
 
             model.addAttribute("item", item);
-
+            model.addAttribute("fw", fw);
             // Populate model with codebook data
             DthCodebookData(model);
 
@@ -295,9 +336,10 @@ public class FormController {
     }
 
     @PostMapping("/approval/dth/{uuid}")
-    public String updateDth(@PathVariable("uuid") String uuid, @ModelAttribute("item") Death item,
+    public String updateDth(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Death item,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
+        	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
             return "approvals/dth";
         } else {
@@ -314,7 +356,7 @@ public class FormController {
                     existingImg.setComment(item.getComment());
                 }
                 dthrepo.save(existingImg);
-                return "redirect:/hdss/approval/dthlist"; // Corrected redirect URL
+                return "redirect:/hdss/approval/dthlist?fw=" + fw; // Corrected redirect URL
             } else {
                 return "error"; // Handle the case when the Inmigration with the given UUID is not found
             }
@@ -326,10 +368,22 @@ public class FormController {
 	PregnancyobservationRepository pregrepo;
     
     @GetMapping("/approval/preglist")
-	public String preg(Model model) {
-
-	        List<Pregnancyobservation> items = pregrepo.findItem();
-	        model.addAttribute("items", items);
+	public String preg(@RequestParam(name = "fw", required = false)  String fw,Model model) {
+     
+	        List<Fieldworker> fws = field.fw();
+			//System.out.println("Villages: " + villages);
+			model.addAttribute("fws", fws);
+	    	
+	    	
+			if (fw != null) {
+				 List<Pregnancyobservation> items = pregrepo.findItem(fw);
+			     model.addAttribute("items", items);
+		        model.addAttribute("selectedFw", fw);
+			}else {
+				model.addAttribute("selectedFw", "Select User");
+				List<Pregnancyobservation> items = pregrepo.findItems();
+			     model.addAttribute("items", items);
+			}
 
 
 	    return "approvals/preg_list";
@@ -337,7 +391,7 @@ public class FormController {
 
 
 	@GetMapping("/approval/preg/{uuid}")
-    public String editPreg(@PathVariable("uuid") String uuid, Model model, Principal principal) {
+    public String editPreg(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
         List<Pregnancyobservation> optionalImg = pregrepo.findByUuid(uuid);
 
         if (!optionalImg.isEmpty()) {
@@ -351,7 +405,7 @@ public class FormController {
             }
 
             model.addAttribute("item", item);
-
+            model.addAttribute("fw", fw);
             // Populate model with codebook data
             PregCodebookData(model);
 
@@ -373,9 +427,10 @@ public class FormController {
     }
 
     @PostMapping("/approval/preg/{uuid}")
-    public String updatePreg(@PathVariable("uuid") String uuid, @ModelAttribute("item") Pregnancyobservation item,
+    public String updatePreg(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Pregnancyobservation item,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
+        	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
             return "approvals/preg";
         } else {
@@ -392,7 +447,7 @@ public class FormController {
                     existingImg.setComment(item.getComment());
                 }
                 pregrepo.save(existingImg);
-                return "redirect:/hdss/approval/preglist"; // Corrected redirect URL
+                return "redirect:/hdss/approval/preglist?fw=" + fw; // Corrected redirect URL
             } else {
                 return "error"; // Handle the case when the Inmigration with the given UUID is not found
             }
@@ -404,10 +459,23 @@ public class FormController {
 	PregnancyoutcomeRepository outrepo;
     
     @GetMapping("/approval/outcomelist")
-	public String out(Model model) {
+	public String out(@RequestParam(name = "fw", required = false)  String fw,Model model) {
 
-	        List<Pregnancyoutcome> items = outrepo.findItem();
-	        model.addAttribute("items", items);
+	        
+	        List<Fieldworker> fws = field.fw();
+			//System.out.println("Villages: " + villages);
+			model.addAttribute("fws", fws);
+	    	
+	    	
+			if (fw != null) {
+				List<Pregnancyoutcome> items = outrepo.findItem(fw);
+		        model.addAttribute("items", items);
+		        model.addAttribute("selectedFw", fw);
+			}else {
+				List<Pregnancyoutcome> items = outrepo.findItems();
+		        model.addAttribute("items", items);
+				model.addAttribute("selectedFw", "Select User");
+			}
 
 
 	    return "approvals/outcome_list";
@@ -415,7 +483,7 @@ public class FormController {
 
 
 	@GetMapping("/approval/outcome/{uuid}")
-    public String editOut(@PathVariable("uuid") String uuid, Model model, Principal principal) {
+    public String editOut(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
         List<Pregnancyoutcome> optionalImg = outrepo.findByUuid(uuid);
 
         if (!optionalImg.isEmpty()) {
@@ -429,7 +497,7 @@ public class FormController {
             }
 
             model.addAttribute("item", item);
-
+            model.addAttribute("fw", fw);
             // Populate model with codebook data
             OutCodebookData(model);
 
@@ -453,9 +521,10 @@ public class FormController {
     }
 
     @PostMapping("/approval/outcome/{uuid}")
-    public String updateOut(@PathVariable("uuid") String uuid, @ModelAttribute("item") Pregnancyoutcome item,
+    public String updateOut(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Pregnancyoutcome item,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
+        	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
             return "approvals/outcome";
         } else {
@@ -472,7 +541,7 @@ public class FormController {
                     existingImg.setComment(item.getComment());
                 }
                 outrepo.save(existingImg);
-                return "redirect:/hdss/approval/outcomelist"; // Corrected redirect URL
+                return "redirect:/hdss/approval/outcomelist?fw=" + fw; // Corrected redirect URL
             } else {
                 return "error"; // Handle the case when the Inmigration with the given UUID is not found
             }
@@ -485,10 +554,22 @@ public class FormController {
 	DemographicRepository demorepo;
     
     @GetMapping("/approval/demolist")
-	public String demo(Model model) {
-
-	        List<Demographic> items = demorepo.findItem();
+	public String demo(@RequestParam(name = "fw", required = false)  String fw,Model model) {
+    	
+    	List<Fieldworker> fws = field.fw();
+		//System.out.println("Villages: " + villages);
+		model.addAttribute("fws", fws);
+    	
+    	
+		if (fw != null) {
+	        List<Demographic> items = demorepo.findItem(fw);
 	        model.addAttribute("items", items);
+	        model.addAttribute("selectedFw", fw);
+		}else {
+			List<Demographic> items = demorepo.findItems();
+	        model.addAttribute("items", items);
+			model.addAttribute("selectedFw", "Select User");
+		}
 
 
 	    return "approvals/demo_list";
@@ -496,7 +577,7 @@ public class FormController {
 
 
 	@GetMapping("/approval/demo/{uuid}")
-    public String editDemo(@PathVariable("uuid") String uuid, Model model, Principal principal) {
+    public String editDemo(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
         List<Demographic> optionalImg = demorepo.findByUuid(uuid);
 
         if (!optionalImg.isEmpty()) {
@@ -510,7 +591,7 @@ public class FormController {
             }
 
             model.addAttribute("item", item);
-
+            model.addAttribute("fw", fw);
             // Populate model with codebook data
             DemoCodebookData(model);
 
@@ -531,9 +612,10 @@ public class FormController {
     }
 
     @PostMapping("/approval/demo/{uuid}")
-    public String updateDemo(@PathVariable("uuid") String uuid, @ModelAttribute("item") Demographic item,
+    public String updateDemo(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Demographic item,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
+        	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
             return "approvals/demo";
         } else {
@@ -550,7 +632,7 @@ public class FormController {
                     existingImg.setComment(item.getComment());
                 }
                 demorepo.save(existingImg);
-                return "redirect:/hdss/approval/demolist"; // Corrected redirect URL
+                return "redirect:/hdss/approval/demolist?fw=" + fw; // Corrected redirect URL
             } else {
                 return "error"; // Handle the case when the Inmigration with the given UUID is not found
             }
@@ -562,11 +644,23 @@ public class FormController {
     @Autowired
   	RelationshipRepository relrepo;
       
-      @GetMapping("/approval/rellist")
-  	public String rel(Model model) {
-
-  	        List<Relationship> items = relrepo.findItem();
-  	        model.addAttribute("items", items);
+    @GetMapping("/approval/rellist")
+  	public String rel(@RequestParam(name = "fw", required = false)  String fw,Model model) {
+  	        
+  	      	List<Fieldworker> fws = field.fw();
+			//System.out.println("Villages: " + villages);
+			model.addAttribute("fws", fws);
+	    	
+	    	
+			if (fw != null) {
+				List<Relationship> items = relrepo.findItem(fw);
+	  	        model.addAttribute("items", items);
+		        model.addAttribute("selectedFw", fw);
+			}else {
+				List<Relationship> items = relrepo.findItems();
+	  	        model.addAttribute("items", items);
+				model.addAttribute("selectedFw", "Select User");
+			}
 
 
   	    return "approvals/rel_list";
@@ -574,7 +668,7 @@ public class FormController {
 
 
   	@GetMapping("/approval/rel/{uuid}")
-      public String editRel(@PathVariable("uuid") String uuid, Model model, Principal principal) {
+      public String editRel(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
           List<Relationship> optionalImg = relrepo.findByUuid(uuid);
 
           if (!optionalImg.isEmpty()) {
@@ -588,7 +682,7 @@ public class FormController {
               }
 
               model.addAttribute("item", item);
-
+              model.addAttribute("fw", fw);
               // Populate model with codebook data
               RelCodebookData(model);
 
@@ -607,9 +701,10 @@ public class FormController {
       }
 
       @PostMapping("/approval/rel/{uuid}")
-      public String updateRel(@PathVariable("uuid") String uuid, @ModelAttribute("item") Relationship item,
+      public String updateRel(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Relationship item,
               BindingResult result, Model model) {
           if (result.hasErrors()) {
+        	  model.addAttribute("fw", fw);
               // Handle validation errors if necessary
               return "approvals/rel";
           } else {
@@ -626,7 +721,7 @@ public class FormController {
                       existingImg.setComment(item.getComment());
                   }
                   relrepo.save(existingImg);
-                  return "redirect:/hdss/approval/rellist"; // Corrected redirect URL
+                  return "redirect:/hdss/approval/rellist?fw=" + fw; // Corrected redirect URL
               } else {
                   return "error"; // Handle the case when the Inmigration with the given UUID is not found
               }
