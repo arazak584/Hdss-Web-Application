@@ -136,4 +136,58 @@ public interface CodebookRepository extends JpaRepository <Codebook, Integer> {
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='relendType' ")
 	List<Codebook> end();
 	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='H2O_FCORRES' ")
+	List<Codebook> h2o_fcorres();
+	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='MARITAL_SCORRES' ")
+	List<Codebook> marital_sco();
+	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='rltnhead' ")
+	List<Codebook> rltnhead();
+	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='TOILET_FCORRES' ")
+	List<Codebook> toilet_fcorres();
+	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='TOILET_LOC_FCORRES' ")
+	List<Codebook> toilet_loc_fcorres();
+	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='TOILET_SHARE_NUM_FCORRES' ")
+	List<Codebook> toilet_share_num_fcorres();
+	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='EXT_WALL_FCORRES' ")
+	List<Codebook> ext_wall_fcorres();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='FLOOR_FCORRES' ")
+	List<Codebook> floor_fcorres();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='ROOF_FCORRES' ")
+	List<Codebook> roof_fcorres();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='MOBILE_ACCESS_FCORRES' ")
+	List<Codebook> mobile_access_fcorres();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='OWN_RENT_SCORRES' ")
+	List<Codebook> own_rent_scorres();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='JOB' ")
+	List<Codebook> job();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='STOVE_FCORRES' ")
+	List<Codebook> stove_fcorres();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='COOKING_LOC_FCORRES' ")
+	List<Codebook> cooking_loc_fcorres();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='FRQ' ")
+	List<Codebook> frq();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='HC' ")
+	List<Codebook> hcard();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='reavac' ")
+	List<Codebook> reavac();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='onet' ")
+	List<Codebook> onet();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='rea' ")
+	List<Codebook> rea();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='scar' ")
+	List<Codebook> scar();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='HL' ")
+	List<Codebook> hl();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='nhis' ")
+	List<Codebook> nhis();
+	
+	
+	
+	
 }

@@ -20,7 +20,10 @@ import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,6 +52,46 @@ public class AssignController {
 		model.addAttribute("items", items);
 
 	    return "report/assign";
+	}
+	
+	
+	@GetMapping("/edit/{extId}")
+	public String editAssign(@PathVariable("extId") String extId, Model model) {
+		
+		List<Fieldworker> fws = fwrepo.fw();
+		//System.out.println("Villages: " + villages);
+		model.addAttribute("fws", fws);
+		
+		List<Locationhierarchy> optionalFieldworker = loc.findByUuid(extId);
+		if (!optionalFieldworker.isEmpty()) {
+			Locationhierarchy item = optionalFieldworker.get(0);
+			// Add any other necessary data to the model attribute for editing
+			model.addAttribute("item", item);
+			return "report/assign_edit";
+		} else {
+			// Handle case where Fieldworker object is not found
+			return "error";
+		}
+	}
+
+	@PostMapping("/{extId}")
+	public String updateAssign(@PathVariable("extId") String extId,
+			@ModelAttribute("item") Locationhierarchy item, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			// Handle validation errors if necessary
+			return "report/assign_edit";
+		} else {
+			List<Locationhierarchy> optionalItem = loc.findByUuid(extId);
+			if (!optionalItem.isEmpty()) {
+				Locationhierarchy existingItem = optionalItem.get(0);
+				existingItem.setFw_name(item.getFw_name());
+				loc.save(existingItem);
+				return "redirect:/file/assign";
+			} else {
+				// Handle case where Fieldworker object is not found
+				return "error";
+			}
+		}
 	}
 	
 	@Transactional

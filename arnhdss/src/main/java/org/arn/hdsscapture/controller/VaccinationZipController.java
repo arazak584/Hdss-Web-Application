@@ -220,7 +220,7 @@ private String convertToCsvRow(Vaccination item) throws JsonProcessingException 
             .addColumn("rota3").addColumn("rtss18").addColumn("rtss6").addColumn("rtss7").addColumn("rtss9")
             .addColumn("sbf").addColumn("scar").addColumn("slpbednet").addColumn("socialgroup_uuid")
             .addColumn("stm").addColumn("sttime").addColumn("sty").addColumn("uuid").addColumn("vitaminA12").addColumn("vitaminA18")
-            .addColumn("vitaminA6").addColumn("weight").addColumn("yellow_fever")
+            .addColumn("vitaminA6").addColumn("weight").addColumn("yellow_fever").addColumn("comment").addColumn("status").addColumn("supervisor").addColumn("approveDate")
             .build();
     CsvMapper csvMapper = new CsvMapper();
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

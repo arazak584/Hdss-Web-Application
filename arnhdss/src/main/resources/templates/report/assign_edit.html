@@ -12,7 +12,6 @@
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
         
         <link rel="stylesheet" th:href="@{/plugins/bootstrap/dist/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
@@ -30,12 +29,11 @@
         <link rel="stylesheet" th:href="@{/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
         
         <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
-		
         
     </head>
 
     <body>
-       
+       <div th:if="${exceptionMsg}" class="alert alert-danger" th:text="${exceptionMsg}"></div>
 
         <div class="wrapper">
             <!-- header start-->
@@ -49,56 +47,53 @@
                 <div class="main-content">
   
                                   <div class="card">
-                                    <div class="card-header d-block">
-                                        <h3>Individual Search</h3> 
-                                        <button id="btn-export" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')" onclick="ExportToExcel('xlsx', 'search.xlsx')">Export to Excel</button>
-                                    </div>
+									  <div th:if="${exceptionMsg}" class="alert alert-danger" th:text="${exceptionMsg}"></div>
+                                    
                                     <div class="card-body">
-										  <form class="form-inline" method="GET" action="/hdss/report/search" style="text-align: center;">
-										    <div class="form-group mx-sm-3 mb-2">
-                                                 <input type="text" name="search" class="form-control" required>
-                                                </div>
-										    <div class="form-group mx-sm-3 mb-2">
-										    <button type="submit" class="btn btn-theme">Submit</button>
-										    </div>
-										</form>
+										
+								<div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header"><h3>Work Area</h3></div>
+                                    <!-- success message -->
+									<div th:if="${success}">
+									    <div class="alert alert-info">
+									        <!--[[${success}]] <span th:text="${community}"></span>!-->
+									    </div>
+									</div>
+                                    <div class="card-body">
+                                        <form class="forms-sample" th:action="@{/file/assign/{extId} (extId=${item.extId})}" th:object="${item}" method="post">
+                                            <!--<div class="form-group">
+                                                <label for="roundNumber">USER NAME</label>
+                                                <input type="text" name="username" th:field ="*{username}" class="form-control" readonly>
+                                            </div>-->
+                                                                          
+											<div class="form-group">
+								            <select name="fw_name" class="form-control select2" th:field="*{fw_name}">
+								                <option value="">Select User</option>			 
+								                <option th:each="fw : ${fws}" th:value="${fw.username}" th:text="${fw.firstName + ' ' + fw.lastName}"></option>
+								            </select>
+								        </div>
+											
+											
+											<div class="form-group">
+													<label th:text="#{name}"></label>
+												 <input type="text" class="form-control"  name="name" th:field ="*{name}" required readonly>
 
+											</div>
+											
+											<div class="form-group">
+													<label th:text="#{codeLabel}"></label>
+												 <input type="text" class="form-control"  name="extId" th:field ="*{extId}" required readonly>
 
-                                        <div class="dt-responsive">
-                                            <table id="order-table"
-                                                   class="table table-striped table-bordered nowrap" data-order='[[8, "asc"]]'>
-                                                <thead>
-                                                <tr>
-                                                    <th th:text="#{permid}"></th>
-													<th th:text="#{ind.compno}"></th>
-													<th th:text="#{ind.dob}"></th>
-													<th th:text="#{ind.name}"></th>
-													<th th:text="#{ind.gender}"></th>
-													<th th:text="#{ind.mpermid}"></th>
-													<th th:text="#{ind.mname}"></th>
-													<th th:text="#{ind.status}"></th>
-													<th th:text="#{ind.village}"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr th:each="item : ${items}">
-											            <td th:text="${item.permid}"></td>
-											            <td th:text="${item.compno}"></td>
-											            <td th:text="${item.dob}"></td>
-											            <td th:text="${item.name}"></td>
-											            <td th:text="${item.gender}"></td>
-											            <td th:text="${item.motherid}"></td>
-											            <td th:text="${item.mothername}"></td>
-											            <td th:text="${item.endType}"></td>
-											            <td th:text="${item.village}"></td>
-											            </tr>                                                                                
-                                               
-                                            </tbody>
-                                                <tfoot>
-                                                
-                                                </tfoot>
-                                            </table>
-                                        </div>
+											</div>
+                                            
+                                            <button sec:authorize="hasAnyRole('CONTROLLER','MANAGER')" type="submit" class="btn btn-primary mr-2">Update</button>
+                                            <!--<button class="btn btn-light">Cancel</button>-->
+                                          </form>
+                                    </div>
+                                </div>
+                            </div>
+                                   
                                     </div>
                                 </div>
   
@@ -134,7 +129,6 @@
         <script th:src="@{/dist/js/theme.min.js}"></script>
         <script th:src="@{/js/dashboard.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
-        <script th:src="@{/js/index.js}"></script>
         
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -151,7 +145,6 @@
         document.getElementById('logoutForm').submit();
     }
 </script>
-
 
         
     </body>

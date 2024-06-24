@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.arn.hdsscapture.entity.Codebook;
 import org.arn.hdsscapture.entity.Death;
 import org.arn.hdsscapture.entity.Demographic;
 import org.arn.hdsscapture.entity.Fieldworker;
@@ -14,6 +15,8 @@ import org.arn.hdsscapture.entity.Outmigration;
 import org.arn.hdsscapture.entity.Pregnancyobservation;
 import org.arn.hdsscapture.entity.Pregnancyoutcome;
 import org.arn.hdsscapture.entity.Relationship;
+import org.arn.hdsscapture.entity.Sociodemographic;
+import org.arn.hdsscapture.entity.Vaccination;
 import org.arn.hdsscapture.repository.CodebookRepository;
 import org.arn.hdsscapture.repository.DeathRepository;
 import org.arn.hdsscapture.repository.DemographicRepository;
@@ -23,7 +26,12 @@ import org.arn.hdsscapture.repository.OutmigrationRepository;
 import org.arn.hdsscapture.repository.PregnancyobservationRepository;
 import org.arn.hdsscapture.repository.PregnancyoutcomeRepository;
 import org.arn.hdsscapture.repository.RelationshipRepository;
+import org.arn.hdsscapture.repository.SesRepository;
+import org.arn.hdsscapture.repository.VaccinationRepository;
+import org.arn.hdsscapture.views.IndividualSearch;
+import org.arn.hdsscapture.views.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -91,6 +99,18 @@ public class FormController {
         data.put("rel1", frepo.Rel1());
         data.put("rel2", frepo.Rel2());
         data.put("rel3", frepo.Rel3()); 
+        
+        // Vaccination
+        data.put("vac0", frepo.Vac0());
+        data.put("vac1", frepo.Vac1());
+        data.put("vac2", frepo.Vac2());
+        data.put("vac3", frepo.Vac3()); 
+        
+        // Ses
+        data.put("ses0", frepo.Ses0());
+        data.put("ses1", frepo.Ses1());
+        data.put("ses2", frepo.Ses2());
+        data.put("ses3", frepo.Ses3()); 
 
 
         return ResponseEntity.ok(data);
@@ -164,15 +184,15 @@ public class FormController {
         model.addAttribute("cashcrops", repo.cashcrops());
     }
 
-    @PostMapping("/approval/{uuid}")
-    public String updateImg(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Inmigration item,
+    @PostMapping("/approval/{uuids}")
+    public String updateImg(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Inmigration item,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
         	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
             return "approvals/img";
         } else {
-            List<Inmigration> optionalImg = imgrepo.findByUuids(uuid);
+            List<Inmigration> optionalImg = imgrepo.findByUuids(uuids);
             if (!optionalImg.isEmpty()) {
                 Inmigration existingImg = optionalImg.get(0);
                 existingImg.setApproveDate(new Date()); // Set the approveDate using a method
@@ -250,15 +270,15 @@ public class FormController {
         model.addAttribute("reason", repo.reasons());
     }
 
-    @PostMapping("/approval/omg/{uuid}")
-    public String updateOmg(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Outmigration item,
+    @PostMapping("/approval/omg/{uuids}")
+    public String updateOmg(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Outmigration item,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
         	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
             return "approvals/omg";
         } else {
-            List<Outmigration> optionalImg = omgrepo.findByUuids(uuid);
+            List<Outmigration> optionalImg = omgrepo.findByUuids(uuids);
             if (!optionalImg.isEmpty()) {
             	Outmigration existingImg = optionalImg.get(0);
                 existingImg.setApproveDate(new Date()); // Set the approveDate using a method
@@ -335,15 +355,15 @@ public class FormController {
         model.addAttribute("deathPlace", repo.deathPlace());
     }
 
-    @PostMapping("/approval/dth/{uuid}")
-    public String updateDth(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Death item,
+    @PostMapping("/approval/dth/{uuids}")
+    public String updateDth(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Death item,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
         	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
             return "approvals/dth";
         } else {
-            List<Death> optionalImg = dthrepo.findByUuids(uuid);
+            List<Death> optionalImg = dthrepo.findByUuids(uuids);
             if (!optionalImg.isEmpty()) {
             	Death existingImg = optionalImg.get(0);
                 existingImg.setApproveDate(new Date()); // Set the approveDate using a method
@@ -426,15 +446,15 @@ public class FormController {
         
     }
 
-    @PostMapping("/approval/preg/{uuid}")
-    public String updatePreg(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Pregnancyobservation item,
+    @PostMapping("/approval/preg/{uuids}")
+    public String updatePreg(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Pregnancyobservation item,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
         	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
             return "approvals/preg";
         } else {
-            List<Pregnancyobservation> optionalImg = pregrepo.findByUuids(uuid);
+            List<Pregnancyobservation> optionalImg = pregrepo.findByUuids(uuids);
             if (!optionalImg.isEmpty()) {
             	Pregnancyobservation existingImg = optionalImg.get(0);
                 existingImg.setApproveDate(new Date()); // Set the approveDate using a method
@@ -520,15 +540,15 @@ public class FormController {
         
     }
 
-    @PostMapping("/approval/outcome/{uuid}")
-    public String updateOut(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Pregnancyoutcome item,
+    @PostMapping("/approval/outcome/{uuids}")
+    public String updateOut(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Pregnancyoutcome item,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
         	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
             return "approvals/outcome";
         } else {
-            List<Pregnancyoutcome> optionalImg = outrepo.findByUuids(uuid);
+            List<Pregnancyoutcome> optionalImg = outrepo.findByUuids(uuids);
             if (!optionalImg.isEmpty()) {
             	Pregnancyoutcome existingImg = optionalImg.get(0);
                 existingImg.setApproveDate(new Date()); // Set the approveDate using a method
@@ -611,15 +631,15 @@ public class FormController {
         
     }
 
-    @PostMapping("/approval/demo/{uuid}")
-    public String updateDemo(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Demographic item,
+    @PostMapping("/approval/demo/{uuids}")
+    public String updateDemo(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Demographic item,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
         	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
             return "approvals/demo";
         } else {
-            List<Demographic> optionalImg = demorepo.findByUuids(uuid);
+            List<Demographic> optionalImg = demorepo.findByUuids(uuids);
             if (!optionalImg.isEmpty()) {
             	Demographic existingImg = optionalImg.get(0);
                 existingImg.setApproveDate(new Date()); // Set the approveDate using a method
@@ -700,15 +720,15 @@ public class FormController {
           
       }
 
-      @PostMapping("/approval/rel/{uuid}")
-      public String updateRel(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Relationship item,
+      @PostMapping("/approval/rel/{uuids}")
+      public String updateRel(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Relationship item,
               BindingResult result, Model model) {
           if (result.hasErrors()) {
         	  model.addAttribute("fw", fw);
               // Handle validation errors if necessary
               return "approvals/rel";
           } else {
-              List<Relationship> optionalImg = relrepo.findByUuids(uuid);
+              List<Relationship> optionalImg = relrepo.findByUuids(uuids);
               if (!optionalImg.isEmpty()) {
             	  Relationship existingImg = optionalImg.get(0);
                   existingImg.setApproveDate(new Date()); // Set the approveDate using a method
@@ -728,4 +748,203 @@ public class FormController {
           }
       }
 
+      
+      @Autowired
+      SesRepository sesrepo;
+        
+      @GetMapping("/approval/seslist")
+    	public String ses(@RequestParam(name = "fw", required = false)  String fw,Model model) {
+    	        
+    	      	List<Fieldworker> fws = field.fw();
+  			//System.out.println("Villages: " + villages);
+  			model.addAttribute("fws", fws);
+  	    	
+  	    	
+  			if (fw != null) {
+  				List<Sociodemographic> items = sesrepo.findItem(fw);
+  	  	        model.addAttribute("items", items);
+  		        model.addAttribute("selectedFw", fw);
+  		      //System.out.println("Print Items: " + items);
+  			}else {
+  				List<Sociodemographic> items = sesrepo.findItems();
+  	  	        model.addAttribute("items", items);
+  				model.addAttribute("selectedFw", "Select User");
+  			}
+
+
+    	    return "approvals/ses_list";
+    	}
+
+
+    	@GetMapping("/approval/ses/{uuid}")
+        public String editSes(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
+            List<Sociodemographic> optionalItem = sesrepo.findByUuid(uuid);
+
+            if (!optionalItem.isEmpty()) {
+            	Sociodemographic item = optionalItem.get(0);
+
+                // Supervisor
+                String userName = principal.getName();
+
+                if (item.getSupervisor() == null || item.getSupervisor().isEmpty()) {
+                    item.setSupervisor(userName);
+                }
+
+                model.addAttribute("item", item);
+                model.addAttribute("fw", fw);
+                // Populate model with codebook data
+                SesCodebookData(model);
+
+                return "approvals/ses";
+            } else {
+                return "error";
+            }
+        }
+
+        private void SesCodebookData(Model model) {
+            model.addAttribute("yn", repo.yn());
+            model.addAttribute("h2o_fcorres", repo.h2o_fcorres());
+            model.addAttribute("marital", repo.marital_sco());
+            model.addAttribute("religion", repo.religion());
+            model.addAttribute("tribe", repo.tribe());
+            model.addAttribute("rltnhead", repo.rltnhead());
+            model.addAttribute("toilet_fcorres", repo.toilet_fcorres());       
+            model.addAttribute("toilet_loc_fcorres", repo.toilet_loc_fcorres());  
+            
+            model.addAttribute("toilet_share_num_fcorres", repo.toilet_share_num_fcorres());
+            model.addAttribute("ext_wall_fcorres", repo.ext_wall_fcorres());
+            model.addAttribute("floor_fcorres", repo.floor_fcorres());
+            model.addAttribute("roof_fcorres", repo.roof_fcorres());
+            model.addAttribute("mobile_access_fcorres", repo.mobile_access_fcorres());
+            model.addAttribute("own_rent_scorres", repo.own_rent_scorres());
+            model.addAttribute("job", repo.job());
+            model.addAttribute("stove_fcorres", repo.stove_fcorres());
+            model.addAttribute("cooking_loc_fcorres", repo.cooking_loc_fcorres());
+            model.addAttribute("frq", repo.frq());
+           
+            
+        }
+
+        @PostMapping("/approval/ses/{uuids}")
+        public String updateSes(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Sociodemographic item,
+                BindingResult result, Model model) {
+            if (result.hasErrors()) {
+          	  model.addAttribute("fw", fw);
+                // Handle validation errors if necessary
+                return "approvals/ses";
+            } else {
+                List<Sociodemographic> optionalItem = sesrepo.findByUuids(uuids);
+                if (!optionalItem.isEmpty()) {
+                	Sociodemographic existingItem = optionalItem.get(0);
+                	existingItem.setApproveDate(new Date()); // Set the approveDate using a method
+                	existingItem.setStatus(item.getStatus());
+                	existingItem.setSupervisor(item.getSupervisor());
+                    // Ensure comment is null if status is not 2
+                    if (item.getStatus() != 2) {
+                    	existingItem.setComment(null);
+                    } else {
+                    	existingItem.setComment(item.getComment());
+                    }
+                    sesrepo.save(existingItem);
+                    return "redirect:/hdss/approval/seslist?fw=" + fw; // Corrected redirect URL
+                } else {
+                    return "error"; 
+                }
+            }
+        }
+        
+        
+        
+        @Autowired
+        VaccinationRepository vacrepo;
+          
+        @GetMapping("/approval/vaclist")
+      	public String vac(@RequestParam(name = "fw", required = false)  String fw,Model model) {
+      	        
+      	      	List<Fieldworker> fws = field.fw();
+    			//System.out.println("Villages: " + villages);
+    			model.addAttribute("fws", fws);
+    	    	
+    	    	
+    			if (fw != null) {
+    				List<Vaccination> items = vacrepo.findItem(fw);
+    	  	        model.addAttribute("items", items);
+    		        model.addAttribute("selectedFw", fw);
+    		      //System.out.println("Print Items: " + items);
+    			}else {
+    				List<Vaccination> items = vacrepo.findItems();
+    	  	        model.addAttribute("items", items);
+    				model.addAttribute("selectedFw", "Select User");
+    			}
+
+
+      	    return "approvals/vac_list";
+      	}
+
+
+      	@GetMapping("/approval/vac/{uuid}")
+          public String editVav(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
+              List<Vaccination> optionalItem = vacrepo.findByUuid(uuid);
+
+              if (!optionalItem.isEmpty()) {
+            	  Vaccination item = optionalItem.get(0);
+
+                  // Supervisor
+                  String userName = principal.getName();
+
+                  if (item.getSupervisor() == null || item.getSupervisor().isEmpty()) {
+                      item.setSupervisor(userName);
+                  }
+
+                  model.addAttribute("item", item);
+                  model.addAttribute("fw", fw);
+                  // Populate model with codebook data
+                  VacCodebookData(model);
+
+                  return "approvals/vac";
+              } else {
+                  return "error";
+              }
+          }
+
+          private void VacCodebookData(Model model) {
+              model.addAttribute("yn", repo.yn());
+              model.addAttribute("hcard", repo.hcard());
+              model.addAttribute("reavac", repo.reavac());
+              model.addAttribute("onet", repo.onet());
+              model.addAttribute("rea", repo.rea());
+              model.addAttribute("scar", repo.scar());
+              model.addAttribute("hl", repo.hl());
+              model.addAttribute("nhis", repo.nhis());
+              
+              
+          }
+
+          @PostMapping("/approval/vac/{uuids}")
+          public String updateVac(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Vaccination item,
+                  BindingResult result, Model model) {
+              if (result.hasErrors()) {
+            	  model.addAttribute("fw", fw);
+                  // Handle validation errors if necessary
+                  return "approvals/vac";
+              } else {
+                  List<Vaccination> optionalItem = vacrepo.findByUuids(uuids);
+                  if (!optionalItem.isEmpty()) {
+                	  Vaccination existingItem = optionalItem.get(0);
+	                  	existingItem.setApproveDate(new Date()); // Set the approveDate using a method
+	                  	existingItem.setStatus(item.getStatus());
+	                  	existingItem.setSupervisor(item.getSupervisor());
+                      // Ensure comment is null if status is not 2
+                      if (item.getStatus() != 2) {
+                      	existingItem.setComment(null);
+                      } else {
+                      	existingItem.setComment(item.getComment());
+                      }
+                      vacrepo.save(existingItem);
+                      return "redirect:/hdss/approval/vaclist?fw=" + fw; // Corrected redirect URL
+                  } else {
+                      return "error"; 
+                  }
+              }
+          }
 }

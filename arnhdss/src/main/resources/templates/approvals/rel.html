@@ -123,7 +123,7 @@
 													</select>
 												</div>
 											</div>
-											<div class="col-md-6" th:if="${item.tnbch}">
+											<div class="col-md-6" th:if="${item.tnbch != null}">
 												<div class="form-group">
 													<label th:text="#{tnbch}"></label>
 													<input type="text" class="form-control" id="tnbch" th:field="*{tnbch}"  readonly>
@@ -141,7 +141,7 @@
 													</select>
 												</div>
 											</div>
-											<div class="col-md-6" th:if="${nchdm}">
+											<div class="col-md-6" th:if="${item.nchdm != null}">
 												<div class="form-group">
 													<label th:text="#{nchdm}"></label>
 													<input type="text" class="form-control" id="nchdm" th:field="*{nchdm}"  readonly>

@@ -9,6 +9,8 @@ import org.arn.hdsscapture.entity.Outmigration;
 import org.arn.hdsscapture.entity.Pregnancyobservation;
 import org.arn.hdsscapture.entity.Pregnancyoutcome;
 import org.arn.hdsscapture.entity.Relationship;
+import org.arn.hdsscapture.entity.Sociodemographic;
+import org.arn.hdsscapture.entity.Vaccination;
 import org.arn.hdsscapture.repository.DeathRepository;
 import org.arn.hdsscapture.repository.DemographicRepository;
 import org.arn.hdsscapture.repository.InmigrationRepository;
@@ -16,6 +18,8 @@ import org.arn.hdsscapture.repository.OutmigrationRepository;
 import org.arn.hdsscapture.repository.PregnancyobservationRepository;
 import org.arn.hdsscapture.repository.PregnancyoutcomeRepository;
 import org.arn.hdsscapture.repository.RelationshipRepository;
+import org.arn.hdsscapture.repository.SesRepository;
+import org.arn.hdsscapture.repository.VaccinationRepository;
 import org.arn.hdsscapture.utils.DataWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -130,5 +134,35 @@ public class RejectedController {
 
 		return w;
 	}
+	
+	@Autowired
+	VaccinationRepository vacrepo;
+	
+	
+	@GetMapping("/vac/reject")
+	public DataWrapper<Vaccination> findVac() {
+
+		List<Vaccination> data = vacrepo.rejected();
+
+		DataWrapper<Vaccination> w = new DataWrapper<>();
+		w.setData(data);
+
+		return w;
+	}
+	
+	@Autowired
+	SesRepository sesrepo;
+	
+	
+	@GetMapping("/ses/reject")
+	public DataWrapper<Sociodemographic> findSes() {
+
+		List<Sociodemographic> data = sesrepo.rejected();
+
+		DataWrapper<Sociodemographic> w = new DataWrapper<>();
+		w.setData(data);
+
+		return w;
+	}	
 
 }

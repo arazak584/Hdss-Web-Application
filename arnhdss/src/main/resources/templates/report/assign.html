@@ -76,6 +76,7 @@
 													<th th:text="#{fw.village}"></th>
 													<th th:text="#{loc.fw_name}"></th>
 													<th th:text="#{loc.parent}"></th>
+													<th th:text="#{fw.action}" ></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -85,6 +86,11 @@
 											            <td th:text="${item.name}"></td>
 											            <td th:text="${item.fw_name}"></td>
 											            <td th:text="${item.parent_uuid}"></td>
+											            <td>
+										                <a th:href="@{/file/assign/edit/{extId}(extId=${item.extId})}" 
+										                class="btn btn-success btn-sm">View</a>
+										
+										            	</td>
 											            </tr>                                                                                
                                                
                                             </tbody>

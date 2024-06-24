@@ -264,7 +264,7 @@ private String convertToCsvRow(Sociodemographic item) throws JsonProcessingExcep
 				.addColumn("toilet_spfy_fcorres").addColumn("tractor_fcorres").addColumn("tractor_num_fcorres")
 				.addColumn("tricycles_fcorres").addColumn("tricycles_num_fcorres").addColumn("tv_fcorres")
 				.addColumn("tv_num_fcorres").addColumn("uuid").addColumn("wash_fcorres").addColumn("wash_num_fcorres")
-				.addColumn("watch_fcorres").addColumn("watch_num_fcorres")
+				.addColumn("watch_fcorres").addColumn("watch_num_fcorres").addColumn("comment").addColumn("status").addColumn("supervisor").addColumn("approveDate")
             .build();
     CsvMapper csvMapper = new CsvMapper();
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

@@ -65,6 +65,18 @@ function updateDashboards(data) {
     $('#rel1').text(data.rel1);
     $('#rel2').text(data.rel2);
     $('#rel3').text(data.rel3);
+    
+    // SES
+    $('#ses0').text(data.ses0);
+    $('#ses1').text(data.ses1);
+    $('#ses2').text(data.ses2);
+    $('#ses3').text(data.ses3);
+    
+    // Vaccination
+    $('#vac0').text(data.vac0);
+    $('#vac1').text(data.vac1);
+    $('#vac2').text(data.vac2);
+    $('#vac3').text(data.vac3);
 }
 
 function renderItems(items) {

@@ -473,15 +473,15 @@ public class ReportController {
 	}
 	
 	@Autowired
-	SearchRepository search;
+	SearchRepository searchs;
 	
 	@GetMapping("/report/search")
-	public String search(@RequestParam(name = "village", required = false)  String village,
+	public String search(@RequestParam(name = "search", required = false)  String search,
 	                 Model model) {
 
 	    
-	    if (village != null) {
-	        List<IndividualSearch> items = search.Report(village);
+	    if (search != null) {
+	        List<IndividualSearch> items = searchs.Report(search);
 	        model.addAttribute("items", items);
 	    } else {
 //	    	List<ActiveHouseholds> items = activehoh.Reports();
