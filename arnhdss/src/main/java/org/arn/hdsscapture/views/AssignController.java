@@ -47,7 +47,7 @@ public class AssignController {
 	@GetMapping("")
 	public String activehoh(Model model) {
 
-		List<Locationhierarchy> items = loc.villages();
+		List<Locationhierarchy> items = loc.subvillage();
 		//System.out.println("Villages: " + villages);
 		model.addAttribute("items", items);
 

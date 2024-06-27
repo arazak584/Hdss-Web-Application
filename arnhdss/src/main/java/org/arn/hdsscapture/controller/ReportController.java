@@ -11,6 +11,7 @@ import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.query.Queries;
 import org.arn.hdsscapture.query.QueryRepository;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
+import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.PopulationRepository;
 import org.arn.hdsscapture.repository.ReportRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
@@ -45,6 +46,8 @@ public class ReportController {
 	
 	@Autowired
 	QueryRepository queryrepo;
+	@Autowired
+	LocationhierarchyRepository loc;
 	
 	@GetMapping("/asyncReport")
     public ResponseEntity<Map<String, Object>> getAsyncReport() {
@@ -81,6 +84,21 @@ public class ReportController {
         data.put("minors", repo.Minors());
         data.put("out", repo.Outcome());
         data.put("dthoh", repo.dthhoh());
+
+        return ResponseEntity.ok(data);
+    }
+	
+	@GetMapping("/asyncReport/hierarchy")
+    public ResponseEntity<Map<String, Object>> getAsyncHierarchy() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("items", loc.findAll());
+        //Query
+        data.put("cnt1", loc.cnt1());
+        data.put("cnt2", loc.cnt2());
+        data.put("cnt3", loc.cnt3());
+        data.put("cnt4", loc.cnt4());
+        data.put("cnt5", loc.cnt5());
+        data.put("cnt6", loc.cnt6());
 
         return ResponseEntity.ok(data);
     }

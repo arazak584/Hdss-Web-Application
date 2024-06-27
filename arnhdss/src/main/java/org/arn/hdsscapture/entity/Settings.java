@@ -52,6 +52,9 @@ public class Settings implements Serializable{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date sesDate;
 	
+	@Column(name = "site", nullable = false)
+	private String site = "HDSS";
+	
 	@Column(nullable = false)
 	private boolean updates;
 	
@@ -132,6 +135,14 @@ public class Settings implements Serializable{
 
 	public void setSesDate(Date sesDate) {
 		this.sesDate = sesDate;
+	}
+
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
 	}
 	
 

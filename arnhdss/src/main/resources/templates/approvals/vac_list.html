@@ -92,7 +92,7 @@
                                                     <th th:text="#{item.compo}"></th>
 													<th th:text="#{item.insertDate}"></th>
 													<th th:text="#{item.name}"></th>
-													<th th:text="#{item.fw}"></th>
+													<th th:text="#{uuid}"></th>
 													<th th:text="#{item.status}"></th>
 													<th th:text="#{fw.action}"></th>
                                                 </tr>
@@ -102,7 +102,7 @@
 											            <td th:text="${item.location_uuid}"></td>
 											            <td th:text="${item.editDate}"></td>
 											            <td th:text="${item.socialgroup_uuid}"></td>
-											            <td th:text="${item.fw_uuid}"></td>
+											            <td th:text="${item.uuid}"></td>
 											            <td th:classappend="${item.status == null ? 'status-pending' : item.status == 1 ? 'status-approved' : item.status == 2 ? 'status-rejected' : item.status == 3 ? 'status-resolved' : 'status-pending'}"
 									                        th:text="${item.status == null ? 'Pending' : item.status == 1 ? 'Approved' : item.status == 2 ? 'Rejected' : item.status == 3 ? 'Resolved' : 'Pending'}">
 									                    </td>

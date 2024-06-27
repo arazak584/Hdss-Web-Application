@@ -227,10 +227,10 @@
 										</div>
 										
 										<div class="row">
-											<div class="col-md-6" th:if="${item.lastClinicVisitDate}">
+											<div class="col-md-6" th:if="${item.recordedDate}">
 												<div class="form-group">
-													<label th:text="#{lastClinicVisitDate}"></label>
-													<input type="text" class="form-control" id="lastClinicVisitDate" th:field="*{lastClinicVisitDate}"  readonly>
+													<label th:text="#{recordedDate}"></label>
+													<input type="text" class="form-control" id="recordedDate" th:field="*{recordedDate}"  readonly>
 												</div>
 											</div>
 											<div class="col-md-6" th:if="${item.outcome_date}">

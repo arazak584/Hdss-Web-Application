@@ -21,7 +21,7 @@ public interface UserTableRepository extends JpaRepository<UserTable, String> {
 	@Query("SELECT u FROM user_table u WHERE u.user_email = :user_email")
 	Optional<UserTable> findUserEmail(@Param("user_email") String user_email);
 	
-	@Query("SELECT u FROM user_table u WHERE u.username = :username")
+	@Query("SELECT u FROM user_table u WHERE u.username = :username OR u.user_email=:username ")
 	Optional<UserTable> findByUsernameIgnoreCase(String username);
 
 	

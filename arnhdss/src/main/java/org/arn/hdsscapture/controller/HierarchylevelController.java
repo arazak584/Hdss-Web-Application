@@ -50,7 +50,7 @@ public class HierarchylevelController {
 	
 	@GetMapping
     public List<Locationhierarchy> getAll() {
-        return repo.villages();
+        return repo.subvillage();
     }
 
 	

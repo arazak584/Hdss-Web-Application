@@ -37,6 +37,9 @@ public class Death {
 	@Column(name = "deathCause", nullable = false)
 	private Integer deathCause;
 	
+	@Column(name = "deathCause_oth")
+	private String deathCause_oth;
+	
 	@Column(name = "deathDate", nullable = false)
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -241,6 +244,15 @@ public class Death {
 
 	public void setApproveDate(Date approveDate) {
 		this.approveDate = approveDate;
+	}
+
+	public String getDeathCause_oth() {
+		return deathCause_oth;
+	}
+
+
+	public void setDeathCause_oth(String deathCause_oth) {
+		this.deathCause_oth = deathCause_oth;
 	}
 
 

@@ -75,15 +75,14 @@
 										th:object="${item}">					
 										
 										<div class="card">
-                                    <div class="card-header"><h3>Modals</h3></div>
                                     <div class="card-body template-demo">
-										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_a}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#sectionaModal"></button>
-										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{week_0}" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#sectionbModal"></button>
-										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{week_6}" type="button" class="btn btn-success" data-toggle="modal" data-target="#sectioncModal"></button>
-										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{week_10}" type="button" class="btn btn-danger" data-toggle="modal" data-target="#sectiondModal"></button>
-										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{week_14}" type="button" class="btn btn-warning" data-toggle="modal" data-target="#sectioneModal"></button>
-										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{month_6}" type="button" class="btn btn-dark" data-toggle="modal" data-target="#sectionfModal"></button>
-										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{month_7}" type="button" class="btn btn-info" data-toggle="modal" data-target="#sectiongModal"></button>
+										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_a}" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sectionaModal"></button>
+										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{week_0}" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#sectionbModal"></button>
+										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{week_6}" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#sectioncModal"></button>
+										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{week_10}" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#sectiondModal"></button>
+										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{week_14}" type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#sectioneModal"></button>
+										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{month_6}" type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#sectionfModal"></button>
+										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{month_7}" type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#sectiongModal"></button>
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{month_9}" type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#sectionhModal"></button>
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{month_12}" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#sectioniModal"></button>
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{month_18}" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#sectionjModal"></button>
@@ -136,7 +135,7 @@
 										<div class="row">
 											<div class="col-md-12" th:if="${item.bednet}">
 												<div class="form-group">
-													<label th:text="#{bednet}"></label>
+													<label th:text="#{bednett}"></label>
 													<select name="bednet" class="form-control" th:field="*{bednet}" readonly style="pointer-events: none;">
 													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}"
 													th:text="${codebook.codeLabel}"></option>

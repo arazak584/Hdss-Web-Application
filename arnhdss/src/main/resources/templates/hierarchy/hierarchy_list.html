@@ -28,27 +28,7 @@
         <link rel="stylesheet" th:href="@{/dist/css/theme.min.css}">
         <link rel="stylesheet" th:href="@{/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
         
-        
         <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
-        
-        <style>
-        .status-pending {
-            background-color: yellow;
-            color: black;
-        }
-        .status-approved {
-            background-color: green;
-            color: white;
-        }
-        .status-rejected {
-            background-color: red;
-            color: white;
-        }
-        .status-resolved {
-            background-color: blue;
-            color: white;
-        }
-    </style>
         
     </head>
 
@@ -68,53 +48,46 @@
   
                                   <div class="card">
                                     <div class="card-body">
-										<div class="card-header"><h3 style="color: blue; text-transform: uppercase; font-weight: bold;">Socio Economic Status</h3></div>
-										<form class="form-inline" method="GET" action="/hdss/approval/seslist" style="text-align: center;">
-										    <div class="form-group mx-sm-3 mb-2">
-										     <select name="fw" class="form-control select2">
-											<option value="">Select User</option>			 
-											 <option th:each="fw : ${fws}" th:value="${fw.fw_uuid}" th:text="${fw.firstName + ' ' + fw.lastName}"
-											 th:selected="${fw.fw_uuid == selectedFw}"></option>
-											</select>
-										    </div>
-										    <div class="form-group mx-sm-3 mb-2">
-										    <button type="submit" class="btn btn-theme">Submit</button>
-										    <button type="button" class="btn btn-cancel ml-2" onclick="window.location.href='/hdss/approval'">Cancel</button>
-										    </div>
-										</form>
-										
-                                               <!--<a th:href="@{/utility/round/add}"> <button class="btn btn-theme">Add Round</button></a>-->
+										<button id="btn-export" onclick="ExportToExcel('xlsx', 'country.xlsx')">Export to Excel</button>
+                                               <a class="btn btn-theme" th:href = "@{/hierarchy/country/add}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')"> 
+												   Add 
+												  </a>
+												  <!--<a class="btn btn-theme" sec:authorize="hasRole('MYCONTROLLER')" th:href = "@{/utility/fw/add}"> 
+												   Add Fieldworker
+												  </a>-->
+                                        
                                         <div class="dt-responsive">
                                             <table id="order-table"
-                                                   class="table table-striped table-bordered nowrap" data-order='[[1, "desc"]]'>
+                                                   class="table table-striped table-bordered nowrap" >
                                                 <thead>
                                                 <tr>
-                                                    <th th:text="#{item.compo}"></th>
-													<th th:text="#{item.insertDate}"></th>
-													<th th:text="#{househead}"></th>
-													<th th:text="#{uuid}"></th>
-													<th th:text="#{item.status}"></th>
-													<th th:text="#{fw.action}"></th>
+													<th th:text="#{item}"></th>
+													<th th:text="#{villcode}"></th>
+													<th th:text="#{name}"></th>
+													<th th:text="#{parent}"></th>
+													<th th:text="#{fw.action}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')"></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr th:each="item : ${items}">
-											            <td th:text="${item.location_uuid}"></td>
-											            <td th:text="${item.formcompldate}"></td>
-											            <td th:text="${item.individual_uuid}"></td>
-											            <td th:text="${item.uuid}"></td>
-											            <td th:classappend="${item.status == null ? 'status-pending' : item.status == 1 ? 'status-approved' : item.status == 2 ? 'status-rejected' : item.status == 3 ? 'status-resolved' : 'status-pending'}"
-									                        th:text="${item.status == null ? 'Pending' : item.status == 1 ? 'Approved' : item.status == 2 ? 'Rejected' : item.status == 3 ? 'Resolved' : 'Pending'}">
-									                    </td>
-
-											            <!--<td th:text="${item.status}"></td>-->
-											            
 											            <td>
-											                <a th:href="@{/hdss/approval/ses/{uuid}(uuid=${item.uuid}, fw=${selectedFw})}" 
-											                class="btn btn-primary btn-sm">View</a>
-											
-											            </td>
-											            </tr>                                                                                
+															<span th:each="hierarchy : ${level}" 
+										                      th:if="${hierarchy.uuid} == ${item.level_uuid}"
+										                      th:text="${hierarchy.name}"></span>
+														</td>
+														<td th:text="${item.extId}"></td>
+														<td th:text="${item.name}"></td>
+														<td>
+															<span th:each="hierarchy : ${root}" 
+										                      th:if="${hierarchy.uuid} == ${item.parent_uuid}"
+										                      th:text="${hierarchy.name}"></span>
+														</td>													
+														<td sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">
+										                <a th:href="@{/hierarchy/country/edit/{uuids}(uuids=${item.uuid})}" 
+										                class="btn btn-success btn-sm">Edit</a>
+										
+										            	</td>
+											     </tr>                                                                                
                                                
                                             </tbody>
                                                 <tfoot>
@@ -122,6 +95,10 @@
                                                 </tfoot>
                                             </table>
                                         </div>
+                                        
+         
+                                        
+                                        
                                     </div>
                                 </div>
   
@@ -157,8 +134,8 @@
         <script th:src="@{/dist/js/theme.min.js}"></script>
         <script th:src="@{/js/dashboard.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
-         <script th:src="@{/js/multiselect-dropdown.js}"></script>
-        <script src="../js/multiselect-dropdown.js" ></script>
+        <script th:src="@{/js/index.js}"></script>
+		<script th:src="@{/js/xlsx.full.min.js}"></script>
         
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

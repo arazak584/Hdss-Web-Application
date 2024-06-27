@@ -99,6 +99,12 @@
 											</select>
 										</div>
 										
+										<div class="form-group" th:if="${item.deathCause_oth}">
+											<label th:text="#{other}"></label>
+											<input type="text" class="form-control" id="deathCause_oth"
+												th:field="*{deathCause_oth}" readonly>
+										</div>
+										
 										<div class="form-group" th:if="${item.deathDate}">
 											<label th:text="#{deathDate}"></label>
 											<input type="text" class="form-control" id="exampleInputUsername1"

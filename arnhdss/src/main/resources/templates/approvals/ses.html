@@ -78,25 +78,21 @@
 											<input type="text" class="form-control" id="exampleInputUsername1" th:field="*{uuid}" readonly >
 										</div>
 										
+										<div class="card">
+                                    <div class="card-body template-demo">
 										<hr>
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_a}" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sectionaModal"></button>
-										<hr>
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_b}" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#sectionbModal"></button>
-										<hr>
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_c}" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#sectioncModal"></button>
-										<hr>
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_d}" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#sectiondModal"></button>
-										<hr>
-										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_e}" type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#sectioneModal"></button>
-										<hr>
+										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_e}" type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#sectioneModal"></button>										
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_f}" type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#sectionfModal"></button>
-										<hr>
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_g}" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#sectiongModal"></button>
-										<hr>
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_h}" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sectionhModal"></button>
-										<hr>																				
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_i}" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#sectioniModal"></button>
 										<hr>
+										</div>
+										</div>
 										
 									<div class="modal fade" id="sectionaModal" tabindex="-1" role="dialog" aria-labelledby="sectionaModalLabel" aria-hidden="true">
                             		<div class="modal-dialog" role="document">
@@ -1370,7 +1366,7 @@
 										<div class="row">
 										    <div class="col-md-6" th:if="${item.job_scorres}">
 										        <div class="form-group">
-										            <label th:text="#{animal_othr_fcorres}"></label>
+										            <label th:text="#{job_scorres}"></label>
 										            <select name="job_scorres" class="form-control" th:field="*{job_scorres}" readonly style="pointer-events: none;">
 										                <option th:each="codebook : ${job}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
 										            </select>

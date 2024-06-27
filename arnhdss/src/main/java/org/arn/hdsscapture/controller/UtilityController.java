@@ -9,7 +9,6 @@ import org.arn.hdsscapture.entity.Codebook;
 import org.arn.hdsscapture.entity.CommunityReport;
 import org.arn.hdsscapture.entity.DataDictionary;
 import org.arn.hdsscapture.entity.Fieldworker;
-import org.arn.hdsscapture.entity.Relationship;
 import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.entity.Settings;
 import org.arn.hdsscapture.entity.Task;
@@ -20,7 +19,6 @@ import org.arn.hdsscapture.repository.CommunityRepository;
 import org.arn.hdsscapture.repository.DictionaryRepository;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.LocationhierarchyRepository;
-import org.arn.hdsscapture.repository.RelationshipRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.repository.SettingsRepository;
 import org.arn.hdsscapture.repository.TaskRepository;
@@ -477,6 +475,7 @@ public class UtilityController {
 				existingSettings.setRel_age(settings.getRel_age());
 				existingSettings.setUpdates(settings.isUpdates());
 				existingSettings.setSesDate(settings.getSesDate());
+				existingSettings.setSite(settings.getSite());
 				// Update any other necessary properties of the object
 				setrepo.save(existingSettings);
 				return "redirect:/utility/parameters";
@@ -561,7 +560,7 @@ public class UtilityController {
 	}
 	
 	private void Community(Model model) {
-        model.addAttribute("community", locrepo.community());
+        model.addAttribute("community", locrepo.village());
         model.addAttribute("itemlist", code.itemlist());
     }
 
