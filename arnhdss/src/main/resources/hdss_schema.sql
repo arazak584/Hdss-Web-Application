@@ -14,6 +14,7 @@ INSERT IGNORE INTO user_table(username, user_email, user_enabled, user_password,
   INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_COORDINATOR', 'Coordinator');
   INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_MANAGER', 'Data Manager');
   INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_VIEWER', 'Viewer');
+  INSERT IGNORE INTO group_table(group_role, group_desc) values('ROLE_SUPERVISOR', 'Supervisor');
 
 
  INSERT IGNORE INTO user_group(username, group_role) values('admin', 'ROLE_CONTROLLER');
@@ -662,4 +663,19 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('itemlist', 'Ed
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('itemlist', 'Netwotk (ISP)', 5);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('itemlist', 'Market', 6);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('itemlist', 'Fuel Station', 7);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Bono', 1);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Asante', 2);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Adanse', 3);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Twifo', 4);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Asen', 5);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Fante', 6);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Akuapem', 7);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Akyem', 8);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Akwamu', 9);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Kwahu', 10);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Sehwi', 11);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Awowin', 12);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Nzema', 13);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Ahanta', 14);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Other', 77);
 

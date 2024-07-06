@@ -43,7 +43,7 @@
                                 <div class="nav-item has-sub">
                                     <a href="#"><i class="ik ik-box"></i><span>Utility</span></a>
                                     <div class="submenu-content">
-                                        <a sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" href="#" th:href="@{/hdss/report/activehoh}" class="menu-item">Households</a>
+                                        <a sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" href="#" th:href="@{/hdss/report/activehoh}" class="menu-item">Household Population</a>
                                         <!--<a href="#" th:href="@{/utility/assignment}" class="menu-item">Work Area</a>-->
                                         <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/utility/activefw}" class="menu-item">Active Fieldworkers</a>
                                         <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/file/assign}" class="menu-item">Schedule Fieldworker</a>
@@ -97,7 +97,7 @@
                                         <a href="#" th:href = "@{/utility/extra-forms}" class="menu-item">Extra Forms</a>
                                     </div>
                                 </div>-->
-                                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
+                                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR','SUPERVISOR')">
                                     <a href="#"><i class="ik ik-inbox"></i><span>Approvals</span> <!--<span class="badge badge-success">In Progress</span>--></a>
                                     <div class="submenu-content">
                                         <a href="#" class="menu-item" th:href="@{/hdss/approval}">Approvals</a>

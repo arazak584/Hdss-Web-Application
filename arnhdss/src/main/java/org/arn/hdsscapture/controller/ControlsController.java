@@ -2,9 +2,12 @@ package org.arn.hdsscapture.controller;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.arn.hdsscapture.entity.UserTable;
 import org.arn.hdsscapture.repository.GroupTableRepository;
 import org.arn.hdsscapture.repository.UserTableRepository;
+import org.arn.hdsscapture.utils.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,9 @@ public class ControlsController {
 
 	@Autowired
 	private BCryptPasswordEncoder bCrypt;
+	
+	@Autowired
+    private EmailService emailService;
 
 	@GetMapping("")
 	public String controls(Principal principal, Model model,
@@ -72,7 +78,7 @@ public class ControlsController {
 
 	@PostMapping("/users/add")
 	public String addUser(Principal principal, final Model model, @ModelAttribute("selected") UserTable selected,
-			BindingResult result) {
+			BindingResult result, HttpServletRequest request) {
 
 		//String username = selected.getUsername().toLowerCase();
 		boolean userExists = userRepo.findById(selected.getUsername()).isPresent();
@@ -100,6 +106,25 @@ public class ControlsController {
 		//selected.setUsername(username);
 
 		userRepo.save(selected);
+		
+		// Get the base URL
+//	    String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+	    
+	    // Get the base URL with port conditionally
+	    String baseUrl;
+	    if ((request.getScheme().equals("http") && request.getServerPort() == 80) || 
+	        (request.getScheme().equals("https") && request.getServerPort() == 443)) {
+	        baseUrl = request.getScheme() + "://" + request.getServerName();
+	    } else {
+	        baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+	    }
+
+	    // Send registration email
+	    String subject = "HDSS CAPTURE USER REGISTRATION";
+	    String url = baseUrl + "/login"; // Adjust if the login URL is different
+	    String text = String.format("Dear %s,\n\nThank you for registering with us. Here are your details:\n\nUsername: %s\nEmail: %s\nPassword: %s\n\nYou can login at the following URL: %s\n\nBest regards,\nHDSS CAPTURE",
+	                                selected.getUsername(), selected.getUsername(), selected.getUser_email(), password, url);
+	    emailService.sendSimpleMessage(selected.getUser_email(), subject, text);
 
 		return "redirect:/controls/users/add?success=yes";
 	}
@@ -107,9 +132,16 @@ public class ControlsController {
 	@GetMapping("/users/{id}")
 	public String editUser(Principal principal, final Model model, @PathVariable("id") String user_id,
 			@RequestParam(name = "success", required = false) String success) {
+		
+		UserTable user = userRepo.findById(user_id).orElse(null);
+		
+		if (user == null) {
+	        // Handle user not found case
+	        // You might redirect or show an error message
+	        return "redirect:/controls/users?error=userNotFound";
+	    }
 
-		model.addAttribute("selected", userRepo.findById(user_id).get());
-
+		model.addAttribute("selected", user);
 		model.addAttribute("users", "active");
 		model.addAttribute("userupdate", "active");
 		model.addAttribute("user_groups", groupRepo.findAll());
@@ -236,7 +268,7 @@ public class ControlsController {
 			check.setUser_password(encodedPassword);
 
 			userRepo.save(check);
-			return "redirect:/controls/password?success=1";
+			return "redirect:/logout?success=1";
 		}else {
 			return "redirect:/controls/password?error=1";
 			

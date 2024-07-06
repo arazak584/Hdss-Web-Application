@@ -627,6 +627,8 @@ public class FormController {
         model.addAttribute("occupation", repo.occupation());
         model.addAttribute("religion", repo.religion());
         model.addAttribute("tribe", repo.tribe());
+        model.addAttribute("akan", repo.akan());
+        model.addAttribute("deno", repo.deno());
                 
         
     }

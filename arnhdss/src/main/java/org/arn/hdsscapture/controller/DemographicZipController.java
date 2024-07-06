@@ -212,7 +212,7 @@ private String convertToCsvRow(Demographic item) throws JsonProcessingException 
     CsvSchema schema = CsvSchema.builder()
     		.addColumn("individual_uuid").addColumn("comp_yrs").addColumn("edtime").addColumn("education").addColumn("fw_uuid")
             .addColumn("insertDate").addColumn("marital").addColumn("occupation").addColumn("occupation_oth")
-            .addColumn("phone1").addColumn("phone2")
+            .addColumn("phone1").addColumn("phone2").addColumn("denomination").addColumn("akan_tribe")
             .addColumn("religion").addColumn("religion_oth").addColumn("sttime").addColumn("tribe").addColumn("tribe_oth")
             .addColumn("comment").addColumn("status").addColumn("supervisor").addColumn("approveDate")
             .build();

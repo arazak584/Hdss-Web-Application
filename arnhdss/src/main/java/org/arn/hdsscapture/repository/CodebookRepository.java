@@ -129,6 +129,12 @@ public interface CodebookRepository extends JpaRepository <Codebook, Integer> {
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='tribe' ")
 	List<Codebook> tribe();
 	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='akan' ")
+	List<Codebook> akan();
+	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='denomination' ")
+	List<Codebook> deno();
+	
 	//Relationship
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='relationshipType' ")
 	List<Codebook> start();

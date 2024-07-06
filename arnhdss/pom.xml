@@ -33,6 +33,13 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
     	</dependency>
+    	
+    	<!-- Email Configuration -->
+    	<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
 
     <!-- Logback as the implementation of SLF4J -->
 	    <dependency>

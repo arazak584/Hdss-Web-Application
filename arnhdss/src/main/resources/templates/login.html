@@ -134,6 +134,11 @@ body {
 						<div class="alert alert-danger">Invalid username or
 							password.</div>
 					</div>
+					
+					<!-- password update message -->
+					<div th:if="${param.success}" class="alert alert-success">
+												    Password changed successfully!
+												</div>
 				
 					<!-- logout message -->
 					<div th:if="${param.logout}">

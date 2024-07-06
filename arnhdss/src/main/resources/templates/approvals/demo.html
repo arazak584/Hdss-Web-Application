@@ -132,6 +132,18 @@
 										</div>
 										
 										<div class="row">
+											<div class="col-md-12" th:if="${item.denomination}">
+												<div class="form-group">
+													<label th:text="#{denomination}"></label>
+													<select name="denomination" class="form-control" th:field="*{denomination}" readonly style="pointer-events: none;">
+														<option value="" ></option>
+													<option th:each="codebook : ${deno}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+													</select>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
 											<div class="col-md-6" th:if="${item.tribe}">
 												<div class="form-group">
 													<label th:text="#{tribe}"></label>
@@ -145,6 +157,18 @@
 												<div class="form-group">
 													<label th:text="#{tribe_oth}"></label>
 													<input type="text" class="form-control" id="tribe_oth" th:field="*{tribe_oth}"  readonly>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-md-12" th:if="${item.akan_tribe}">
+												<div class="form-group">
+													<label th:text="#{akan_tribe}"></label>
+													<select name="akan_tribe" class="form-control" th:field="*{akan_tribe}" readonly style="pointer-events: none;">
+														<option value="" ></option>
+													<option th:each="codebook : ${akan}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+													</select>
 												</div>
 											</div>
 										</div>

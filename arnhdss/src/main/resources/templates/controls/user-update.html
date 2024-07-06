@@ -63,18 +63,6 @@
                                                 <input type="email" class="form-control" th:field="*{user_email}" required readonly/>
                                                 <small class="text-danger" th:if="${#fields.hasErrors('user_email')}" th:errors="*{user_email}">error</small>
                                             </div>
-                                            <!--<div class="form-group">
-                                                <label th:text="#{label.password}"></label>
-                                                <input id="user_password" type="password" class="form-control" 
-                                                onChange="onChange()" th:field="*{user_password}" required/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label th:text="#{label.confirm.password}"></label>
-                                                <input id="confirm_password" type="password" class="form-control" 
-                                                onChange="onChange()" required/>
-                                                
-                                                <div class="invalid-feedback" th:text="#{password.mismatch}"></div>
-                                            </div>-->
                                             <div class="form-group">
                                                 <label th:text="#{label.userFname}"></label>
                                                 <input type="text" class="form-control" th:field="*{user_fname}" required />
@@ -111,7 +99,7 @@
                                             </div>
                                             <hr />
                                             
-                                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                            <button type="submit" class="btn btn-primary mr-2">Update</button>
                                             <a class="btn btn-secondary btn-lg" href="#" th:href="@{/controls/users}">CANCEL</a>
                                             <!--<button class="btn btn-light">Cancel</button>-->
                                           </form>

@@ -72,6 +72,12 @@ public class Demographic implements Serializable {
 	@Column(name = "tribe")
 	private Integer tribe;
 	
+	@Column(name = "denomination")
+	private Integer denomination;
+	
+	@Column(name = "akan_tribe")
+	private Integer akan_tribe;
+	
 	@Column(name = "tribe_oth")
 	private String tribe_oth;
 	
@@ -275,6 +281,22 @@ public class Demographic implements Serializable {
 
 	public void setApproveDate(Date approveDate) {
 		this.approveDate = approveDate;
+	}
+
+	public Integer getDenomination() {
+		return denomination;
+	}
+
+	public void setDenomination(Integer denomination) {
+		this.denomination = denomination;
+	}
+
+	public Integer getAkan_tribe() {
+		return akan_tribe;
+	}
+
+	public void setAkan_tribe(Integer akan_tribe) {
+		this.akan_tribe = akan_tribe;
 	}
 
 	@Override
