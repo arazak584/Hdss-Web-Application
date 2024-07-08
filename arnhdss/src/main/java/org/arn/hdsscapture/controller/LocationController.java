@@ -103,6 +103,11 @@ public class LocationController {
 	void delete(@PathVariable("id") String extId) {
 		repo.deleteById(extId);
 	}
+	
+	@GetMapping("/all")
+    public List<Location> getAllLocations() {
+        return repo.findAll();
+    }
 
 
 }

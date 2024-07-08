@@ -1,8 +1,10 @@
 package org.arn.hdsscapture.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.arn.hdsscapture.entity.Outmigration;
 import org.arn.hdsscapture.entity.UserTable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +25,9 @@ public interface UserTableRepository extends JpaRepository<UserTable, String> {
 	
 	@Query("SELECT u FROM user_table u WHERE u.username = :username OR u.user_email=:username ")
 	Optional<UserTable> findByUsernameIgnoreCase(String username);
+	
+	@Query(nativeQuery = true, value = "SELECT a.* FROM user_table a WHERE a.user_enabled=1")
+    List<UserTable> ActiveUsers();
 
 	
 

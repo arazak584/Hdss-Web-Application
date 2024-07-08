@@ -251,13 +251,11 @@
 													<label for="status">Status</label>
 													<select class="form-control" id="status" name="status"
 														th:field="*{status}" required onchange="toggleCommentField()">
-														<option value="0" th:selected="${item.status == 0}">Pending
-														</option>
-														<option value="1" th:selected="${item.status == 1}">Approved
-														</option>
-														<option value="2" th:selected="${item.status == 2}">Rejected
-														</option>
+														<option value=""></option>
+														<option value="1" th:selected="${item.status == 1}">Approve </option>
+														<option value="2" th:selected="${item.status == 2}">Reject </option>
 													</select>
+													<span class="text-success" th:if="${item.status==4}" >Supervisor Approved</span>
 												</div>
 											</div>
 										</div>
@@ -271,6 +269,13 @@
 										<a th:href="@{/hdss/approval/imglist(fw=${fw})}">
 										    <button type="button" class="btn btn-cancel ml-2">Cancel</button>
 										</a>
+										
+										<div class="form-group row hidden">
+										    <label for="groupRole" class="col-sm-3 col-form-label">Group Role</label>
+										    <div class="col-sm-9">
+										        <input type="text" class="form-control" id="groupRole" th:value="${groupRole}" readonly>
+										    </div>
+										</div>
 
 										<!--<button class="btn btn-light"><a th:href="@{/hdss/approval/imglist}">Cancel</a></button>-->
 										

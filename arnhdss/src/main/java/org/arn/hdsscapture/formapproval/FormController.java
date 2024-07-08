@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.arn.hdsscapture.entity.Codebook;
 import org.arn.hdsscapture.entity.Death;
 import org.arn.hdsscapture.entity.Demographic;
 import org.arn.hdsscapture.entity.Fieldworker;
@@ -28,11 +27,11 @@ import org.arn.hdsscapture.repository.PregnancyoutcomeRepository;
 import org.arn.hdsscapture.repository.RelationshipRepository;
 import org.arn.hdsscapture.repository.SesRepository;
 import org.arn.hdsscapture.repository.VaccinationRepository;
-import org.arn.hdsscapture.views.IndividualSearch;
-import org.arn.hdsscapture.views.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -157,13 +156,19 @@ public class FormController {
 
             // Supervisor
             String userName = principal.getName();
-
+            String groupRole = getGroupRole();
+            
             if (item.getSupervisor() == null || item.getSupervisor().isEmpty()) {
                 item.setSupervisor(userName);
+            }else {
+            	item.getSupervisor();
             }
+            
+            //System.out.println(groupRole);
 
             model.addAttribute("item", item);
             model.addAttribute("fw", fw);
+            model.addAttribute("groupRole", groupRole);
             // Populate model with codebook data
             populateModelWithCodebookData(model);
 
@@ -186,7 +191,7 @@ public class FormController {
 
     @PostMapping("/approval/{uuids}")
     public String updateImg(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Inmigration item,
-            BindingResult result, Model model) {
+            BindingResult result, Model model, Principal principal) {
         if (result.hasErrors()) {
         	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
@@ -194,10 +199,18 @@ public class FormController {
         } else {
             List<Inmigration> optionalImg = imgrepo.findByUuids(uuids);
             if (!optionalImg.isEmpty()) {
+            	String userName = principal.getName();
+            	String groupRole = getGroupRole();
+            	
                 Inmigration existingImg = optionalImg.get(0);
                 existingImg.setApproveDate(new Date()); // Set the approveDate using a method
-                existingImg.setStatus(item.getStatus());
-                existingImg.setSupervisor(item.getSupervisor());
+                //existingImg.setStatus(item.getStatus());
+                existingImg.setSupervisor(userName);
+                if ("ROLE_SUPERVISOR".equals(groupRole) && item.getStatus() == 1) {
+                    existingImg.setStatus(4);
+                } else {
+                    existingImg.setStatus(item.getStatus());
+                }               
                 // Ensure comment is null if status is not 2
                 if (item.getStatus() != 2) {
                     existingImg.setComment(null);
@@ -253,6 +266,8 @@ public class FormController {
             if (item.getSupervisor() == null || item.getSupervisor().isEmpty()) {
                 item.setSupervisor(userName);
             }
+            
+            System.out.println("Item status: " + item.getStatus());
 
             model.addAttribute("item", item);
             model.addAttribute("fw", fw);
@@ -272,7 +287,7 @@ public class FormController {
 
     @PostMapping("/approval/omg/{uuids}")
     public String updateOmg(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Outmigration item,
-            BindingResult result, Model model) {
+            BindingResult result, Model model,Principal principal) {
         if (result.hasErrors()) {
         	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
@@ -281,10 +296,18 @@ public class FormController {
             List<Outmigration> optionalImg = omgrepo.findByUuids(uuids);
             if (!optionalImg.isEmpty()) {
             	Outmigration existingImg = optionalImg.get(0);
+            	String userName = principal.getName();
+            	String groupRole = getGroupRole();
+            	
                 existingImg.setApproveDate(new Date()); // Set the approveDate using a method
-                existingImg.setStatus(item.getStatus());
-                existingImg.setSupervisor(item.getSupervisor());
-             // Ensure comment is null if status is not 2
+                //existingImg.setStatus(item.getStatus());
+                existingImg.setSupervisor(userName);
+                if ("ROLE_SUPERVISOR".equals(groupRole) && item.getStatus() == 1) {
+                    existingImg.setStatus(4);
+                } else {
+                    existingImg.setStatus(item.getStatus());
+                }               
+                // Ensure comment is null if status is not 2
                 if (item.getStatus() != 2) {
                     existingImg.setComment(null);
                 } else {
@@ -357,7 +380,7 @@ public class FormController {
 
     @PostMapping("/approval/dth/{uuids}")
     public String updateDth(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Death item,
-            BindingResult result, Model model) {
+            BindingResult result, Model model,Principal principal) {
         if (result.hasErrors()) {
         	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
@@ -366,10 +389,18 @@ public class FormController {
             List<Death> optionalImg = dthrepo.findByUuids(uuids);
             if (!optionalImg.isEmpty()) {
             	Death existingImg = optionalImg.get(0);
+            	String userName = principal.getName();
+            	String groupRole = getGroupRole();
+            	
                 existingImg.setApproveDate(new Date()); // Set the approveDate using a method
-                existingImg.setStatus(item.getStatus());
-                existingImg.setSupervisor(item.getSupervisor());
-             // Ensure comment is null if status is not 2
+                //existingImg.setStatus(item.getStatus());
+                existingImg.setSupervisor(userName);
+                if ("ROLE_SUPERVISOR".equals(groupRole) && item.getStatus() == 1) {
+                    existingImg.setStatus(4);
+                } else {
+                    existingImg.setStatus(item.getStatus());
+                }               
+                // Ensure comment is null if status is not 2
                 if (item.getStatus() != 2) {
                     existingImg.setComment(null);
                 } else {
@@ -448,7 +479,7 @@ public class FormController {
 
     @PostMapping("/approval/preg/{uuids}")
     public String updatePreg(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Pregnancyobservation item,
-            BindingResult result, Model model) {
+            BindingResult result, Model model,Principal principal) {
         if (result.hasErrors()) {
         	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
@@ -457,9 +488,17 @@ public class FormController {
             List<Pregnancyobservation> optionalImg = pregrepo.findByUuids(uuids);
             if (!optionalImg.isEmpty()) {
             	Pregnancyobservation existingImg = optionalImg.get(0);
+            	String userName = principal.getName();
+            	String groupRole = getGroupRole();
+            	
                 existingImg.setApproveDate(new Date()); // Set the approveDate using a method
-                existingImg.setStatus(item.getStatus());
-                existingImg.setSupervisor(item.getSupervisor());
+                //existingImg.setStatus(item.getStatus());
+                existingImg.setSupervisor(userName);
+                if ("ROLE_SUPERVISOR".equals(groupRole) && item.getStatus() == 1) {
+                    existingImg.setStatus(4);
+                } else {
+                    existingImg.setStatus(item.getStatus());
+                }               
                 // Ensure comment is null if status is not 2
                 if (item.getStatus() != 2) {
                     existingImg.setComment(null);
@@ -542,7 +581,7 @@ public class FormController {
 
     @PostMapping("/approval/outcome/{uuids}")
     public String updateOut(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Pregnancyoutcome item,
-            BindingResult result, Model model) {
+            BindingResult result, Model model,Principal principal) {
         if (result.hasErrors()) {
         	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
@@ -551,9 +590,17 @@ public class FormController {
             List<Pregnancyoutcome> optionalImg = outrepo.findByUuids(uuids);
             if (!optionalImg.isEmpty()) {
             	Pregnancyoutcome existingImg = optionalImg.get(0);
+            	String userName = principal.getName();
+            	String groupRole = getGroupRole();
+            	
                 existingImg.setApproveDate(new Date()); // Set the approveDate using a method
-                existingImg.setStatus(item.getStatus());
-                existingImg.setSupervisor(item.getSupervisor());
+                //existingImg.setStatus(item.getStatus());
+                existingImg.setSupervisor(userName);
+                if ("ROLE_SUPERVISOR".equals(groupRole) && item.getStatus() == 1) {
+                    existingImg.setStatus(4);
+                } else {
+                    existingImg.setStatus(item.getStatus());
+                }               
                 // Ensure comment is null if status is not 2
                 if (item.getStatus() != 2) {
                     existingImg.setComment(null);
@@ -635,7 +682,7 @@ public class FormController {
 
     @PostMapping("/approval/demo/{uuids}")
     public String updateDemo(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Demographic item,
-            BindingResult result, Model model) {
+            BindingResult result, Model model,Principal principal) {
         if (result.hasErrors()) {
         	model.addAttribute("fw", fw);
             // Handle validation errors if necessary
@@ -644,9 +691,17 @@ public class FormController {
             List<Demographic> optionalImg = demorepo.findByUuids(uuids);
             if (!optionalImg.isEmpty()) {
             	Demographic existingImg = optionalImg.get(0);
+            	String userName = principal.getName();
+            	String groupRole = getGroupRole();
+            	
                 existingImg.setApproveDate(new Date()); // Set the approveDate using a method
-                existingImg.setStatus(item.getStatus());
-                existingImg.setSupervisor(item.getSupervisor());
+                //existingImg.setStatus(item.getStatus());
+                existingImg.setSupervisor(userName);
+                if ("ROLE_SUPERVISOR".equals(groupRole) && item.getStatus() == 1) {
+                    existingImg.setStatus(4);
+                } else {
+                    existingImg.setStatus(item.getStatus());
+                }               
                 // Ensure comment is null if status is not 2
                 if (item.getStatus() != 2) {
                     existingImg.setComment(null);
@@ -724,7 +779,7 @@ public class FormController {
 
       @PostMapping("/approval/rel/{uuids}")
       public String updateRel(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Relationship item,
-              BindingResult result, Model model) {
+              BindingResult result, Model model,Principal principal) {
           if (result.hasErrors()) {
         	  model.addAttribute("fw", fw);
               // Handle validation errors if necessary
@@ -733,9 +788,17 @@ public class FormController {
               List<Relationship> optionalImg = relrepo.findByUuids(uuids);
               if (!optionalImg.isEmpty()) {
             	  Relationship existingImg = optionalImg.get(0);
+            	  String userName = principal.getName();
+              	String groupRole = getGroupRole();
+              	
                   existingImg.setApproveDate(new Date()); // Set the approveDate using a method
-                  existingImg.setStatus(item.getStatus());
-                  existingImg.setSupervisor(item.getSupervisor());
+                  //existingImg.setStatus(item.getStatus());
+                  existingImg.setSupervisor(userName);
+                  if ("ROLE_SUPERVISOR".equals(groupRole) && item.getStatus() == 1) {
+                      existingImg.setStatus(4);
+                  } else {
+                      existingImg.setStatus(item.getStatus());
+                  }               
                   // Ensure comment is null if status is not 2
                   if (item.getStatus() != 2) {
                       existingImg.setComment(null);
@@ -829,7 +892,7 @@ public class FormController {
 
         @PostMapping("/approval/ses/{uuids}")
         public String updateSes(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Sociodemographic item,
-                BindingResult result, Model model) {
+                BindingResult result, Model model,Principal principal) {
             if (result.hasErrors()) {
           	  model.addAttribute("fw", fw);
                 // Handle validation errors if necessary
@@ -837,17 +900,25 @@ public class FormController {
             } else {
                 List<Sociodemographic> optionalItem = sesrepo.findByUuids(uuids);
                 if (!optionalItem.isEmpty()) {
-                	Sociodemographic existingItem = optionalItem.get(0);
-                	existingItem.setApproveDate(new Date()); // Set the approveDate using a method
-                	existingItem.setStatus(item.getStatus());
-                	existingItem.setSupervisor(item.getSupervisor());
+                	Sociodemographic existingImg = optionalItem.get(0);
+                	String userName = principal.getName();
+                	String groupRole = getGroupRole();
+                	
+                    existingImg.setApproveDate(new Date()); // Set the approveDate using a method
+                    //existingImg.setStatus(item.getStatus());
+                    existingImg.setSupervisor(userName);
+                    if ("ROLE_SUPERVISOR".equals(groupRole) && item.getStatus() == 1) {
+                        existingImg.setStatus(4);
+                    } else {
+                        existingImg.setStatus(item.getStatus());
+                    }               
                     // Ensure comment is null if status is not 2
                     if (item.getStatus() != 2) {
-                    	existingItem.setComment(null);
+                        existingImg.setComment(null);
                     } else {
-                    	existingItem.setComment(item.getComment());
+                        existingImg.setComment(item.getComment());
                     }
-                    sesrepo.save(existingItem);
+                    sesrepo.save(existingImg);
                     return "redirect:/hdss/approval/seslist?fw=" + fw; // Corrected redirect URL
                 } else {
                     return "error"; 
@@ -924,7 +995,7 @@ public class FormController {
 
           @PostMapping("/approval/vac/{uuids}")
           public String updateVac(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Vaccination item,
-                  BindingResult result, Model model) {
+                  BindingResult result, Model model,Principal principal) {
               if (result.hasErrors()) {
             	  model.addAttribute("fw", fw);
                   // Handle validation errors if necessary
@@ -932,21 +1003,43 @@ public class FormController {
               } else {
                   List<Vaccination> optionalItem = vacrepo.findByUuids(uuids);
                   if (!optionalItem.isEmpty()) {
-                	  Vaccination existingItem = optionalItem.get(0);
-	                  	existingItem.setApproveDate(new Date()); // Set the approveDate using a method
-	                  	existingItem.setStatus(item.getStatus());
-	                  	existingItem.setSupervisor(item.getSupervisor());
+                	  Vaccination existingImg = optionalItem.get(0);
+                	  String userName = principal.getName();
+                  	String groupRole = getGroupRole();
+                  	
+                      existingImg.setApproveDate(new Date()); // Set the approveDate using a method
+                      //existingImg.setStatus(item.getStatus());
+                      existingImg.setSupervisor(userName);
+                      if ("ROLE_SUPERVISOR".equals(groupRole) && item.getStatus() == 1) {
+                          existingImg.setStatus(4);
+                      } else {
+                          existingImg.setStatus(item.getStatus());
+                      }               
                       // Ensure comment is null if status is not 2
                       if (item.getStatus() != 2) {
-                      	existingItem.setComment(null);
+                          existingImg.setComment(null);
                       } else {
-                      	existingItem.setComment(item.getComment());
+                          existingImg.setComment(item.getComment());
                       }
-                      vacrepo.save(existingItem);
+                      vacrepo.save(existingImg);
                       return "redirect:/hdss/approval/vaclist?fw=" + fw; // Corrected redirect URL
                   } else {
                       return "error"; 
                   }
               }
           }
+          
+          
+          private String getGroupRole() {
+        	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        	    if (authentication != null) {
+        	        for (GrantedAuthority authority : authentication.getAuthorities()) {
+        	            // Assuming authorities are SimpleGrantedAuthority with role as authority name
+        	            return authority.getAuthority(); // This will return the group_role associated with the user
+        	        }
+        	    }
+        	    return null; // Return null or handle accordingly if no group_role found
+        	}        
+          
+          
 }

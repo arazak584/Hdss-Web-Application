@@ -30,4 +30,10 @@ public interface FieldworkerRepository extends JpaRepository <Fieldworker, Strin
 	@Query(nativeQuery = true, value = "SELECT * FROM fieldworker Where status=1 order by firstName,lastName")
 	List<Fieldworker> fw();
 	
+	@Query(nativeQuery = true, value = "SELECT a.fw_uuid,a.firstName,a.lastName, MAX(b.insertDate) AS insertDate,a.`status`,`password`,username\r\n"
+			+ "FROM fieldworker a INNER JOIN visit b ON a.fw_uuid = b.fw_uuid\r\n"
+			+ "WHERE b.insertDate > (SELECT r.startDate FROM round r ORDER BY r.roundNumber DESC LIMIT 1)\r\n"
+			+ "AND a.`status` = 1 GROUP BY a.fw_uuid HAVING TIMESTAMPDIFF(DAY, MAX(b.insertDate), CURDATE()) > 3;")
+	List<Fieldworker> lastSync();
+	
 }

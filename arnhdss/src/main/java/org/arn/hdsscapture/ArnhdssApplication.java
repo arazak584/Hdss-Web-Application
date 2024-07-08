@@ -10,13 +10,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableCaching
 public class ArnhdssApplication {
 	
-//	@Autowired
-//    private EmailService emailService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ArnhdssApplication.class, args);
 	}
 	
+//	@Autowired
+//	private EmailService emailService;
+//	
 //	@EventListener(ApplicationReadyEvent.class)
 //	public void sendMail() {
 //		emailService.sendSimpleMessage("abdzakus@gmail.com",

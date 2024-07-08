@@ -678,4 +678,12 @@ INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Awowi
 INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Nzema', 13);
 INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Ahanta', 14);
 INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('akan', 'Other', 77);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('denomination', 'Catholic Church', 1);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('denomination', 'Protestant', 2);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('denomination', 'Pentecostal/Charismatic', 3);
+INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('denomination', 'Other Christian', 4);
+
+
+
+
 

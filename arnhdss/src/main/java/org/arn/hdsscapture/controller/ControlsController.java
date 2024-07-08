@@ -88,7 +88,7 @@ public class ControlsController {
 			result.rejectValue("username", "user.exists");
 		}
 		if (emailExists) {
-			result.rejectValue("userEmail", "user.exists");
+			result.rejectValue("user_email", "email.exists");
 		}
 
 		if (result.hasErrors()) {
@@ -97,7 +97,7 @@ public class ControlsController {
 			model.addAttribute("usercreate", "active");
 			model.addAttribute("user_groups", groupRepo.findAll());
 
-			return "controls/user-list";
+			return "controls/user-create";
 		}
 
 		String password = selected.getUser_password();
@@ -121,12 +121,14 @@ public class ControlsController {
 
 	    // Send registration email
 	    String subject = "HDSS CAPTURE USER REGISTRATION";
-	    String url = baseUrl + "/login"; // Adjust if the login URL is different
-	    String text = String.format("Dear %s,\n\nThank you for registering with us. Here are your details:\n\nUsername: %s\nEmail: %s\nPassword: %s\n\nYou can login at the following URL: %s\n\nBest regards,\nHDSS CAPTURE",
-	                                selected.getUsername(), selected.getUsername(), selected.getUser_email(), password, url);
+	    String url = baseUrl + "/login"; 
+	    String pwdurl = baseUrl + "/controls/password";
+	    String fullName = selected.getUser_fname() + " " + selected.getUser_lname();
+	    String text = String.format("Dear %s,\n\nThank you for registering with us. Here are your details:\n\nUsername: %s\nEmail: %s\nPassword: %s\n\nYou can login at the following URL: %s\n\nYou can change your password after Login at the following URL: %s\n\nBest regards,\nHDSS CAPTURE",
+	    		fullName, selected.getUsername(), selected.getUser_email(), password, url,pwdurl);
 	    emailService.sendSimpleMessage(selected.getUser_email(), subject, text);
 
-		return "redirect:/controls/users/add?success=yes";
+		return "redirect:/controls/users";
 	}
 
 	@GetMapping("/users/{id}")
@@ -196,7 +198,7 @@ public class ControlsController {
 
 	@PostMapping("/users/{id}/password")
 	public String editUserPassword(Principal principal, @ModelAttribute("selected") UserTable selected,
-			@PathVariable("id") String user_id, BindingResult results) {
+			@PathVariable("id") String user_id, BindingResult results, HttpServletRequest request) {
 
 		if (selected.getUsername()!= null) {
 			
@@ -216,6 +218,26 @@ public class ControlsController {
 			check.setUser_password(encodedPassword);
 
 			userRepo.save(check);
+			
+			// Get the base URL with port conditionally
+		    String baseUrl;
+		    if ((request.getScheme().equals("http") && request.getServerPort() == 80) || 
+		        (request.getScheme().equals("https") && request.getServerPort() == 443)) {
+		        baseUrl = request.getScheme() + "://" + request.getServerName();
+		    } else {
+		        baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+		    }
+
+		    // Send registration email
+		    String subject = "HDSS CAPTURE PASSWORD RESET";
+		    String url = baseUrl + "/login"; 
+		    String pwdurl = baseUrl + "/controls/password";
+		    String fullName = selected.getUser_fname() + " " + selected.getUser_lname();
+		    String text = String.format("Dear %s,\n\nAdministrator Has succesfully Changed your password. Here are your details:\n\nUsername: %s\nEmail: %s\nPassword: %s\n\nYou can login at the following URL: %s\n\nYou can change your password after Login at the following URL: %s\n\nBest regards,\nHDSS CAPTURE",
+		    		fullName, selected.getUsername(), selected.getUser_email(), password, url,pwdurl);
+		    emailService.sendSimpleMessage(selected.getUser_email(), subject, text);
+			
+			
 			return "redirect:/controls/users/" + user_id + "/password?success=1";
 		}else {
 			return "redirect:/controls/users/" + user_id + "/password";

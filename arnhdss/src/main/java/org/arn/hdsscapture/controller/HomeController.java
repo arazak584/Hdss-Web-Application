@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/home")
+//@RequestMapping("/home")
 public class HomeController {
 
-	@GetMapping("")
-    public String redirectAfterLogin() {
-        return "redirect:/hdss/report";
+	@GetMapping("/hdss/map")
+    public String map() {
+        return "map";
     }
 	
 	

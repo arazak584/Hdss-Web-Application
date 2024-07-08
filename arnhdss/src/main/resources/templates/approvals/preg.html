@@ -329,13 +329,11 @@
 													<label for="status">Status</label>
 													<select class="form-control" id="status" name="status"
 														th:field="*{status}" required onchange="toggleCommentField()">
-														<option value="0" th:selected="${item.status == 0}">Pending
-														</option>
-														<option value="1" th:selected="${item.status == 1}">Approved
-														</option>
-														<option value="2" th:selected="${item.status == 2}">Rejected
-														</option>
+														<option value=""></option>
+														<option value="1" th:selected="${item.status == 1}">Approve </option>
+														<option value="2" th:selected="${item.status == 2}">Reject </option>
 													</select>
+													<span class="text-success" th:if="${item.status==4}" >Supervisor Approved</span>
 												</div>
 											</div>
 										</div>

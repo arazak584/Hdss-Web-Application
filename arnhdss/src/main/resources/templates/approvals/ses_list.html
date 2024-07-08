@@ -48,6 +48,10 @@
             background-color: blue;
             color: white;
         }
+        .status-supervisor {
+            background-color: purple;
+            color: white;
+        }
     </style>
         
     </head>
@@ -103,8 +107,8 @@
 											            <td th:text="${item.formcompldate}"></td>
 											            <td th:text="${item.individual_uuid}"></td>
 											            <td th:text="${item.uuid}"></td>
-											            <td th:classappend="${item.status == null ? 'status-pending' : item.status == 1 ? 'status-approved' : item.status == 2 ? 'status-rejected' : item.status == 3 ? 'status-resolved' : 'status-pending'}"
-									                        th:text="${item.status == null ? 'Pending' : item.status == 1 ? 'Approved' : item.status == 2 ? 'Rejected' : item.status == 3 ? 'Resolved' : 'Pending'}">
+											            <td th:classappend="${item.status == 0 ? 'status-pending' : item.status == 1 ? 'status-approved' : item.status == 2 ? 'status-rejected' : item.status == 3 ? 'status-resolved' : 'status-supervisor'}"
+									                        th:text="${item.status == 0 ? 'Pending' : item.status == 1 ? 'Approved' : item.status == 2 ? 'Rejected' : item.status == 3 ? 'Resolved' : 'Approved'}">
 									                    </td>
 
 											            <!--<td th:text="${item.status}"></td>-->

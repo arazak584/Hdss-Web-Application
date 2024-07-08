@@ -527,7 +527,7 @@ public class UtilityController {
     public String saveCommunity(@ModelAttribute("item") CommunityReport item, BindingResult bindingResult, Model model, Principal principal) {
 		 //Generate a UUID for the Fieldworker's ID
 	    String uuid = UUID.randomUUID().toString();
-	    String uuidString = uuid.replaceAll("-", "");
+	    //String uuidString = uuid.replaceAll("-", "");
 
 	    String userName = principal.getName();
 	    // Set the ID
