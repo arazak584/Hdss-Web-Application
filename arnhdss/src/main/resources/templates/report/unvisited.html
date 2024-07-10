@@ -56,8 +56,9 @@
                                     <div class="card-body">
 										  <form class="form-inline" method="GET" action="/hdss/report/unvisited" style="text-align: center;">
 										    <div class="form-group mx-sm-3 mb-2">
-										     <select name="village" class="form-control select2">
-											 <option th:each="village : ${villages}" th:value="${village}" th:text="${village}"></option>
+										     <select name="village" class="js-states form-control" style="width: 300px;">
+											 <option th:each="village : ${villages}" th:value="${village}" th:text="${village}"
+											 th:selected="${village == selected}"></option>
 											</select>
 										    </div>
 										    <div class="form-group mx-sm-3 mb-2">
@@ -151,7 +152,9 @@
         document.getElementById('logoutForm').submit();
     }
 </script>
-
+<script>
+	$('.js-states').select2();
+</script>
 
         
     </body>

@@ -482,6 +482,7 @@ public class ReportController {
 	    if (village != null) {
 	        List<ActiveHouseholds> items = activehoh.Unvisited(village);
 	        model.addAttribute("items", items);
+	        model.addAttribute("selected", village);
 	    } else {
 //	    	List<ActiveHouseholds> items = activehoh.Unvisit();
 //	    	model.addAttribute("items", items);

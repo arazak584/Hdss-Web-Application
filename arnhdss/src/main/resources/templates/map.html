@@ -22,11 +22,14 @@
 	<link rel="stylesheet" th:href="@{/plugins/ionicons/dist/css/ionicons.min.css}">
 	<link rel="stylesheet" th:href="@{/plugins/perfect-scrollbar/css/perfect-scrollbar.css}">
 	<link rel="stylesheet" th:href="@{/dist/css/theme.min.css}">
+	<link rel="stylesheet" th:href="@{/css/select2.min.css}">
 
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<!--<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />-->
     <!-- Leaflet JavaScript -->
  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+ 
 
 </head>
 
@@ -83,9 +86,15 @@
 								<div class="card-body">
 									
 									<div id="search">
-        <input type="text" id="searchInput" placeholder="Enter compno" />
-        <button onclick="searchLocation()">Search</button>
-    </div>
+                                        <select id="villageSelect" onchange="loadVillageLocations()" class="js-states form-control" style="width: 300px;">
+                                            <option value="">Select a village</option>
+                                        </select>
+                                    </div>
+									
+									<div id="searchs">
+								        <input type="text" id="searchInput" placeholder="Enter compno" />
+								        <button onclick="searchLocation()">Search</button>
+								    </div>
 									
 									<div id="map"></div>
 
@@ -115,6 +124,8 @@
 	<script th:src="@{/dist/js/theme.min.js}"></script>
 	<script th:src="@{/js/dashboard.js}"></script>
 	<script th:src="@{/js/form-components.js}"></script>
+	<script th:src="@{/js/select2.min.js}"></script>
+	<!--<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>-->
 
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 	<script>
@@ -135,8 +146,88 @@
 	</script>
 
 	<script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
+	
+	<script>
+        var map = L.map('map').setView([0, 0], 2);
+        var markers = [];
 
- <script>
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        function loadVillages() {
+            fetch('/api/location/villages')
+                .then(response => response.json())
+                .then(data => {
+                    var villageSelect = document.getElementById('villageSelect');
+                    data.forEach(village => {
+                        var option = document.createElement('option');
+                        option.value = village.name;
+                        option.textContent = village.name;
+                        villageSelect.appendChild(option);
+                    });
+                    // Initialize Select2
+                    $('.js-states').select2();
+                })
+                .catch(error => console.error('Error fetching villages:', error));
+        }
+
+        function loadVillageLocations() {
+            var village = document.getElementById('villageSelect').value;
+            if (village) {
+                fetch(`/api/location/by-village?village=${village}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        clearMarkers();
+                        var bounds = [];
+                        data.forEach(location => {
+                            var marker = L.marker([location.latitude, location.longitude]).addTo(map);
+                            marker.bindPopup(`<b>${location.compno}</b><br>${location.locationName}`);
+                            markers.push({ compno: location.compno, marker: marker });
+                            bounds.push([location.latitude, location.longitude]);
+                        });
+                        map.fitBounds(bounds);
+                    })
+                    .catch(error => console.error('Error fetching location data:', error));
+            }
+        }
+
+        function clearMarkers() {
+            markers.forEach(item => map.removeLayer(item.marker));
+            markers = [];
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadVillages();
+        });
+        
+        function searchLocation() {
+            var searchInput = document.getElementById('searchInput').value.toUpperCase();
+            var found = false;
+
+            markers.forEach(item => {
+                if (item.compno.toUpperCase() === searchInput) {
+                    map.setView(item.marker.getLatLng(), 15);
+                    item.marker.openPopup();
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                alert('Location not found');
+            }
+        }
+
+        // Add event listener for Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                searchLocation();
+            }
+        });
+    </script>
+
+ <!--<script>
         var map = L.map('map').setView([0, 0], 2);
         var markers = [];
 
@@ -186,7 +277,7 @@
                 searchLocation();
             }
         });
-    </script>
+    </script>-->
 
 
 </body>

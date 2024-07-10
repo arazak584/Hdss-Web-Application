@@ -7,11 +7,14 @@ import java.util.List;
 
 import org.arn.hdsscapture.entity.ErrorLog;
 import org.arn.hdsscapture.entity.Location;
+import org.arn.hdsscapture.entity.Locationhierarchy;
 import org.arn.hdsscapture.exception.DataErrorException;
 import org.arn.hdsscapture.exception.DataNotFoundException;
 import org.arn.hdsscapture.projection.LocationProjection;
 import org.arn.hdsscapture.repository.ErrorLogRepository;
 import org.arn.hdsscapture.repository.LocationRepository;
+import org.arn.hdsscapture.repository.LocationhierarchyRepository;
+import org.arn.hdsscapture.repository.LocationhierarchylevelRepository;
 import org.arn.hdsscapture.utils.DataWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,6 +35,9 @@ public class LocationController {
 	
 	@Autowired
 	ErrorLogRepository errorLogRepository;
+	
+	@Autowired
+	LocationhierarchyRepository villrepo;
 	
 	@GetMapping("")
 	public DataWrapper<LocationProjection> findAll() {
@@ -104,10 +111,14 @@ public class LocationController {
 		repo.deleteById(extId);
 	}
 	
-	@GetMapping("/all")
-    public List<Location> getAllLocations() {
-        return repo.findAll();
+	@GetMapping("/villages")
+    public List<Locationhierarchy> getAllVillages() {
+        return villrepo.village();
     }
-
+	
+	@GetMapping("/by-village")
+    public List<Location> getAllLocations(@RequestParam String village) {
+        return repo.findByVillage(village);
+    }
 
 }

@@ -29,6 +29,7 @@
         <link rel="stylesheet" th:href="@{/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
         
         <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
+        <link rel="stylesheet" th:href="@{/css/select2.min.css}">
         
         <style>
         .status-pending {
@@ -74,7 +75,7 @@
 										<div class="card-header"><h3 style="color: blue; text-transform: uppercase; font-weight: bold;">Death</h3></div>
 										<form class="form-inline" method="GET" action="/hdss/approval/dthlist" style="text-align: center;">
 										    <div class="form-group mx-sm-3 mb-2">
-										     <select name="fw" class="form-control select2">
+										     <select name="fw" class="js-states form-control" style="width: 300px;">
 											<option value="">Select User</option>			 
 											 <option th:each="fw : ${fws}" th:value="${fw.fw_uuid}" th:text="${fw.firstName + ' ' + fw.lastName}"
 											 th:selected="${fw.fw_uuid == selectedFw}"></option>
@@ -159,6 +160,7 @@
         <script th:src="@{/dist/js/theme.min.js}"></script>
         <script th:src="@{/js/dashboard.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
+         <script th:src="@{/js/select2.min.js}"></script>
         
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -175,7 +177,9 @@
         document.getElementById('logoutForm').submit();
     }
 </script>
-
+<script>
+	$('.js-states').select2();
+</script>
         
     </body>
 </html>

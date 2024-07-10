@@ -86,6 +86,10 @@ public class Amendment implements Serializable {
     public Integer complete;
 	@Column(nullable = false)
     public String fw_uuid;
+	@Column
+	public String mother_uuid;
+	@Column
+    public String father_uuid;
 		
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
@@ -404,6 +408,24 @@ public class Amendment implements Serializable {
 	}
 
 
+	public String getMother_uuid() {
+		return mother_uuid;
+	}
+
+
+	public void setMother_uuid(String mother_uuid) {
+		this.mother_uuid = mother_uuid;
+	}
+
+
+	public String getFather_uuid() {
+		return father_uuid;
+	}
+
+
+	public void setFather_uuid(String father_uuid) {
+		this.father_uuid = father_uuid;
+	}
 
 
 	@Override
