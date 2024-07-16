@@ -132,6 +132,7 @@
 											</div>
 											<div class="col-md-6" th:if="${item.cash_crops}">
 												<div class="form-group">
+													<label th:text="#{cash_crops}"></label>
 													<select name="cash_crops" class="form-control" th:field="*{cash_crops}" readonly style="pointer-events: none;">
 													<option th:each="codebook : ${cashcrops}" th:value="${codebook.codeValue}"
 													th:text="${codebook.codeLabel}"></option>
@@ -152,6 +153,7 @@
 											</div>
 											<div class="col-md-6" th:if="${item.livestock}">
 												<div class="form-group">
+													<label th:text="#{livestock}"></label>
 													<select name="livestock" class="form-control" th:field="*{livestock}" readonly style="pointer-events: none;">
 													<option th:each="codebook : ${livestock}" th:value="${codebook.codeValue}"
 													th:text="${codebook.codeLabel}"></option>
@@ -172,6 +174,7 @@
 											</div>
 											<div class="col-md-6" th:if="${item.food_crops}">
 												<div class="form-group">
+													<label th:text="#{food_crops}"></label>
 													<select name="food_crops" class="form-control" th:field="*{food_crops}" readonly style="pointer-events: none;">
 													<option th:each="codebook : ${food}" th:value="${codebook.codeValue}"
 													th:text="${codebook.codeLabel}"></option>

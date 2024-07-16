@@ -33,8 +33,9 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
 			+ "(SELECT count(uuid) from location)*100,2) as done")
     Double perComp();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from location v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
-			+ "(SELECT count(uuid) from location)*100,2) as done")
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from location v where v.insertDate > "
+			+ "(SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/(SELECT count(DISTINCT b.location_uuid) "
+			+ "FROM location a INNER JOIN residency b on a.uuid=b.location_uuid Where b.endType = 1)*100,2) as done")
     Double perLoc();
 	
 	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.compno) from listing v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")

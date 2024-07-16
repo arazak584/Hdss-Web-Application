@@ -186,6 +186,7 @@ public class FormController {
         model.addAttribute("farm", repo.farm());
         model.addAttribute("livestock", repo.livestock());
         model.addAttribute("food", repo.food());
+        model.addAttribute("yn", repo.yn());
         model.addAttribute("cashcrops", repo.cashcrops());
     }
 
