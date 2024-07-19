@@ -113,7 +113,7 @@ public class ReportController {
         data.put("hhvisit", repo.hhVisit());
         data.put("visit", repo.countVisit());
         //Comp Visited
-        data.put("comp", repo.countCompound());
+        data.put("comp", repo.countCompounds());
         data.put("compvisit", repo.countList());
         data.put("compper", repo.perComp());
         data.put("comploc", repo.perLoc());

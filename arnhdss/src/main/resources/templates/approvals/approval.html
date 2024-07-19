@@ -76,137 +76,120 @@
                                                         <th>Approved</th>
                                                         <th>Rejected</th>
                                                         <th>Resolved</th>
-                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
                                                         <td>
                                                             <div class="d-inline-block align-middle">
-                                                                <h6>Inmigration</h6>
+                                                                <button onclick="window.location.href='/hdss/approval/imglist'" class="btn btn-success" style="width: 150px;"><i class="ik ik-edit-2"></i>Inmigration</button>
                                                             </div>
                                                         </td>
                                                         <td class="text-blue" id="img0"></td>
                                                         <td class="text-blue" id="img1"></td>
-                                                        <td class="text-blue" id="img2"></td>
+                                                        <td class="text-blue"><button onclick="window.location.href='/hdss/reject/img'" id="img2" class="btn btn-outline-danger"></button></td>
                                                         <td class="text-blue" id="img3"></td>
-                                                        <td>
+                                                        <!--<td>
 															<a th:href="@{/hdss/approval/imglist}"><label class="badge badge-success">View</label></a>
-														</td>
+														</td>-->
                                                     </tr>
                                                     <tr>
                                                         <td>
                                                             <div class="d-inline-block align-middle">
-                                                                <h6>Outmigration</h6>
+                                                                <button onclick="window.location.href='/hdss/approval/omglist'" class="btn btn-success" style="width: 150px;"><i class="ik ik-edit-2"></i>Outmigration</button>
                                                             </div>
                                                         </td>
                                                         <td class="text-blue" id="omg0"></td>
                                                         <td class="text-blue" id="omg1"></td>
-                                                        <td class="text-blue" id="omg2"></td>
+                                                         <td class="text-blue" ><button onclick="window.location.href='/hdss/reject/omg'" id="omg2" class="btn btn-outline-danger"></button></td>
                                                         <td class="text-blue" id="omg3"></td>
-                                                        <td>
-															<a th:href="@{/hdss/approval/omglist}"><label class="badge badge-success">View</label></a>
-														</td>
+                                                        
                                                     </tr>
                                                     <tr>
                                                         <td>
                                                             <div class="d-inline-block align-middle">
-                                                                <h6>Death</h6>
+                                                                <button onclick="window.location.href='/hdss/approval/dthlist'" class="btn btn-success" style="width: 150px;"><i class="ik ik-edit-2"></i>Death</button>
                                                             </div>
                                                         </td>
                                                         <td class="text-blue" id="dth0"></td>
                                                         <td class="text-blue" id="dth1"></td>
-                                                        <td class="text-blue" id="dth2"></td>
+                                                        <td class="text-blue" ><button onclick="window.location.href='/hdss/reject/death'" id="dth2" class="btn btn-outline-danger"></button></td>
                                                         <td class="text-blue" id="dth3"></td>
-                                                        <td>
-															<a th:href="@{/hdss/approval/dthlist}"><label class="badge badge-success">View</label></a>
-														</td>
+                                                        
                                                     </tr>
                                                     <tr>
                                                         <td>
                                                             <div class="d-inline-block align-middle">
-                                                                <h6>Pregnancy</h6>
+                                                                <button onclick="window.location.href='/hdss/approval/preglist'" class="btn btn-success" style="width: 150px;"><i class="ik ik-edit-2"></i>Pregnancy</button>
                                                             </div>
                                                         </td>
                                                         <td class="text-blue" id="preg0"></td>
                                                         <td class="text-blue" id="preg1"></td>
-                                                        <td class="text-blue" id="preg2"></td>
+                                                        <td class="text-blue" ><button onclick="window.location.href='/hdss/reject/pregnancy'" id="preg2" class="btn btn-outline-danger"></button></td>
                                                         <td class="text-blue" id="preg3"></td>
-                                                         <td>
-															<a th:href="@{/hdss/approval/preglist}"><label class="badge badge-success">View</label></a>
-														</td>
+                                                        
                                                     </tr>
                                                     <tr>
                                                         <td>
                                                             <div class="d-inline-block align-middle">
-                                                                <h6>Outcome</h6>
+                                                                <button onclick="window.location.href='/hdss/approval/outcomelist'" class="btn btn-success" style="width: 150px;"><i class="ik ik-edit-2"></i>Outcome</button>
                                                             </div>
                                                         </td>
                                                         <td class="text-blue" id="out0"></td>
                                                         <td class="text-blue" id="out1"></td>
-                                                        <td class="text-blue" id="out2"></td>
+                                                        <td class="text-blue" ><button onclick="window.location.href='/hdss/reject/outcome'" id="out2" class="btn btn-outline-danger"></button></td>
                                                         <td class="text-blue" id="out3"></td>
-                                                         <td>
-															<a th:href="@{/hdss/approval/outcomelist}"><label class="badge badge-success">View</label></a>
-														</td>
+                                                         
                                                     </tr>
                                                     <tr>
                                                         <td>
                                                             <div class="d-inline-block align-middle">
-                                                                <h6>Demographic</h6>
+                                                                <button onclick="window.location.href='/hdss/approval/demolist'" class="btn btn-success" style="width: 150px;"><i class="ik ik-edit-2"></i>Demographic</button>
                                                             </div>
                                                         </td>
                                                         <td class="text-blue" id="demo0"></td>
                                                         <td class="text-blue" id="demo1"></td>
-                                                        <td class="text-blue" id="demo2"></td>
+                                                        <td class="text-blue" ><button onclick="window.location.href='/hdss/reject/demographic'" id="demo2" class="btn btn-outline-danger"></button></td>
                                                         <td class="text-blue" id="demo3"></td>
-                                                         <td>
-															<a th:href="@{/hdss/approval/demolist}"><label class="badge badge-success">View</label></a>
-														</td>
+                                                         
                                                     </tr>
                                                     <tr>
                                                         <td>
                                                             <div class="d-inline-block align-middle">
-                                                                <h6>Relationship</h6>
+                                                                <button onclick="window.location.href='/hdss/approval/rellist'" class="btn btn-success" style="width: 150px;"><i class="ik ik-edit-2"></i>Relationship</button>
                                                             </div>
                                                         </td>
                                                         <td class="text-blue" id="rel0"></td>
                                                         <td class="text-blue" id="rel1"></td>
-                                                        <td class="text-blue" id="rel2"></td>
+                                                        <td class="text-blue" ><button onclick="window.location.href='/hdss/reject/relationship'" id="rel2" class="btn btn-outline-danger"></button></td>
                                                         <td class="text-blue" id="rel3"></td>
-                                                         <td>
-															<a th:href="@{/hdss/approval/rellist}"><label class="badge badge-success">View</label></a>
-														</td>
+                                                        
                                                     </tr>
                                                     
                                                     <tr>
                                                         <td>
                                                             <div class="d-inline-block align-middle">
-                                                                <h6>SES</h6>
+                                                                <button onclick="window.location.href='/hdss/approval/seslist'" class="btn btn-success" style="width: 150px;"><i class="ik ik-edit-2"></i>SES</button>
                                                             </div>
                                                         </td>
                                                         <td class="text-blue" id="ses0"></td>
                                                         <td class="text-blue" id="ses1"></td>
-                                                        <td class="text-blue" id="ses2"></td>
+                                                        <td class="text-blue" ><button onclick="window.location.href='/hdss/reject/ses'" id="ses2" class="btn btn-outline-danger"></button></td>
                                                         <td class="text-blue" id="ses3"></td>
-                                                         <td>
-															<a th:href="@{/hdss/approval/seslist}"><label class="badge badge-success">View</label></a>
-														</td>
+                                                         
                                                     </tr>
                                                     
                                                     <tr>
                                                         <td>
                                                             <div class="d-inline-block align-middle">
-                                                                <h6>Vaccination</h6>
+                                                                <button onclick="window.location.href='/hdss/approval/vaclist'" class="btn btn-success" style="width: 150px;"><i class="ik ik-edit-2"></i>Vaccination</button>
                                                             </div>
                                                         </td>
                                                         <td class="text-blue" id="vac0"></td>
                                                         <td class="text-blue" id="vac1"></td>
-                                                        <td class="text-blue" id="vac2"></td>
+                                                        <td class="text-blue" ><button onclick="window.location.href='/hdss/reject/vaccination'" id="vac2" class="btn btn-outline-danger"></button></td>
                                                         <td class="text-blue" id="vac3"></td>
-                                                         <td>
-															<a th:href="@{/hdss/approval/vaclist}"><label class="badge badge-success">View</label></a>
-														</td>
+                                                         
                                                     </tr>
                                                 </tbody>
                                             </table>

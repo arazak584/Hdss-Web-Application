@@ -38,7 +38,7 @@ public class NotificationController {
 
             for (UserTable user : users) {
                 String userFullName = user.getUser_fname() + " " + user.getUser_lname();
-                StringBuilder text = new StringBuilder(String.format("Dear %s,\n\nThe following fieldworkers have not synced their data for the past 3+ days:\n", userFullName));
+                StringBuilder text = new StringBuilder(String.format("Dear %s,\n\nThe following fieldworkers have not synced their data for the past 2+ days:\n", userFullName));
 
                 for (Fieldworker fw : fws) {
                     text.append(String.format("\n- %s %s, Last Sync: %s", fw.getFirstName(), fw.getLastName(), fw.getInsertDate()));

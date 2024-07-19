@@ -145,6 +145,15 @@ public class FormController {
 
 	    return "approvals/img_list";
 	}
+	
+	@GetMapping("/reject/img")
+	public String imgReject(Model model) {
+
+			List<Inmigration> items = imgrepo.findRej();
+	        model.addAttribute("items", items);
+
+	    return "approvals/img_reject";
+	}
 
 
 	@GetMapping("/approval/edit/{uuid}")
@@ -252,6 +261,15 @@ public class FormController {
 
 	    return "approvals/omg_list";
 	}
+    
+    @GetMapping("/reject/omg")
+	public String omgReject(Model model) {
+
+			List<Outmigration> items = omgrepo.findRej();
+	        model.addAttribute("items", items);
+
+	    return "approvals/omg_reject";
+	}
 
 
 	@GetMapping("/approval/omg/{uuid}")
@@ -347,6 +365,15 @@ public class FormController {
 
 	    return "approvals/dth_list";
 	}
+    
+    @GetMapping("/reject/death")
+	public String dthReject(Model model) {
+
+			List<Death> items = dthrepo.findRej();
+	        model.addAttribute("items", items);
+
+	    return "approvals/dth_reject";
+	}
 
 
 	@GetMapping("/approval/dth/{uuid}")
@@ -441,6 +468,14 @@ public class FormController {
 	    return "approvals/preg_list";
 	}
 
+    @GetMapping("/reject/pregnancy")
+	public String pregReject(Model model) {
+
+			List<Pregnancyobservation> items = pregrepo.findRej();
+	        model.addAttribute("items", items);
+
+	    return "approvals/preg_reject";
+	}
 
 	@GetMapping("/approval/preg/{uuid}")
     public String editPreg(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
@@ -541,6 +576,14 @@ public class FormController {
 	    return "approvals/outcome_list";
 	}
 
+    @GetMapping("/reject/outcome")
+	public String outcomeReject(Model model) {
+
+			List<Pregnancyoutcome> items = outrepo.findRej();
+	        model.addAttribute("items", items);
+
+	    return "approvals/outcome_reject";
+	}
 
 	@GetMapping("/approval/outcome/{uuid}")
     public String editOut(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
@@ -641,6 +684,15 @@ public class FormController {
 
 
 	    return "approvals/demo_list";
+	}
+    
+    @GetMapping("/reject/demographic")
+	public String demoReject(Model model) {
+
+			List<Demographic> items = demorepo.findRej();
+	        model.addAttribute("items", items);
+
+	    return "approvals/demo_reject";
 	}
 
 
@@ -744,6 +796,14 @@ public class FormController {
   	    return "approvals/rel_list";
   	}
 
+    @GetMapping("/reject/relationship")
+	public String relReject(Model model) {
+
+			List<Relationship> items = relrepo.findRej();
+	        model.addAttribute("items", items);
+
+	    return "approvals/rel_reject";
+	}
 
   	@GetMapping("/approval/rel/{uuid}")
       public String editRel(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
@@ -841,6 +901,14 @@ public class FormController {
     	    return "approvals/ses_list";
     	}
 
+      @GetMapping("/reject/ses")
+  	public String sesReject(Model model) {
+
+  			List<Sociodemographic> items = sesrepo.findRej();
+  	        model.addAttribute("items", items);
+
+  	    return "approvals/ses_reject";
+  	}
 
     	@GetMapping("/approval/ses/{uuid}")
         public String editSes(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
@@ -955,6 +1023,15 @@ public class FormController {
       	    return "approvals/vac_list";
       	}
 
+        
+        @GetMapping("/reject/vaccination")
+      	public String vacReject(Model model) {
+
+      			List<Vaccination> items = vacrepo.findRej();
+      	        model.addAttribute("items", items);
+
+      	    return "approvals/vac_reject";
+      	}
 
       	@GetMapping("/approval/vac/{uuid}")
           public String editVav(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {

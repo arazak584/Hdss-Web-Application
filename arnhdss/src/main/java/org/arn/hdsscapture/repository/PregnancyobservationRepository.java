@@ -65,6 +65,18 @@ public interface PregnancyobservationRepository extends JpaRepository <Pregnancy
 			+ "FROM pregnancyobservation a INNER JOIN individual b on a.individual_uuid=b.uuid\r\n"
 			+ "INNER JOIN visit c on a.visit_uuid=c.uuid INNER JOIN location d on c.location_uuid=d.uuid\r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
+			+ "where a.status=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	List<Pregnancyobservation> findRej();
+	
+	@Query(nativeQuery = true, value ="SELECT	a.uuid,concat(b.firstName,' ',b.lastName,' ',COALESCE(otherName, '')) as individual_uuid, "
+			+ "ageOfPregFromPregNotes, 	anc_visits,anteNatalClinic,attend_you,attend_you_other,bnet_loc,bnet_loc_other,bnet_sou,"
+			+ "bnet_sou_other, 	estimatedAgeOfPreg,expectedDeliveryDate,first_preg,first_rec,concat(f.firstName,' ',f.lastName) as edtime, "
+			+ " healthfacility,how_many,a.insertDate, 	lastClinicVisitDate, 	medicineforpregnancy, 	outcome, outcome_date, \r\n"
+			+ " own_bnet, 	pregnancyNumber, 	recordedDate, 	slp_bednet, 	trt_bednet, 	ttinjection,compno as visit_uuid, 	"
+			+ " why_no, why_no_other, 	a.fw_uuid,dob as sttime, 	approveDate, 	`comment`, 	a.`status`, 	supervisor\r\n"
+			+ "FROM pregnancyobservation a INNER JOIN individual b on a.individual_uuid=b.uuid\r\n"
+			+ "INNER JOIN visit c on a.visit_uuid=c.uuid INNER JOIN location d on c.location_uuid=d.uuid\r\n"
+			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
 			+ "where a.`status`=3 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	List<Pregnancyobservation> findItems();
 	

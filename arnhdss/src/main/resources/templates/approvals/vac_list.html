@@ -108,9 +108,14 @@
 											            <td th:text="${item.editDate}"></td>
 											            <td th:text="${item.socialgroup_uuid}"></td>
 											            <td th:text="${item.uuid}"></td>
-											            <td th:classappend="${item.status == 0 ? 'status-pending' : item.status == 1 ? 'status-approved' : item.status == 2 ? 'status-rejected' : item.status == 3 ? 'status-resolved' : 'status-supervisor'}"
-									                        th:text="${item.status == 0 ? 'Pending' : item.status == 1 ? 'Approved' : item.status == 2 ? 'Rejected' : item.status == 3 ? 'Resolved' : 'Approved'}">
-									                    </td>
+											            <td th:classappend="${item.status == 0 ? 'status-pending' : item.status == 1 ? 'status-approved' : item.status == 2 ? 'status-rejected' : item.status == 3 ? 'status-resolved' : 'status-supervisor'}">
+															  <span th:if="${item.status == 1 || item.status == 4}">  <i class="ik ik-check-circle"></i>  </span>
+															  <span th:if="${item.status == 2}">  <i class="ik ik-info"></i>  </span>
+															  <span th:if="${item.status == 0}">  <i class="ik ik-edit-2"></i>  </span>
+															  <span th:if="${item.status == 3}">  <i class="ik ik-refresh-cw"></i>  </span>
+															  <span th:text="${item.status == 0 ? 'Pending' : item.status == 1 ? 'Approved' : item.status == 2 ? 'Rejected' : item.status == 3 ? 'Resolved' : 'Supervisor'}">
+															  </span>
+															</td>
 
 											            <!--<td th:text="${item.status}"></td>-->
 											            

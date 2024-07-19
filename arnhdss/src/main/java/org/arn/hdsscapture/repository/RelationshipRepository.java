@@ -46,4 +46,13 @@ public interface RelationshipRepository extends JpaRepository <Relationship, Str
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
 			+ "where a.`status`=3 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND c.endType=1")
 	List<Relationship> findItems();
+	
+	@Query(nativeQuery = true, value ="SELECT a.uuid,aIsToB,a.endDate,a.endType,concat(f.firstName,' ',f.lastName) as fw_uuid, "
+			+ "concat(b.firstName,' ',b.lastName,' ',COALESCE(otherName, '')) as individualA_uuid,individualB_uuid,a.insertDate,lcow,mar, \r\n"
+			+ "mrank,nchdm,nwive,polygamous,a.startDate,tnbch,compno as edtime,dob as sttime,approveDate,`comment`,a.`status`,supervisor\r\n"
+			+ "FROM relationship a INNER JOIN individual b on a.individualA_uuid=b.uuid\r\n"
+			+ "INNER JOIN residency c on b.uuid=c.individual_uuid INNER JOIN location d on c.location_uuid=d.uuid\r\n"
+			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
+			+ "where a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND c.endType=1")
+	List<Relationship> findRej();
 }
