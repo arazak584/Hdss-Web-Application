@@ -5,6 +5,7 @@ import java.util.List;
 import org.arn.hdsscapture.entity.Death;
 import org.arn.hdsscapture.entity.Demographic;
 import org.arn.hdsscapture.entity.Inmigration;
+import org.arn.hdsscapture.entity.Morbidity;
 import org.arn.hdsscapture.entity.Outmigration;
 import org.arn.hdsscapture.entity.Pregnancyobservation;
 import org.arn.hdsscapture.entity.Pregnancyoutcome;
@@ -14,6 +15,7 @@ import org.arn.hdsscapture.entity.Vaccination;
 import org.arn.hdsscapture.repository.DeathRepository;
 import org.arn.hdsscapture.repository.DemographicRepository;
 import org.arn.hdsscapture.repository.InmigrationRepository;
+import org.arn.hdsscapture.repository.MorbidityRepository;
 import org.arn.hdsscapture.repository.OutmigrationRepository;
 import org.arn.hdsscapture.repository.PregnancyobservationRepository;
 import org.arn.hdsscapture.repository.PregnancyoutcomeRepository;
@@ -160,6 +162,20 @@ public class RejectedController {
 		List<Sociodemographic> data = sesrepo.rejected();
 
 		DataWrapper<Sociodemographic> w = new DataWrapper<>();
+		w.setData(data);
+
+		return w;
+	}	
+	
+	@Autowired
+	MorbidityRepository morrepo;
+	
+	@GetMapping("/mor/reject")
+	public DataWrapper<Morbidity> findMor() {
+
+		List<Morbidity> data = morrepo.rejected();
+
+		DataWrapper<Morbidity> w = new DataWrapper<>();
 		w.setData(data);
 
 		return w;

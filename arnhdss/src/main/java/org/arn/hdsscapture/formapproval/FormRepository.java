@@ -125,5 +125,16 @@ public interface FormRepository extends JpaRepository <FormStatus, Long>{
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from vaccination v where `status`=3 AND v.editDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Vac3();
 	
-	
+	//Vaccination
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from morbidity v where `status`=0 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	Long Mor0();
+		
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from morbidity v where `status`=1 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	Long Mor1();
+		
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from morbidity v where `status`=2 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	Long Mor2();
+		
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from morbidity v where `status`=3 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	Long Mor3();
 }

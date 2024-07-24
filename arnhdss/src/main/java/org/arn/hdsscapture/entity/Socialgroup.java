@@ -13,6 +13,7 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -66,6 +67,9 @@ public class Socialgroup {
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
 	private List<Vaccination> vaccinations = new ArrayList<>();
+	
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "socialgroup")
+	private Morbidity morbidity;
 		
 	
 	public Socialgroup() {}

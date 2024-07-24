@@ -97,6 +97,9 @@ public class Fieldworker implements Serializable {
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
 	private List<Amendment> amendment = new ArrayList<>();
 	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<Morbidity> morbidity = new ArrayList<>();
+	
 	
 	
 	public Fieldworker() {}

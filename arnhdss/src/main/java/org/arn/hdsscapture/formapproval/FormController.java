@@ -10,6 +10,7 @@ import org.arn.hdsscapture.entity.Death;
 import org.arn.hdsscapture.entity.Demographic;
 import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Inmigration;
+import org.arn.hdsscapture.entity.Morbidity;
 import org.arn.hdsscapture.entity.Outmigration;
 import org.arn.hdsscapture.entity.Pregnancyobservation;
 import org.arn.hdsscapture.entity.Pregnancyoutcome;
@@ -21,6 +22,7 @@ import org.arn.hdsscapture.repository.DeathRepository;
 import org.arn.hdsscapture.repository.DemographicRepository;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.InmigrationRepository;
+import org.arn.hdsscapture.repository.MorbidityRepository;
 import org.arn.hdsscapture.repository.OutmigrationRepository;
 import org.arn.hdsscapture.repository.PregnancyobservationRepository;
 import org.arn.hdsscapture.repository.PregnancyoutcomeRepository;
@@ -110,6 +112,12 @@ public class FormController {
         data.put("ses1", frepo.Ses1());
         data.put("ses2", frepo.Ses2());
         data.put("ses3", frepo.Ses3()); 
+        
+     // Morbidity
+        data.put("mor0", frepo.Mor0());
+        data.put("mor1", frepo.Mor1());
+        data.put("mor2", frepo.Mor2());
+        data.put("mor3", frepo.Mor3()); 
 
 
         return ResponseEntity.ok(data);
@@ -1108,6 +1116,111 @@ public class FormController {
           }
           
           
+          
+          @Autowired
+          MorbidityRepository morrepo;
+            
+          @GetMapping("/approval/morlist")
+        	public String mor(@RequestParam(name = "fw", required = false)  String fw,Model model) {
+        	        
+        	      	List<Fieldworker> fws = field.fw();
+      			//System.out.println("Villages: " + villages);
+      			model.addAttribute("fws", fws);
+      	    	
+      	    	
+      			if (fw != null) {
+      				List<Morbidity> items = morrepo.findItem(fw);
+      	  	        model.addAttribute("items", items);
+      		        model.addAttribute("selectedFw", fw);
+      		      //System.out.println("Print Items: " + items);
+      			}else {
+      				List<Morbidity> items = morrepo.findItems();
+      	  	        model.addAttribute("items", items);
+      				model.addAttribute("selectedFw", "Select User");
+      			}
+
+
+        	    return "approvals/mor_list";
+        	}
+
+          
+          @GetMapping("/reject/morbidity")
+        	public String morReject(Model model) {
+
+        			List<Morbidity> items = morrepo.findRej();
+        	        model.addAttribute("items", items);
+
+        	    return "approvals/mor_reject";
+        	}
+
+        	@GetMapping("/approval/mor/{uuid}")
+            public String editmorbidity(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
+                List<Morbidity> optionalItem = morrepo.findByUuid(uuid);
+
+                if (!optionalItem.isEmpty()) {
+                	Morbidity item = optionalItem.get(0);
+
+                    // Supervisor
+                    String userName = principal.getName();
+
+                    if (item.getSupervisor() == null || item.getSupervisor().isEmpty()) {
+                        item.setSupervisor(userName);
+                    }
+
+                    model.addAttribute("item", item);
+                    model.addAttribute("fw", fw);
+                    // Populate model with codebook data
+                    MorCodebookData(model);
+
+                    return "approvals/mor";
+                } else {
+                    return "error";
+                }
+            }
+
+            private void MorCodebookData(Model model) {
+                model.addAttribute("yn", repo.yn());
+              
+                
+            }
+
+            @PostMapping("/approval/mor/{uuids}")
+            public String updateMor(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Morbidity item,
+                    BindingResult result, Model model,Principal principal) {
+                if (result.hasErrors()) {
+              	  model.addAttribute("fw", fw);
+                    // Handle validation errors if necessary
+                    return "approvals/mor";
+                } else {
+                    List<Morbidity> optionalItem = morrepo.findByUuids(uuids);
+                    if (!optionalItem.isEmpty()) {
+                    	Morbidity existingImg = optionalItem.get(0);
+                  	  String userName = principal.getName();
+                    	String groupRole = getGroupRole();
+                    	
+                        existingImg.setApproveDate(new Date()); // Set the approveDate using a method
+                        //existingImg.setStatus(item.getStatus());
+                        existingImg.setSupervisor(userName);
+                        if ("ROLE_SUPERVISOR".equals(groupRole) && item.getStatus() == 1) {
+                            existingImg.setStatus(4);
+                        } else {
+                            existingImg.setStatus(item.getStatus());
+                        }               
+                        // Ensure comment is null if status is not 2
+                        if (item.getStatus() != 2) {
+                            existingImg.setComment(null);
+                        } else {
+                            existingImg.setComment(item.getComment());
+                        }
+                        morrepo.save(existingImg);
+                        return "redirect:/hdss/approval/morlist?fw=" + fw; // Corrected redirect URL
+                    } else {
+                        return "error"; 
+                    }
+                }
+            }
+          
+          
           private String getGroupRole() {
         	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         	    if (authentication != null) {
@@ -1119,5 +1232,6 @@ public class FormController {
         	    return null; // Return null or handle accordingly if no group_role found
         	}        
           
+ 
           
 }

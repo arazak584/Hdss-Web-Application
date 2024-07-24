@@ -77,6 +77,12 @@ function updateDashboards(data) {
     $('#vac1').text(data.vac1);
     $('#vac2').text(data.vac2);
     $('#vac3').text(data.vac3);
+    
+    // Morbidity
+    $('#mor0').text(data.mor0);
+    $('#mor1').text(data.mor1);
+    $('#mor2').text(data.mor2);
+    $('#mor3').text(data.mor3);
 }
 
 function renderItems(items) {

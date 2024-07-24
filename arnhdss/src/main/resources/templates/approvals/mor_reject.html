@@ -27,13 +27,38 @@
         <link rel="stylesheet" th:href="@{/plugins/owl.carousel/dist/assets/owl.theme.default.min.css}">
         <link rel="stylesheet" th:href="@{/dist/css/theme.min.css}">
         <link rel="stylesheet" th:href="@{/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
+        <link rel="stylesheet" th:href="@{/css/select2.min.css}">
+        
         
         <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
+        
+        <style>
+        .status-pending {
+            background-color: yellow;
+            color: black;
+        }
+        .status-approved {
+            background-color: green;
+            color: white;
+        }
+        .status-rejected {
+            background-color: red;
+            color: white;
+        }
+        .status-resolved {
+            background-color: blue;
+            color: white;
+        }
+        .status-supervisor {
+            background-color: purple;
+            color: white;
+        }
+    </style>
         
     </head>
 
     <body>
-       <div th:if="${exceptionMsg}" class="alert alert-danger" th:text="${exceptionMsg}"></div>
+       
 
         <div class="wrapper">
             <!-- header start-->
@@ -47,61 +72,56 @@
                 <div class="main-content">
   
                                   <div class="card">
-									  <div th:if="${exceptionMsg}" class="alert alert-danger" th:text="${exceptionMsg}"></div>
-                                    
                                     <div class="card-body">
+										<div class="card-header"><h3 style="color: blue; text-transform: uppercase; font-weight: bold;">Morbidity Assessment</h3>
+										<button type="button" class="btn btn-cancel ml-2" onclick="window.location.href='/hdss/approval'">Back</button>
+										</div>
 										
-								<div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header"><h3>Community Report</h3></div>
-                                    <!-- success message -->
-									<div th:if="${success}">
-									    <div class="alert alert-info">
-									        <!--[[${success}]] <span th:text="${community}"></span>!-->
-									    </div>
-									</div>
-                                    <div class="card-body">
-                                        <form class="forms-sample" th:action="@{/utility/community/{uuid} (uuid=${item.uuid})}" th:object="${item}" method="post">
-                                            <!--<div class="form-group">
-                                                <input type="text" name="username" th:field ="*{username}" class="form-control" readonly>
-                                            </div>-->
-                                                                          
-												<div class="form-group">
-													<label th:text="#{community}"></label>
-													<select name="rec_anc" class="form-control" th:field="*{community}" required>
-													<option th:each="locationhierarchy : ${community}" th:value="${locationhierarchy.name}"
-													th:text="${locationhierarchy.name}"></option>
-													</select>
-												</div>
-											
-											<div class="form-group">
-													<label th:text="#{factype}"></label>
-													<select name="rec_anc" class="form-control " th:field="*{item}" required>
-													<option th:each="codebook : ${itemlist}" th:value="${codebook.codeValue}"
-													th:text="${codebook.codeLabel}"></option>
-													</select>
-											</div>
-											
-											<div class="form-group">
-													<label th:text="#{facility}"></label>
-												 <input type="text" class="form-control"  name="name" th:field ="*{name}" Placeholder="Name of Facility/Institution" required>
+										
+                                               <!--<a th:href="@{/utility/round/add}"> <button class="btn btn-theme">Add Round</button></a>-->
+                                        <div class="dt-responsive">
+                                            <table id="order-table"
+                                                   class="table table-striped table-bordered nowrap" data-order='[[1, "desc"]]'>
+                                                <thead>
+                                                <tr>
+                                                    <th th:text="#{item.compo}"></th>
+													<th th:text="#{item.insertDate}"></th>
+													<th th:text="#{househead}"></th>
+													<th th:text="#{item.fw}"></th>
+													<th th:text="#{item.status}"></th>
+													<th th:text="#{fw.action}"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="item : ${items}">
+											            <td th:text="${item.compno}"></td>
+											            <td th:text="${item.insertDate}"></td>
+											            <td th:text="${item.hoh_name}"></td>
+											            <td th:text="${item.fw_name}"></td>
+											            <td th:classappend="${item.status == 0 ? 'status-pending' : item.status == 1 ? 'status-approved' : item.status == 2 ? 'status-rejected' : item.status == 3 ? 'status-resolved' : 'status-supervisor'}">
+															  <span th:if="${item.status == 1 || item.status == 4}">  <i class="ik ik-check-circle"></i>  </span>
+															  <span th:if="${item.status == 2}">  <i class="ik ik-info"></i>  </span>
+															  <span th:if="${item.status == 0}">  <i class="ik ik-edit-2"></i>  </span>
+															  <span th:if="${item.status == 3}">  <i class="ik ik-refresh-cw"></i>  </span>
+															  <span th:text="${item.status == 0 ? 'Pending' : item.status == 1 ? 'Approved' : item.status == 2 ? 'Rejected' : item.status == 3 ? 'Resolved' : 'Supervisor'}">
+															  </span>
+															</td>
 
-											</div>
+											            <!--<td th:text="${item.status}"></td>-->
+											            
+											            <td>
+											                <a th:href="@{/hdss/approval/mor/{uuid}(uuid=${item.uuid}, fw=${selectedFw})}" 
+											                class="btn btn-primary btn-sm">View</a>
 											
-											<div class="form-group">
-													<label th:text="#{description}"></label>
-												 <input type="text" class="form-control"  name="description" th:field ="*{description}" Placeholder="Description" required>
-
-											</div>
-                                            
-                                            <button type="submit" class="btn btn-primary mr-2">Update</button>
-                                            <a class="btn btn-secondary btn-lg" href="#" th:href="@{/utility/community}">CANCEL</a>
-                                            <!--<button class="btn btn-light">Cancel</button>-->
-                                          </form>
-                                    </div>
-                                </div>
-                            </div>
-                                   
+											            </td>
+											            </tr>                                                                                
+                                               
+                                            </tbody>
+                                                <tfoot>
+                                                
+                                                </tfoot>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
   
@@ -137,6 +157,7 @@
         <script th:src="@{/dist/js/theme.min.js}"></script>
         <script th:src="@{/js/dashboard.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
+         <script th:src="@{/js/select2.min.js}"></script>
         
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -153,7 +174,9 @@
         document.getElementById('logoutForm').submit();
     }
 </script>
-
+<script>
+	$('.js-states').select2();
+</script>
         
     </body>
 </html>

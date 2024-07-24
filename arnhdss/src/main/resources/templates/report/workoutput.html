@@ -12,6 +12,7 @@
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
         
         <link rel="stylesheet" th:href="@{/plugins/bootstrap/dist/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
@@ -29,11 +30,12 @@
         <link rel="stylesheet" th:href="@{/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
         
         <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
+		
         
     </head>
 
     <body>
-       <div th:if="${exceptionMsg}" class="alert alert-danger" th:text="${exceptionMsg}"></div>
+       
 
         <div class="wrapper">
             <!-- header start-->
@@ -46,63 +48,45 @@
 				<!-- Sidebar end -->
                 <div class="main-content">
   
-                                  <div class="card">
-									  <div th:if="${exceptionMsg}" class="alert alert-danger" th:text="${exceptionMsg}"></div>
-                                    
-                                    <div class="card-body">
-										
-								<div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header"><h3>Community Report</h3></div>
-                                    <!-- success message -->
-									<div th:if="${success}">
-									    <div class="alert alert-info">
-									        <!--[[${success}]] <span th:text="${community}"></span>!-->
-									    </div>
-									</div>
-                                    <div class="card-body">
-                                        <form class="forms-sample" th:action="@{/utility/community/{uuid} (uuid=${item.uuid})}" th:object="${item}" method="post">
-                                            <!--<div class="form-group">
-                                                <input type="text" name="username" th:field ="*{username}" class="form-control" readonly>
-                                            </div>-->
-                                                                          
-												<div class="form-group">
-													<label th:text="#{community}"></label>
-													<select name="rec_anc" class="form-control" th:field="*{community}" required>
-													<option th:each="locationhierarchy : ${community}" th:value="${locationhierarchy.name}"
-													th:text="${locationhierarchy.name}"></option>
-													</select>
-												</div>
-											
-											<div class="form-group">
-													<label th:text="#{factype}"></label>
-													<select name="rec_anc" class="form-control " th:field="*{item}" required>
-													<option th:each="codebook : ${itemlist}" th:value="${codebook.codeValue}"
-													th:text="${codebook.codeLabel}"></option>
-													</select>
-											</div>
-											
-											<div class="form-group">
-													<label th:text="#{facility}"></label>
-												 <input type="text" class="form-control"  name="name" th:field ="*{name}" Placeholder="Name of Facility/Institution" required>
-
-											</div>
-											
-											<div class="form-group">
-													<label th:text="#{description}"></label>
-												 <input type="text" class="form-control"  name="description" th:field ="*{description}" Placeholder="Description" required>
-
-											</div>
-                                            
-                                            <button type="submit" class="btn btn-primary mr-2">Update</button>
-                                            <a class="btn btn-secondary btn-lg" href="#" th:href="@{/utility/community}">CANCEL</a>
-                                            <!--<button class="btn btn-light">Cancel</button>-->
-                                          </form>
+                               
+							<div class="card-header d-block">
+                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'work_done.xlsx')">Export to Excel</button>
+                                        <form class="form-inline" method="GET"  action="/hdss/report/workoutput" style="text-align: center;">                                       
+                                                 <input type="text" name="query" class="form-control" value="query" required readonly hidden>
+                                                <button type="submit" class="btn btn-theme">Generate Work Output</button>
+                                            </form>
                                     </div>
+							<div class="dt-responsive">
+                                    <table id="order-table" class="table table-striped table-bordered nowrap" data-order='[[3, "asc"]]'>
+                                    <thead>
+                                        <tr>
+                                           
+                                            <th>SubVillage</th>
+                                            <th>Compounds</th>
+                                            <th>Total Done</th>
+                                            <th>Percentage</th>
+                                            <th>Households</th>
+                                            <th>Total Done</th>
+                                            <th>Percentage</th>
+                                            <th>Data Collector</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="item : ${items}">                               
+                                            <td th:text="${item.id}"></td>
+											 <td th:text="${item.id1}"></td>											 
+											 <td th:text="${item.id4}"></td>
+											 <td th:text="${item.id5}"></td>
+											 <td th:text="${item.id6}"></td>
+											 <td th:text="${item.id7}"></td>
+											 <td th:text="${item.id8}"></td>
+											 <td th:text="${item.id9}"></td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
                                 </div>
                             </div>
-                                   
-                                    </div>
                                 </div>
   
                 </div>
@@ -137,6 +121,7 @@
         <script th:src="@{/dist/js/theme.min.js}"></script>
         <script th:src="@{/js/dashboard.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
+        <script th:src="@{/js/index.js}"></script>
         
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -153,6 +138,7 @@
         document.getElementById('logoutForm').submit();
     }
 </script>
+
 
         
     </body>

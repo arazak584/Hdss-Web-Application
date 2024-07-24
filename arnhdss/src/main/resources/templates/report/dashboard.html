@@ -7,9 +7,8 @@
         <title  th:text="#{app.title}"></title>
         <meta name="description" content="">
         <meta name="keywords" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">      
+       
 
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">     
         
@@ -28,23 +27,17 @@
         <link rel="stylesheet" th:href="@{/dist/css/theme.min.css}">
         <link rel="stylesheet" th:href="@{/css/spinner.css}">
         
+        
         <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
         <script th:src="@{/js/xlsx.full.min.js}"></script>
-        
-        <style>
-        #populationPyramid {
-            width: 100%;
-            height: 800px;
-        }
-    </style>
         
     </head>
 
     <body>
        
-       <div id="loadingSpinner">
+       <!--<div id="loadingSpinner">
         <div class="loader"></div>
-    	</div>
+    	</div>-->
 
         <div class="wrapper">
             <!-- header start-->
@@ -58,15 +51,22 @@
                 <div class="main-content">
                     <div class="container-fluid">
 						
-                        <div class="row clearfix">
+                        <div class="row clearfix">											         
 							
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="widget">
                                     <div class="widget-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="state" id="div1">
+										
+                                        <div class="d-flex justify-content-between align-items-center">                                            
+											<div class="state" id="div1">																							
                                                 <h6>Total Individuals</h6>
+                                               
+                                            <div class="d-flex flex-column justify-content-center align-items-center">
+								            <div id="loadingSpinnerResident1" class="spinner-border text-success" role="status">
+								                <span class="sr-only">Loading...</span>
+								            </div>
                                                 <h2><span id="countInd" class="count"></span></h2>
+                                                </div>
                                             </div>
                                             <div class="icon">
                                                 <i class="fa fa-users"></i>
@@ -85,12 +85,19 @@
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12">
+								
                                 <div class="widget">
                                     <div class="widget-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="state">
                                                 <h6>Active Residents</h6>
+                                                
+                                                <div class="d-flex flex-column justify-content-center align-items-center">
+								            	<div id="loadingSpinnerResident2" class="spinner-border text-success" role="status">
+								                <span class="sr-only">Loading...</span>
+								            	</div>
                                                 <h2><span id="countResContainer" class="count"></span></h2>
+                                                </div>
                                             </div>
                                             <div class="icon">
                                                 <i class="fa fa-users"></i>
@@ -112,7 +119,13 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="state">
                                                 <h6>Active Households</h6>
+                                                
+                                                <div class="d-flex flex-column justify-content-center align-items-center">
+								            <div id="loadingSpinnerResident3" class="spinner-border text-success" role="status">
+								                <span class="sr-only">Loading...</span>
+								            </div>
                                                 <h2><span id="cnthh" class="count"></span></h2>
+                                                </div>
                                             </div>
                                             <div class="icon">
                                                 <i class="fa fa-female"></i>
@@ -134,7 +147,13 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="state">
                                                 <h6>Active Compounds</h6>
+                                                
+                                            <div class="d-flex flex-column justify-content-center align-items-center">
+								            <div id="loadingSpinnerResident4" class="spinner-border text-success" role="status">
+								                <span class="sr-only">Loading...</span>
+								            </div>
                                                 <h2><span id="cntcomp" class="count"></span></h2>
+                                            </div>
                                             </div>
                                             <div class="icon">
                                                 <i class="fa fa-home"></i>
@@ -152,23 +171,26 @@
                             </div>
                             
                         </div>
+                        
+                       <!-- Field Report -->			      
+                      
                         <div class="row">
                                             
-								<!-- top contact and member performance start -->
                             <div class="col-xl-8 col-md-6">
                                 <div class="card table-card">
                                     <div class="card-header">
                                         <h3>Field Report</h3>
                                         <div class="card-header-right">
-                                            <ul class="list-unstyled card-option">
-                                                <li><i class="ik ik-chevron-left action-toggle"></i></li>
-                                                
+                                            <ul class="list-unstyled card-option">                                               
+                                                <li><i class="ik ik-minus minimize-card"></i></li>
+                                                <li><i class="ik ik-x close-card"></i></li>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="card-block">
+                                    <div class="card-body scrollable" id="fieldreport">
                                         <div class="table-responsive">
                                             <table class="table table-hover mb-0">
+											
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -178,62 +200,94 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+												
                                                     <tr>
                                                         <td><h5>1</h5></td>
                                                         <td><h6 class="mb-1">Household Visit</h6></td>
-                                                        <td><h6 class="text-muted"><span id="rvisit"></span></h6></td>
+                                                        							            	                                                  										            										           
+                                                        <td>
+														<div id="loadingSpinnerReport1" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 														
+															<h6 class="text-muted"><span id="rvisit"></span></h6>                                                                                                                
+                                                       
+                                                        </td>
+                                                       
                                                         <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href="@{/hdss/report/visit}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><h5>2</h5></td>
                                                         <td><h6 class="mb-1">Compound Visit</h6></td>
-                                                        <td><h6 class="text-muted"><span id="listing"></span></h6></td>
+                                                        <td>
+														<div id="loadingSpinnerReport2" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div>	
+															<h6 class="text-muted"><span id="listing"></span></h6></td>
                                                         <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/listing}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><h5>3</h5></td>
                                                         <td><h6 class="mb-1">Inmigration</h6></td>
-                                                        <td><h6 class="text-muted"><span id="cntimg"></span></h6></td>
+                                                        <td>
+														<div id="loadingSpinnerReport3" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 		
+															<h6 class="text-muted"><span id="cntimg"></span></h6></td>
                                                         <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/inmigration}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><h5>4</h5></td>
                                                         <td><h6 class="mb-1">Outmigration</h6></td>
-                                                        <td><h6 class="text-muted"><span id="cntomg"></span></h6></td>
+                                                        <td>
+															<div id="loadingSpinnerReport4" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
+															<h6 class="text-muted"><span id="cntomg"></span></h6></td>
                                                         <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/outmigration}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><h5>5</h5></td>
                                                         <td><h6 class="mb-1">Pregnancy Outcome</h6></td>
-                                                        <td><h6 class="text-muted"><span id="cntoutcome"></span></h6></td>
+                                                        <td>
+															<div id="loadingSpinnerReport5" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
+															<h6 class="text-muted"><span id="cntoutcome"></span></h6></td>
                                                         <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/outcome}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     
                                                     <tr>
                                                         <td><h5>6</h5></td>
                                                         <td><h6 class="mb-1">Individual</h6></td>
-                                                        <td><h6 class="text-muted"><span id="cntperson"></span></h6></td>
+                                                        <td>
+														<div id="loadingSpinnerReport6" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div>
+															<h6 class="text-muted"><span id="cntperson"></span></h6></td>
                                                         <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/individual}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     
                                                     <tr>
                                                         <td><h5>7</h5></td>
                                                         <td><h6 class="mb-1">Household</h6></td>
-                                                        <td><h6 class="text-muted"><span id="cntsoc"></span></h6></td>
+                                                        <td>
+															<div id="loadingSpinnerReport7" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
+															<h6 class="text-muted"><span id="cntsoc"></span></h6></td>
                                                         <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/household}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     
                                                     <tr>
                                                         <td><h5>8</h5></td>
                                                         <td><h6 class="mb-1">Compounds</h6></td>
-                                                        <td><h6 class="text-muted"><span id="cntloc"></span></h6></td>
+                                                        <td>
+															<div id="loadingSpinnerReport8" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
+															<h6 class="text-muted"><span id="cntloc"></span></h6></td>
                                                         <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/location}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     
                                                     <tr>
                                                         <td><h5>9</h5></td>
                                                         <td><h6 class="mb-1">Vaccination</h6></td>
-                                                        <td><h6 class="text-muted"><span id="cntvac"></span></h6></td>
+                                                        <td>
+															<div id="loadingSpinnerReport9" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
+															<h6 class="text-muted"><span id="cntvac"></span></h6></td>
                                                         <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/vaccination}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     
@@ -246,24 +300,31 @@
 
                                     
                                 <div class="col-md-12 col-xl-4">
-                                <div class="card sale-card">
-                                    <div class="card-block pb-0">
-                                        
-                                        <div id="loadingSpinnerPopulation" style="display: none;">Loading...</div>
-
-									    <!-- Population Line Chart -->
-									    <!--<div id="populationPyramid" style="height:100px"></div>-->
-									    <canvas id="populationPyramid" style="height:500px"></canvas>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-                            
-                            
+								    <div class="card sale-card">
+								        <div class="card-header">
+								            <h3>Population Pyramid</h3>
+								            <div class="card-header-right">
+                                            <ul class="list-unstyled card-option">                                               
+                                                <li><i class="ik ik-minus minimize-card"></i></li>
+                                                <li><i class="ik ik-x close-card"></i></li>
+                                            </ul>
+                                        </div>
+								        </div>
+								        
+								        <div class="card-body scrollable">
+								            <div class="d-flex flex-column justify-content-center align-items-center">
+								                <div id="loadingSpinnerPopulation" class="loader" role="status">
+								                    <span class="sr-only">Loading...</span>
+								                </div>
+								                <!-- Population Pyramid Chart -->
+								                <canvas id="populationPyramid" style="height:250px;"></canvas>
+								            </div>
+								        </div>
+								    </div>
+								</div>     
                             
                         </div>
+                        
                         
                         <div class="row">
 							
@@ -282,9 +343,13 @@
                                         </div>
                                         <div class="row align-items-center text-center">
                                             <div class="col">
+												<div id="loadingSpinnerReport10" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
                                                 <h6 class="mb-0"><span id="allhh" class="count"></span></h6></div>
                                             <div class="col"><i class="fas fa-exchange-alt text-red f-18"></i></div>
                                             <div class="col">
+												<div id="loadingSpinnerReport11" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
                                                 <h6 class="mb-0"><span id="visited" class="count"></span></h6></div>
                                         </div>
                                         <h6 class="pt-badge bg-red"><span id="allvisit"></span> </h6>
@@ -305,16 +370,21 @@
                                         </div>
                                         <div class="row align-items-center text-center">
                                             <div class="col">
+												<div id="loadingSpinnerReport12" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
                                                 <h6 class="mb-0"><span id="cntcmp" class="count"></span></h6></div>
                                             <div class="col"><i class="fas fa-exchange-alt text-green f-18"></i></div>
                                             <div class="col">
+												<div id="loadingSpinnerReport13" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
                                                 <h6 class="mb-0"><span id="cmpvisit" class="count"></span></h6></div>
                                         </div>
                                         <h6 class="pt-badge bg-green"><span id="cpmvisited"></span>%</h6>
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="col-xl-4 col-md-6">
+                            
+                            <div class="col-xl-4 col-md-6" th:each="round : ${items}">
                                 <div class="card proj-t-card">
                                     <div class="card-body">
                                         <div class="row align-items-center mb-30">
@@ -322,37 +392,37 @@
                                                 <i class="fas fa-lightbulb text-yellow f-30"></i>
                                             </div>
                                             <div class="col pl-0">
-                                                <h6 class="mb-5">Unique Innovation</h6>
-                                                <h6 class="mb-0 text-yellow">Live Update</h6>
+                                                <h6 class="mb-5">Work Output</h6>
+                                                <h6 class="mb-0 text-yellow" th:text="${round.remark}"></h6>
                                             </div>
                                         </div>
                                         <div class="row align-items-center text-center">
                                             <div class="col">
-                                                <h6 class="mb-0">1 Month</h6></div>
+                                                <h6 class="mb-0" th:text="${round.startDate}"></h6>
+                                             </div>
                                             <div class="col"><i class="fas fa-exchange-alt text-yellow f-18"></i></div>
                                             <div class="col">
-                                                <h6 class="mb-0">248</h6></div>
+                                                <h6 class="mb-0"><span th:text="${round.endDate}"></span></h6>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <h6 class="pt-badge bg-yellow">73%</h6>
+                                        <h6 class="pt-badge bg-yellow"> <a href="#" th:href="@{/hdss/report/workoutput}">View</a></h6>
                                     </div>
                                 </div>
-                            </div>-->
+                            
+                            </div>
                             <!-- project-ticket end -->
                             
-							
-							
-						</div>
-						
-						<div class="row">
+                            <div class="row">
 							<!-- ticket, proj, clent start -->
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
-                                        <a th:href = "@{/hdss/report/pregnancy}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><p class="mb-30 bg-red lbl-card"><i class="fas fa-database"></i> View Report</p></a>
+                                        <a th:href = "@{/hdss/report/pregnancy}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><p class="mb-30 bg-red lbl-card"><i class="fas fa-database"></i> View Pregnancy</p></a>
                                         <div class="text-center">
+											<div id="loadingSpinnerReport14" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
                                             <h2 class="mb-0 d-inline-block text-red"><span id="cntpreg" class="count"></span></h2>
-                                            <p class="mb-0 d-inline-block">Pregnancy</p>
-                                            <p class="mb-0 mt-15"><i class="fas fa-caret-down mr-10 f-18 text-red"></i>From Current Round</p>
                                         </div>
                                     </div>
                                 </div>
@@ -360,11 +430,12 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
-                                        <a th:href = "@{/hdss/report/relationship}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><p class="mb-30 bg-blue lbl-card"><i class="fas fa-database"></i> View Report</p></a>
+                                        <a th:href = "@{/hdss/report/relationship}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
+											<p class="mb-30 bg-blue lbl-card"><i class="fas fa-database"></i> View Relationship</p></a>
                                         <div class="text-center">
+											<div id="loadingSpinnerReport15" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
                                             <h2 class="mb-0 d-inline-block text-blue"><span id="cntrel"></span></h2>
-                                            <p class="mb-0 d-inline-block">Relationship</p>
-                                            <p class="mb-0 mt-15"><i class="fas fa-caret-down mr-10 f-18 text-blue"></i>From Current Round</p>
                                         </div>
                                     </div>
                                 </div>
@@ -372,11 +443,11 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
-                                        <a th:href = "@{/hdss/report/death}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><p class="mb-30 bg-green lbl-card"><i class="fas fa-database"></i> View Report</p></a>
+                                        <a th:href = "@{/hdss/report/death}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><p class="mb-30 bg-green lbl-card"><i class="fas fa-database"></i> View Death</p></a>
                                         <div class="text-center">
+											<div id="loadingSpinnerReport16" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
                                             <h2 class="mb-0 d-inline-block text-green"><span id="cntdth"></span></h2>
-                                            <p class="mb-0 d-inline-block">Death</p>
-                                            <p class="mb-0 mt-15"><i class="fas fa-caret-down mr-10 f-18 text-green"></i>From Current Round</p>
                                         </div>
                                     </div>
                                 </div>
@@ -384,75 +455,95 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
-                                        <a th:href = "@{/hdss/report/ses}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><p class="mb-30 bg-warning lbl-card"><i class="fas fa-database"></i> View Report</p></a>
+                                        <a th:href = "@{/hdss/report/ses}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><p class="mb-30 bg-warning lbl-card"><i class="fas fa-database"></i> View SES</p></a>
                                         <div class="text-center">
+											<div id="loadingSpinnerReport17" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
                                             <h2 class="mb-0 d-inline-block text-warning"><span id="cntses"></span></h2>
-                                            <p class="mb-0 d-inline-block">SES</p>
-                                            <p class="mb-0 mt-15"><i class="fas fa-caret-down mr-10 f-18 text-warning"></i>From Current Round</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- ticket, proj, clent end -->
-                            
-                            
-                          <!-- Population -->  
+                            <!-- Field Report end -->
    							
 						</div>
-						
-						<!-- Work Done Table -->
-						
-						<div class="card-body">
-							<div class="card-header d-block">
-                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'work_done.xlsx')">Export to Excel</button>
-                                        <form class="form-inline" method="GET"  action="/hdss/report" style="text-align: center;">                                       
-                                                 <input type="text" name="query" class="form-control" value="query" required readonly hidden>
-                                                <button type="submit" class="btn btn-theme">Generate Work Output</button>
-                                            </form>
+                           
+                           
+                           
+                        <!-- Chart -->
+						<div class="row">
+                                            
+								<!-- Field Report -->
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card table-card">
+                                    <div class="card-header">
+                                        <h3>Deaths Per Year</h3>
+                                        <div class="card-header-right">
+                                            <ul class="list-unstyled card-option">
+                                                <li><i class="ik ik-chevron-left action-toggle"></i></li>
+                                                
+                                            </ul>
+                                        </div>
                                     </div>
-							<div class="dt-responsive">
-                                    <table id="order-table" class="table table-striped table-bordered nowrap" data-order='[[3, "asc"]]'>
-                                    <thead>
-                                        <tr>
-                                           
-                                            <th>SubVillage</th>
-                                            <th>Compounds</th>
-                                            <th>Total Done</th>
-                                            <th>Percentage</th>
-                                            <th>Households</th>
-                                            <th>Total Done</th>
-                                            <th>Percentage</th>
-                                            <th>Data Collector</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="item : ${items}">                               
-                                            <td th:text="${item.id}"></td>
-											 <td th:text="${item.id1}"></td>											 
-											 <td th:text="${item.id4}"></td>
-											 <td th:text="${item.id5}"></td>
-											 <td th:text="${item.id6}"></td>
-											 <td th:text="${item.id7}"></td>
-											 <td th:text="${item.id8}"></td>
-											 <td th:text="${item.id9}"></td>
-                                        </tr>
+                                    <div class="card-block">
+										
+										<div class="d-flex flex-column justify-content-center align-items-center">
+								            <div id="loadingSpinnerDeath" class="loader" role="status">
+								                <span class="sr-only">Loading...</span>
+								            </div>
                                         
-                                    </tbody>
-                                </table>
+						                <!-- Death Statistics Line Chart -->
+						                <canvas id="myChart"></canvas>
+						               </div>
+                                    </div>
                                 </div>
                             </div>
+
+                                    
+                                <div class="col-xl-6 col-md-6">
+                                <div class="card table-card">
+									<div class="card-header">
+                                        <h3>Outcome Type</h3>
+                                        <div class="card-header-right">
+                                            <ul class="list-unstyled card-option">
+                                                <li><i class="ik ik-chevron-left action-toggle"></i></li>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-block">
+										
+						                <div class="d-flex flex-column justify-content-center align-items-center">
+								            <div id="loadingSpinnerOutcome" class="loader" role="status">
+								                <span class="sr-only">Loading...</span>
+								            </div>
+						                <!-- Outcome Statistics Line Chart -->
+						                <canvas id="outcomeChart" style="height:max-content"></canvas>
+						                </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div> 
+							
+							
+						</div>					
 						
-			
+
+						
+						
+
 
                     </div>
+                    <!--Footer-->
+                <div th:insert="fragments/footer"></div>
                 </div>
 
 
-				<!--Footer-->
-                <div th:insert="fragments/footer"></div>
+				
                 
             </div>
-        </div>
         
        
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -482,11 +573,13 @@
         <script th:src="@{/js/charts.js}"></script>
         <script th:src="@{/dist/js/theme.min.js}"></script>
         <script th:src="@{/js/dashboard.js}"></script>
-        <script th:src="@{/js/dashboards.js}"></script>
+        <script th:src="@{/js/reportdashboard.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
         <script th:src="@{/js/index.js}"></script>
         <script th:src="@{/js/approval.js}"></script>
         <script th:src="@{/js/population.js}"></script>
+        <script th:src="@{/js/deaths.js}"></script>
+        <script th:src="@{/js/births.js}"></script>
         
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -529,6 +622,7 @@
   };
   xhr.send();
 </script>
+
 
         
     </body>

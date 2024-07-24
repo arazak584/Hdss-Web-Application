@@ -29,5 +29,4 @@ public interface RoundRepository extends JpaRepository <Round, String> {
 	 @Query(nativeQuery = true, value = "SELECT * from round ORDER BY roundNumber DESC limit 1")
 	 Round endD();
 
-
 }

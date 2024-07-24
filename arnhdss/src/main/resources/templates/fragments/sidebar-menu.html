@@ -63,6 +63,7 @@
                     <a href="#"><i class="ik ik-pie-chart"></i><span>Report</span></a>
                     <div class="submenu-content">
                         <a href="#" th:href="@{/hdss/report/pop}" class="menu-item">Population</a>
+                        <a href="#" th:href="@{/hdss/report/workoutput}" class="menu-item">Work Output</a>
                         <a href="#" th:href="@{/hdss/report/visit}" class="menu-item">Household Visit</a>
                         <a th:href = "@{/hdss/report/listing}" class="menu-item">Compound Visit</a>
                         <a th:href = "@{/hdss/report/inmigration}" class="menu-item">Inmigration</a>
@@ -73,6 +74,7 @@
                         <a th:href = "@{/hdss/report/death}" class="menu-item">Death</a>
                         <a th:href = "@{/hdss/report/location}" class="menu-item">Compound</a>
                         <a th:href = "@{/hdss/report/household}" class="menu-item">Socialgroup</a>
+                        <a th:href = "@{/hdss/report/ses}" class="menu-item">SES</a>
                     </div>
                 </div>
                 <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">
@@ -94,6 +96,7 @@
                         <a href="#" class="menu-item" th:href="@{/hdss/approval/rellist}">Relationship</a>
                         <a href="#" class="menu-item" th:href="@{/hdss/approval/seslist}">SES</a>
                         <a href="#" class="menu-item" th:href="@{/hdss/approval/vaclist}">Vaccination</a>
+                        <a href="#" class="menu-item" th:href="@{/hdss/approval/morlist}">Morbidity</a>
                     </div>
                 </div>
             </nav>

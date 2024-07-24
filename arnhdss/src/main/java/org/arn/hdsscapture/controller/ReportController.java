@@ -10,6 +10,7 @@ import org.arn.hdsscapture.entity.Population;
 import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.query.Queries;
 import org.arn.hdsscapture.query.QueryRepository;
+import org.arn.hdsscapture.repository.CodebookRepository;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.PopulationRepository;
@@ -48,11 +49,15 @@ public class ReportController {
 	QueryRepository queryrepo;
 	@Autowired
 	LocationhierarchyRepository loc;
+	@Autowired
+	RoundRepository round;
+	@Autowired
+	CodebookRepository codebook;
 	
 	@GetMapping("/asyncReport")
     public ResponseEntity<Map<String, Object>> getAsyncReport() {
         Map<String, Object> data = new HashMap<>();
-        data.put("items", field.findAll());
+        data.put("items", codebook.findAll());
         //Residency
         data.put("countRes", repo.countResidency());
         data.put("perres", repo.perRES());
@@ -74,7 +79,7 @@ public class ReportController {
 	@GetMapping("/asyncReport/query")
     public ResponseEntity<Map<String, Object>> getAsyncQuery() {
         Map<String, Object> data = new HashMap<>();
-        data.put("items", field.findAll());
+        data.put("items", codebook.findAll());
         //Query
         data.put("nomemb", repo.noMem());
         data.put("minor", repo.Minor());
@@ -91,7 +96,7 @@ public class ReportController {
 	@GetMapping("/asyncReport/hierarchy")
     public ResponseEntity<Map<String, Object>> getAsyncHierarchy() {
         Map<String, Object> data = new HashMap<>();
-        data.put("items", loc.findAll());
+        data.put("items", codebook.findAll());
         //Query
         data.put("cnt1", loc.cnt1());
         data.put("cnt2", loc.cnt2());
@@ -106,7 +111,7 @@ public class ReportController {
 	@GetMapping("/asyncReport/report")
     public ResponseEntity<Map<String, Object>> getAsyncReports() {
         Map<String, Object> data = new HashMap<>();
-        data.put("items", field.findAll());
+        data.put("items", codebook.findAll());
         //Report
       //HH VISIT
         data.put("hh", repo.countSocialgroup());
@@ -142,16 +147,12 @@ public class ReportController {
 
 
 	@GetMapping("/report")
-	public String fw(@RequestParam(name = "query", required = false)  String query,Model model) {
-		
-		if (query != null) {
-	        List<Queries> items = queryrepo.Compvisit(query);
-	        model.addAttribute("items", items);
-		}else {
+	public String fw(Model model) {
 			
-		}
+	        List<Round> items = round.findAll();
+	        model.addAttribute("items", items);
+
 	   
-		
 //		List<Population> items = pop.pyramid();
 //		System.err.println("Size of list " + items.size());
 //		
@@ -432,6 +433,21 @@ public class ReportController {
 
 	    return "report/vaccination";
 	}
+	
+	@GetMapping("/report/morbidity")
+	public String morbidity(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+
+	    
+	    if (startDate != null && endDate != null) {
+	        List<FieldReport> items = rep.Mor(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/morbidity";
+	}
 
 	
 	@GetMapping("/report/household")
@@ -521,6 +537,21 @@ public class ReportController {
 	        model.addAttribute("items", items);	 
 
 	    return "report/pop";
+	}
+	
+	@GetMapping("/report/workoutput")
+	public String output(@RequestParam(name = "query", required = false)  String query,Model model) {
+		
+		if (query != null) {
+	        List<Queries> items = queryrepo.Compvisit(query);
+	        model.addAttribute("items", items);
+		}else {
+			
+		}
+	  
+		
+
+		return "report/workoutput";
 	}
 
 	

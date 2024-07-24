@@ -127,5 +127,13 @@ public interface FieldRepository extends JpaRepository <FieldReport, String> {
 			+ "WHERE a.insertDate BETWEEN :startDate AND :endDate GROUP BY Fieldworker,name ORDER BY Fieldworker,total")
 	List<FieldReport> Hoh(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
+	@Query(nativeQuery = true, value = "SELECT a.uuid as id,concat(b.firstName,' ',b.lastName)as Fieldworker,username,count(a.socialgroup_uuid) as total,\r\n"
+			+ "max(a.insertDate)insertDate,max(date(a.submitDate))submitDate,e.name\r\n"
+			+ "FROM morbidity a INNER JOIN fieldworker b ON a.fw_uuid=b.fw_uuid\r\n"
+			+ "INNER JOIN location  d on  a.location_uuid=d.uuid\r\n"
+			+ "inner JOIN locationhierarchy e on d.locationLevel_uuid=e.uuid\r\n"
+			+ "WHERE a.editDate BETWEEN :startDate AND :endDate GROUP BY Fieldworker,name ORDER BY Fieldworker,total")
+	List<FieldReport> Mor(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+	
 
 }
