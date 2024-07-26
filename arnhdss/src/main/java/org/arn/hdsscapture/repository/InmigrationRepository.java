@@ -3,6 +3,7 @@ package org.arn.hdsscapture.repository;
 import java.util.List;
 
 import org.arn.hdsscapture.entity.Inmigration;
+import org.arn.hdsscapture.projection.Img;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,8 +15,12 @@ public interface InmigrationRepository extends JpaRepository <Inmigration, Strin
 	@Query(nativeQuery = true, value = "SELECT * FROM inmigration WHERE uuid = :uuid LIMIT 1")
     List<Inmigration> findByUuids(@Param("uuid") String uuid);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM inmigration a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
-    List<Inmigration> rejected();
+	@Query(nativeQuery = true, value = "SELECT residency_uuid,acres,food_crops,a.fw_uuid,a.individual_uuid,a.insertDate,last_occupa,\r\n"
+			+ "last_other,livestock,migType,origin,reason,reason_oth,recordedDate,a.uuid,visit_uuid,cash_crops,cash_yn,farm,farm_other,\r\n"
+			+ "food_yn,livestock_yn,a.edtime,a.sttime,approveDate,`comment`,`status`,supervisor,b.location_uuid\r\n"
+			+ "FROM inmigration a INNER JOIN residency b on a.residency_uuid=b.uuid "
+			+ " WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+    List<Img> rejected();
 	
 	
 	@Query(nativeQuery = true, value ="SELECT a.uuid,concat(b.firstName,' ',b.lastName,' ',COALESCE(otherName, '')) as residency_uuid, a.`status`, `comment`, approveDate,b.dob as sttime,TIMESTAMPDIFF(year,dob,CURDATE()) as edtime, livestock_yn, food_yn, farm_other, farm, cash_yn, cash_crops, \r\n"

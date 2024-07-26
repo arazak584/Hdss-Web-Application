@@ -15,8 +15,12 @@ public interface MorbidityRepository extends JpaRepository <Morbidity, String> {
 	@Query(nativeQuery = true, value = "SELECT * FROM morbidity WHERE uuid = :uuid LIMIT 1")
     List<Morbidity> findByUuids(@Param("uuid") String uuid);
 	
-	@Query(nativeQuery = true, value ="SELECT * from morbidity "
-			+ " where insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND uuid = :uuid LIMIT 1")
+	@Query(nativeQuery = true, value ="SELECT a.uuid, approveDate, asthma, asthma_dur, asthma_trt, `comment`,compno,diabetes,diabetes_dur,diabetes_trt,\r\n"
+			+ "epilepsy,epilepsy_dur,epilepsy_trt,fever,fever_days,fever_treat,fw_name,heart,heart_dur,heart_trt,hypertension,\r\n"
+			+ "hypertension_dur,hypertension_trt,ind_name,individual_uuid,location_uuid,sickle,sickle_dur,sickle_trt,socialgroup_uuid,`status`,\r\n"
+			+ "stroke,stroke_dur,stroke_trt,supervisor,dob as insertDate,TIMESTAMPDIFF(year,dob,CURDATE()) as fw_uuid\r\n"
+			+ "FROM morbidity a INNER JOIN individual b ON a.individual_uuid=b.uuid\r\n"
+			+ " where a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.uuid = :uuid LIMIT 1")
 	List<Morbidity> findByUuid(@Param("uuid") String uuid);
 	
 	@Query(nativeQuery = true, value ="SELECT * from morbidity "

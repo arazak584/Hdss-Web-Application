@@ -153,18 +153,6 @@ public class Individual implements Serializable {
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "individual")
 	private List<Morbidity> morbidity = new ArrayList<>();
 	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "indA")
-	private List<Morbidity> morbidityA = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "indB")
-	private List<Morbidity> morbidityB = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "indC")
-	private List<Morbidity> morbidityC = new ArrayList<>();
-	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "indD")
-	private List<Morbidity> morbidityD = new ArrayList<>();
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
 	private Fieldworker fieldworker;

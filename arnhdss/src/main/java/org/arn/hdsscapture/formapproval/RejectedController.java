@@ -12,6 +12,7 @@ import org.arn.hdsscapture.entity.Pregnancyoutcome;
 import org.arn.hdsscapture.entity.Relationship;
 import org.arn.hdsscapture.entity.Sociodemographic;
 import org.arn.hdsscapture.entity.Vaccination;
+import org.arn.hdsscapture.projection.Img;
 import org.arn.hdsscapture.repository.DeathRepository;
 import org.arn.hdsscapture.repository.DemographicRepository;
 import org.arn.hdsscapture.repository.InmigrationRepository;
@@ -52,11 +53,11 @@ public class RejectedController {
 	
 	
 	@GetMapping("/inmigration/reject")
-	public DataWrapper<Inmigration> findImg() {
+	public DataWrapper<Img> findImg() {
 
-		List<Inmigration> data = imgrepo.rejected();
+		List<Img> data = imgrepo.rejected();
 
-		DataWrapper<Inmigration> w = new DataWrapper<>();
+		DataWrapper<Img> w = new DataWrapper<>();
 		w.setData(data);
 
 		return w;

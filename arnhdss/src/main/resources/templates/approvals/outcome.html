@@ -91,7 +91,7 @@
 												<div class="form-group" >
 													<label th:text="#{why_no_anc}"></label>
 													<select name="why_no" class="form-control" th:field="*{why_no_anc}" readonly style="pointer-events: none;">
-													<option value="" th:selected="${item.why_no == null}"></option>
+													<option value=""></option>
 													<option th:each="codebook : ${notdel}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
 													</select>
 												</div>
@@ -270,6 +270,19 @@
 													</select>
 												</div>
 											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-md-6" th:if="${item.b_place}">
+												<div class="form-group">
+													<label th:text="#{b_place}"></label>
+													<select name="b_place" class="form-control" th:field="*{b_place}" readonly style="pointer-events: none;">
+														<option value="" ></option>
+													<option th:each="codebook : ${birthPlace}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+													</select>
+												</div>
+											</div>
+											
 										</div>
 										
 										<div class="row">

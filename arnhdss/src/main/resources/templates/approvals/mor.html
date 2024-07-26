@@ -46,7 +46,7 @@
 								<div class="page-header-title">
 									<i class="ik ik-edit bg-blue"></i>
 									<div class="d-inline">
-										<h5>Vaccination</h5>
+										<h5>Morbidity Assessment</h5>
 										<!--<span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>-->
 									</div>
 								</div>
@@ -73,15 +73,7 @@
 								<div class="card-body">
 									<form class="forms-sample" th:action="@{/hdss/approval/mor/{uuid} (uuid=${item.uuid})}"
 										th:object="${item}">					
-										
-										<div class="card">
-                                    <div class="card-body template-demo">
-										<button th:if="${item.fever_num >= 1}" style="font-weight: bold; text-transform: uppercase;" th:text="#{inda}" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sectionaModal"></button>
-										<button th:if="${item.fever_num >= 2}" style="font-weight: bold; text-transform: uppercase;" th:text="#{indb}" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#sectionbModal"></button>
-										<button th:if="${item.fever_num >= 3}" style="font-weight: bold; text-transform: uppercase;" th:text="#{indc}" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#sectioncModal"></button>
-										<button th:if="${item.fever_num >= 4}" style="font-weight: bold; text-transform: uppercase;" th:text="#{indd}" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#sectiondModal"></button>									
-                                    </div>
-                                		</div>		
+																			
                                 
                                 		<div class="row">
 											<div class="col-md-6" th:if="${item.fever}">
@@ -92,16 +84,27 @@
 													th:text="${codebook.codeLabel}"></option>
 													</select>
 												</div>
-											</div>
-											<div class="col-md-6" th:if="${item.fever_num}">
-												<div class="form-group" >
-													<label th:text="#{fever_num}"></label>
-													<input type="text" class="form-control" id="fever_num" th:field="*{fever_num}"  readonly>
+											</div>										
+										</div>		
+										
+										<div class="row">
+											<div class="col-md-6" th:if="${item.fever_treat}">
+												<div class="form-group">
+													<label th:text="#{treats}"></label>
+													<select name="onet" class="form-control" th:field="*{fever_treat}" readonly style="pointer-events: none;">
+													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}"
+													th:text="${codebook.codeLabel}"></option>
+													</select>
 												</div>
 											</div>
-										</div>
-										
-										<h5 class="form-control" style="font-weight: bold; color: blue;" th:text="#{hoh_member}"></h5>
+											<div class="col-md-6" th:if="${item.fever_days}">
+												<div class="form-group">
+													<label th:text="#{days}"></label>
+													<input type="text" class="form-control" id="fever_days" th:field="*{fever_days}" readonly>
+												</div>
+											</div>									
+										</div>								
+									
 										
 										<div class="row">
 											<div class="col-md-6" th:if="${item.hypertension}">
@@ -299,201 +302,8 @@
 													</select>
 												</div>
 										</div>
-                                															
-										
-									<div class="modal fade" id="sectionaModal" tabindex="-1" role="dialog" aria-labelledby="sectionaModalLabel" aria-hidden="true">
-                            		<div class="modal-dialog" role="document">
-                                	<div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="sectionaModalLabel" style="font-weight: bold; color: blue; text-transform: uppercase;" th:text="#{inda}"></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    </div>
-                                    <div class="modal-body">                           																			
-										
-										<div class="row">
-											<div class="col-md-12" th:if="${item.indA_name}">
-												<div class="form-group">
-													<label th:text="#{ind_name}"></label>
-													<input type="text" class="form-control" id="indA_name" th:field="*{indA_name}"  readonly>
-												</div>
-											</div>									
-										</div>
-										
-										<div class="row">
-											<div class="col-md-6" th:if="${item.indA_treat}">
-												<div class="form-group">
-													<label th:text="#{treats}"></label>
-													<select name="onet" class="form-control" th:field="*{indA_treat}" readonly style="pointer-events: none;">
-													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}"
-													th:text="${codebook.codeLabel}"></option>
-													</select>
-												</div>
-											</div>
-											<div class="col-md-6" th:if="${item.indA_days}">
-												<div class="form-group">
-													<label th:text="#{days}"></label>
-													<input type="text" class="form-control" id="indA_days" th:field="*{indA_days}" readonly>
-												</div>
-											</div>									
-										</div>
-										
-																					
-																																								
-										</div>										
-                                 
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-		                                </d>
-		                            </div>
-		                        </div>
-		                        </div>
-										
-								
-								<!--Section B -->
-								<div class="modal fade" id="sectionbModal" tabindex="-1" role="dialog" aria-labelledby="sectionbModalLabel" aria-hidden="true">
-                            		<div class="modal-dialog" role="document">
-                                	<div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="sectionbModalLabel" style="font-weight: bold; color: blue; text-transform: uppercase;" th:text="#{indb}"></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    </div>
-                                    <div class="modal-body">                           																				
-									
-									<div class="row">
-											<div class="col-md-12" th:if="${item.indB_name}">
-												<div class="form-group">
-													<label th:text="#{ind_name}"></label>
-													<input type="text" class="form-control" id="indB_name" th:field="*{indB_name}"  readonly/>
-												</div>
-											</div>									
-										</div>
-										
-										<div class="row">
-											<div class="col-md-6" th:if="${item.indB_treat}">
-												<div class="form-group">
-													<label th:text="#{treats}"></label>
-													<select name="onet" class="form-control" th:field="*{indB_treat}" readonly style="pointer-events: none;">
-													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}"
-													th:text="${codebook.codeLabel}"></option>
-													</select>
-												</div>
-											</div>
-											<div class="col-md-6" th:if="${item.indB_days}">
-												<div class="form-group">
-													<label th:text="#{days}"></label>
-													<input type="text" class="form-control" id="indB_days" th:field="*{indB_days}" readonly>
-												</div>
-											</div>									
-										</div>
-										
-											
-										</div>																											
-                                      
-                                    
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-		                                </d>
-		                            </div>
-		                        </div>
-		                        </div>		                      
-		                        
-		                        
-		                        <!-- WEEK 14-->
-		                        <div class="modal fade" id="sectioneModal" tabindex="-1" role="dialog" aria-labelledby="sectioneModalLabel" aria-hidden="true">
-                            		<div class="modal-dialog" role="document">
-                                	<div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="sectioneModalLabel" style="font-weight: bold; color: blue; text-transform: uppercase;" th:text="#{indc}"></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    </div>
-                                    <div class="modal-body">                           																				
-										
-										
-										<div class="row">
-											<div class="col-md-12" th:if="${item.indC_name}">
-												<div class="form-group">
-													<label th:text="#{ind_name}"></label>
-													<input type="text" class="form-control" id="indC_name" th:field="*{indC_name}"  readonly>
-												</div>
-											</div>									
-										</div>
-										
-										<div class="row">
-											<div class="col-md-6" th:if="${item.indC_treat}">
-												<div class="form-group">
-													<label th:text="#{treats}"></label>
-													<select name="onet" class="form-control" th:field="*{indC_treat}" readonly style="pointer-events: none;">
-													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}"
-													th:text="${codebook.codeLabel}"></option>
-													</select>
-												</div>
-											</div>
-											<div class="col-md-6" th:if="${item.indC_days}">
-												<div class="form-group">
-													<label th:text="#{days}"></label>
-													<input type="text" class="form-control" id="indC_days" th:field="*{indC_days}" readonly>
-												</div>
-											</div>									
-										</div>															
-										
-                                      
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-		                                </d>
-		                            </div>
-		                        </div>
-		                        </div>
-		                       	
-		                		<!-- MONTH 6-->
-		                        <div class="modal fade" id="sectionfModal" tabindex="-1" role="dialog" aria-labelledby="sectionfModalLabel" aria-hidden="true">
-                            		<div class="modal-dialog" role="document">
-                                	<div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="sectionfModalLabel" style="font-weight: bold; color: blue; text-transform: uppercase;" th:text="#{indd}"></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    </div>
-                                    <div class="modal-body">                           																				
-										
-										<div class="row">
-											<div class="col-md-12" th:if="${item.indD_name}">
-												<div class="form-group">
-													<label th:text="#{ind_name}"></label>
-													<input type="text" class="form-control" id="indD_name" th:field="*{indD_name}"  readonly>
-												</div>
-											</div>									
-										</div>
-										
-										<div class="row">
-											<div class="col-md-6" th:if="${item.indD_treat}">
-												<div class="form-group">
-													<label th:text="#{treats}"></label>
-													<select name="onet" class="form-control" th:field="*{indD_treat}" readonly style="pointer-events: none;">
-													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}"
-													th:text="${codebook.codeLabel}"></option>
-													</select>
-												</div>
-											</div>
-											<div class="col-md-6" th:if="${item.indD_days}">
-												<div class="form-group">
-													<label th:text="#{days}"></label>
-													<input type="text" class="form-control" id="indD_days" th:field="*{indD_days}" readonly>
-												</div>
-											</div>									
-										</div>
-																														
-                                      
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-		                                </d>
-		                            </div>
-		                        </div>
-		                        </div>				
+                              																							
+
 
 
 									</form>
@@ -563,10 +373,10 @@
 													<input type="text" class="form-control" id="fw_name" th:field="*{fw_name}"  readonly>
 												</div>
 											</div>
-											<div class="col-md-6" th:if="${item.socialgroup_uuid}">
+											<div class="col-md-6" th:if="${item.ind_name}">
 												<div class="form-group">
-													<label th:text="#{househead}"></label>
-													<input type="text" class="form-control" id="hoh_name" th:field="*{hoh_name}"  readonly>
+													<label th:text="#{ind_name}"></label>
+													<input type="text" class="form-control" id="ind_name" th:field="*{ind_name}"  readonly>
 												</div>
 											</div>
 										</div>
@@ -580,8 +390,9 @@
 											</div>
 											<div class="col-md-6" th:if="${item.insertDate}">
 												<div class="form-group">
-													<label th:text="#{item.insertDate}"></label>
+													<label th:text="#{ind.dob}"></label>
 													<input type="text" class="form-control" id="insertDate" th:field="*{insertDate}"  readonly>
+													<span style="color: green;" class="input-group-text" th:text="'(' + ${item.fw_uuid} + ' years)'"></span>
 												</div>
 											</div>
 											

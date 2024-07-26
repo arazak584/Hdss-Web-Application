@@ -96,7 +96,7 @@
                                                 <tr>
                                                     <th th:text="#{item.compo}"></th>
 													<th th:text="#{item.insertDate}"></th>
-													<th th:text="#{househead}"></th>
+													<th th:text="#{item.name}"></th>
 													<th th:text="#{uuid}"></th>
 													<th th:text="#{item.status}"></th>
 													<th th:text="#{fw.action}"></th>
@@ -106,7 +106,7 @@
                                                 <tr th:each="item : ${items}">
 											            <td th:text="${item.compno}"></td>
 											            <td th:text="${item.insertDate}"></td>
-											            <td th:text="${item.hoh_name}"></td>
+											            <td th:text="${item.ind_name}"></td>
 											            <td th:text="${item.uuid}"></td>
 											            <td th:classappend="${item.status == 0 ? 'status-pending' : item.status == 1 ? 'status-approved' : item.status == 2 ? 'status-rejected' : item.status == 3 ? 'status-resolved' : 'status-supervisor'}">
 															  <span th:if="${item.status == 1 || item.status == 4}">  <i class="ik ik-check-circle"></i>  </span>

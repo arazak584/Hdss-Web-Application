@@ -21,10 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Audited
-@Table(name="morbidity", indexes = {@Index(name="indA_uuid", columnList="indA_uuid", unique=false),
-		@Index(name = "indB_uuid", columnList = "indB_uuid", unique = false),
-		@Index(name = "indC_uuid", columnList = "indC_uuid", unique = false),
-		@Index(name = "indD_uuid", columnList = "indD_uuid", unique = false)})
+@Table(name="morbidity", indexes = {@Index(name="individual_uuid", columnList="individual_uuid", unique=false)})
 public class Morbidity implements Serializable {
 
 	/**
@@ -54,45 +51,15 @@ public class Morbidity implements Serializable {
     public String fw_uuid;
 
     @Column(nullable = true)
-    private String indA_uuid;
+    private String ind_name;
     @Column(nullable = true)
-    private String indA_name;
+    private Integer fever_days;
     @Column(nullable = true)
-    private Integer indA_days;
-    @Column(nullable = true)
-    private Integer indA_treat;
-
-    @Column(nullable = true)
-    private String indB_uuid;
-    @Column(nullable = true)
-    private String indB_name;
-    @Column(nullable = true)
-    private Integer indB_days;
-    @Column(nullable = true)
-    private Integer indB_treat;
+    private Integer fever_treat;
     
-    @Column(nullable = true)
-    public String indC_uuid;
-    @Column(nullable = true)
-    public String indC_name;
-    @Column(nullable = true)
-    public Integer indC_days;
-    @Column(nullable = true)
-    public Integer indC_treat;
-    
-    @Column(nullable = true)
-    public String indD_uuid;
-    @Column(nullable = true)
-    public String indD_name;
-    @Column(nullable = true)
-    public Integer indD_days;
-    @Column(nullable = true)
-    public Integer indD_treat;
     
     @Column(nullable = false)
     public Integer fever;
-    @Column(nullable = true)
-    public Integer fever_num;
     
     @Column(nullable = false)
     public Integer hypertension;
@@ -159,9 +126,6 @@ public class Morbidity implements Serializable {
 	@Column(name = "fw_name", nullable = true)
 	private String fw_name;
 	
-	@Column(name = "hoh_name", nullable = true)
-	private String hoh_name;
-	
 	@Column(name = "compno", nullable = true)
 	private String compno;
     
@@ -173,27 +137,7 @@ public class Morbidity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "individual_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	@NotAudited
-	private Individual individual;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "indA_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
-	@NotAudited
-	private Individual indA;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "indB_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
-	@NotAudited
-	private Individual indB;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "indC_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
-	@NotAudited
-	private Individual indC;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "indD_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
-	@NotAudited
-	private Individual indD;
+	private Individual individual;    
     
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "location_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
@@ -207,592 +151,6 @@ public class Morbidity implements Serializable {
     
     public Morbidity() {}
 
-	
-
-	public String getIndividual_uuid() {
-		return individual_uuid;
-	}
-
-
-
-	public void setIndividual_uuid(String individual_uuid) {
-		this.individual_uuid = individual_uuid;
-	}
-
-
-
-	public String getSocialgroup_uuid() {
-		return socialgroup_uuid;
-	}
-
-
-
-	public void setSocialgroup_uuid(String socialgroup_uuid) {
-		this.socialgroup_uuid = socialgroup_uuid;
-	}
-
-
-
-	public String getLocation_uuid() {
-		return location_uuid;
-	}
-
-
-
-	public void setLocation_uuid(String location_uuid) {
-		this.location_uuid = location_uuid;
-	}
-
-
-
-	public Date getInsertDate() {
-		return insertDate;
-	}
-
-
-
-	public void setInsertDate(Date insertDate) {
-		this.insertDate = insertDate;
-	}
-
-
-
-	public String getFw_uuid() {
-		return fw_uuid;
-	}
-
-
-
-	public void setFw_uuid(String fw_uuid) {
-		this.fw_uuid = fw_uuid;
-	}
-
-
-
-	public String getIndA_uuid() {
-		return indA_uuid;
-	}
-
-
-
-	public void setIndA_uuid(String indA_uuid) {
-		this.indA_uuid = indA_uuid;
-	}
-
-
-
-	public String getIndA_name() {
-		return indA_name;
-	}
-
-
-
-	public void setIndA_name(String indA_name) {
-		this.indA_name = indA_name;
-	}
-
-
-
-	public Integer getIndA_days() {
-		return indA_days;
-	}
-
-
-
-	public void setIndA_days(Integer indA_days) {
-		this.indA_days = indA_days;
-	}
-
-
-
-	public Integer getIndA_treat() {
-		return indA_treat;
-	}
-
-
-
-	public void setIndA_treat(Integer indA_treat) {
-		this.indA_treat = indA_treat;
-	}
-
-
-
-	public String getIndB_uuid() {
-		return indB_uuid;
-	}
-
-
-
-	public void setIndB_uuid(String indB_uuid) {
-		this.indB_uuid = indB_uuid;
-	}
-
-
-
-	public String getIndB_name() {
-		return indB_name;
-	}
-
-
-
-	public void setIndB_name(String indB_name) {
-		this.indB_name = indB_name;
-	}
-
-
-
-	public Integer getIndB_days() {
-		return indB_days;
-	}
-
-
-
-	public void setIndB_days(Integer indB_days) {
-		this.indB_days = indB_days;
-	}
-
-
-
-	public Integer getIndB_treat() {
-		return indB_treat;
-	}
-
-
-
-	public void setIndB_treat(Integer indB_treat) {
-		this.indB_treat = indB_treat;
-	}
-
-
-
-	public String getIndC_uuid() {
-		return indC_uuid;
-	}
-
-
-
-	public void setIndC_uuid(String indC_uuid) {
-		this.indC_uuid = indC_uuid;
-	}
-
-
-
-	public String getIndC_name() {
-		return indC_name;
-	}
-
-
-
-	public void setIndC_name(String indC_name) {
-		this.indC_name = indC_name;
-	}
-
-
-
-	public Integer getIndC_days() {
-		return indC_days;
-	}
-
-
-
-	public void setIndC_days(Integer indC_days) {
-		this.indC_days = indC_days;
-	}
-
-
-
-	public Integer getIndC_treat() {
-		return indC_treat;
-	}
-
-
-
-	public void setIndC_treat(Integer indC_treat) {
-		this.indC_treat = indC_treat;
-	}
-
-
-
-	public String getIndD_uuid() {
-		return indD_uuid;
-	}
-
-
-
-	public void setIndD_uuid(String indD_uuid) {
-		this.indD_uuid = indD_uuid;
-	}
-
-
-
-	public String getIndD_name() {
-		return indD_name;
-	}
-
-
-
-	public void setIndD_name(String indD_name) {
-		this.indD_name = indD_name;
-	}
-
-
-
-	public Integer getIndD_days() {
-		return indD_days;
-	}
-
-
-
-	public void setIndD_days(Integer indD_days) {
-		this.indD_days = indD_days;
-	}
-
-
-
-	public Integer getIndD_treat() {
-		return indD_treat;
-	}
-
-
-
-	public void setIndD_treat(Integer indD_treat) {
-		this.indD_treat = indD_treat;
-	}
-
-
-
-	public Integer getFever() {
-		return fever;
-	}
-
-
-
-	public void setFever(Integer fever) {
-		this.fever = fever;
-	}
-
-
-
-	public Integer getHypertension() {
-		return hypertension;
-	}
-
-
-
-	public void setHypertension(Integer hypertension) {
-		this.hypertension = hypertension;
-	}
-
-
-
-	public Integer getHypertension_dur() {
-		return hypertension_dur;
-	}
-
-
-
-	public void setHypertension_dur(Integer hypertension_dur) {
-		this.hypertension_dur = hypertension_dur;
-	}
-
-
-
-	public Integer getHypertension_trt() {
-		return hypertension_trt;
-	}
-
-
-
-	public void setHypertension_trt(Integer hypertension_trt) {
-		this.hypertension_trt = hypertension_trt;
-	}
-
-
-
-	public Integer getDiabetes() {
-		return diabetes;
-	}
-
-
-
-	public void setDiabetes(Integer diabetes) {
-		this.diabetes = diabetes;
-	}
-
-
-
-	public Integer getDiabetes_dur() {
-		return diabetes_dur;
-	}
-
-
-
-	public void setDiabetes_dur(Integer diabetes_dur) {
-		this.diabetes_dur = diabetes_dur;
-	}
-
-
-
-	public Integer getDiabetes_trt() {
-		return diabetes_trt;
-	}
-
-
-
-	public void setDiabetes_trt(Integer diabetes_trt) {
-		this.diabetes_trt = diabetes_trt;
-	}
-
-
-
-	public Integer getHeart() {
-		return heart;
-	}
-
-
-
-	public void setHeart(Integer heart) {
-		this.heart = heart;
-	}
-
-
-
-	public Integer getHeart_dur() {
-		return heart_dur;
-	}
-
-
-
-	public void setHeart_dur(Integer heart_dur) {
-		this.heart_dur = heart_dur;
-	}
-
-
-
-	public Integer getHeart_trt() {
-		return heart_trt;
-	}
-
-
-
-	public void setHeart_trt(Integer heart_trt) {
-		this.heart_trt = heart_trt;
-	}
-
-
-
-	public Integer getStroke() {
-		return stroke;
-	}
-
-
-
-	public void setStroke(Integer stroke) {
-		this.stroke = stroke;
-	}
-
-
-
-	public Integer getStroke_dur() {
-		return stroke_dur;
-	}
-
-
-
-	public void setStroke_dur(Integer stroke_dur) {
-		this.stroke_dur = stroke_dur;
-	}
-
-
-
-	public Integer getStroke_trt() {
-		return stroke_trt;
-	}
-
-
-
-	public void setStroke_trt(Integer stroke_trt) {
-		this.stroke_trt = stroke_trt;
-	}
-
-
-
-	public Integer getSickle() {
-		return sickle;
-	}
-
-
-
-	public void setSickle(Integer sickle) {
-		this.sickle = sickle;
-	}
-
-
-
-	public Integer getSickle_dur() {
-		return sickle_dur;
-	}
-
-
-
-	public void setSickle_dur(Integer sickle_dur) {
-		this.sickle_dur = sickle_dur;
-	}
-
-
-
-	public Integer getSickle_trt() {
-		return sickle_trt;
-	}
-
-
-
-	public void setSickle_trt(Integer sickle_trt) {
-		this.sickle_trt = sickle_trt;
-	}
-
-
-
-	public Integer getAsthma() {
-		return asthma;
-	}
-
-
-
-	public void setAsthma(Integer asthma) {
-		this.asthma = asthma;
-	}
-
-
-
-	public Integer getAsthma_dur() {
-		return asthma_dur;
-	}
-
-
-
-	public void setAsthma_dur(Integer asthma_dur) {
-		this.asthma_dur = asthma_dur;
-	}
-
-
-
-	public Integer getAsthma_trt() {
-		return asthma_trt;
-	}
-
-
-
-	public void setAsthma_trt(Integer asthma_trt) {
-		this.asthma_trt = asthma_trt;
-	}
-
-
-
-	public Integer getEpilepsy() {
-		return epilepsy;
-	}
-
-
-
-	public void setEpilepsy(Integer epilepsy) {
-		this.epilepsy = epilepsy;
-	}
-
-
-
-	public Integer getEpilepsy_dur() {
-		return epilepsy_dur;
-	}
-
-
-
-	public void setEpilepsy_dur(Integer epilepsy_dur) {
-		this.epilepsy_dur = epilepsy_dur;
-	}
-
-
-
-	public Integer getEpilepsy_trt() {
-		return epilepsy_trt;
-	}
-
-
-
-	public void setEpilepsy_trt(Integer epilepsy_trt) {
-		this.epilepsy_trt = epilepsy_trt;
-	}
-
-
-
-	public Integer getStatus() {
-		return status;
-	}
-
-
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-
-
-	public String getSupervisor() {
-		return supervisor;
-	}
-
-
-
-	public void setSupervisor(String supervisor) {
-		this.supervisor = supervisor;
-	}
-
-
-
-	public Date getApproveDate() {
-		return approveDate;
-	}
-
-
-
-	public void setApproveDate(Date approveDate) {
-		this.approveDate = approveDate;
-	}
-
-
-
-	public String getFw_name() {
-		return fw_name;
-	}
-
-
-
-	public void setFw_name(String fw_name) {
-		this.fw_name = fw_name;
-	}
-
-
-
-	public String getHoh_name() {
-		return hoh_name;
-	}
-
-
-
-	public void setHoh_name(String hoh_name) {
-		this.hoh_name = hoh_name;
-	}
-
 	public String getUuid() {
 		return uuid;
 	}
@@ -803,17 +161,707 @@ public class Morbidity implements Serializable {
 		this.uuid = uuid;
 	}
 
+	public String getIndividual_uuid() {
+		return individual_uuid;
+	}
 
 
-	public Integer getFever_num() {
-		return fever_num;
+	public void setIndividual_uuid(String individual_uuid) {
+		this.individual_uuid = individual_uuid;
+	}
+
+
+	public String getSocialgroup_uuid() {
+		return socialgroup_uuid;
+	}
+
+
+	public void setSocialgroup_uuid(String socialgroup_uuid) {
+		this.socialgroup_uuid = socialgroup_uuid;
+	}
+
+
+	public String getLocation_uuid() {
+		return location_uuid;
+	}
+
+
+	public void setLocation_uuid(String location_uuid) {
+		this.location_uuid = location_uuid;
+	}
+
+	public Date getInsertDate() {
+		return insertDate;
+	}
+
+
+	public void setInsertDate(Date insertDate) {
+		this.insertDate = insertDate;
+	}
+
+
+	public String getFw_uuid() {
+		return fw_uuid;
+	}
+
+
+	public void setFw_uuid(String fw_uuid) {
+		this.fw_uuid = fw_uuid;
 	}
 
 
 
-	public void setFever_num(Integer fever_num) {
-		this.fever_num = fever_num;
+	public String getInd_name() {
+		return ind_name;
 	}
+
+
+	public void setInd_name(String ind_name) {
+		this.ind_name = ind_name;
+	}
+
+
+
+
+
+
+
+
+	public Integer getFever_days() {
+		return fever_days;
+	}
+
+
+
+
+
+
+
+
+	public void setFever_days(Integer fever_days) {
+		this.fever_days = fever_days;
+	}
+
+
+
+
+
+
+
+
+	public Integer getFever_treat() {
+		return fever_treat;
+	}
+
+
+
+
+
+
+
+
+	public void setFever_treat(Integer fever_treat) {
+		this.fever_treat = fever_treat;
+	}
+
+
+
+
+
+
+
+
+	public Integer getFever() {
+		return fever;
+	}
+
+
+
+
+
+
+
+
+	public void setFever(Integer fever) {
+		this.fever = fever;
+	}
+
+
+
+
+
+
+
+
+	public Integer getHypertension() {
+		return hypertension;
+	}
+
+
+
+
+
+
+
+
+	public void setHypertension(Integer hypertension) {
+		this.hypertension = hypertension;
+	}
+
+
+
+
+
+
+
+
+	public Integer getHypertension_dur() {
+		return hypertension_dur;
+	}
+
+
+
+
+
+
+
+
+	public void setHypertension_dur(Integer hypertension_dur) {
+		this.hypertension_dur = hypertension_dur;
+	}
+
+
+
+
+
+
+
+
+	public Integer getHypertension_trt() {
+		return hypertension_trt;
+	}
+
+
+
+
+
+
+
+
+	public void setHypertension_trt(Integer hypertension_trt) {
+		this.hypertension_trt = hypertension_trt;
+	}
+
+
+
+
+
+
+
+
+	public Integer getDiabetes() {
+		return diabetes;
+	}
+
+
+
+
+
+
+
+
+	public void setDiabetes(Integer diabetes) {
+		this.diabetes = diabetes;
+	}
+
+
+
+
+
+
+
+
+	public Integer getDiabetes_dur() {
+		return diabetes_dur;
+	}
+
+
+
+
+
+
+
+
+	public void setDiabetes_dur(Integer diabetes_dur) {
+		this.diabetes_dur = diabetes_dur;
+	}
+
+
+
+
+
+
+
+
+	public Integer getDiabetes_trt() {
+		return diabetes_trt;
+	}
+
+
+
+
+
+
+
+
+	public void setDiabetes_trt(Integer diabetes_trt) {
+		this.diabetes_trt = diabetes_trt;
+	}
+
+
+
+
+
+
+
+
+	public Integer getHeart() {
+		return heart;
+	}
+
+
+
+
+
+
+
+
+	public void setHeart(Integer heart) {
+		this.heart = heart;
+	}
+
+
+
+
+
+
+
+
+	public Integer getHeart_dur() {
+		return heart_dur;
+	}
+
+
+
+
+
+
+
+
+	public void setHeart_dur(Integer heart_dur) {
+		this.heart_dur = heart_dur;
+	}
+
+
+
+
+
+
+
+
+	public Integer getHeart_trt() {
+		return heart_trt;
+	}
+
+
+
+
+
+
+
+
+	public void setHeart_trt(Integer heart_trt) {
+		this.heart_trt = heart_trt;
+	}
+
+
+
+
+
+
+
+
+	public Integer getStroke() {
+		return stroke;
+	}
+
+
+
+
+
+
+
+
+	public void setStroke(Integer stroke) {
+		this.stroke = stroke;
+	}
+
+
+
+
+
+
+
+
+	public Integer getStroke_dur() {
+		return stroke_dur;
+	}
+
+
+
+
+
+
+
+
+	public void setStroke_dur(Integer stroke_dur) {
+		this.stroke_dur = stroke_dur;
+	}
+
+
+
+
+
+
+
+
+	public Integer getStroke_trt() {
+		return stroke_trt;
+	}
+
+
+
+
+
+
+
+
+	public void setStroke_trt(Integer stroke_trt) {
+		this.stroke_trt = stroke_trt;
+	}
+
+
+
+
+
+
+
+
+	public Integer getSickle() {
+		return sickle;
+	}
+
+
+
+
+
+
+
+
+	public void setSickle(Integer sickle) {
+		this.sickle = sickle;
+	}
+
+
+
+
+
+
+
+
+	public Integer getSickle_dur() {
+		return sickle_dur;
+	}
+
+
+
+
+
+
+
+
+	public void setSickle_dur(Integer sickle_dur) {
+		this.sickle_dur = sickle_dur;
+	}
+
+
+
+
+
+
+
+
+	public Integer getSickle_trt() {
+		return sickle_trt;
+	}
+
+
+
+
+
+
+
+
+	public void setSickle_trt(Integer sickle_trt) {
+		this.sickle_trt = sickle_trt;
+	}
+
+
+
+
+
+
+
+
+	public Integer getAsthma() {
+		return asthma;
+	}
+
+
+
+
+
+
+
+
+	public void setAsthma(Integer asthma) {
+		this.asthma = asthma;
+	}
+
+
+
+
+
+
+
+
+	public Integer getAsthma_dur() {
+		return asthma_dur;
+	}
+
+
+
+
+
+
+
+
+	public void setAsthma_dur(Integer asthma_dur) {
+		this.asthma_dur = asthma_dur;
+	}
+
+
+
+
+
+
+
+
+	public Integer getAsthma_trt() {
+		return asthma_trt;
+	}
+
+
+
+
+
+
+
+
+	public void setAsthma_trt(Integer asthma_trt) {
+		this.asthma_trt = asthma_trt;
+	}
+
+
+
+
+
+
+
+
+	public Integer getEpilepsy() {
+		return epilepsy;
+	}
+
+
+
+
+
+
+
+
+	public void setEpilepsy(Integer epilepsy) {
+		this.epilepsy = epilepsy;
+	}
+
+
+
+
+
+
+
+
+	public Integer getEpilepsy_dur() {
+		return epilepsy_dur;
+	}
+
+
+
+
+
+
+
+
+	public void setEpilepsy_dur(Integer epilepsy_dur) {
+		this.epilepsy_dur = epilepsy_dur;
+	}
+
+
+
+
+
+
+
+
+	public Integer getEpilepsy_trt() {
+		return epilepsy_trt;
+	}
+
+
+
+
+
+
+
+
+	public void setEpilepsy_trt(Integer epilepsy_trt) {
+		this.epilepsy_trt = epilepsy_trt;
+	}
+
+
+
+
+
+
+
+
+	public String getComment() {
+		return comment;
+	}
+
+
+
+
+
+
+
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+
+
+
+
+
+
+
+	public Integer getStatus() {
+		return status;
+	}
+
+
+
+
+
+
+
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+
+
+
+
+
+
+
+	public String getSupervisor() {
+		return supervisor;
+	}
+
+
+
+
+
+
+
+
+	public void setSupervisor(String supervisor) {
+		this.supervisor = supervisor;
+	}
+
+
+
+
+
+
+
+
+	public Date getApproveDate() {
+		return approveDate;
+	}
+
+
+
+
+
+
+
+
+	public void setApproveDate(Date approveDate) {
+		this.approveDate = approveDate;
+	}
+
+
+
+
+
+
+
+
+	public String getFw_name() {
+		return fw_name;
+	}
+
+
+
+
+
+
+
+
+	public void setFw_name(String fw_name) {
+		this.fw_name = fw_name;
+	}
+
+
+
+
+
 
 
 
@@ -823,9 +871,19 @@ public class Morbidity implements Serializable {
 
 
 
+
+
+
+
+
 	public void setCompno(String compno) {
 		this.compno = compno;
 	}
+
+
+
+
+
 
 
 
