@@ -141,14 +141,18 @@ public class FormController {
 		model.addAttribute("fws", fws);
     	
     	
-		if (fw != null) {
+		if (fw != null && !fw.equals("Select User")) {
 			List<Inmigration> items = imgrepo.findImg(fw);
 	        model.addAttribute("items", items);
 	        model.addAttribute("selectedFw", fw);
+		}else if ("Select User".equals(fw))  {
+			List<Inmigration> items = imgrepo.findImgs();
+	        model.addAttribute("items", items);
+			model.addAttribute("selectedFw", "Select User");
 		}else {
 			List<Inmigration> items = imgrepo.findImgs();
 	        model.addAttribute("items", items);
-			model.addAttribute("selectedFw", "Select ");
+			model.addAttribute("selectedFw", "Select User");
 		}
 
 
@@ -256,16 +260,20 @@ public class FormController {
 			model.addAttribute("fws", fws);
 	    	
 	    	
-			if (fw != null) {
+			if (fw != null && !fw.equals("Select User")) {
 				List<Outmigration> items = omgrepo.findItem(fw);
 		        model.addAttribute("items", items);
 		        model.addAttribute("selectedFw", fw);
+			}else if ("Select User".equals(fw)) {
+				model.addAttribute("selectedFw", "Select User");
+				List<Outmigration> items = omgrepo.findItems();
+		        model.addAttribute("items", items);				
 			}else {
 				model.addAttribute("selectedFw", "Select User");
 				List<Outmigration> items = omgrepo.findItems();
-		        model.addAttribute("items", items);
-				
-			}
+		        model.addAttribute("items", items);				
+			}			
+			
 
 
 	    return "approvals/omg_list";
@@ -361,16 +369,19 @@ public class FormController {
 			model.addAttribute("fws", fws);
 	    	
 	    	
-			if (fw != null) {
+			if (fw != null && !fw.equals("Select User")) {
 				List<Death> items = dthrepo.findItem(fw);
 		        model.addAttribute("items", items);
 		        model.addAttribute("selectedFw", fw);
+			}else if ("Select User".equals(fw)) {
+				List<Death> items = dthrepo.findItems();
+		        model.addAttribute("items", items);
+				model.addAttribute("selectedFw", "Select User");
 			}else {
 				List<Death> items = dthrepo.findItems();
 		        model.addAttribute("items", items);
 				model.addAttribute("selectedFw", "Select User");
 			}
-
 
 	    return "approvals/dth_list";
 	}
@@ -463,10 +474,14 @@ public class FormController {
 			model.addAttribute("fws", fws);
 	    	
 	    	
-			if (fw != null) {
+			if (fw != null && !fw.equals("Select User")) {
 				 List<Pregnancyobservation> items = pregrepo.findItem(fw);
 			     model.addAttribute("items", items);
 		        model.addAttribute("selectedFw", fw);
+			}else if ("Select User".equals(fw)) {
+				model.addAttribute("selectedFw", "Select User");
+				List<Pregnancyobservation> items = pregrepo.findItems();
+			     model.addAttribute("items", items);
 			}else {
 				model.addAttribute("selectedFw", "Select User");
 				List<Pregnancyobservation> items = pregrepo.findItems();
@@ -571,16 +586,21 @@ public class FormController {
 			model.addAttribute("fws", fws);
 	    	
 	    	
-			if (fw != null) {
+			if (fw != null && !fw.equals("Select User")) {
 				List<Pregnancyoutcome> items = outrepo.findItem(fw);
 		        model.addAttribute("items", items);
 		        model.addAttribute("selectedFw", fw);
+			}else if ("Select User".equals(fw)) {
+				model.addAttribute("selectedFw", "Select User");
+				List<Pregnancyoutcome> items = outrepo.findItems();
+		        model.addAttribute("items", items);
+	
 			}else {
 				model.addAttribute("selectedFw", "Select User");
 				List<Pregnancyoutcome> items = outrepo.findItems();
 		        model.addAttribute("items", items);
 	
-			}
+			}		
 
 
 	    return "approvals/outcome_list";
@@ -687,10 +707,14 @@ public class FormController {
 		model.addAttribute("fws", fws);
     	
     	
-		if (fw != null) {
+		if (fw != null && !fw.equals("Select User")) {
 	        List<Demographic> items = demorepo.findItem(fw);
 	        model.addAttribute("items", items);
 	        model.addAttribute("selectedFw", fw);
+		}else if ("Select User".equals(fw)) {
+			List<Demographic> items = demorepo.findItems();
+	        model.addAttribute("items", items);
+			model.addAttribute("selectedFw", "Select User");
 		}else {
 			List<Demographic> items = demorepo.findItems();
 	        model.addAttribute("items", items);
@@ -797,15 +821,19 @@ public class FormController {
 			model.addAttribute("fws", fws);
 	    	
 	    	
-			if (fw != null) {
+			if (fw != null && !fw.equals("Select User")) {
 				List<Relationship> items = relrepo.findItem(fw);
 	  	        model.addAttribute("items", items);
 		        model.addAttribute("selectedFw", fw);
+			}else if ("Select User".equals(fw)) {
+				List<Relationship> items = relrepo.findItems();
+	  	        model.addAttribute("items", items);
+				model.addAttribute("selectedFw", "Select User");
 			}else {
 				List<Relationship> items = relrepo.findItems();
 	  	        model.addAttribute("items", items);
 				model.addAttribute("selectedFw", "Select User");
-			}
+			}			
 
 
   	    return "approvals/rel_list";
@@ -901,15 +929,21 @@ public class FormController {
   			model.addAttribute("fws", fws);
   	    	
   	    	
-  			if (fw != null) {
+  			if (fw != null && !fw.equals("Select User")) {
   				List<Sociodemographic> items = sesrepo.findItem(fw);
   	  	        model.addAttribute("items", items);
   		        model.addAttribute("selectedFw", fw);
   		      //System.out.println("Print Items: " + items);
-  			}else {
-  				List<Sociodemographic> items = sesrepo.findItems();
-  	  	        model.addAttribute("items", items);
-  				model.addAttribute("selectedFw", "Select User");
+  			}else if ("Select User".equals(fw)) {
+  			    // Handle the case where fw is explicitly "Select User"
+  			    List<Sociodemographic> items = sesrepo.findItems();
+  			    model.addAttribute("items", items);
+  			    model.addAttribute("selectedFw", "Select User");
+  			} else {
+  			    // Handle the case where fw is null or any other value
+  			    List<Sociodemographic> items = sesrepo.findItems();
+  			    model.addAttribute("items", items);
+  			    model.addAttribute("selectedFw", "Select User");
   			}
 
 
@@ -1025,16 +1059,21 @@ public class FormController {
     			model.addAttribute("fws", fws);
     	    	
     	    	
-    			if (fw != null) {
+    			if (fw != null && !fw.equals("Select User")) {
     				List<Vaccination> items = vacrepo.findItem(fw);
     	  	        model.addAttribute("items", items);
     		        model.addAttribute("selectedFw", fw);
     		      //System.out.println("Print Items: " + items);
+    			}else if ("Select User".equals(fw)) {
+    				List<Vaccination> items = vacrepo.findItems();
+    	  	        model.addAttribute("items", items);
+    				model.addAttribute("selectedFw", "Select User");
     			}else {
     				List<Vaccination> items = vacrepo.findItems();
     	  	        model.addAttribute("items", items);
     				model.addAttribute("selectedFw", "Select User");
     			}
+    			   				
 
 
       	    return "approvals/vac_list";
@@ -1137,17 +1176,20 @@ public class FormController {
       			model.addAttribute("fws", fws);
       	    	
       	    	
-      			if (fw != null) {
+      			if (fw != null && !fw.equals("Select User")) {
       				List<Morbidity> items = morrepo.findItem(fw);
       	  	        model.addAttribute("items", items);
       		        model.addAttribute("selectedFw", fw);
       		      //System.out.println("Print Items: " + items);
+      			}else if ("Select User".equals(fw)) {
+      				List<Morbidity> items = morrepo.findItems();
+      	  	        model.addAttribute("items", items);
+      				model.addAttribute("selectedFw", "Select User");
       			}else {
       				List<Morbidity> items = morrepo.findItems();
       	  	        model.addAttribute("items", items);
       				model.addAttribute("selectedFw", "Select User");
       			}
-
 
         	    return "approvals/mor_list";
         	}

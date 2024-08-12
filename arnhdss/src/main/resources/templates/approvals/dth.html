@@ -155,6 +155,7 @@
 														<option value=""></option>
 														<option value="1" th:selected="${item.status == 1}">Approve </option>
 														<option value="2" th:selected="${item.status == 2}">Reject </option>
+														<option hidden value="3" th:selected="${item.status == 3}">Resolved </option>
 													</select>
 													<span class="text-success" th:if="${item.status==4}" >Supervisor Approved</span>
 												</div>
@@ -254,7 +255,7 @@
 	<script>
 		function toggleCommentField() {
 			var status = $('#status').val();
-			if (status === '2') { // Use strict comparison (===)
+			if (status === '2' || status === '3') { // Use strict comparison (===)
 				$('#commentField').show('fade');
 			} else {
 				$('#commentField').hide('fade');
