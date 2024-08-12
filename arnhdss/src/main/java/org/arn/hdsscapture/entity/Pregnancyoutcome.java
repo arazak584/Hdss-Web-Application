@@ -103,6 +103,26 @@ public class Pregnancyoutcome {
 	
 	@Column(name = "pregnancy_uuid")
 	private String pregnancy_uuid;
+	
+	//Dodowa Addon
+	@Column
+	private Integer id1001;//Did you ever breastfeed the child? 
+	@Column
+	private Integer id1002;//How long after delivery did you first put child to the breast?
+	@Column
+	private Integer id1003;//In the first 2 days after birth was the child given anything other than breastmilk to drink (water, infant formula)
+	@Column
+	private Integer id1004;//Are you still breastfeeding the child?
+	@Column
+	private Integer id1005;//What did you feed the child with in the first 6 months of birth?  
+	@Column
+	private Integer id1006;//Do you have plans to have more children? 		
+	@Column
+	private Integer id1007;//If YES, how long will you want to wait before becoming pregnant again?
+	@Column
+	private Integer id1008;//Are you currently using any family planning method to delay or prevent pregnancy?
+	@Column
+	private Integer id1009;	//If Yes/NO, what will be your specific family planning method of preference when finally you decide to use one? 
 
 	
 	@Column(name = "visit_uuid", nullable = false)
@@ -553,6 +573,96 @@ public class Pregnancyoutcome {
 
 	public void setApproveDate(Date approveDate) {
 		this.approveDate = approveDate;
+	}
+
+
+	public Integer getId1001() {
+		return id1001;
+	}
+
+
+	public void setId1001(Integer id1001) {
+		this.id1001 = id1001;
+	}
+
+
+	public Integer getId1002() {
+		return id1002;
+	}
+
+
+	public void setId1002(Integer id1002) {
+		this.id1002 = id1002;
+	}
+
+
+	public Integer getId1003() {
+		return id1003;
+	}
+
+
+	public void setId1003(Integer id1003) {
+		this.id1003 = id1003;
+	}
+
+
+	public Integer getId1004() {
+		return id1004;
+	}
+
+
+	public void setId1004(Integer id1004) {
+		this.id1004 = id1004;
+	}
+
+
+	public Integer getId1005() {
+		return id1005;
+	}
+
+
+	public void setId1005(Integer id1005) {
+		this.id1005 = id1005;
+	}
+
+
+	public Integer getId1006() {
+		return id1006;
+	}
+
+
+	public void setId1006(Integer id1006) {
+		this.id1006 = id1006;
+	}
+
+
+	public Integer getId1007() {
+		return id1007;
+	}
+
+
+	public void setId1007(Integer id1007) {
+		this.id1007 = id1007;
+	}
+
+
+	public Integer getId1008() {
+		return id1008;
+	}
+
+
+	public void setId1008(Integer id1008) {
+		this.id1008 = id1008;
+	}
+
+
+	public Integer getId1009() {
+		return id1009;
+	}
+
+
+	public void setId1009(Integer id1009) {
+		this.id1009 = id1009;
 	}
 
 

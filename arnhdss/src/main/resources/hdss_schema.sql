@@ -682,8 +682,54 @@ INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('denomination'
 INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('denomination', 'Protestant', 2);
 INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('denomination', 'Pentecostal/Charismatic', 3);
 INSERT INTO codebook ( codeFeature, codeLabel, codeValue) VALUES ('denomination', 'Other Christian', 4);
-
-
-
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('pet_vac', 'Never vaccinated', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('pet_vac', 'Ever vaccinated', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('pet_vac', 'Fully vaccinated', 3);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('pet_vac', 'N/A', 99);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('how_lng', 'Immediately after birth', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('how_lng', 'Within 30 minutes after birth', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('how_lng', 'One hour after birth', 3);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('how_lng', 'More than 1 hour after birth', 4);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('feed_chd', 'Breastmilk ONLY (Exclusive breast feeding)', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('feed_chd', 'Artificial (Formula) milk ONLY', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('feed_chd', 'Breast milk + Artificial milk', 3);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('feed_chd', 'Breast milk + Gripe water/boiled water/cod liver oil/ tea/juice/soup/ medicine/porridge', 4);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('feed_chd', 'Artificial milk + Gripe water/boiled water/cod liver oil/tea/juice/soup/medicine/porridge', 5);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('feed_chd', 'Gripe water/ boiled water/ tea/ juice/ soup/ medicine/ solid food, weaning food/porridge/glucose', 6);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('preg_chd', 'Less than 1 year', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('preg_chd', '1 - 2 years', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('preg_chd', 'More than 2 years', 3);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('more_chd', 'Yes', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('more_chd', 'No', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('more_chd', 'Undecided', 3);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Lactation Amenorrhea Method (LAM)', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Withdrawal', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Condoms', 3);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Pills/oral contraception', 4);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Injectable', 5);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Implants', 6);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'IUD', 7);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Emergency contraception ', 8);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Other Specify', 77);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'None', 11);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('crop', 'Consumption mainly', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('crop', 'Export market mainly', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('crop', 'Export market mainly', 3);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('crop', 'Local and export combinations', 4);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('crop', 'Household consumption and local', 5);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('nhis_no', 'I do not understand the Scheme', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('nhis_no', 'I do not Know where to register', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('nhis_no', 'I do not have easy access to a health facility where I live', 3);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('nhis_no', 'I do not like the attitude of the staff in the health facility', 4);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('nhis_no', 'Those with the Insurance card are given sub standard drugs', 5);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('nhis_no', 'Too expensive/cannot afford', 6);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('nhis_no', 'Lack of money', 7);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('nhis_no', 'Other', 77);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('salt', 'Rock', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('salt', 'Powdered', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('salt', 'Don’t take salt', 3);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('ynd', 'Yes', 1);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('ynd', 'No', 2);
+INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('ynd', 'Don’t know', 3);  
 
 

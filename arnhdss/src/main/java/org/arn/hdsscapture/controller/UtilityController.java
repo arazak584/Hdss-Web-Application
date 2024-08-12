@@ -300,8 +300,7 @@ public class UtilityController {
 	@GetMapping("/extra-forms")
 	public String findOdk(Model model) {
 		
-		List<ODK> items = odkrepo.findAll();
-		
+		List<ODK> items = odkrepo.find();		
 		
 		model.addAttribute("items", items);
 		return "utility/odk_list";
@@ -315,12 +314,6 @@ public class UtilityController {
 	    List<Codebook> items = codebook.odk_gender();
 //	    gender.forEach(codebook -> System.out.println("Codebook: " + codebook));
 		model.addAttribute("items", items);
-		
-//	    List<Codebook> modules = codebook.modules();
-//		model.addAttribute("modules", modules);
-		
-		List<Codebook> enabled = codebook.enabled();
-		model.addAttribute("enabled", enabled);
 
 	    model.addAttribute("odk", odk);
 
@@ -336,17 +329,8 @@ public class UtilityController {
 	}
 
 	
-	@PostMapping("/extra-forms")
-    public String saveOdk(@ModelAttribute("odk") ODK odk, BindingResult bindingResult, Model model) {
-		
-	    List<Codebook> items = codebook.odk_gender();
-		model.addAttribute("items", items);
-		
-//	    List<Codebook> modules = codebook.modules();
-//		model.addAttribute("modules", modules);
-		
-		List<Codebook> enabled = codebook.enabled();
-		model.addAttribute("enabled", enabled);
+	@PostMapping("/extra-forms/add")
+    public String saveOdk(@ModelAttribute("odk") ODK odk, BindingResult bindingResult, Model model) {		
 		
 		boolean formIDExists = odkrepo.findByformID(odk.getFormID()).isPresent();
 
@@ -361,10 +345,10 @@ public class UtilityController {
 		}
  
 
-        // Save the Round object using the repository
+        // Save the object using the repository
         odkrepo.save(odk);
 
-        return "redirect:/utility/extra-forms/add?success";
+        return "redirect:/utility/extra-forms";
     }
 
 
@@ -391,7 +375,7 @@ public class UtilityController {
 		}
 	}
 
-	@PostMapping("/extra-forms/{id}")
+	@PostMapping("/extra-forms/edit/{id}")
 	public String updateOdk(@PathVariable("id") Integer id, @ModelAttribute("round") ODK odk,
 			BindingResult result, Model model) {
 		if (result.hasErrors()) {
@@ -416,7 +400,6 @@ public class UtilityController {
 			}
 		}
 	}
-
 	
 
 	@Autowired

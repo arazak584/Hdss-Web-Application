@@ -418,6 +418,101 @@ public class Sociodemographic {
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date approveDate;
+	
+	//Additional Questions from Dodowa	
+	@Column
+	private Integer pets;	
+	@Column
+	private Integer dogs;	
+	@Column
+	private Integer guinea_pigs;
+	@Column
+	private Integer cats;
+	@Column
+	private Integer fish;
+	@Column
+	private Integer birds;
+	@Column
+	private Integer rabbits;
+	@Column
+	private Integer reptiles;
+	@Column
+	private Integer pet_other;
+	@Column
+	private String pet_other_spfy;
+	@Column
+	private Integer pet_vac;
+	
+	//Dodowa
+	@Column
+	private Integer id0001;
+	@Column
+	private Integer id0002;
+	@Column
+	private Integer id0003;
+	@Column
+	private Integer id0004;
+	@Column
+	private Integer id0005;
+	@Column
+	private Integer id0006;
+	@Column
+	private Integer id0006_1;
+	@Column
+	private Integer id0007;
+	@Column
+	private Integer id0007_1;
+	@Column
+	private Integer id0008;
+	@Column
+	private Integer id0008_1;
+	@Column
+	private Integer  id0009;
+	@Column
+	private Integer  id0009_1;
+	@Column
+	private Integer  id0010;
+	@Column
+	private Integer  id0010_1;
+	@Column
+	private Integer  id0011;
+	@Column
+	private Integer  id0011_1;
+	@Column
+	private Integer  id0012;
+	@Column
+	private Integer  id0012_1;
+	@Column
+	private Integer  id0013;
+	@Column
+	private Integer  id0013_1;
+	@Column
+	private Integer  id0014;
+	@Column
+	private Integer  id0014_1;
+	@Column
+	private Integer  id0015;
+	@Column
+	private Integer  id0015_1;
+	@Column
+	private Integer  id0016;
+	@Column
+	private Integer  id0016_1;
+	@Column
+	private Integer  id0017;
+	@Column
+	private Integer  id0017_1;
+	@Column
+	private Integer  id0018;
+	@Column
+	private Integer  id0018_1;
+	@Column
+	private Integer  id0019;
+	@Column
+	private Integer  id0019_1;
+	@Column
+	private String  id0021;
+	
     
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
@@ -1591,6 +1686,455 @@ public class Sociodemographic {
 	public void setApproveDate(Date approveDate) {
 		this.approveDate = approveDate;
 	}
+
+	public Integer getPets() {
+		return pets;
+	}
+
+
+	public void setPets(Integer pets) {
+		this.pets = pets;
+	}
+
+
+	public Integer getDogs() {
+		return dogs;
+	}
+
+
+	public void setDogs(Integer dogs) {
+		this.dogs = dogs;
+	}
+
+
+	public Integer getGuinea_pigs() {
+		return guinea_pigs;
+	}
+
+
+	public void setGuinea_pigs(Integer guinea_pigs) {
+		this.guinea_pigs = guinea_pigs;
+	}
+
+
+	public Integer getCats() {
+		return cats;
+	}
+
+
+	public void setCats(Integer cats) {
+		this.cats = cats;
+	}
+
+
+	public Integer getFish() {
+		return fish;
+	}
+
+
+	public void setFish(Integer fish) {
+		this.fish = fish;
+	}
+
+
+	public Integer getBirds() {
+		return birds;
+	}
+
+
+	public void setBirds(Integer birds) {
+		this.birds = birds;
+	}
+
+
+	public Integer getRabbits() {
+		return rabbits;
+	}
+
+
+	public void setRabbits(Integer rabbits) {
+		this.rabbits = rabbits;
+	}
+
+
+	public Integer getReptiles() {
+		return reptiles;
+	}
+
+
+	public void setReptiles(Integer reptiles) {
+		this.reptiles = reptiles;
+	}
+
+
+	public Integer getPet_other() {
+		return pet_other;
+	}
+
+
+	public void setPet_other(Integer pet_other) {
+		this.pet_other = pet_other;
+	}
+
+
+	public String getPet_other_spfy() {
+		return pet_other_spfy;
+	}
+
+
+	public void setPet_other_spfy(String pet_other_spfy) {
+		this.pet_other_spfy = pet_other_spfy;
+	}
+	
+	public Integer getPet_vac() {
+		return pet_vac;
+	}
+
+
+	public void setPet_vac(Integer pet_vac) {
+		this.pet_vac = pet_vac;
+	}
+
+
+	public Integer getId0001() {
+		return id0001;
+	}
+
+
+	public void setId0001(Integer id0001) {
+		this.id0001 = id0001;
+	}
+
+
+	public Integer getId0002() {
+		return id0002;
+	}
+
+
+	public void setId0002(Integer id0002) {
+		this.id0002 = id0002;
+	}
+
+
+	public Integer getId0003() {
+		return id0003;
+	}
+
+
+	public void setId0003(Integer id0003) {
+		this.id0003 = id0003;
+	}
+
+
+	public Integer getId0004() {
+		return id0004;
+	}
+
+
+	public void setId0004(Integer id0004) {
+		this.id0004 = id0004;
+	}
+
+
+	public Integer getId0005() {
+		return id0005;
+	}
+
+
+	public void setId0005(Integer id0005) {
+		this.id0005 = id0005;
+	}
+
+
+	public Integer getId0006() {
+		return id0006;
+	}
+
+
+	public void setId0006(Integer id0006) {
+		this.id0006 = id0006;
+	}
+
+
+	public Integer getId0007() {
+		return id0007;
+	}
+
+
+	public void setId0007(Integer id0007) {
+		this.id0007 = id0007;
+	}
+
+
+	public Integer getId0008() {
+		return id0008;
+	}
+
+
+	public void setId0008(Integer id0008) {
+		this.id0008 = id0008;
+	}
+
+
+	public Integer getId0009() {
+		return id0009;
+	}
+
+
+	public void setId0009(Integer id0009) {
+		this.id0009 = id0009;
+	}
+
+
+	public Integer getId0006_1() {
+		return id0006_1;
+	}
+
+
+	public void setId0006_1(Integer id0006_1) {
+		this.id0006_1 = id0006_1;
+	}
+
+
+	public Integer getId0007_1() {
+		return id0007_1;
+	}
+
+
+	public void setId0007_1(Integer id0007_1) {
+		this.id0007_1 = id0007_1;
+	}
+
+
+	public Integer getId0008_1() {
+		return id0008_1;
+	}
+
+
+	public void setId0008_1(Integer id0008_1) {
+		this.id0008_1 = id0008_1;
+	}
+
+
+	public Integer getId0009_1() {
+		return id0009_1;
+	}
+
+
+	public void setId0009_1(Integer id0009_1) {
+		this.id0009_1 = id0009_1;
+	}
+
+
+	public Integer getId0010() {
+		return id0010;
+	}
+
+
+	public void setId0010(Integer id0010) {
+		this.id0010 = id0010;
+	}
+
+
+	public Integer getId0010_1() {
+		return id0010_1;
+	}
+
+
+	public void setId0010_1(Integer id0010_1) {
+		this.id0010_1 = id0010_1;
+	}
+
+
+	public Integer getId0011() {
+		return id0011;
+	}
+
+
+	public void setId0011(Integer id0011) {
+		this.id0011 = id0011;
+	}
+
+
+	public Integer getId0011_1() {
+		return id0011_1;
+	}
+
+
+	public void setId0011_1(Integer id0011_1) {
+		this.id0011_1 = id0011_1;
+	}
+
+
+	public Integer getId0012() {
+		return id0012;
+	}
+
+
+	public void setId0012(Integer id0012) {
+		this.id0012 = id0012;
+	}
+
+
+	public Integer getId0012_1() {
+		return id0012_1;
+	}
+
+
+	public void setId0012_1(Integer id0012_1) {
+		this.id0012_1 = id0012_1;
+	}
+
+
+	public Integer getId0014() {
+		return id0014;
+	}
+
+
+	public void setId0014(Integer id0014) {
+		this.id0014 = id0014;
+	}
+
+
+	public Integer getId0014_1() {
+		return id0014_1;
+	}
+
+
+	public void setId0014_1(Integer id0014_1) {
+		this.id0014_1 = id0014_1;
+	}
+
+
+	public Integer getId0015() {
+		return id0015;
+	}
+
+
+	public void setId0015(Integer id0015) {
+		this.id0015 = id0015;
+	}
+
+
+	public Integer getId0015_1() {
+		return id0015_1;
+	}
+
+
+	public void setId0015_1(Integer id0015_1) {
+		this.id0015_1 = id0015_1;
+	}
+
+
+	public Integer getId0016() {
+		return id0016;
+	}
+
+
+	public void setId0016(Integer id0016) {
+		this.id0016 = id0016;
+	}
+
+
+	public Integer getId0016_1() {
+		return id0016_1;
+	}
+
+
+	public void setId0016_1(Integer id0016_1) {
+		this.id0016_1 = id0016_1;
+	}
+
+
+	public Integer getId0017() {
+		return id0017;
+	}
+
+
+	public void setId0017(Integer id0017) {
+		this.id0017 = id0017;
+	}
+
+
+	public Integer getId0017_1() {
+		return id0017_1;
+	}
+
+
+	public void setId0017_1(Integer id0017_1) {
+		this.id0017_1 = id0017_1;
+	}
+
+
+	public Integer getId0018() {
+		return id0018;
+	}
+
+
+	public void setId0018(Integer id0018) {
+		this.id0018 = id0018;
+	}
+
+
+	public Integer getId0018_1() {
+		return id0018_1;
+	}
+
+
+	public void setId0018_1(Integer id0018_1) {
+		this.id0018_1 = id0018_1;
+	}
+
+
+	public Integer getId0019() {
+		return id0019;
+	}
+
+
+	public void setId0019(Integer id0019) {
+		this.id0019 = id0019;
+	}
+
+
+	public Integer getId0019_1() {
+		return id0019_1;
+	}
+
+
+	public void setId0019_1(Integer id0019_1) {
+		this.id0019_1 = id0019_1;
+	}
+
+
+	public Integer getId0013() {
+		return id0013;
+	}
+
+
+	public void setId0013(Integer id0013) {
+		this.id0013 = id0013;
+	}
+
+
+	public Integer getId0013_1() {
+		return id0013_1;
+	}
+
+
+	public void setId0013_1(Integer id0013_1) {
+		this.id0013_1 = id0013_1;
+	}
+
+
+	public String getId0021() {
+		return id0021;
+	}
+
+
+	public void setId0021(String id0021) {
+		this.id0021 = id0021;
+	}
+
 
 	@Override
     public String toString() {

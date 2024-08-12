@@ -1,6 +1,5 @@
 <!doctype html>
-<html th:fragment="layout(title, links, scripts, content, subnav)" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -29,6 +28,17 @@
         <link rel="stylesheet" th:href="@{/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
         
         <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}"></script>
+        
+        <style>
+        .status-disabled {
+            background-color: yellow;
+            color: black;
+        }
+        .status-enabled {
+            background-color: green;
+            color: white;
+        }
+        </style>
         
     </head>
 
@@ -78,7 +88,13 @@
 														<td th:text="${item.minAge}"></td>
 														<td th:text="${item.maxAge}"></td>
 														<td th:text="${item.gender}"></td>
-														<td th:text="${item.enabled}"></td>
+														<td th:classappend="${item.enabled == 1 ? 'status-enabled' : item.enabled == 2 ? 'status-disabled': 'status-disabled'}">
+															  <span th:if="${item.enabled == 1}">  <i class="ik ik-check-circle"></i>  </span>
+															  <span th:if="${item.enabled == 2}">  <i class="ik ik-info"></i>  </span>		
+															  <span th:text="${item.enabled == 1 ? 'Enabled' : item.enabled == 2 ? 'Disabled'  : 'Disabled'}">
+															  </span>
+															</td>
+														
 														<td>
 										                <a th:href="@{/utility/extra-forms/edit/{id}(id=${item.id})}" 
 										                class="btn btn-success btn-sm">Edit</a>

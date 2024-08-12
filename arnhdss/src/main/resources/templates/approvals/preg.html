@@ -124,7 +124,7 @@
 										<div class="row">
 											<div class="col-md-6" th:if="${item.first_rec}">
 												<div class="form-group">
-													<label th:text="#{first_rec}"></label>
+													<label th:text="#{first_recs}"></label>
 													<input type="text" class="form-control" id="first_rec" th:field="*{first_rec}"  readonly>
 												</div>
 											</div>
@@ -279,6 +279,45 @@
 													<option value="" ></option>
 													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
 													</select>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-md-6" th:if="${item.preg_ready}">
+												<div class="form-group">
+													<label th:text="#{preg_ready}"></label>
+													<select name="preg_ready" class="form-control" th:field="*{preg_ready}" readonly style="pointer-events: none;">
+														<option value="" ></option>
+													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6" th:if="${item.family_plan}">
+												<div class="form-group">
+													<label th:text="#{family_plan}"></label>
+													<select name="family_plan" class="form-control" th:field="*{family_plan}" readonly style="pointer-events: none;">
+													<option value="" ></option>
+													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+													</select>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-md-6" th:if="${item.plan_method}">
+												<div class="form-group">
+													<label th:text="#{plan_method}"></label>
+													<select name="preg_ready" class="form-control" th:field="*{plan_method}" readonly style="pointer-events: none;">
+														<option value="" ></option>
+													<option th:each="codebook : ${plan_method}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6" th:if="${item.plan_method_oth}">
+												<div class="form-group">
+													<label th:text="#{plan_method_oth}"></label>
+													<input type="text" class="form-control" id="plan_method_oth" th:field="*{plan_method_oth}" readonly>
 												</div>
 											</div>
 										</div>

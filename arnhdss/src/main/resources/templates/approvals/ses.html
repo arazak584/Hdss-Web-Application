@@ -90,6 +90,7 @@
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_g}" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#sectiongModal"></button>
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_h}" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sectionhModal"></button>
 										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_i}" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#sectioniModal"></button>
+										<button style="font-weight: bold; text-transform: uppercase;" th:text="#{section_j}" type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#sectionjModal"></button>
 										<hr>
 										</div>
 										</div>
@@ -189,6 +190,38 @@
 											<label th:text="#{house_occ_ge5_fcorres}"></label>
 											<input type="text" class="form-control" id="house_occ_ge5_fcorres" th:field="*{house_occ_ge5_fcorres}" readonly>
 										</div>
+										
+										<div class="row">
+											<div class="col-md-6" th:if="${item.id0003}">
+												<div class="form-group">
+													<label th:text="#{id0003}"></label>
+													<select name="id1003" class="form-control" th:field="*{id0003}" readonly style="pointer-events: none;">
+														<option value="" ></option>
+													<option th:each="codebook : ${nhis}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6" th:if="${item.id0004}">
+												<div class="form-group">
+													<label th:text="#{id0004}"></label>
+													<select name="id0004" class="form-control" th:field="*{id0004}" readonly style="pointer-events: none;">
+													<option value="" ></option>
+													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+													</select>
+												</div>
+											</div>
+										</div>
+										
+										<div  th:if="${item.id0005}">
+												<div class="form-group">
+													<label th:text="#{id0005}"></label>
+													<select name="id0005" class="form-control" th:field="*{id0005}" readonly style="pointer-events: none;">
+													<option value="" ></option>
+													<option th:each="codebook : ${nhis_no}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+													</select>
+												</div>
+											</div>
+										
                                       
                                     </div>
                                     <div class="modal-footer">
@@ -1091,7 +1124,7 @@
 		                        </div>	
 		                        
 		                           <!--Section F -->
-		                        <div class="modal fade" id="sectionfModal" tabindex="-1" role="dialog" aria-labelledby="sectionfModalLabel" aria-hidden="true">
+		                        <div class="modal fade full-window-modal" id="sectionfModal" tabindex="-1" role="dialog" aria-labelledby="sectionfModalLabel" aria-hidden="true">
                             		<div class="modal-dialog" role="document">
                                 	<div class="modal-content">
                                     <div class="modal-header">
@@ -1340,6 +1373,111 @@
 										        <div class="form-group">
 										            <label th:text="#{animal_othr_num_fcorres}"></label>
 										            <input type="text" class="form-control" id="animal_othr_num_fcorres" th:field="*{animal_othr_num_fcorres}" readonly>
+										        </div>
+										    </div>
+										</div>
+										
+										<h3 style="font-weight: bold; color: blue; text-transform: uppercase;">PETS</h3>
+										<div class="row">
+										    <div class="col-md-12" th:if="${item.pets}">
+										        <div class="form-group">
+										            <label th:text="#{pets}"></label>
+										            <select name="pets" class="form-control" th:field="*{pets}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>										    
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.dogs}">
+										        <div class="form-group">
+										            <label th:text="#{dogs}"></label>
+										            <select name="dogs" class="form-control" th:field="*{dogs}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.guinea_pigs}">
+										        <div class="form-group">
+										            <label th:text="#{guinea_pigs}"></label>
+										            <select name="guinea_pigs" class="form-control" th:field="*{guinea_pigs}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.cats}">
+										        <div class="form-group">
+										            <label th:text="#{cats}"></label>
+										            <select name="cats" class="form-control" th:field="*{cats}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.fish}">
+										        <div class="form-group">
+										            <label th:text="#{fish}"></label>
+										            <select name="fish" class="form-control" th:field="*{fish}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.birds}">
+										        <div class="form-group">
+										            <label th:text="#{birds}"></label>
+										            <select name="birds" class="form-control" th:field="*{birds}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.rabbits}">
+										        <div class="form-group">
+										            <label th:text="#{rabbits}"></label>
+										            <select name="rabbits" class="form-control" th:field="*{rabbits}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.reptiles}">
+										        <div class="form-group">
+										            <label th:text="#{reptiles}"></label>
+										            <select name="reptiles" class="form-control" th:field="*{reptiles}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.pet_other}">
+										        <div class="form-group">
+										            <label th:text="#{pet_other}"></label>
+										            <select name="pet_other" class="form-control" th:field="*{pet_other}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.pet_other_spfy}">
+										        <div class="form-group">
+										            <label th:text="#{pet_other_spfy}"></label>
+										            <input type="text" name="pet_other_spfy" class="form-control" th:field="*{pet_other_spfy}" readonly />
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.pet_vac}">
+										        <div class="form-group">
+										            <label th:text="#{pet_vac}"></label>
+										            <select name="pet_vac" class="form-control" th:field="*{pet_vac}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${pet_vac}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
 										        </div>
 										    </div>
 										</div>
@@ -1734,6 +1872,301 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        	<!--Section J -->	
+							<div class="modal fade" id="sectionjModal" tabindex="-1" role="dialog" aria-labelledby="sectionjModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="sectionjModalLabel" style="font-weight: bold; color: blue; text-transform: uppercase;" th:text="#{section_j}"></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <div class="modal-body">                           
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0006}">
+										        <div class="form-group">
+										            <label th:text="#{id0006}"></label>
+										            <select name="id0006" class="form-control" th:field="*{id0006}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0006_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0006_1" class="form-control" th:field="*{id0006_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0007}">
+										        <div class="form-group">
+										            <label th:text="#{id0007}"></label>
+										            <select name="id0007" class="form-control" th:field="*{id0007}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0007_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0007_1" class="form-control" th:field="*{id0007_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0008}">
+										        <div class="form-group">
+										            <label th:text="#{id0008}"></label>
+										            <select name="id0008" class="form-control" th:field="*{id0008}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0008_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0008_1" class="form-control" th:field="*{id0008_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0009}">
+										        <div class="form-group">
+										            <label th:text="#{id0009}"></label>
+										            <select name="id0009" class="form-control" th:field="*{id0009}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0009_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0009_1" class="form-control" th:field="*{id0009_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0010}">
+										        <div class="form-group">
+										            <label th:text="#{id0010}"></label>
+										            <select name="id0010" class="form-control" th:field="*{id0010}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0010_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0010_1" class="form-control" th:field="*{id0010_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0011}">
+										        <div class="form-group">
+										            <label th:text="#{id0011}"></label>
+										            <select name="id0011" class="form-control" th:field="*{id0011}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0011_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0011_1" class="form-control" th:field="*{id0011_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0012}">
+										        <div class="form-group">
+										            <label th:text="#{id0012}"></label>
+										            <select name="id0012" class="form-control" th:field="*{id0012}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0012_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0012_1" class="form-control" th:field="*{id0012_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0013}">
+										        <div class="form-group">
+										            <label th:text="#{id0013}"></label>
+										            <select name="id0013" class="form-control" th:field="*{id0013}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0013_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0013_1" class="form-control" th:field="*{id0013_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0014}">
+										        <div class="form-group">
+										            <label th:text="#{id0014}"></label>
+										            <select name="id0014" class="form-control" th:field="*{id0014}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0014_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0014_1" class="form-control" th:field="*{id0014_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0015}">
+										        <div class="form-group">
+										            <label th:text="#{id0015}"></label>
+										            <select name="id0015" class="form-control" th:field="*{id0015}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0015_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0015_1" class="form-control" th:field="*{id0015_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0016}">
+										        <div class="form-group">
+										            <label th:text="#{id0016}"></label>
+										            <select name="id0016" class="form-control" th:field="*{id0016}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0016_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0016_1" class="form-control" th:field="*{id0016_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0017}">
+										        <div class="form-group">
+										            <label th:text="#{id0017}"></label>
+										            <select name="id0017" class="form-control" th:field="*{id0017}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0017_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0017_1" class="form-control" th:field="*{id0017_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0018}">
+										        <div class="form-group">
+										            <label th:text="#{id0018}"></label>
+										            <select name="id0018" class="form-control" th:field="*{id0018}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0018_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0018_1" class="form-control" th:field="*{id0018_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div class="row">
+										    <div class="col-md-6" th:if="${item.id0019}">
+										        <div class="form-group">
+										            <label th:text="#{id0019}"></label>
+										            <select name="id0019" class="form-control" th:field="*{id0019}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										    <div class="col-md-6" th:if="${item.id0019_1}">
+										        <div class="form-group">
+										            <label th:text="#{crop_use}"></label>
+										            <select name="id0019_1" class="form-control" th:field="*{id0019_1}" readonly style="pointer-events: none;">
+										                <option th:each="codebook : ${crop}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+										            </select>
+										        </div>
+										    </div>
+										</div>
+										
+										<div th:if="${item.id0021}">
+										        <div class="form-group">
+										            <label th:text="#{id0021}"></label>
+										            <input type="text" class="form-control" id="id0021" th:field="*{id0021}"  readonly>
+										        </div>
+										    </div>
+							
+								
+									
+									
+                                      
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 										
 
 
@@ -1751,7 +2184,7 @@
 									<form class="forms-sample" th:action="@{/hdss/approval/ses/{uuids} (uuids=${item.uuid})}" th:object="${item}" method="post">
 										<input type="hidden" name="fw" th:value="${fw}" />
 										<div class="form-group">
-											<input type="text" class="form-control" id="exampleInputUsername1" th:field="*{individual_uuid}" readonly>
+											<input type="text" class="form-control" id="exampleInputUsername1" th:field="*{uuid}" readonly>
 										</div>
 										
 										<div class="form-group row" th:if="${item.approveDate}">

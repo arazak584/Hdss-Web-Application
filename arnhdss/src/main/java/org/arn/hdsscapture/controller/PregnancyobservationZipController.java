@@ -213,6 +213,7 @@ public class PregnancyobservationZipController {
 			  .addColumn("pregnancyNumber").addColumn("recordedDate").addColumn("slp_bednet").addColumn("trt_bednet").addColumn("ttinjection")
 			.addColumn("why_no").addColumn("why_no_other").addColumn("individual_uuid").addColumn("sttime").addColumn("visit_uuid")
 			.addColumn("comment").addColumn("status").addColumn("supervisor").addColumn("approveDate")
+			.addColumn("preg_ready").addColumn("family_plan").addColumn("plan_method").addColumn("plan_method_oth")
              .build();
      CsvMapper csvMapper = new CsvMapper();
      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

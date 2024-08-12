@@ -51,7 +51,7 @@
   
                                   <div class="card">
 									  
-									 <div class="col-lg-3 col-md-6 col-sm-12">
+								<div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="widget bg-purple">
                                     <div class="widget-header">
                                         <h3 class="widget-title">Updated SES</h3>
@@ -60,7 +60,7 @@
                                         </div>
                                     </div>
                                     <div class="widget-body">
-                                        <a th:href = "@{/hdss/report/edit-ses}"> <h3 id="cnteses" class="text-light"></h3></a>
+                                        <a th:href = "@{/hdss/report/edit-ses}"> <h3 th:text="${ses}" class="text-light"></h3> </a>
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +147,6 @@
         <script th:src="@{/js/charts.js}"></script>
         <script th:src="@{/dist/js/theme.min.js}"></script>
         <script th:src="@{/js/dashboard.js}"></script>
-        <script th:src="@{/js/dashboards.js}"></script>
         <script th:src="@{/js/datatables.js}"></script>
         <script th:src="@{/js/index.js}"></script>
         <script th:src="@{/js/xlsx.full.min.js}"></script>

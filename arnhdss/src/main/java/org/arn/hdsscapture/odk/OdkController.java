@@ -1,14 +1,10 @@
 package org.arn.hdsscapture.odk;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.arn.hdsscapture.utils.DataWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +21,7 @@ public class OdkController {
         this.repo = repo;
     }
 	
-	@GetMapping("/enabled")
+	@GetMapping("")
 	public DataWrapper<ODK> findAll() {
 
 		List<ODK> data = repo.findEnabled();
@@ -35,36 +31,32 @@ public class OdkController {
 
 		return w;
 	}
-	
-	@GetMapping
-    public List<ODK> getAll() {
-        return repo.findAll();
-    }
+
 
 	
-	@PostMapping(consumes = "application/json", produces = "application/json")
-    public List<ODK> updateOdk(final @RequestBody List<OdkUpdate> list) {
-        List<ODK> toDelete = list.stream().filter(o -> o.getAction() == OdkUpdate.Action.DELETE)
-                .map(OdkUpdate::getData).collect(Collectors.toList());
-        List<ODK> toUpdate = list.stream().filter(o -> o.getAction() == OdkUpdate.Action.UPDATE)
-                .map(OdkUpdate::getData).collect(Collectors.toList());
-
-        List<ODK> result = new ArrayList<>();
-
-        if(!toDelete.isEmpty()){
-        	repo.deleteInBatch(toDelete);
-        }
-        if(!toUpdate.isEmpty()){
-        	 for (ODK odk : toUpdate) {
-//                 if (odk.getInsertDate() == null) {
-//                     odk.setInsertDate(new Date());
-//                 }
-             }
-            result = repo.saveAll(toUpdate);
-        }
-
-        return result;
-    }
+//	@PostMapping(consumes = "application/json", produces = "application/json")
+//    public List<ODK> updateOdk(final @RequestBody List<OdkUpdate> list) {
+//        List<ODK> toDelete = list.stream().filter(o -> o.getAction() == OdkUpdate.Action.DELETE)
+//                .map(OdkUpdate::getData).collect(Collectors.toList());
+//        List<ODK> toUpdate = list.stream().filter(o -> o.getAction() == OdkUpdate.Action.UPDATE)
+//                .map(OdkUpdate::getData).collect(Collectors.toList());
+//
+//        List<ODK> result = new ArrayList<>();
+//
+//        if(!toDelete.isEmpty()){
+//        	repo.deleteInBatch(toDelete);
+//        }
+//        if(!toUpdate.isEmpty()){
+//        	 for (ODK odk : toUpdate) {
+////                 if (odk.getInsertDate() == null) {
+////                     odk.setInsertDate(new Date());
+////                 }
+//             }
+//            result = repo.saveAll(toUpdate);
+//        }
+//
+//        return result;
+//    }
 	
 
 

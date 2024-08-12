@@ -97,6 +97,11 @@ public class Pregnancyobservation {
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date approveDate;
+	
+	private Integer preg_ready;//When you got pregnant, did you want to get pregnant at that time?   
+	private Integer family_plan;//Before this pregnancy,  did you ever use any Family Planning method to delay or prevent getting pregnant?   
+	private Integer plan_method;//If YES, which of the following methods of family planning did you use to delay or prevent getting pregnant?
+	private String plan_method_oth;//Other Method, Specify
 			
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false)
@@ -513,6 +518,62 @@ public class Pregnancyobservation {
 
 	public void setApproveDate(Date approveDate) {
 		this.approveDate = approveDate;
+	}
+
+
+
+
+	public Integer getPreg_ready() {
+		return preg_ready;
+	}
+
+
+
+
+	public void setPreg_ready(Integer preg_ready) {
+		this.preg_ready = preg_ready;
+	}
+
+
+
+
+	public Integer getFamily_plan() {
+		return family_plan;
+	}
+
+
+
+
+	public void setFamily_plan(Integer family_plan) {
+		this.family_plan = family_plan;
+	}
+
+
+
+
+	public Integer getPlan_method() {
+		return plan_method;
+	}
+
+
+
+
+	public void setPlan_method(Integer plan_method) {
+		this.plan_method = plan_method;
+	}
+
+
+
+
+	public String getPlan_method_oth() {
+		return plan_method_oth;
+	}
+
+
+
+
+	public void setPlan_method_oth(String plan_method_oth) {
+		this.plan_method_oth = plan_method_oth;
 	}
 
 

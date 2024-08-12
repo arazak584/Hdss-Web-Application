@@ -188,8 +188,8 @@
                                         </div>
                                     </div>
                                     <div class="card-body scrollable" id="fieldreport">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover mb-0">
+                                        <div class="dt-responsive">
+                                            <table id="scr-vtr-dynamic" class="table table-striped table-bordered nowrap">
 											
                                                 <thead>
                                                     <tr>
@@ -290,6 +290,58 @@
 															<h6 class="text-muted"><span id="cntvac"></span></h6></td>
                                                         <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/vaccination}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
+                                                    
+                                                    <tr>
+                                                        <td><h5>10</h5></td>
+                                                        <td><h6 class="mb-1">Morbidity</h6></td>
+                                                        <td>
+															<div id="loadingSpinnerReport18" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
+															<h6 class="text-muted"><span id="cntmorbidity"></span></h6></td>
+                                                        <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/morbidity}"><label class="badge badge-success">View Report</label></a></td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td><h5>11</h5></td>
+                                                        <td><h6 class="mb-1">Pregnancy</h6></td>
+                                                        <td>
+															<div id="loadingSpinnerReport14" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
+															<h6 class="text-muted"><span id="cntpreg"></span></h6></td>
+                                                        <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/pregnancy}"><label class="badge badge-success">View Report</label></a></td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td><h5>12</h5></td>
+                                                        <td><h6 class="mb-1">Relationship</h6></td>
+                                                        <td>
+															<div id="loadingSpinnerReport15" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
+															<h6 class="text-muted"><span id="cntrel"></span></h6></td>
+                                                        <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/relationship}"><label class="badge badge-success">View Report</label></a></td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td><h5>13</h5></td>
+                                                        <td><h6 class="mb-1">Death</h6></td>
+                                                        <td>
+															<div id="loadingSpinnerReport16" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
+															<h6 class="text-muted"><span id="cntdth"></span></h6></td>
+                                                        <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/death}"><label class="badge badge-success">View Report</label></a></td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td><h5>14</h5></td>
+                                                        <td><h6 class="mb-1">SES</h6></td>
+                                                        <td>
+															<div id="loadingSpinnerReport17" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
+															<h6 class="text-muted"><span id="cntses"></span></h6></td>
+                                                        <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/ses}"><label class="badge badge-success">View Report</label></a></td>
+                                                    </tr>
+                                                    
+                                                    
                                                     
                                                 </tbody>
                                             </table>
@@ -413,8 +465,8 @@
                             </div>
                             <!-- project-ticket end -->
                             
-                            <div class="row">
-							<!-- ticket, proj, clent start -->
+                            <!-- Start Other Events-->
+                            <!-- <div class="row">					
                             <div class="col-xl-3 col-md-6">
                                 <div class="card ticket-card">
                                     <div class="card-body">
@@ -464,9 +516,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Field Report end -->
+                            
    							
-						</div>
+						</div>-->
+						<!-- Field Report end -->
                            
                            
                            

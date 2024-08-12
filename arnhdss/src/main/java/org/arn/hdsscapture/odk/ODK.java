@@ -44,16 +44,16 @@ public class ODK implements Serializable {
 	@Column(name = "formDesc", nullable = false)
 	public String formDesc;
 	
-	@Column(name = "gender", nullable = false)
+	@Column(name = "gender", nullable = true)
 	public String gender;
 	
 	@Column(name = "enabled", nullable = false)
-	public String enabled;
+	public Integer enabled;
 	
-	@Column(name = "minAge", nullable = false)
+	@Column(name = "minAge", nullable = true)
 	public Integer minAge;
 	
-	@Column(name = "maxAge", nullable = false)
+	@Column(name = "maxAge", nullable = true)
 	public Integer maxAge;
 	
 
@@ -121,12 +121,12 @@ public class ODK implements Serializable {
 	}
 
 
-	public String getEnabled() {
+	public Integer getEnabled() {
 		return enabled;
 	}
 
 
-	public void setEnabled(String enabled) {
+	public void setEnabled(Integer enabled) {
 		this.enabled = enabled;
 	}
 

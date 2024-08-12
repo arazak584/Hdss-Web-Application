@@ -265,6 +265,11 @@ private String convertToCsvRow(Sociodemographic item) throws JsonProcessingExcep
 				.addColumn("tricycles_fcorres").addColumn("tricycles_num_fcorres").addColumn("tv_fcorres")
 				.addColumn("tv_num_fcorres").addColumn("uuid").addColumn("wash_fcorres").addColumn("wash_num_fcorres")
 				.addColumn("watch_fcorres").addColumn("watch_num_fcorres").addColumn("comment").addColumn("status").addColumn("supervisor").addColumn("approveDate")
+				.addColumn("pets").addColumn("dogs").addColumn("guinea_pigs").addColumn("cats").addColumn("fish").addColumn("birds")
+				.addColumn("rabbits").addColumn("reptiles").addColumn("pet_other").addColumn("pet_other_spfy").addColumn("pet_vac")
+				.addColumn("id0001").addColumn("id0002").addColumn("id0003").addColumn("id0004").addColumn("id0005")
+				.addColumn("id0006").addColumn("id0006_1").addColumn("id0007").addColumn("id0007_1").addColumn("id0008").addColumn("id0008_1").addColumn("id0009").addColumn("id0009_1").addColumn("id0010")
+				.addColumn("id0010_1").addColumn("id0011").addColumn("id0011_1").addColumn("id0012").addColumn("id0012_1").addColumn("id0014").addColumn("id0014_1").addColumn("id0015").addColumn("id0015_1").addColumn("id0016").addColumn("id0016_1").addColumn("id0017").addColumn("id0017_1").addColumn("id0018").addColumn("id0018_1").addColumn("id0019").addColumn("id0019_1").addColumn("id0013").addColumn("id0013_1").addColumn("id0021")
             .build();
     CsvMapper csvMapper = new CsvMapper();
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

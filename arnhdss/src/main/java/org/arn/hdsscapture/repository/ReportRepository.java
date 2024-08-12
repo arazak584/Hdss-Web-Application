@@ -59,6 +59,9 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
 	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from death v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countDth();
 	
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from morbidity v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+    Long countMor();
+	
 	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from sociodemographic v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countSes();
 	

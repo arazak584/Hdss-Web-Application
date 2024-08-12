@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.arn.hdsscapture.entity.Codebook;
 import org.arn.hdsscapture.entity.Death;
 import org.arn.hdsscapture.entity.Demographic;
 import org.arn.hdsscapture.entity.Fieldworker;
@@ -517,7 +518,7 @@ public class FormController {
         model.addAttribute("yn_anc", repo.yn_anc());
         model.addAttribute("assist", repo.assist());
         model.addAttribute("bnetLoc", repo.bnetLoc());
-        
+        model.addAttribute("plan_method", repo.fam_plan_method());
         
     }
 
@@ -627,6 +628,11 @@ public class FormController {
         model.addAttribute("birthPlace", repo.birthPlace());
         model.addAttribute("howdel", repo.howdel());
         model.addAttribute("size", repo.size());
+        model.addAttribute("how_lng", repo.how_lng());        
+        model.addAttribute("feed_chd", repo.feed_chd());
+        model.addAttribute("more_chd", repo.more_chd());
+        model.addAttribute("preg_chd", repo.preg_chd());
+        model.addAttribute("fam_plan_method", repo.fam_plan_method());       
         
         
     }
@@ -909,7 +915,7 @@ public class FormController {
     	    return "approvals/ses_list";
     	}
 
-      @GetMapping("/reject/ses")
+    @GetMapping("/reject/ses")
   	public String sesReject(Model model) {
 
   			List<Sociodemographic> items = sesrepo.findRej();
@@ -952,7 +958,7 @@ public class FormController {
             model.addAttribute("rltnhead", repo.rltnhead());
             model.addAttribute("toilet_fcorres", repo.toilet_fcorres());       
             model.addAttribute("toilet_loc_fcorres", repo.toilet_loc_fcorres());  
-            
+            model.addAttribute("pet_vac", repo.pet_vac());
             model.addAttribute("toilet_share_num_fcorres", repo.toilet_share_num_fcorres());
             model.addAttribute("ext_wall_fcorres", repo.ext_wall_fcorres());
             model.addAttribute("floor_fcorres", repo.floor_fcorres());
@@ -962,8 +968,10 @@ public class FormController {
             model.addAttribute("job", repo.job());
             model.addAttribute("stove_fcorres", repo.stove_fcorres());
             model.addAttribute("cooking_loc_fcorres", repo.cooking_loc_fcorres());
-            model.addAttribute("frq", repo.frq());
-           
+            model.addAttribute("frq", repo.frq());          
+            model.addAttribute("nhis", repo.nhis());
+            model.addAttribute("nhis_no", repo.nhis_no()); 
+            model.addAttribute("crop", repo.crop()); 
             
         }
 

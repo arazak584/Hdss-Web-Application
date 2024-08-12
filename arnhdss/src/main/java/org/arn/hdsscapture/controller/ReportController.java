@@ -131,7 +131,7 @@ public class ReportController {
         data.put("death", repo.countDth());
         data.put("rel", repo.countRel());
         data.put("sess", repo.countSes());
-        data.put("eses", repo.countoldSes());
+        //data.put("eses", repo.countoldSes());
         data.put("vacc", repo.countVac());
         data.put("newhh", repo.countHH());
         data.put("newperson", repo.countPerson());
@@ -139,7 +139,8 @@ public class ReportController {
         
         data.put("img", repo.countImg());
         data.put("omg", repo.countOmg());
-        data.put("outcome", repo.countOutcome());
+        data.put("outcome", repo.countOutcome());       
+        data.put("morb", repo.countMor());
 
         return ResponseEntity.ok(data);
     }
@@ -360,7 +361,9 @@ public class ReportController {
 	public String ses(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
 	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
 	                 Model model) {
-
+		
+		long ses = repo.countoldSes();
+		model.addAttribute("ses", ses);
 	    
 	    if (startDate != null && endDate != null) {
 	        List<FieldReport> items = rep.Ses(startDate, endDate);

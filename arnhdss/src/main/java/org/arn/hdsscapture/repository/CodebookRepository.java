@@ -3,7 +3,6 @@ package org.arn.hdsscapture.repository;
 import java.util.List;
 
 import org.arn.hdsscapture.entity.Codebook;
-import org.arn.hdsscapture.entity.CommunityReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,7 +27,7 @@ public interface CodebookRepository extends JpaRepository <Codebook, Integer> {
 	@Query(nativeQuery = true, value = "SELECT * FROM codebook group by codeFeature")
 	List<Codebook> codeFeature();
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM codebook Where codeFeature='enabled'")
+	@Query(nativeQuery = true, value = "SELECT * FROM codebook Where codeFeature='complete'")
 	List<Codebook> enabled();
 	
 	//Inmigration
@@ -90,6 +89,10 @@ public interface CodebookRepository extends JpaRepository <Codebook, Integer> {
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='bnetLoc' ")
 	List<Codebook> bnetLoc();
 	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='fam_plan_method' ")
+	List<Codebook> fam_plan_method();
+	
+	
 	//Pregnancy Outcome
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='outcometype' ")
 	List<Codebook> outcometype();
@@ -97,15 +100,18 @@ public interface CodebookRepository extends JpaRepository <Codebook, Integer> {
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='birthPlace' ")
 	List<Codebook> birthPlace();
 	
-	//Same as pregnancy
-//	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='notdel' ")
-//	List<Codebook> notdel();
+
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='feed_chd' ")
+	List<Codebook> feed_chd();
 	
-//	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='yn_anc' ")
-//	List<Codebook> yn_anc();
-//	
-//	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='assist' ")
-//	List<Codebook> assist();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='more_chd' ")
+	List<Codebook> more_chd();
+	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='preg_chd' ")
+	List<Codebook> preg_chd();      
+	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='how_lng' ")
+	List<Codebook> how_lng();
 	
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='howdel' ")
 	List<Codebook> howdel();
@@ -157,6 +163,9 @@ public interface CodebookRepository extends JpaRepository <Codebook, Integer> {
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='TOILET_LOC_FCORRES' ")
 	List<Codebook> toilet_loc_fcorres();
 	
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='pet_vac' ")
+	List<Codebook> pet_vac();
+	
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='TOILET_SHARE_NUM_FCORRES' ")
 	List<Codebook> toilet_share_num_fcorres();
 	
@@ -190,10 +199,14 @@ public interface CodebookRepository extends JpaRepository <Codebook, Integer> {
 	List<Codebook> scar();
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='HL' ")
 	List<Codebook> hl();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='nhis_no' ")
+	List<Codebook> nhis_no();
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='nhis' ")
 	List<Codebook> nhis();
+	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='crop' ")
+	List<Codebook> crop();
 	
-	
+	List<Codebook> findByCodeFeature(String codeFeature);
 	
 	
 }
