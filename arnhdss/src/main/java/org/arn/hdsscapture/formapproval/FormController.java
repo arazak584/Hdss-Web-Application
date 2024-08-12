@@ -576,9 +576,10 @@ public class FormController {
 		        model.addAttribute("items", items);
 		        model.addAttribute("selectedFw", fw);
 			}else {
+				model.addAttribute("selectedFw", "Select User");
 				List<Pregnancyoutcome> items = outrepo.findItems();
 		        model.addAttribute("items", items);
-				model.addAttribute("selectedFw", "Select User");
+	
 			}
 
 

@@ -144,10 +144,15 @@ public class Morbidity implements Serializable {
 	@NotAudited
 	private Location location;
     
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
 	@NotAudited
 	private Socialgroup socialgroup;
+    
+//    @OneToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "socialgroup_uuid", referencedColumnName = "uuid", insertable = false, updatable = false, nullable=false)
+//	@NotAudited
+//	private Socialgroup socialgroup;
     
     public Morbidity() {}
 
