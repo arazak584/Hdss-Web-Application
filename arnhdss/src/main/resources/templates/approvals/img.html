@@ -144,7 +144,7 @@
 										<div class="row">
 											<div class="col-md-6" th:if="${item.livestock_yn}">
 												<div class="form-group">
-													<label th:text="#{cash_yn}"></label>
+													<label th:text="#{livestock_yn}"></label>
 													<select name="livestock_yn" class="form-control" th:field="*{livestock_yn}" readonly style="pointer-events: none;">
 													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}"
 													th:text="${codebook.codeLabel}"></option>
@@ -213,7 +213,22 @@
 												th:field="*{recordedDate}" readonly>
 										</div>
 
+										<fieldset th:if="${item.why_ext}" class="form-group">
+												<label class="control-label" th:text="#{why_ext}"></label>
+												<textarea type="text" class="form-control form-control-sm" th:field="*{why_ext}" readonly
+												rows="4"></textarea>
+										</fieldset>
 										
+										<fieldset th:if="${item.why_int}" class="form-group">
+												<label class="control-label" th:text="#{why_int}"></label>
+												<textarea type="text" class="form-control form-control-sm" th:field="*{why_int}" readonly rows="4"></textarea>
+										</fieldset>
+										
+										<div class="form-group" th:if="${item.how_lng}">
+											<label th:text="#{how_lng}"></label>
+											<input type="text" class="form-control" id="how_lng"
+												th:field="*{how_lng}" readonly>
+										</div>
 
 
 									</form>

@@ -101,6 +101,15 @@ public class Inmigration {
 	@Column(name = "edtime")
 	private String edtime;
 	
+	@Column(name = "why_ext", length = 1000)
+	private String why_ext;
+	
+	@Column(name = "why_int", length = 1000)
+	private String why_int;
+	
+	@Column(name = "how_lng")
+	private Integer how_lng;
+	
 	@Column(name = "comment", nullable = true, length = 1000)
 	private String comment;
 	
@@ -423,6 +432,36 @@ public class Inmigration {
 
 	public void setApproveDate(Date approveDate) {
 		this.approveDate = approveDate;
+	}
+
+
+	public String getWhy_ext() {
+		return why_ext;
+	}
+
+
+	public void setWhy_ext(String why_ext) {
+		this.why_ext = why_ext;
+	}
+
+
+	public String getWhy_int() {
+		return why_int;
+	}
+
+
+	public void setWhy_int(String why_int) {
+		this.why_int = why_int;
+	}
+
+
+	public Integer getHow_lng() {
+		return how_lng;
+	}
+
+
+	public void setHow_lng(Integer how_lng) {
+		this.how_lng = how_lng;
 	}
 
 

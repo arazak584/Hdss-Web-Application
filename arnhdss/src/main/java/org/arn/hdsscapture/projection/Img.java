@@ -33,5 +33,8 @@ public interface Img {
 	Integer getStatus(); 
 	String getSupervisor();
 	String getLocation_uuid();
+	String getWhy_ext();
+	String getWhy_int();
+	Integer getHow_lng();
 
 }
