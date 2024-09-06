@@ -23,8 +23,8 @@ public interface PregnancyobservationRepository extends JpaRepository <Pregnancy
 	        + "AND m1.recordedDate >= DATE_SUB(CURRENT_DATE(), INTERVAL 5 YEAR) LIMIT ?1 OFFSET ?2")
 	List<Pregnancyobservation> findPregnancy(int pageSize, int offset);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM pregnancyobservation a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
-    List<Pregnancyobservation> rejected();
+	@Query(nativeQuery = true, value = "SELECT a.* FROM pregnancyobservation a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
+    List<Pregnancyobservation> rejected(@Param("fw")String fw);
 
 
 	@Query(nativeQuery = true, value = "SELECT * FROM pregnancyobservation WHERE uuid = :uuid LIMIT 1")

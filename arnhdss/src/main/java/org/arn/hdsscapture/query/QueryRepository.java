@@ -1,7 +1,9 @@
 package org.arn.hdsscapture.query;
 
+import java.util.Date;
 import java.util.List;
 
+import org.arn.hdsscapture.views.FieldReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -124,6 +126,13 @@ public interface QueryRepository extends JpaRepository <Queries, String> {
 			+ "WHERE b.name!= :query GROUP BY b.uuid ORDER BY b.name")
 	List<Queries> Compvisit(@Param("query") String query);
 	
-	
+	@Query(nativeQuery = true, value = "SELECT a.individual_uuid as id,concat(b.firstName,' ',b.lastName)as id1,username as id4,count(a.individual_uuid) as id5,\r\n"
+			+ "max(a.insertDate) as id2,max(date(a.insertDate)) as id3,e.name as id6,SUM(CASE WHEN a.`status`=1 THEN 1 ELSE 0 END) AS id7,\r\n"
+			+ "SUM(CASE WHEN a.`status`=2 THEN 1 ELSE 0 END) AS id8,count(distinct a.location_uuid) as id9\r\n"
+			+ "FROM registry a INNER JOIN fieldworker b ON a.fw_uuid=b.fw_uuid\r\n"
+			+ "INNER JOIN location  d on  a.location_uuid=d.uuid\r\n"
+			+ "inner JOIN locationhierarchy e on d.locationLevel_uuid=e.uuid\r\n"
+			+ "WHERE a.insertDate BETWEEN :startDate AND :endDate GROUP BY id1,id6 ORDER BY id1,id5")
+	List<Queries> registry(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
 }

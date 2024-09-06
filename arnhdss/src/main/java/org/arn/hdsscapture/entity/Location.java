@@ -102,6 +102,9 @@ public class Location implements Serializable {
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "location")
 	private List<Morbidity> morbidity = new ArrayList<>();
 	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "location")
+	private List<RegisterBook> register = new ArrayList<>();
+	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "locationLevel_uuid", referencedColumnName = "uuid", insertable = false, updatable = false)
     private Locationhierarchy locationhierarchy;

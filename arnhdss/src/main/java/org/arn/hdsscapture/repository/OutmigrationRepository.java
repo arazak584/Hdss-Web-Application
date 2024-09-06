@@ -12,8 +12,8 @@ public interface OutmigrationRepository extends JpaRepository <Outmigration, Str
 	@Query(nativeQuery = true, value = "SELECT * FROM outmigration WHERE uuid = :uuid LIMIT 1")
     List<Outmigration> findByUuids(@Param("uuid") String uuid);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM outmigration a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
-    List<Outmigration> rejected();
+	@Query(nativeQuery = true, value = "SELECT a.* FROM outmigration a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
+    List<Outmigration> rejected(@Param("fw")String fw);
 	
 	
 	@Query(nativeQuery = true, value ="SELECT a.uuid,residency_uuid, destination,concat(f.firstName,' ',f.lastName) as fw_uuid,"

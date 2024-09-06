@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
@@ -580,6 +581,15 @@ public class UtilityController {
 		
 		return "utility/codebook_list";
 	}
+	
+	@GetMapping("/codebook/getItems")
+	@ResponseBody
+	public List<Codebook> getItemsByFeature(@RequestParam("codeFeature") String codeFeature) {
+	    // Retrieve the list of items based on the selected codeFeature
+	    List<Codebook> items = code.findByCodeFeature(codeFeature);
+	    return items;
+	}
+
 
 	@GetMapping("/codebook/add")
 	public String addCode(Model model,

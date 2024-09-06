@@ -15,8 +15,8 @@ public interface SesRepository extends JpaRepository <Sociodemographic, String> 
 	        + " WHERE b.endType = 1 AND a.insertDate >= (SELECT r.sesDate from settings r) GROUP BY a.socialgroup_uuid LIMIT ?1 OFFSET ?2")
 	List<Sociodemographic> findSes(int pageSize, int offset);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM sociodemographic a WHERE a.`status`=2 AND a.formcompldate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
-    List<Sociodemographic> rejected();
+	@Query(nativeQuery = true, value = "SELECT a.* FROM sociodemographic a WHERE a.`status`=2 AND a.formcompldate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
+    List<Sociodemographic> rejected(@Param("fw")String fw);
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM sociodemographic WHERE uuid = :uuid LIMIT 1")
     List<Sociodemographic> findByUuids(@Param("uuid") String uuid);

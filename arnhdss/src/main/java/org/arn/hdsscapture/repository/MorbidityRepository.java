@@ -9,8 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface MorbidityRepository extends JpaRepository <Morbidity, String> {
 
-	@Query(nativeQuery = true, value = "SELECT a.* FROM morbidity a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
-    List<Morbidity> rejected();
+	@Query(nativeQuery = true, value = "SELECT a.* FROM morbidity a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
+    List<Morbidity> rejected(@Param("fw")String fw);
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM morbidity WHERE uuid = :uuid LIMIT 1")
     List<Morbidity> findByUuids(@Param("uuid") String uuid);

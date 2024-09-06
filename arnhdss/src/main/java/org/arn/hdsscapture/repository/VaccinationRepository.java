@@ -13,8 +13,8 @@ public interface VaccinationRepository extends JpaRepository <Vaccination, Strin
 			+ "death b ON a.individual_uuid=b.individual_uuid where b.individual_uuid is null LIMIT ?1 OFFSET ?2")
 	List<Vaccination> findVaccination(int pageSize, int offset);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM vaccination a WHERE a.`status`=2 AND a.editDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
-    List<Vaccination> rejected();
+	@Query(nativeQuery = true, value = "SELECT a.* FROM vaccination a WHERE a.`status`=2 AND a.editDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
+    List<Vaccination> rejected(@Param("fw")String fw);
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM vaccination WHERE uuid = :uuid LIMIT 1")
     List<Vaccination> findByUuids(@Param("uuid") String uuid);

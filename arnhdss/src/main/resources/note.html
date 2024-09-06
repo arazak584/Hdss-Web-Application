@@ -14,13 +14,18 @@
 
 
 //Install Docker on Ubuntu Server
-1. Install Ubuntu 20.04 or above
+1. Install Ubuntu 18.04 or above
 2. Install Docker from hub.docker.com
 3. Install mysql 8
 
 //Install Mysql on Ubuntu Server
-
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.24-1_all.deb
+sudo dpkg -i mysql-apt-config*
 sudo apt update
+sudo apt-key adv --keyserver keys.gnupg.net --recv-keys B7B3B788A8D3785C
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys B7B3B788A8D3785C
+
+//rm mysql-apt-config*
 
 sudo apt install mysql-server
 sudo systemctl start mysql.service
@@ -51,7 +56,7 @@ sudo mysql
 
 [mysqld]
 bind-address = 0.0.0.0
-sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY$
+sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY
 pid-file        = /var/run/mysqld/mysqld.pid
 socket          = /var/run/mysqld/mysqld.sock
 datadir         = /var/lib/mysql
@@ -76,11 +81,11 @@ docker run -p 8080:8080 \
 -e SPRING_DATASOURCE_PASSWORD=data \
 arazak584/hdss.jar:v2023.0.7
 
-docker run -p 8484:8080 \
--e SPRING_DATASOURCE_URL=jdbc:mysql://192.168.10.15:3306/hdss \
+docker run -p 1100:8080 \
+-e SPRING_DATASOURCE_URL=jdbc:mysql://192.168.10.105:3306/hdss \
 -e SPRING_DATASOURCE_USERNAME=data \
 -e SPRING_DATASOURCE_PASSWORD=data \
-arazak584/hdss.jar:v2023.0.6
+arazak584/hdss.jar:v2023.0.8
 
 //Run this for restart when server restarts
 docker update --restart unless-stopped c854b1356724(THIS IS THE IMAGE ID)

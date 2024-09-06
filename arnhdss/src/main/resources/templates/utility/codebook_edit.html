@@ -50,7 +50,8 @@
 									  <div th:if="${exceptionMsg}" class="alert alert-danger" th:text="${exceptionMsg}"></div>
                                     
                                     <div class="card-body">
-										
+								
+								<div class="row">		
 								<div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header"><h3>Codebook</h3></div>
@@ -62,14 +63,10 @@
 									</div>
                                     <div class="card-body">
                                         <form class="forms-sample" th:action="@{/utility/codebook/{uuid} (uuid=${item.id})}" th:object="${item}" method="post">
-                                            <!--<div class="form-group">
-                                                <label for="roundNumber">USER NAME</label>
-                                                <input type="text" name="username" th:field ="*{username}" class="form-control" readonly>
-                                            </div>-->
                                                                           
 											<div class="form-group">
 													<label th:text="#{codeFeature}"></label>
-													<select name="rec_anc" class="form-control select2" th:field="*{codeFeature}" required>
+													<select name="codeFeature" class="form-control select2" th:field="*{codeFeature}" required readonly style="pointer-events: none;">
 													<option th:each="codebook : ${codeFeature}" th:value="${codebook.codeFeature}"
 													th:text="${codebook.codeFeature}"></option>
 													</select>
@@ -77,7 +74,7 @@
 											
 											<div class="form-group">
 													<label th:text="#{codeFeature}"></label>
-												 <input type="number" class="form-control"  name="codeValue" th:field ="*{codeValue}" Placeholder="Code Value" required>
+												 <input type="number" class="form-control"  name="codeValue" th:field ="*{codeValue}" Placeholder="Code Value" required readonly>
 
 											</div>
 											
@@ -88,13 +85,47 @@
 											</div>
                                             
                                             <button type="submit" class="btn btn-primary mr-2">Update</button>
-                                            <!--<button class="btn btn-light">Cancel</button>-->
+                                            <a class="btn btn-light" th:href="@{/utility/codebook}">Cancel</a>
                                           </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card table-card">
+                                    <div class="card-header">
+                                        <h3>Codebook Options</h3>
+                                        <div class="card-header-right">
+                                            <ul class="list-unstyled card-option">
+                                                <li><i class="ik ik-chevron-left action-toggle"></i></li>
+                                                <li><i class="ik ik-minus minimize-card"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>CodeFeature</th>
+                                                        <th>Code Value</th>
+                                                        <th>Code Label</th>
+                                                       
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                   
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                                    
                                     </div>
+                                </div>
                                 </div>
   
                 </div>
@@ -146,6 +177,49 @@
     }
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+    // Function to load items based on selected codeFeature
+    function loadItems(selectedFeature) {
+        $.ajax({
+            url: '/utility/codebook/getItems', // The endpoint to handle the request
+            type: 'GET',
+            data: { codeFeature: selectedFeature },
+            success: function (response) {
+                // Clear the table body
+                var tbody = $('table tbody');
+                tbody.empty();
+
+                // Populate the table with the received data
+                $.each(response, function (index, item) {
+                    var row = '<tr>' +
+                        '<td>' + item.codeFeature + '</td>' +
+                        '<td>' + item.codeValue + '</td>' +
+                        '<td>' + item.codeLabel + '</td>' +
+                        '</tr>';
+                    tbody.append(row);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching data: ' + error);
+            }
+        });
+    }
+
+    // Trigger the AJAX request on change
+    $('select[name="codeFeature"]').change(function () {
+        var selectedFeature = $(this).val();
+        loadItems(selectedFeature);
+    });
+
+    // Trigger the AJAX request on page load if there is a default selected option
+    var defaultSelectedFeature = $('select[name="codeFeature"]').val();
+    if (defaultSelectedFeature) {
+        loadItems(defaultSelectedFeature);
+    }
+});
+
+</script>
         
     </body>
 </html>

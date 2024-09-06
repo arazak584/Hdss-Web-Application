@@ -13,8 +13,8 @@ public interface DeathRepository extends JpaRepository <Death, String> {
 	@Query(nativeQuery = true, value = "SELECT * FROM death WHERE uuid = :uuid LIMIT 1")
     List<Death> findByUuids(@Param("uuid") String uuid);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM death a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
-    List<Death> rejected();
+	@Query(nativeQuery = true, value = "SELECT a.* FROM death a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
+    List<Death> rejected(@Param("fw")String fw);
 	
 	
 	@Query(nativeQuery = true, value ="SELECT a.uuid,concat(b.firstName,' ',b.lastName,' ',COALESCE(otherName, '')) as individual_uuid, deathCause,deathDate,deathPlace,concat(f.firstName,' ',f.lastName) as fw_uuid,a.insertDate,compno as visit_uuid,deathPlace_oth,\r\n"

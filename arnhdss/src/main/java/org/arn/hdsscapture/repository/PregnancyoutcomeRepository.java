@@ -13,8 +13,8 @@ public interface PregnancyoutcomeRepository extends JpaRepository <Pregnancyoutc
 	@Query(nativeQuery = true, value = "SELECT a.* FROM pregnancyoutcome as a INNER JOIN outcome b on a.uuid=b.preg_uuid WHERE b.uuid = :uuid LIMIT 1")
     List<Pregnancyoutcome> findByUuids(@Param("uuid") String uuid);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM pregnancyoutcome a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
-    List<Pregnancyoutcome> rejected();
+	@Query(nativeQuery = true, value = "SELECT a.* FROM pregnancyoutcome a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
+    List<Pregnancyoutcome> rejected(@Param("fw")String fw);
 	
 	
 	@Query(nativeQuery = true, value ="SELECT	h.uuid as uuid,ass_del,ass_del_other,b_place,h.chd_size as pregnancy_uuid,conceptionDate,first_nb,TIMESTAMPDIFF(year,dob,CURDATE()) as first_rec,\r\n"

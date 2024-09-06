@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.arn.hdsscapture.entity.Codebook;
 import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Population;
+import org.arn.hdsscapture.entity.RegisterBook;
 import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.query.Queries;
 import org.arn.hdsscapture.query.QueryRepository;
@@ -14,6 +16,7 @@ import org.arn.hdsscapture.repository.CodebookRepository;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.PopulationRepository;
+import org.arn.hdsscapture.repository.RegisterRepository;
 import org.arn.hdsscapture.repository.ReportRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.views.ActiveHouseholdRepository;
@@ -30,6 +33,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/hdss")
@@ -53,6 +57,8 @@ public class ReportController {
 	RoundRepository round;
 	@Autowired
 	CodebookRepository codebook;
+	@Autowired
+	RegisterRepository registry;
 	
 	@GetMapping("/asyncReport")
     public ResponseEntity<Map<String, Object>> getAsyncReport() {
@@ -450,6 +456,28 @@ public class ReportController {
 	    }
 
 	    return "report/morbidity";
+	}
+	
+	@GetMapping("/report/registry")
+	public String registry(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+	    
+	    if (startDate != null && endDate != null) {
+	        List<Queries> items = queryrepo.registry(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/registry";
+	}
+	
+	@GetMapping("/report/regis")
+	@ResponseBody
+	public List<RegisterBook> getItemsByCompno(@RequestParam("compno") String compno) {
+	    // Retrieve the list of items based on the selected compound Number
+	    List<RegisterBook> regis = registry.Search(compno);
+	    return regis;
 	}
 
 	

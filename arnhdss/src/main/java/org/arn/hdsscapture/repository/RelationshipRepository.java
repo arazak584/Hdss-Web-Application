@@ -12,8 +12,9 @@ public interface RelationshipRepository extends JpaRepository <Relationship, Str
 	@Query(nativeQuery = true, value = "SELECT * from relationship WHERE endType=1 LIMIT ?1 OFFSET ?2")
 	List<Relationship> findRelationship(int pageSize, int offset);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM relationship a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
-    List<Relationship> rejected();
+	@Query(nativeQuery = true, value = "SELECT a.* FROM relationship a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)"
+			+ " AND a.fw_uuid = :fw")
+    List<Relationship> rejected(@Param("fw")String fw);
 	
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM relationship WHERE uuid = :uuid LIMIT 1")

@@ -100,6 +100,9 @@ public class Fieldworker implements Serializable {
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
 	private List<Morbidity> morbidity = new ArrayList<>();
 	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "fieldworker")
+	private List<RegisterBook> register = new ArrayList<>();
+	
 	
 	
 	public Fieldworker() {}

@@ -15,8 +15,8 @@ public interface DemographicRepository extends JpaRepository <Demographic, Strin
 			+ "death b ON a.individual_uuid=b.individual_uuid where b.individual_uuid is null LIMIT ?1 OFFSET ?2")
 	List<Demographic> findDemographic(int pageSize, int offset);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM demographic a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
-    List<Demographic> rejected();
+	@Query(nativeQuery = true, value = "SELECT a.* FROM demographic a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
+    List<Demographic> rejected(@Param("fw")String fw);
 	
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM demographic WHERE individual_uuid = :uuid LIMIT 1")
