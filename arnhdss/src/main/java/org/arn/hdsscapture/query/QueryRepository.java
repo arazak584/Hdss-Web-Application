@@ -3,7 +3,6 @@ package org.arn.hdsscapture.query;
 import java.util.Date;
 import java.util.List;
 
-import org.arn.hdsscapture.views.FieldReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -3,7 +3,6 @@ package org.arn.hdsscapture.repository;
 import java.util.List;
 import java.util.Optional;
 
-import org.arn.hdsscapture.entity.DataDictionary;
 import org.arn.hdsscapture.entity.Locationhierarchy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

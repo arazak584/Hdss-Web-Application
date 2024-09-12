@@ -3,7 +3,6 @@ package org.arn.hdsscapture.controller;
 import java.util.List;
 import java.util.UUID;
 
-import org.arn.hdsscapture.entity.Codebook;
 import org.arn.hdsscapture.entity.Locationhierarchy;
 import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.LocationhierarchylevelRepository;

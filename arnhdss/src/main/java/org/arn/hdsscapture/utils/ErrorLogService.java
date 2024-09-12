@@ -18,13 +18,15 @@ public class ErrorLogService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW) // Independent transaction for logging errors
-    public void logError(String errorMessage, String stackTrace, String recordUuid) {
+    public void logError(String errorMessage, String stackTrace, String recordUuid,String fw,String tb) {
         try {
             ErrorLog errorLog = new ErrorLog();
             errorLog.setErrorMessage(errorMessage);
             errorLog.setTimestamp(LocalDateTime.now());
             errorLog.setStackTrace(stackTrace);
             errorLog.setRecordUuid(recordUuid);
+            errorLog.setDataCollector(fw);
+            errorLog.setTableName(tb);
             errorLogRepository.save(errorLog); // Save the error log to the database
         } catch (Exception logException) {
             // Log the failure of error logging (this should not fail often)

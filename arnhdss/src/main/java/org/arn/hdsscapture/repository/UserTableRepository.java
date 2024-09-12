@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.arn.hdsscapture.entity.Outmigration;
-import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.entity.UserTable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

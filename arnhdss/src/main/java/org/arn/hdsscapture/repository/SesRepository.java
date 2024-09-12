@@ -3,8 +3,6 @@ package org.arn.hdsscapture.repository;
 import java.util.List;
 
 import org.arn.hdsscapture.entity.Sociodemographic;
-import org.arn.hdsscapture.entity.Vaccination;
-import org.arn.hdsscapture.views.IndividualSearch;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

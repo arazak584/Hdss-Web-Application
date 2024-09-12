@@ -2,12 +2,9 @@ package org.arn.hdsscapture.controller;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.arn.hdsscapture.entity.ErrorLog;
-import org.arn.hdsscapture.entity.Outcome;
 import org.arn.hdsscapture.entity.Outcome;
 import org.arn.hdsscapture.exception.DataErrorException;
 import org.arn.hdsscapture.exception.DataNotFoundException;
@@ -64,10 +61,13 @@ public class OutcomeController {
                 } catch (Exception e) {
                     // Log the error for the problematic record using the external service
                     String errorMessage = "Error saving record: " + e.getMessage();
-                    String stackTrace = getStackTraceAsString(e);
-                    String residencyUuid = record.getMother_uuid() + " - " + "outcome_motheruuid "+ record.getPreg_uuid() + " - preg_uuid" ; // Extract the residency_uuid directly
-
-                    errorLogService.logError(errorMessage, stackTrace, residencyUuid); // Log error details
+                    String stackTrace = getImportantPartOfStackTrace(e); //getStackTraceAsString(e);
+                    String residencyUuid = (record.getMother_uuid() != null ? record.getMother_uuid() : "Unknown") + " - motheruuid " + 
+                            (record.getPreg_uuid() != null ? record.getPreg_uuid() : "Unknown") + " - preg_uuid";
+                    String fw = "Unknown";
+                    String tb = "Outcome";
+                    
+                    errorLogService.logError(errorMessage, stackTrace, residencyUuid,fw,tb); // Log error details
                     
                     errorRecords.add(record); // Add the record to the error list
                 }
@@ -90,7 +90,7 @@ public class OutcomeController {
             // In case of an unexpected exception, log it and re-throw
             String errorMessage = "Unexpected error: " + e.getMessage();
             String stackTrace = getStackTraceAsString(e);
-            errorLogService.logError(errorMessage, stackTrace, null);
+            errorLogService.logError(errorMessage, stackTrace, null,null,null);
             
             throw new DataErrorException(errorMessage, e);
         }
@@ -103,6 +103,36 @@ public class OutcomeController {
         e.printStackTrace(pw);
         return sw.toString();
     }
+    
+    private String getImportantPartOfStackTrace(Exception e) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        
+        String fullStackTrace = sw.toString();
+        StringBuilder importantPart = new StringBuilder();
+        
+        // Extract lines related to 'Caused by' and the exception type
+        String[] lines = fullStackTrace.split("\n");
+        boolean causeFound = false;
+        
+        for (String line : lines) {
+            // Append the first line (the main exception) and the 'Caused by' parts
+            if (line.startsWith("Caused by") || (!causeFound && line.contains(e.getClass().getSimpleName()))) {
+                importantPart.append(line).append("\n");
+                causeFound = true;
+            }
+            
+            // Stop after appending the first 'Caused by' section
+            if (causeFound && line.startsWith("    at ")) {
+                break;
+            }
+        }
+        
+        // Return only the important part of the stack trace
+        return importantPart.toString();
+    }
+
 	
 //	@PostMapping("")
 //	public DataWrapper<Outcome> saveAll(@RequestBody DataWrapper<Outcome> data) {

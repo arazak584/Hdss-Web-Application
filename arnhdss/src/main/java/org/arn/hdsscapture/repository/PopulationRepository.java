@@ -3,7 +3,6 @@ package org.arn.hdsscapture.repository;
 import java.util.List;
 
 import org.arn.hdsscapture.entity.Population;
-import org.arn.hdsscapture.views.Events;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -2,13 +2,9 @@ package org.arn.hdsscapture.controller;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.ValidationException;
-
-import org.arn.hdsscapture.entity.ErrorLog;
 import org.arn.hdsscapture.entity.Inmigration;
 import org.arn.hdsscapture.exception.DataErrorException;
 import org.arn.hdsscapture.exception.DataNotFoundException;
@@ -17,9 +13,6 @@ import org.arn.hdsscapture.repository.InmigrationRepository;
 import org.arn.hdsscapture.utils.DataWrapper;
 import org.arn.hdsscapture.utils.ErrorLogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,10 +61,13 @@ public class InmigrationController {
                 } catch (Exception e) {
                     // Log the error for the problematic record using the external service
                     String errorMessage = "Error saving record: " + e.getMessage();
-                    String stackTrace = getStackTraceAsString(e);
-                    String residencyUuid = record.getResidency_uuid()+ " - " + "Inmigration_Residency_uuid " + record.getVisit_uuid()+ " - visit_uuid"; // Extract the residency_uuid directly
+                    String stackTrace = getImportantPartOfStackTrace(e); //getStackTraceAsString(e);
+                    String residencyUuid = (record.getResidency_uuid() != null ? record.getResidency_uuid() : "Unknown") + " - Residency_uuid " + 
+                            (record.getVisit_uuid() != null ? record.getVisit_uuid() : "Unknown") + " - visit_uuid";
+                    String fw = record.getFw_uuid();
+                    String tb = "Inmigration";
 
-                    errorLogService.logError(errorMessage, stackTrace, residencyUuid); // Log error details
+                    errorLogService.logError(errorMessage, stackTrace, residencyUuid,fw,tb); // Log error details
                     
                     errorRecords.add(record); // Add the record to the error list
                 }
@@ -94,7 +90,7 @@ public class InmigrationController {
             // In case of an unexpected exception, log it and re-throw
             String errorMessage = "Unexpected error: " + e.getMessage();
             String stackTrace = getStackTraceAsString(e);
-            errorLogService.logError(errorMessage, stackTrace, null);
+            errorLogService.logError(errorMessage, stackTrace, null,null,null);
             
             throw new DataErrorException(errorMessage, e);
         }
@@ -107,6 +103,36 @@ public class InmigrationController {
         e.printStackTrace(pw);
         return sw.toString();
     }
+    
+    private String getImportantPartOfStackTrace(Exception e) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        
+        String fullStackTrace = sw.toString();
+        StringBuilder importantPart = new StringBuilder();
+        
+        // Extract lines related to 'Caused by' and the exception type
+        String[] lines = fullStackTrace.split("\n");
+        boolean causeFound = false;
+        
+        for (String line : lines) {
+            // Append the first line (the main exception) and the 'Caused by' parts
+            if (line.startsWith("Caused by") || (!causeFound && line.contains(e.getClass().getSimpleName()))) {
+                importantPart.append(line).append("\n");
+                causeFound = true;
+            }
+            
+            // Stop after appending the first 'Caused by' section
+            if (causeFound && line.startsWith("    at ")) {
+                break;
+            }
+        }
+        
+        // Return only the important part of the stack trace
+        return importantPart.toString();
+    }
+
 
 
 	

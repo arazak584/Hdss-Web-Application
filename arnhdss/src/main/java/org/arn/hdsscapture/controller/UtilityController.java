@@ -12,6 +12,7 @@ import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.entity.Settings;
 import org.arn.hdsscapture.entity.Task;
+import org.arn.hdsscapture.entity.Vpm;
 import org.arn.hdsscapture.odk.OdkRepository;
 import org.arn.hdsscapture.odk.ODK;
 import org.arn.hdsscapture.repository.CodebookRepository;
@@ -22,6 +23,7 @@ import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.RoundRepository;
 import org.arn.hdsscapture.repository.SettingsRepository;
 import org.arn.hdsscapture.repository.TaskRepository;
+import org.arn.hdsscapture.repository.VpmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -571,6 +573,17 @@ public class UtilityController {
 	}
 	
 	
+	@Autowired
+	VpmRepository vpm;
+
+	// Community
+	@GetMapping("/vpm")
+	public String vpm(Model model) {
+		List<Vpm> items = vpm.findVpm();
+		model.addAttribute("items", items);
+		Community(model);
+		return "utility/vpm_list";
+	}
 
 
 	// Codebook

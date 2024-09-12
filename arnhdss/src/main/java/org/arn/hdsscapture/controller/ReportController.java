@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.arn.hdsscapture.entity.Codebook;
 import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Population;
 import org.arn.hdsscapture.entity.RegisterBook;

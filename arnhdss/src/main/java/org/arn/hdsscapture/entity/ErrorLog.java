@@ -24,6 +24,9 @@ public class ErrorLog {
 	public LocalDateTime timestamp;
 	@Column(columnDefinition = "TEXT") // Use TEXT type to store the full stack trace as a string
 	public String stackTrace;
+	
+	public String dataCollector;
+	public String tableName;
     
     public ErrorLog() {}
 
@@ -65,6 +68,22 @@ public class ErrorLog {
 
 	public void setRecordUuid(String recordUuid) {
 		this.recordUuid = recordUuid;
+	}
+
+	public String getDataCollector() {
+		return dataCollector;
+	}
+
+	public void setDataCollector(String dataCollector) {
+		this.dataCollector = dataCollector;
+	}
+
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
 	}
     
     
