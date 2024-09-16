@@ -56,7 +56,9 @@
                             <div class="col-md-12">
                                 <div class="card table-card">
                                     <div class="card-header">
-                                        <h3>#</h3>
+										<div class="card-header d-block">
+                                        <button style="font-weight: bold; text-transform: uppercase;" th:text="#{report}" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sectionaModal"></button>
+                                    </div>
                                         <div class="card-header-right">
                                             <ul class="list-unstyled card-option">
                                                 <li><i class="ik ik-chevron-left action-toggle"></i></li>
@@ -208,6 +210,55 @@
                                             </table>
                                         </div>
                                     </div>
+                                    
+                                    
+                                    <div class="modal fade full-window-modal" id="sectionaModal" tabindex="-1" role="dialog" aria-labelledby="sectionaModalLabel" aria-hidden="true">
+                            		<div class="modal-dialog" role="document">
+                                	<div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="sectionaModalLabel" style="font-weight: bold; color: blue; text-transform: uppercase;" th:text="#{report}"></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <div class="modal-body">									                     																			
+																	
+										
+										<div class="table-responsive">
+                                            <table id="search-table"
+                                                   class="table table-striped table-bordered nowrap">
+                                                <thead>
+                                                <tr>
+                                                    <th>Event</th>
+													<th>Name</th>
+													<th>Total</th>
+													<th>Approved</th>
+													<th>Rejected</th>
+													<th>Resolved</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                
+                                                                                                                    
+                                               
+                                            </tbody>
+                                                <tfoot>
+                                                
+                                                </tfoot>
+                                            </table>
+                                        </div>
+										
+                                      
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+		                               
+		                            </div>
+		                        </div>
+		                        </div>
+                                    
+                                    
+                                    
+                                    
                                     <div class="card-footer">
                                         <div class="text-right">
                                             <a href="#!" class=" b-b-primary text-primary">View all Events</a>
@@ -270,68 +321,47 @@
     }
 </script>
 
-<script>
-  // Make an AJAX request to fetch data for div 1
-  const div = document.getElementById('div1');
-  const progressBar = div.querySelector('.progress-bar');
-  const progress = progressBar.querySelector('.progress');
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Trigger the AJAX request automatically when the page loads
+        loadApprovedData();
 
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://example.com/data.json');
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      // Update the progress bar to 100%
-      progress.style.transform = 'rotate(360deg)';
+        function loadApprovedData() {
+            $.ajax({
+                url: '/hdss/approved', // The endpoint to handle the request
+                type: 'GET',
+                success: function (response) {
+                    var tbody = $('table#search-table tbody');
+                    tbody.empty(); // Clear the table body
 
-      // Hide and remove the progress bar
-      progressBar.style.display = 'none';
-      progressBar.parentNode.removeChild(progressBar);
-
-      // Display the loaded data
-      div.querySelector('p').textContent = JSON.parse(xhr.responseText).data;
-    } else {
-      console.error('Error fetching data:', xhr.statusText);
-    }
-  };
-  xhr.send();
+                    if (response.length === 0) {
+                        tbody.append('<tr><td colspan="6">No data available.</td></tr>');
+                    } else {
+                        // Populate the table with the received data
+                        $.each(response, function (index, regi) {
+                            var row = '<tr>' +
+                                '<td>' + regi.event + '</td>' +
+                                '<td>' + regi.supervisor + '</td>' +
+                                '<td>' + regi.number + '</td>' +
+                                '<td>' + regi.approved + '</td>' +
+                                '<td>' + regi.rejected + '</td>' +
+                                '<td>' + regi.resolved + '</td>' +
+                                '</tr>';
+                            tbody.append(row);
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    var tbody = $('table#search-table tbody');
+                    tbody.empty(); // Clear the table body
+                    tbody.append('<tr><td colspan="6">Error fetching data: ' + error + '</td></tr>');
+                    console.error('Error fetching data: ' + error);
+                }
+            });
+        }
+    });
 </script>
 
-<script>
-      function addRow(tbody, ageGroup, pop, male, female, className) {
-        var tr = $("<tr></tr>").attr("data-id", ageGroup);
-        if (className) {
-          tr.addClass(className);
-        }
-        tr.append($("<td></td>").append($('<input type="text" class="form-control" readonly>').val(ageGroup)));
-        tr.append($("<td></td>").append($('<input type="text" class="form-control"> readonly').val(pop)));
-        tr.append($("<td></td>").append($('<input type="text" class="form-control">').val(male)));
-        tr.append($("<td></td>").append($('<input type="text" class="form-control">').val(female)));
-        tbody.append(tr);
-      }
-
-      function tableRefresh() {
-        var tbody = $(".settings-table tbody");
-        tbody.html("Loading...");
-
-        $.getJSON("/api/pyramid", function (data) {
-          tbody.html("");
-          data.forEach((el) => {
-            addRow(tbody, el.ageGroup, el.pop, el.male, el.female);
-          });
-        });
-      }
-
-      $("button.refresh").click(tableRefresh);
-
-      $("button.add-row").click(function () {
-        var tbody = $(".settings-table tbody");
-        addRow(tbody, null, null, null, null, "dirty");
-      });
-
-
-
-      tableRefresh();
-    </script>
 
         
     </body>

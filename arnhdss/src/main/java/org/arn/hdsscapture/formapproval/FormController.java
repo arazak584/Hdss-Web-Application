@@ -14,6 +14,7 @@ import org.arn.hdsscapture.entity.Morbidity;
 import org.arn.hdsscapture.entity.Outmigration;
 import org.arn.hdsscapture.entity.Pregnancyobservation;
 import org.arn.hdsscapture.entity.Pregnancyoutcome;
+import org.arn.hdsscapture.entity.RegisterBook;
 import org.arn.hdsscapture.entity.Relationship;
 import org.arn.hdsscapture.entity.Sociodemographic;
 import org.arn.hdsscapture.entity.Vaccination;
@@ -43,6 +44,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -127,6 +129,17 @@ public class FormController {
 	public String main(Model model) {
 
 		return "approvals/approval";
+	}
+	
+	@Autowired
+	ApprovalRepository aprepo;
+	
+	@GetMapping("/approved")
+	@ResponseBody
+	public List<approvals> getItems() {
+	    // Retrieve the list of items based on the selected compound Number
+	    List<approvals> regis = aprepo.approval();
+	    return regis;
 	}
 
 	@Autowired
@@ -582,7 +595,7 @@ public class FormController {
 	        
 	        List<Fieldworker> fws = field.fw();
 			//System.out.println("Villages: " + villages);
-			model.addAttribute("fws", fws);
+			model.addAttribute("fws", fws);		
 	    	
 	    	
 			if (fw != null && !fw.equals("Select User")) {
@@ -616,10 +629,10 @@ public class FormController {
 
 	@GetMapping("/approval/outcome/{uuid}")
     public String editOut(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
-        List<Pregnancyoutcome> optionalImg = outrepo.findByUuid(uuid);
+        List<Pregnancyoutcome> optionalItem = outrepo.findByUuid(uuid);
 
-        if (!optionalImg.isEmpty()) {
-        	Pregnancyoutcome item = optionalImg.get(0);
+        if (!optionalItem.isEmpty()) {
+        	Pregnancyoutcome item = optionalItem.get(0);
 
             // Supervisor
             String userName = principal.getName();
@@ -692,6 +705,70 @@ public class FormController {
             }
         }
     }
+    
+    //Open Pregnancy from outcome
+    @GetMapping("/approval/pregout/{uuid}")
+    public String editPregs(@PathVariable("uuid") String uuid,@RequestParam(name = "fw", required = false) String fw, Model model, Principal principal) {
+        List<Pregnancyobservation> optionalImg = pregrepo.findUuid(uuid);
+
+        if (!optionalImg.isEmpty()) {
+        	Pregnancyobservation item = optionalImg.get(0);
+
+            // Supervisor
+            String userName = principal.getName();
+
+            if (item.getSupervisor() == null || item.getSupervisor().isEmpty()) {
+                item.setSupervisor(userName);
+            }
+
+            model.addAttribute("item", item);
+            model.addAttribute("fw", fw);
+            // Populate model with codebook data
+            PregCodebookData(model);
+
+            return "approvals/preg_out";
+        } else {
+            return "error";
+        }
+    }
+    
+    //Save Pregnancy and return to the Outcome
+    @PostMapping("/approval/pregs/{uuids}")
+    public String updatePregs(@PathVariable("uuids") String uuids,@RequestParam(name = "fw", required = false) String fw, @ModelAttribute("item") Pregnancyobservation item,
+            BindingResult result, Model model,Principal principal) {
+        if (result.hasErrors()) {
+        	model.addAttribute("fw", fw);
+            // Handle validation errors if necessary
+            return "approvals/preg_out";
+        } else {
+            List<Pregnancyobservation> optionalImg = pregrepo.findByUuids(uuids);
+            if (!optionalImg.isEmpty()) {
+            	Pregnancyobservation existingImg = optionalImg.get(0);
+            	String userName = principal.getName();
+            	String groupRole = getGroupRole();
+            	
+                existingImg.setApproveDate(new Date()); // Set the approveDate using a method
+                //existingImg.setStatus(item.getStatus());
+                existingImg.setSupervisor(userName);
+                if ("ROLE_SUPERVISOR".equals(groupRole) && item.getStatus() == 1) {
+                    existingImg.setStatus(4);
+                } else {
+                    existingImg.setStatus(item.getStatus());
+                }               
+                // Ensure comment is null if status is not 2
+                if (item.getStatus() != 2) {
+                    existingImg.setComment(null);
+                } else {
+                    existingImg.setComment(item.getComment());
+                }
+                pregrepo.save(existingImg);
+                return "redirect:/hdss/approval/outcomelist?fw=" + fw; // Corrected redirect URL
+            } else {
+                return "error"; // Handle the case when the Inmigration with the given UUID is not found
+            }
+        }
+    }
+    
     
     
     

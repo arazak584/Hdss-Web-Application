@@ -107,6 +107,22 @@
 													</div>
 												</div>
                                             </div>
+                                            
+                                            <div class="form-group">
+                                                <label th:text="#{label.emailenabled}"></label>
+                                                <div class="col-md-8">
+													<div class="custom-control custom-radio">
+														<input id="email_disabled" name="email_status_check" type="radio"
+															class="custom-control-input" required value="0" th:field="*{email_enabled}" /> <label
+															class="custom-control-label text-secondary" for="email_disabled">Disabled</label>
+													</div>
+													<div class="custom-control custom-radio">
+														<input id="email_enabled" name="email_status_check" type="radio"
+															class="custom-control-input" required value="1" th:field="*{email_enabled}" /> <label
+															class="custom-control-label text-success" for="email_enabled">Enabled</label>
+													</div>
+												</div>
+                                            </div>
                                             <hr />
                                             
                                             <button type="submit" class="btn btn-primary mr-2">Submit</button>

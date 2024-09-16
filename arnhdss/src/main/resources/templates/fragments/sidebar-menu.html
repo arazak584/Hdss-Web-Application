@@ -48,7 +48,7 @@
                         <a href="#" th:href="@{/hdss/report/search}" class="menu-item">Search</a>
                     </div>
                 </div>
-                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
+                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR','SUPERVISOR')">
                     <a href="#" ><i class="fa fa-exclamation-triangle"></i><span>Queries</span><span class="badge badge-danger" id="errors"></span></a>
                     <div class="submenu-content">
                         <a href="#" th:href="@{/hdss/query/nomembership}" class="menu-item">No Membership<span class="badge badge-danger" id="nomemb"></span></a>

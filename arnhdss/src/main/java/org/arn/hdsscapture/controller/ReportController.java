@@ -1,5 +1,6 @@
 package org.arn.hdsscapture.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -150,14 +151,39 @@ public class ReportController {
         return ResponseEntity.ok(data);
     }
 	
+	@GetMapping("/syncreport")
+    public ResponseEntity<Map<String, Object>> getSyncReports() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("items", codebook.findAll());
+        //Report
+        //Failure to sync for 2 plus days
+        data.put("notify", repo.sync());
 
+     // Get fieldworkers and format their details
+        List<Fieldworker> fws = field.lastSync();
+        List<String> formattedFieldworkers = new ArrayList<>();
+        for (Fieldworker fw : fws) {
+            String formattedString = String.format(
+                "- %s %s, : %s",
+                fw.getFirstName(),
+                fw.getLastName(),
+                fw.getInsertDate()
+            );
+            formattedFieldworkers.add(formattedString);
+        }
+        
+        // Add formatted fieldworkers to the data map
+        data.put("fieldworkers", formattedFieldworkers);
+
+        return ResponseEntity.ok(data);
+    }
 
 	@GetMapping("/report")
 	public String fw(Model model) {
 			
 	        List<Round> items = round.findAll();
 	        model.addAttribute("items", items);
-
+	       
 	   
 //		List<Population> items = pop.pyramid();
 //		System.err.println("Size of list " + items.size());

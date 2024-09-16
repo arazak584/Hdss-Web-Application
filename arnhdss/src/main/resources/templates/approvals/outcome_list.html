@@ -97,6 +97,7 @@
 													<th th:text="#{uuid}"></th>
 													<th th:text="#{item.status}"></th>
 													<th th:text="#{fw.action}"></th>
+													<th th:text="#{preg}"></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -119,6 +120,19 @@
 											            <td>
 											                <a th:href="@{/hdss/approval/outcome/{uuid}(uuid=${item.uuid}, fw=${selectedFw})}" 
 											                class="btn btn-primary btn-sm">View</a>
+											
+											            </td>
+											            <td th:classappend="${item.first_rec == 0 ? 'status-pending' : item.first_rec == 1 ? 'status-approved' : item.first_rec == 2 ? 'status-rejected' : item.first_rec == 3 ? 'status-resolved' : 'status-supervisor'}">
+											                <a th:href="@{/hdss/approval/pregout/{uuid}(uuid=${item.pregnancy_uuid}, fw=${selectedFw})}" th:classappend="${item.first_rec == 0 ? 'status-pending' : item.first_rec == 1 ? 'status-approved' : item.first_rec == 2 ? 'status-rejected' : item.first_rec == 3 ? 'status-resolved' : 'status-supervisor'}">View
+											                
+											                <span th:if="${item.first_rec == 1 || item.first_rec == 4}">  <i class="ik ik-check-circle"></i>  </span>
+															  <span th:if="${item.first_rec == 2}">  <i class="ik ik-info"></i>  </span>
+															  <span th:if="${item.first_rec == 0}">  <i class="ik ik-edit-2"></i>  </span>
+															  <span th:if="${item.first_rec == 3}">  <i class="ik ik-refresh-cw"></i>  </span>
+															  <span th:text="${item.first_rec == 0 ? 'Pending' : item.first_rec == 1 ? 'Approved' : item.first_rec == 2 ? 'Rejected' : item.first_rec == 3 ? 'Resolved' : 'Supervisor'}">
+															  </span>
+											                
+											                </a>
 											
 											            </td>
 											            </tr>                                                                                

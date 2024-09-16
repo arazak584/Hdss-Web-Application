@@ -155,6 +155,23 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
     		+ "ON a.individual_uuid=b.individual_uuid  WHERE a.uuid IN (SELECT socialgroup_uuid FROM residency WHERE endType=1)")
     Long dthhoh();
     
+    @Query(nativeQuery = true, value ="SELECT COUNT(Number)\r\n"
+    		+ "FROM (\r\n"
+    		+ "    SELECT COUNT(DISTINCT a.username) AS Number\r\n"
+    		+ "    FROM fieldworker a\r\n"
+    		+ "    INNER JOIN visit b ON a.fw_uuid = b.fw_uuid\r\n"
+    		+ "    WHERE b.insertDate > (\r\n"
+    		+ "        SELECT r.startDate\r\n"
+    		+ "        FROM round r\r\n"
+    		+ "        ORDER BY r.roundNumber DESC\r\n"
+    		+ "        LIMIT 1\r\n"
+    		+ "    )\r\n"
+    		+ "    AND a.status = 1\r\n"
+    		+ "    GROUP BY a.fw_uuid\r\n"
+    		+ "    HAVING TIMESTAMPDIFF(DAY, MAX(b.insertDate), CURDATE()) > 2\r\n"
+    		+ ") AS subquery;")
+    Long sync();
+    
     
 
 }

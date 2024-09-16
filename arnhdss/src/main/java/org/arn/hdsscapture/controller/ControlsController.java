@@ -166,6 +166,7 @@ public class ControlsController {
 			existingUser.setUser_fname(selected.getUser_fname());
 			existingUser.setUser_lname(selected.getUser_lname());
 			existingUser.setUser_enabled(selected.isUser_enabled());
+			existingUser.setEmail_enabled(selected.isEmail_enabled());
 			existingUser.setGroups(selected.getGroups());
 
 			// Save the updated user

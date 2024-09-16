@@ -14,4 +14,5 @@ public interface RegisterRepository extends JpaRepository <RegisterBook, String>
 			+ " INNER JOIN fieldworker c on a.fw_uuid=c.fw_uuid WHERE b.compno = :compno")
 	List<RegisterBook> Search(@Param("compno") String compno);
 
+
 }

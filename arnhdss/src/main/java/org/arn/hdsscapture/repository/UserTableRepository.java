@@ -25,7 +25,7 @@ public interface UserTableRepository extends JpaRepository<UserTable, String> {
 	@Query("SELECT u FROM user_table u WHERE u.username = :username OR u.user_email=:username ")
 	Optional<UserTable> findByUsernameIgnoreCase(String username);
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM user_table WHERE user_enabled=1")
+	@Query(nativeQuery = true, value = "SELECT * FROM user_table WHERE email_enabled=1")
     List<UserTable> ActiveUsers();
 	
 

@@ -3,7 +3,8 @@ $(document).ready(function() {
     // Make separate AJAX requests for different sections of the dashboard
     $.when(
         getData('/hdss/asyncReport/hierarchy', updateHierarchy),
-        getData('/hdss/asyncReport/query', updateQuery)
+        getData('/hdss/asyncReport/query', updateQuery),
+        getData('/hdss/syncreport', updateSync)
         // Add more calls for other sections as needed
     ).then(function() {
         // All updates are complete
@@ -63,9 +64,28 @@ function updateQuery(data) {
     $('#errors').text(data.nomemb+data.minor+data.dupres+data.dobs+data.lag+data.minors+data.out+data.dthoh);
 }
 
+function updateSync(data) {
+    // Update your dashboard components with the received data
+    // For example, assuming you have HTML elements with specific IDs:
+    $('#itemsContainer').html(renderItems(data.items));
+    
+    //Sync Notification
+    $('#notify').text(data.notify);
+    
+    // Update fieldworker details
+    if (data.fieldworkers && data.fieldworkers.length) {
+        $('#fieldworkersContainer').html(data.fieldworkers.join('<br>'));
+    } else {
+        $('#fieldworkersContainer').html('<p>No Notification</p>'); // Fallback if there are no fieldworkers
+    }
+    
+   
+}
+
 $(document).ready(function() {
     getData('/hdss/asyncReport/hierarchy', updateHierarchy);
     getData('/hdss/asyncReport/query', updateQuery);
+     getData('/hdss/syncreport', updateSync);
     // Add more calls for other sections as needed
 });
 

@@ -73,21 +73,23 @@
                                                 <thead>
                                                 <tr>
                                                     <th th:text="#{fw.name}"></th>
-													<th th:text="#{fw.type}"></th>
 													<th th:text="#{fw.village}"></th>
 													<th th:text="#{fw.visit}"></th>
 													<th th:text="#{fw.submit}"></th>
 													<th th:text="#{fw.total}"></th>
+													<th th:text="#{type}"></th>
+													<th th:text="#{year}"></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr th:each="item : ${items}">
 											            <td th:text="${item.Fieldworker}"></td>
-											            <td th:text="${item.username}"></td>
 											            <td th:text="${item.name}"></td>
 											            <td th:text="${item.insertDate}"></td>
 											            <td th:text="${item.submitDate}"></td>
 											            <td th:text="${item.total}"></td>
+											            <td th:text="${item.type}"></td>
+											            <td th:text="${item.year}"></td>
 											            </tr>                                                                                
                                                
                                             </tbody>

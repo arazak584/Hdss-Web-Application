@@ -1,7 +1,11 @@
 package org.arn.hdsscapture.formapproval;
 
+import java.util.List;
+
+import org.arn.hdsscapture.entity.RegisterBook;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface FormRepository extends JpaRepository <FormStatus, Long>{
 
@@ -10,7 +14,7 @@ public interface FormRepository extends JpaRepository <FormStatus, Long>{
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from inmigration v where `status`=0 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
     Long Img0();
 	
-	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from inmigration v where `status`=1 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from inmigration v where `status`=1 OR `status`=4 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
     Long Img1();
 	
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from inmigration v where `status`=2 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
@@ -24,7 +28,7 @@ public interface FormRepository extends JpaRepository <FormStatus, Long>{
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from outmigration v where `status`=0 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Omg0();
 		
-	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from outmigration v where `status`=1 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from outmigration v where `status`=1 OR `status`=4 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Omg1();
 		
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from outmigration v where `status`=2 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
@@ -38,7 +42,7 @@ public interface FormRepository extends JpaRepository <FormStatus, Long>{
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from death v where `status`=0 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Dth0();
 		
-	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from death v where `status`=1 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from death v where `status`=1 OR `status`=4 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Dth1();
 		
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from death v where `status`=2 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
@@ -51,7 +55,7 @@ public interface FormRepository extends JpaRepository <FormStatus, Long>{
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from pregnancyobservation v where `status`=0 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Preg0();
 		
-	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from pregnancyobservation v where `status`=1 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from pregnancyobservation v where `status`=1 OR `status`=4 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Preg1();
 		
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from pregnancyobservation v where `status`=2 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
@@ -64,7 +68,7 @@ public interface FormRepository extends JpaRepository <FormStatus, Long>{
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from pregnancyoutcome v where `status`=0 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Out0();
 		
-	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from pregnancyoutcome v where `status`=1 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from pregnancyoutcome v where `status`=1 OR `status`=4 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Out1();
 		
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from pregnancyoutcome v where `status`=2 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
@@ -77,7 +81,7 @@ public interface FormRepository extends JpaRepository <FormStatus, Long>{
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.individual_uuid) from demographic v where `status`=0 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Demo0();
 		
-	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.individual_uuid) from demographic v where `status`=1 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.individual_uuid) from demographic v where `status`=1 OR `status`=4 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Demo1();
 		
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.individual_uuid) from demographic v where `status`=2 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
@@ -90,7 +94,7 @@ public interface FormRepository extends JpaRepository <FormStatus, Long>{
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from relationship v where `status`=0 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Rel0();
 		
-	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from relationship v where `status`=1 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from relationship v where `status`=1 OR `status`=4 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Rel1();
 		
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from relationship v where `status`=2 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
@@ -103,7 +107,7 @@ public interface FormRepository extends JpaRepository <FormStatus, Long>{
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from sociodemographic v where `status`=0 AND v.formcompldate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Ses0();
 		
-	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from sociodemographic v where `status`=1 AND v.formcompldate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from sociodemographic v where `status`=1 OR `status`=4 AND v.formcompldate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Ses1();
 		
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from sociodemographic v where `status`=2 AND v.formcompldate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
@@ -116,7 +120,7 @@ public interface FormRepository extends JpaRepository <FormStatus, Long>{
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from vaccination v where `status`=0 AND v.editDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Vac0();
 		
-	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from vaccination v where `status`=1 AND v.editDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from vaccination v where `status`=1 OR `status`=4 AND v.editDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Vac1();
 		
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from vaccination v where `status`=2 AND v.editDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
@@ -129,7 +133,7 @@ public interface FormRepository extends JpaRepository <FormStatus, Long>{
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from morbidity v where `status`=0 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Mor0();
 		
-	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from morbidity v where `status`=1 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from morbidity v where `status`=1 OR `status`=4 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Mor1();
 		
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from morbidity v where `status`=2 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
@@ -137,4 +141,5 @@ public interface FormRepository extends JpaRepository <FormStatus, Long>{
 		
 	@Query(nativeQuery = true, value ="SELECT  count(DISTINCT v.uuid) from morbidity v where `status`=3 AND v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long Mor3();
+	
 }

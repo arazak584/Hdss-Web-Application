@@ -39,6 +39,12 @@ public class FieldReport {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
+	@Column(name = "year", nullable = false)
+	private String year;
+	
+	@Column(name = "type", nullable = false)
+	private String type;
+	
 	private Long total;
 
 	public FieldReport() {
@@ -108,6 +114,22 @@ public class FieldReport {
     public void setTotal(Long total) {
         this.total = total;
     }
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 	
 
 }

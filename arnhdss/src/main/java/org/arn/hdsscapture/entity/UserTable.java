@@ -41,6 +41,9 @@ public class UserTable implements Serializable {
 	
 	@Column(nullable = false)
 	private boolean user_enabled;
+	
+	@Column(nullable = false)
+	private boolean email_enabled;
 
 	@Column(nullable = false, length = 80)
 	private String user_password;
@@ -116,6 +119,14 @@ public class UserTable implements Serializable {
 
 	public void setGroups(List<GroupTable> groups) {
 		this.groups = groups;
+	}
+
+	public boolean isEmail_enabled() {
+		return email_enabled;
+	}
+
+	public void setEmail_enabled(boolean email_enabled) {
+		this.email_enabled = email_enabled;
 	}
 
 	@Override

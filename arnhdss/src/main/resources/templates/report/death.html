@@ -69,7 +69,7 @@
 
                                         <div class="dt-responsive">
                                             <table id="order-table"
-                                                   class="table table-striped table-bordered nowrap" data-order='[[3, "asc"]]'>
+                                                   class="table table-striped table-bordered nowrap" data-order='[[2, "asc"]]'>
                                                 <thead>
                                                 <tr>
                                                     <th th:text="#{fw.name}"></th>
@@ -78,6 +78,7 @@
 													<th th:text="#{fw.visit}"></th>
 													<th th:text="#{fw.submit}"></th>
 													<th th:text="#{fw.total}"></th>
+													<th th:text="#{year}"></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -88,6 +89,7 @@
 											            <td th:text="${item.insertDate}"></td>
 											            <td th:text="${item.submitDate}"></td>
 											            <td th:text="${item.total}"></td>
+											            <td th:text="${item.year}"></td>
 											            </tr>                                                                                
                                                
                                             </tbody>

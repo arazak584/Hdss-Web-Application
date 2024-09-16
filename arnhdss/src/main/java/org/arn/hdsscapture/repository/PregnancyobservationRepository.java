@@ -30,6 +30,9 @@ public interface PregnancyobservationRepository extends JpaRepository <Pregnancy
 	@Query(nativeQuery = true, value = "SELECT * FROM pregnancyobservation WHERE uuid = :uuid LIMIT 1")
     List<Pregnancyobservation> findByUuids(@Param("uuid") String uuid);
 	
+	@Query(nativeQuery = true, value = "SELECT * FROM pregnancyobservation LIMIT 1")
+    List<Pregnancyobservation> findId();
+	
 	
 	@Query(nativeQuery = true, value ="SELECT	a.uuid,concat(b.firstName,' ',b.lastName,' ',COALESCE(otherName, '')) as individual_uuid,\r\n"
 			+ " ageOfPregFromPregNotes, 	anc_visits, 	anteNatalClinic, 	attend_you, 	attend_you_other, 	bnet_loc, 	bnet_loc_other,\r\n" 
@@ -42,6 +45,18 @@ public interface PregnancyobservationRepository extends JpaRepository <Pregnancy
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
 			+ "where a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.uuid = :uuid LIMIT 1")
 	List<Pregnancyobservation> findByUuid(@Param("uuid") String uuid);
+	
+	@Query(nativeQuery = true, value ="SELECT	a.uuid,concat(b.firstName,' ',b.lastName,' ',COALESCE(otherName, '')) as individual_uuid,\r\n"
+			+ " ageOfPregFromPregNotes, 	anc_visits, 	anteNatalClinic, 	attend_you, 	attend_you_other, 	bnet_loc, 	bnet_loc_other,\r\n" 
+			+ " bnet_sou,bnet_sou_other,estimatedAgeOfPreg,expectedDeliveryDate,first_preg,first_rec,concat(f.firstName,' ',f.lastName) as fw_uuid, \r\n"
+			+ "healthfacility, 	how_many, 	a.insertDate, 	lastClinicVisitDate, 	medicineforpregnancy, 	outcome, 	outcome_date, 	own_bnet,\r\n"
+			+ "pregnancyNumber, 	recordedDate, 	slp_bednet, 	trt_bednet, 	ttinjection,compno as visit_uuid, why_no, why_no_other,\r\n"
+			+ "TIMESTAMPDIFF(year,dob,CURDATE()) as edtime,dob as sttime, 	approveDate, 	`comment`, 	a.`status`,preg_ready,family_plan,plan_method,plan_method_oth,supervisor\r\n"
+			+ "FROM pregnancyobservation a INNER JOIN individual b on a.individual_uuid=b.uuid\r\n"
+			+ "INNER JOIN visit c on a.visit_uuid=c.uuid INNER JOIN location d on c.location_uuid=d.uuid\r\n"
+			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
+			+ "where a.uuid = :uuid LIMIT 1")
+	List<Pregnancyobservation> findUuid(@Param("uuid") String uuid);
 
 		
 	@Query(nativeQuery = true, value ="SELECT	a.uuid,concat(b.firstName,' ',b.lastName,' ',COALESCE(otherName, '')) as individual_uuid, "
