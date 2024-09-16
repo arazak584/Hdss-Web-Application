@@ -42,8 +42,8 @@ public class RegisterBook implements Serializable {
 	private String location_uuid;
 	
 	@Column(nullable = false)
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date insertDate;
 	
     @Column(nullable = false)

@@ -132,7 +132,7 @@ public interface FieldRepository extends JpaRepository <FieldReport, String> {
 			+ "FROM morbidity a INNER JOIN fieldworker b ON a.fw_uuid=b.fw_uuid\r\n"
 			+ "INNER JOIN location  d on  a.location_uuid=d.uuid\r\n"
 			+ "inner JOIN locationhierarchy e on d.locationLevel_uuid=e.uuid\r\n"
-			+ "WHERE a.insertDate BETWEEN :startDate AND :endDate GROUP BY Fieldworker,name ORDER BY Fieldworker,total")
+			+ "WHERE date(a.insertDate) BETWEEN :startDate AND :endDate GROUP BY Fieldworker,name ORDER BY Fieldworker,total")
 	List<FieldReport> Mor(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
 
