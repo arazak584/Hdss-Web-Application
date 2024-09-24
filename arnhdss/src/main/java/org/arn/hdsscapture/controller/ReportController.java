@@ -578,8 +578,15 @@ public class ReportController {
 //	    	List<ActiveHouseholds> items = activehoh.Reports();
 //	    	model.addAttribute("items", items);
 	    }
-
 	    return "report/search";
+	}
+	
+	@GetMapping("/api/search")
+	@ResponseBody
+	public List<IndividualSearch> searchByCompno(@RequestParam("compno") String compno) {
+	    // Retrieve the list of items based on the selected compound Number
+	    List<IndividualSearch> items = searchs.Report(compno);
+	    return items;
 	}
 	
 	@Autowired

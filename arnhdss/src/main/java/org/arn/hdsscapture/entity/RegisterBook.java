@@ -1,6 +1,7 @@
 package org.arn.hdsscapture.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,6 +18,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Audited
@@ -41,13 +44,13 @@ public class RegisterBook implements Serializable {
 	@Column(name = "location_uuid", nullable = false)
 	private String location_uuid;
 	
-	@Column(nullable = false)
+	@Column(name = "insertDate", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    public Date insertDate;
+	//@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date insertDate;
 	
     @Column(nullable = false)
-    public String fw_uuid;
+    private String fw_uuid;
 
     @Column(nullable = false)
     private Integer status;
@@ -109,19 +112,13 @@ public class RegisterBook implements Serializable {
 		this.location_uuid = location_uuid;
 	}
 
-
-
 	public Date getInsertDate() {
 		return insertDate;
 	}
 
-
-
 	public void setInsertDate(Date insertDate) {
 		this.insertDate = insertDate;
 	}
-
-
 
 	public String getFw_uuid() {
 		return fw_uuid;

@@ -2,8 +2,10 @@ package org.arn.hdsscapture.controller;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 
 import org.arn.hdsscapture.entity.ErrorLog;
 import org.arn.hdsscapture.entity.RegisterBook;
@@ -42,26 +44,42 @@ public class RegisterController {
 		return w;
 	}
 	
+
 	@PostMapping("")
 	public DataWrapper<RegisterBook> saveAll(@RequestBody DataWrapper<RegisterBook> data) {
-		try {
+	    try {
+	        // Loop through each record and print the insertDate
+	        for (RegisterBook record : data.getData()) {
+	            // Assuming insertDate is a Date object in RegisterBook
+	            if (record.getInsertDate() != null) {
+	                System.out.println("Incoming insertDate: " + record.getInsertDate().toString()); 
+	                // or use SimpleDateFormat for custom formatting
+	                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+	                System.out.println("Formatted insertDate: " + f.format(record.getInsertDate()));
+	            } else {
+	                System.out.println("insertDate is null for record: " + record.getIndividual_uuid());
+	            }
+	        }
 
-		List<RegisterBook> saved =  repo.saveAll(data.getData());
+	        // Save all valid records
+	        List<RegisterBook> saved = repo.saveAll(data.getData());
 
-		DataWrapper<RegisterBook> s = new DataWrapper<>();
-		s.setData(saved);
+	        DataWrapper<RegisterBook> s = new DataWrapper<>();
+	        s.setData(saved);
 
-		return s;
-		}catch (Exception e) {
-            // Log the API error message and full stack trace into ErrorLog entity
-            String errorMessage = "API Error: " + e.getMessage();
-            String stackTrace = getStackTraceAsString(e);
+	        return s;
+	    } catch (Exception e) {
+	        // Log the API error message and full stack trace into ErrorLog entity
+	        String errorMessage = "API Error: " + e.getMessage();
+	        String stackTrace = getStackTraceAsString(e);
 
-            logError(errorMessage, stackTrace);
+	        logError(errorMessage, stackTrace);
 
-            throw new DataErrorException(errorMessage, e);
-        }
+	        throw new DataErrorException(errorMessage, e);
+	    }
 	}
+
+
 	
 	// Helper method to log the error into ErrorLog entity
     private void logError(String errorMessage, String stackTrace) {

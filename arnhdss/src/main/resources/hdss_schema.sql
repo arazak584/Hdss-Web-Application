@@ -696,6 +696,7 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('feed_chd', 'Br
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('feed_chd', 'Breast milk + Gripe water/boiled water/cod liver oil/ tea/juice/soup/ medicine/porridge', 4);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('feed_chd', 'Artificial milk + Gripe water/boiled water/cod liver oil/tea/juice/soup/medicine/porridge', 5);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('feed_chd', 'Gripe water/ boiled water/ tea/ juice/ soup/ medicine/ solid food, weaning food/porridge/glucose', 6);
+INSERT INTO `codebook` (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('feed_chd', 'Not Applicable', 7);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('preg_chd', 'Less than 1 year', 1);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('preg_chd', '1 - 2 years', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('preg_chd', 'More than 2 years', 3);

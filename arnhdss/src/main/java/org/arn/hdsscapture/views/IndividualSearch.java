@@ -39,7 +39,7 @@ public class IndividualSearch {
 	private String motherid;
 	
 	private String mothername;
-	private String endType;
+	private Integer endType;
 	private String village;
 
 	public IndividualSearch() {
@@ -109,11 +109,11 @@ public class IndividualSearch {
 		this.mothername = mothername;
 	}
 
-	public String getEndType() {
+	public Integer getEndType() {
 		return endType;
 	}
 
-	public void setEndType(String endType) {
+	public void setEndType(Integer endType) {
 		this.endType = endType;
 	}
 
