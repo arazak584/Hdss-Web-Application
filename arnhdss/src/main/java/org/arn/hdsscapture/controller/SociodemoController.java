@@ -61,9 +61,9 @@ public class SociodemoController {
                     // Log the error for the problematic record using the external service
                     String errorMessage = "Error saving record: " + e.getMessage();
                     String stackTrace = getImportantPartOfStackTrace(e); //getStackTraceAsString(e);
-                    String residencyUuid = (record.getSocialgroup_uuid() != null ? record.getSocialgroup_uuid() : "Unknown") + " - HHID " + 
-                            (record.getLocation_uuid() != null ? record.getLocation_uuid() : "Unknown") + " - compID" +
-                            (record.getIndividual_uuid() != null ? record.getIndividual_uuid() : "Unknown") + " - IndID";
+                    String residencyUuid = "HHID: " +(record.getSocialgroup_uuid() != null ? record.getSocialgroup_uuid() : "Unknown") + " | " + 
+                    		"compID: " +(record.getLocation_uuid() != null ? record.getLocation_uuid() : "Unknown") + " | " +
+                    		"Individual_uuid: " +(record.getIndividual_uuid() != null ? record.getIndividual_uuid() : "Unknown");
                     String fw = record.getFw_uuid();
                     String tb = "Sociodemographic";
                     

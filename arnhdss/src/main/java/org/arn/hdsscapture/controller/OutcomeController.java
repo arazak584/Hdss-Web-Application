@@ -62,8 +62,8 @@ public class OutcomeController {
                     // Log the error for the problematic record using the external service
                     String errorMessage = "Error saving record: " + e.getMessage();
                     String stackTrace = getImportantPartOfStackTrace(e); //getStackTraceAsString(e);
-                    String residencyUuid = (record.getMother_uuid() != null ? record.getMother_uuid() : "Unknown") + " - motheruuid " + 
-                            (record.getPreg_uuid() != null ? record.getPreg_uuid() : "Unknown") + " - preg_uuid";
+                    String residencyUuid = "Motheruuid: " + (record.getMother_uuid() != null ? record.getMother_uuid() : "Unknown") + " | " + 
+                    		 "Pregnancy_uuid: "+(record.getPreg_uuid() != null ? record.getPreg_uuid() : "Unknown");
                     String fw = "Unknown";
                     String tb = "Outcome";
                     

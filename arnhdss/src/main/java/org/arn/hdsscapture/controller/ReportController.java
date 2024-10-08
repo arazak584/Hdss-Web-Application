@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.arn.hdsscapture.entity.ErrorLog;
 import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Population;
 import org.arn.hdsscapture.entity.RegisterBook;
@@ -13,6 +14,7 @@ import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.query.Queries;
 import org.arn.hdsscapture.query.QueryRepository;
 import org.arn.hdsscapture.repository.CodebookRepository;
+import org.arn.hdsscapture.repository.ErrorLogRepository;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
 import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.PopulationRepository;
@@ -31,9 +33,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/hdss")
@@ -562,6 +566,41 @@ public class ReportController {
 
 	    return "report/unvisited";
 	}
+	
+	@Autowired
+	ErrorLogRepository errorrepo;
+	
+	@GetMapping("/errorlog")
+	public String errorlog(@RequestParam(name = "error", required = false)  String error,
+	                 Model model) {
+
+		List<String> errors = errorrepo.errorentity();
+		//System.out.println("forms: " + errors);
+		model.addAttribute("errors", errors);
+	    
+	    if (error != null) {
+	        List<ErrorLog> items = errorrepo.errorlog(error);
+	        model.addAttribute("items", items);
+	        model.addAttribute("selected", error);
+	      //System.out.println("itemlist: " + items);
+	    } else {
+	    	//
+	    }
+
+	    return "report/errorlog";
+	}
+	
+	@PostMapping("/truncate-error-log")
+    public String truncateErrorLog(RedirectAttributes redirectAttributes) {
+        // Truncate the error log table
+        errorrepo.truncateErrorLog();
+        
+        // Add a success message to be shown on the next request
+        redirectAttributes.addFlashAttribute("successMessage", "Error log table has been successfully truncated.");
+        
+        // Redirect back to the error log page
+        return "redirect:/hdss/errorlog";
+    }
 	
 	@Autowired
 	SearchRepository searchs;

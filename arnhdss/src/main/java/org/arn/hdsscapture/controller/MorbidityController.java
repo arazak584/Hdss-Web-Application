@@ -61,9 +61,9 @@ public class MorbidityController {
                     // Log the error for the problematic record using the external service
                     String errorMessage = "Error saving record: " + e.getMessage();
                     String stackTrace = getImportantPartOfStackTrace(e); //getStackTraceAsString(e);
-                    String residencyUuid = (record.getSocialgroup_uuid() != null ? record.getSocialgroup_uuid() : "Unknown") + " - HHID " + 
-                            (record.getLocation_uuid() != null ? record.getLocation_uuid() : "Unknown") + " - compID" +
-                            (record.getInd_name() != null ? record.getInd_name() : "Unknown") + " - Name";
+                    String residencyUuid = "HHID: " +(record.getSocialgroup_uuid() != null ? record.getSocialgroup_uuid() : "Unknown") + " | " + 
+                    		"compID: " +(record.getLocation_uuid() != null ? record.getLocation_uuid() : "Unknown") + " | " +
+                    		"Name: "+(record.getInd_name() != null ? record.getInd_name() : "Unknown");
                     String fw = record.getFw_uuid();
                     String tb = "Morbidity";
                     

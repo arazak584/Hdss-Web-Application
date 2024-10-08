@@ -62,8 +62,8 @@ public class InmigrationController {
                     // Log the error for the problematic record using the external service
                     String errorMessage = "Error saving record: " + e.getMessage();
                     String stackTrace = getImportantPartOfStackTrace(e); //getStackTraceAsString(e);
-                    String residencyUuid = (record.getResidency_uuid() != null ? record.getResidency_uuid() : "Unknown") + " - Residency_uuid " + 
-                            (record.getVisit_uuid() != null ? record.getVisit_uuid() : "Unknown") + " - visit_uuid";
+                    String residencyUuid = "Residency_uuid: " +(record.getResidency_uuid() != null ? record.getResidency_uuid() : "Unknown") + " | " + 
+                    		 "visit_uuid: "+(record.getVisit_uuid() != null ? record.getVisit_uuid() : "Unknown");
                     String fw = record.getFw_uuid();
                     String tb = "Inmigration";
 
@@ -89,21 +89,14 @@ public class InmigrationController {
         } catch (Exception e) {
             // In case of an unexpected exception, log it and re-throw
             String errorMessage = "Unexpected error: " + e.getMessage();
-            String stackTrace = getStackTraceAsString(e);
+            String stackTrace = getImportantPartOfStackTrace(e);
             errorLogService.logError(errorMessage, stackTrace, null,null,null);
             
             throw new DataErrorException(errorMessage, e);
         }
     }
 
-    // Helper method to get full stack trace as a String
-    private String getStackTraceAsString(Exception e) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        e.printStackTrace(pw);
-        return sw.toString();
-    }
-    
+    // Helper method to get full stack trace as a String   
     private String getImportantPartOfStackTrace(Exception e) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);

@@ -68,9 +68,9 @@ public class LocationController {
                     // Log the error for the problematic record using the external service
                     String errorMessage = "Error saving record: " + e.getMessage();
                     String stackTrace = getImportantPartOfStackTrace(e); //getStackTraceAsString(e);
-                    String residencyUuid = (record.getCompno() != null ? record.getCompno() : "Unknown") + " - Compno " + 
-                            (record.getCompextId() != null ? record.getCompextId() : "Unknown") + " - CompextId " +
-                            (record.getLocationLevel_uuid() != null ? record.getLocationLevel_uuid() : "Unknown") + " - villUUID ";
+                    String residencyUuid = "Compno: " + (record.getCompno() != null ? record.getCompno() : "Unknown") + " | " + 
+                    		"CompextId: " +(record.getCompextId() != null ? record.getCompextId() : "Unknown") + " | " +
+                    		 "villUUID: "+(record.getLocationLevel_uuid() != null ? record.getLocationLevel_uuid() : "Unknown");
                     String fw = record.getFw_uuid();
                     String tb = "Location";
                     

@@ -59,9 +59,9 @@ public class PregnancyoutcomeController {
                     // Log the error for the problematic record using the external service
                     String errorMessage = "Error saving record: " + e.getMessage();
                     String stackTrace = getImportantPartOfStackTrace(e); //getStackTraceAsString(e);
-                    String residencyUuid = (record.getMother_uuid() != null ? record.getMother_uuid() : "Unknown") + " - IndID " + 
-                            (record.getVisit_uuid() != null ? record.getVisit_uuid() : "Unknown") + " - visitID" +
-                            (record.getPregnancy_uuid() != null ? record.getPregnancy_uuid() : "Unknown") + " - pregID";
+                    String residencyUuid = "Individual_uuid: " +(record.getMother_uuid() != null ? record.getMother_uuid() : "Unknown") + " | " + 
+                    		"Visit_uuid: " +(record.getVisit_uuid() != null ? record.getVisit_uuid() : "Unknown") + " | " +
+                    		 "Pregnancy_uuid: "+(record.getPregnancy_uuid() != null ? record.getPregnancy_uuid() : "Unknown");
                     String fw = record.getFw_uuid();
                     String tb = "Pregnancyoutcome";
                     
