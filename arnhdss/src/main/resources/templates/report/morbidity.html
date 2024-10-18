@@ -54,7 +54,7 @@
                                         <h3>Vaccination</h3> 
                                         <button id="btn-export" onclick="ExportToExcel('xlsx', 'morbidity.xlsx')">Export to Excel</button>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-block">
 										<form class="form-inline" method="GET"  action="/hdss/report/morbidity" style="text-align: center;">
                                                 <div class="form-group mb-2">
                                                     <input type="date" name="startDate" class="form-control" required>
@@ -67,7 +67,7 @@
                                                 </div>
                                             </form>
 
-                                        <div class="dt-responsive">
+                                        <div class="table-responsive">
                                             <table id="order-table"
                                                    class="table table-striped table-bordered wrap" data-order='[[1, "asc"]]'>
                                                 <thead class="thead-dark">

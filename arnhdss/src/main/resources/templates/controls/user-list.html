@@ -58,6 +58,7 @@
 													<th class="sticky-top">User Email</th>
 														<th class="sticky-top">Name</th>
 														<th class="sticky-top">Status</th>
+														<th class="sticky-top">Notification</th>
 														<th class="sticky-top">Action</th>
 												</tr>
                                                 </thead>
@@ -69,6 +70,9 @@
 													<td>[[${item.user_fname}]] [[${item.user_lname}]]</td>
 													<td th:attrappend="class=${item.user_enabled}==true? text-success: text-muted">
 														<strong th:text="${item.user_enabled}==true? 'ENABLED': 'DISABLED'"></strong>
+													</td>
+													<td th:attrappend="class=${item.email_enabled}==true? text-success: text-muted">
+														<strong th:text="${item.email_enabled}==true? 'ENABLED': 'DISABLED'"></strong>
 													</td>
 													<td><a href="#" th:href="@{/controls/users/{id}(id=${item.username})}"> <strong
 																class="text-primary" th:text="|Edit details|"></strong>

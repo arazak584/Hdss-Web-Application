@@ -72,7 +72,7 @@
                                         <h3>Individual Search</h3> 
                                         <button id="btn-export" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')" onclick="ExportToExcel('xlsx', 'search.xlsx')">Export to Excel</button>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-block">
 										  <form class="form-inline" method="GET" action="/hdss/report/search" style="text-align: center;">
 										    <div class="form-group mx-sm-3 mb-2">
                                                  <input type="text" name="search" class="form-control" required>

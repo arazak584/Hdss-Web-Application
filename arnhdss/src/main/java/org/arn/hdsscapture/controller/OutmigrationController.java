@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.arn.hdsscapture.entity.Outmigration;
-import org.arn.hdsscapture.entity.Outmigration;
 import org.arn.hdsscapture.entity.Residency;
 import org.arn.hdsscapture.exception.DataErrorException;
 import org.arn.hdsscapture.exception.DataNotFoundException;

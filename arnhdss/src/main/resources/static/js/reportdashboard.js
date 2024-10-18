@@ -126,6 +126,7 @@ function updateReport(data) {
     $('#cntomg').text(data.omg);
     $('#cntoutcome').text(data.outcome);
     $('#cntmorbidity').text(data.morb);
+    $('#cntfw').text(data.fw);
 }
 
 // Add more update functions for other sections as needed

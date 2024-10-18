@@ -71,7 +71,7 @@
                                         <h3>Data Dictionary</h3> 
                                         <button id="btn-export" onclick="ExportToExcel('xlsx', 'diction.xlsx')">Export to Excel</button>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-block">
 										<form class="form-inline" method="GET" action="/utility/dictionary" style="text-align: center;">
 										    <div class="form-group mx-sm-3 mb-2">
 										     <select name="ev" class="form-control select2">
@@ -87,7 +87,7 @@
 										</form>
 										
                                                <!--<a th:href="@{/utility/round/add}"> <button class="btn btn-theme">Add Round</button></a>-->
-                                        <div class="dt-responsive">
+                                        <div class="table-responsive">
                                             <table id="order-table"
                                                    class="table table-striped table-bordered wrap" data-order='[[0, "desc"]]'>
                                                 <thead class="thead-dark">

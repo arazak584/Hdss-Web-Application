@@ -11,6 +11,7 @@ import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Population;
 import org.arn.hdsscapture.entity.RegisterBook;
 import org.arn.hdsscapture.entity.Round;
+import org.arn.hdsscapture.projection.FieldReports;
 import org.arn.hdsscapture.query.Queries;
 import org.arn.hdsscapture.query.QueryRepository;
 import org.arn.hdsscapture.repository.CodebookRepository;
@@ -151,6 +152,7 @@ public class ReportController {
         data.put("omg", repo.countOmg());
         data.put("outcome", repo.countOutcome());       
         data.put("morb", repo.countMor());
+        data.put("fw", repo.countFw());
 
         return ResponseEntity.ok(data);
     }
@@ -654,6 +656,22 @@ public class ReportController {
 		
 
 		return "report/workoutput";
+	}
+	
+	
+	@GetMapping("/report/fw_report")
+	public String fw_report(@RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                 @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                 Model model) {
+
+	    
+	    if (startDate != null && endDate != null) {
+	        List<FieldReports> items = rep.getFieldworkerReport(startDate, endDate);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/fw_report";
 	}
 
 	

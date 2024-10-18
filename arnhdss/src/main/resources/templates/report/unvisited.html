@@ -53,7 +53,7 @@
                                         <h3>Unvisited Compounds</h3> 
                                         <button id="btn-export" onclick="ExportToExcel('xlsx', 'unvisited.xlsx')">Export to Excel</button>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-block">
 										  <form class="form-inline" method="GET" action="/hdss/report/unvisited" style="text-align: center;">
 										    <div class="form-group mx-sm-3 mb-2">
 										     <select name="village" class="js-states form-control" style="width: 300px;">
@@ -67,7 +67,7 @@
 										</form>
 
 
-                                        <div class="dt-responsive">
+                                        <div class="table-responsive">
                                             <table id="order-table"
                                                    class="table table-striped table-bordered wrap" data-order='[[4, "asc"]]'>
                                                 <thead class="thead-dark">

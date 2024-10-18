@@ -52,16 +52,16 @@
                                         <h3>DOB Greater Than StartDate</h3> 
                                         <button id="btn-export" onclick="ExportToExcel('xlsx', 'dob.xlsx')">Export to Excel</button>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-block">
 										<form class="form-inline" method="GET"  action="/hdss/query/dob" style="text-align: center;">                                       
                                                  <input type="text" name="query" class="form-control" value="query" required readonly hidden>
                                                 <button type="submit" class="btn btn-theme">Generate Query</button>
                                             </form>
 
-                                        <div class="dt-responsive">
+                                        <div class="table-responsive">
                                             <table id="order-table"
                                                    class="table table-striped table-bordered wrap">
-                                                <thead>
+                                                <thead class="thead-dark">
                                                 <tr>
                                                     <th th:text="#{permid}"></th>
 													<th th:text="#{name}"></th>

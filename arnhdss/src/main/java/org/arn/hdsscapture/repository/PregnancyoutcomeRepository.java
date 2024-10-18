@@ -17,7 +17,7 @@ public interface PregnancyoutcomeRepository extends JpaRepository <Pregnancyoutc
     List<Pregnancyoutcome> rejected(@Param("fw")String fw);
 	
 	
-	@Query(nativeQuery = true, value ="SELECT	h.uuid as uuid,ass_del,ass_del_other,b_place,pregnancy_uuid,conceptionDate,first_nb,TIMESTAMPDIFF(year,dob,CURDATE()) as first_rec,\r\n"
+	@Query(nativeQuery = true, value ="SELECT	h.uuid as uuid,ass_del,ass_del_other,b_place,h.chd_size as pregnancy_uuid,conceptionDate,first_nb,TIMESTAMPDIFF(year,dob,CURDATE()) as first_rec,\r\n"
 			+ "concat(f.firstName,' ',f.lastName) as fw_uuid,how_del, how_del_other,a.insertDate,l_birth,many_ipt,month_pg,\r\n"
 			+ "concat(b.firstName,' ',b.lastName,' ',COALESCE(otherName, '')) as mother_uuid,not_del,not_del_other,num_anc,numberofBirths,\r\n"
 			+ "outcomeDate, rec_anc,rec_ipt,compno as visit_uuid,h.weig_hcard as father_uuid,where_anc, where_anc_Other,who_anc,why_no_anc,numberOfLiveBirths,type as edtime,\r\n"

@@ -341,6 +341,16 @@
                                                         <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/ses}"><label class="badge badge-success">View Report</label></a></td>
                                                     </tr>
                                                     
+                                                    <tr>
+                                                        <td><h5>15</h5></td>
+                                                        <td><h6 class="mb-1">Complete Field Report</h6></td>
+                                                        <td>
+															<div id="loadingSpinnerReport19" class="spinner-grow text-success" role="status">
+								                		<span class="sr-only">Loading...</span>	</div> 
+															<h6 class="text-muted"><span id="cntfw"></span></h6></td>
+                                                        <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/fw_report}"><label class="badge badge-success">Field Report</label></a></td>
+                                                    </tr>
+                                                    
                                                     
                                                     
                                                 </tbody>

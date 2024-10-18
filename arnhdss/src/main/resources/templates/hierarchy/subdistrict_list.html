@@ -47,7 +47,7 @@
                 <div class="main-content">
   
                                   <div class="card">
-                                    <div class="card-body">
+                                    <div class="card-block">
 										<button id="btn-export" onclick="ExportToExcel('xlsx', 'subdistrict.xlsx')">Export to Excel</button>
                                                <a class="btn btn-theme" th:href = "@{/hierarchy/subdistrict/add}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')"> 
 												   Add 
@@ -56,10 +56,10 @@
 												   Add Fieldworker
 												  </a>-->
                                         
-                                        <div class="dt-responsive">
+                                        <div class="table-responsive">
                                             <table id="order-table"
-                                                   class="table table-striped table-bordered nowrap" >
-                                                <thead>
+                                                   class="table table-striped table-bordered wrap" >
+                                                <thead class="thead-dark">
                                                 <tr>
 													<th th:text="#{item}"></th>
 													<th th:text="#{villcode}"></th>

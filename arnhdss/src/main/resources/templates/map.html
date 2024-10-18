@@ -80,30 +80,32 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-								
-								<div class="card-body">
-									
-									<div id="search">
-                                        <select id="villageSelect" onchange="loadVillageLocations()" class="js-states form-control" style="width: 300px;">
-                                            <option value="">Select a village</option>
-                                        </select>
-                                    </div>
-									
-									<div id="searchs">
-								        <input type="text" id="searchInput" placeholder="Enter compno" />
-								        <button onclick="searchLocation()">Search</button>
-								    </div>
-									
-									<div id="map"></div>
-
-								</div>
-							</div>
-						</div>
-
-
+					    <div class="col-md-12">
+					        <div class="card">
+					            <div class="card-body">
+					                <div id="search">
+					                    <select id="villageSelect" onchange="loadVillageLocations()" class="js-states form-control" style="width: 300px;">
+					                        <option value="">Select a village</option>
+					                    </select>
+					                </div>
+					
+					                <div id="searchs">
+					                    <input type="text" id="searchInput" placeholder="Enter compno" />
+					                    <button onclick="searchLocation()">Search</button>
+					                </div>
+					
+					                <!-- Scrollable map container -->
+					                <div id="mapContainer" style="height: 600px; overflow: auto;">
+					                    <div id="map" style="height: 800px;"></div> <!-- Example larger height -->
+					                </div>
+					
+					            </div>
+					        </div>
+					    </div>
 					</div>
+
+
+
 
 
 
@@ -226,6 +228,33 @@
             }
         });
     </script>
+    
+    <script>
+  // Initialize Google Maps
+  function initMap() {
+    var mapOptions = {
+      zoom: 8,
+      center: { lat: -34.397, lng: 150.644 },
+      scrollwheel: true // Enable scrollwheel zooming
+    };
+
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+    // Adjust map container height dynamically as zoom changes
+    map.addListener('zoom_changed', function() {
+      adjustMapHeight(map);
+    });
+
+    function adjustMapHeight(map) {
+      var zoomLevel = map.getZoom();
+      var mapContainer = document.getElementById('mapContainer');
+      
+      // Adjust the map container's height based on zoom level
+      var newHeight = 400 + (10 * (8 - zoomLevel)); // You can adjust this factor as needed
+      mapContainer.style.height = newHeight + 'px';
+    }
+  }
+</script>
 
  <!--<script>
         var map = L.map('map').setView([0, 0], 2);
