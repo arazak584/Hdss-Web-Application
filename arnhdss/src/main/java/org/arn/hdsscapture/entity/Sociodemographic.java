@@ -20,10 +20,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Audited
 @Table(name="sociodemographic", indexes = {@Index(name="idx_socialgroup_uuid", columnList="socialgroup_uuid")})
-public class Sociodemographic {
+public class Sociodemographic {	
 	
-	
-	@Id
     @Column
     public String socialgroup_uuid;
 	
@@ -36,6 +34,7 @@ public class Sociodemographic {
 	@Column(nullable = false)
     public String fw_uuid;
     
+	@Id
 	@Column(nullable = false)
     public String uuid;
     
