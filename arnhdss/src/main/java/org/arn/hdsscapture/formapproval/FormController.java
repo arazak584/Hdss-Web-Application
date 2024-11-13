@@ -436,6 +436,7 @@ public class FormController {
     private void DthCodebookData(Model model) {
         model.addAttribute("deathCause", repo.deathCause());
         model.addAttribute("deathPlace", repo.deathPlace());
+        model.addAttribute("yn", repo.yn());
     }
 
     @PostMapping("/approval/dth/{uuids}")

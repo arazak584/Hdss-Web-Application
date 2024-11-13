@@ -80,6 +80,9 @@ public class Death {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date approveDate;
 	
+	@Column(name = "estimated_dod", nullable = true)
+	private Integer estimated_dod;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fw_uuid", referencedColumnName = "fw_uuid", insertable = false, updatable = false, nullable=false)
 	private Fieldworker fieldworker;
@@ -253,6 +256,16 @@ public class Death {
 
 	public void setDeathCause_oth(String deathCause_oth) {
 		this.deathCause_oth = deathCause_oth;
+	}
+
+
+	public Integer getEstimated_dod() {
+		return estimated_dod;
+	}
+
+
+	public void setEstimated_dod(Integer estimated_dod) {
+		this.estimated_dod = estimated_dod;
 	}
 
 

@@ -111,6 +111,17 @@
 												th:field="*{deathDate}" readonly>
 										</div>
 
+										<div class="row">
+											<div class="col-md-6" th:if="${item.estimated_dod}">
+												<div class="form-group">
+													<label th:text="#{estimate}"></label>
+													<select name="yn" class="form-control" th:field="*{estimated_dod}" readonly style="pointer-events: none;">
+													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}"
+													th:text="${codebook.codeLabel}"></option>
+													</select>
+												</div>
+											</div>										
+										</div>	
 										
 
 
