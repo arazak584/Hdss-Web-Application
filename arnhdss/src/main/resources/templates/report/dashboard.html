@@ -350,7 +350,14 @@
 															<h6 class="text-muted"><span id="cntfw"></span></h6></td>
                                                         <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/fw_report}"><label class="badge badge-success">Field Report</label></a></td>
                                                     </tr>
-                                                    
+                                                    <tr>
+                                                        <td><h5>16</h5></td>
+                                                        <td><h6 class="mb-1">Events Trend Report</h6></td>
+                                                        <td>
+															<div class="text-success" role="status"></div> 
+															<h6 class="text-muted"><a href="#" th:href="@{/hdss/event-chart}" class="badge badge-success">Trend Chart</a></h6></td>
+                                                        <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')"><a th:href = "@{/hdss/report/event-trend}"><label class="badge badge-success">Events Trend</label></a></td>
+                                                    </tr>
                                                     
                                                     
                                                 </tbody>

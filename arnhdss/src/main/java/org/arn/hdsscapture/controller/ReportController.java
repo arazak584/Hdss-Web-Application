@@ -11,6 +11,7 @@ import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.entity.Population;
 import org.arn.hdsscapture.entity.RegisterBook;
 import org.arn.hdsscapture.entity.Round;
+import org.arn.hdsscapture.projection.EventTrend;
 import org.arn.hdsscapture.projection.FieldReports;
 import org.arn.hdsscapture.query.Queries;
 import org.arn.hdsscapture.query.QueryRepository;
@@ -673,6 +674,20 @@ public class ReportController {
 
 	    return "report/fw_report";
 	}
+	
+	@GetMapping("/report/event-trend")
+	public String eventtrend(@RequestParam(name = "id", required = false)  String id,
+	                 Model model) {	    
+	    if (id != null) {
+	        List<EventTrend> items = rep.getEvents(id);
+	        model.addAttribute("items", items);
+	    } else {
+	    }
+
+	    return "report/eventtrend";
+	}
+	
+	
 
 	
 }

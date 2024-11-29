@@ -19,6 +19,11 @@ public class HomeController {
         return "map";
     }
 	
+	@GetMapping("/hdss/event-chart")
+    public String eventtrend() {
+        return "event_chart";
+    }
+	
 	@Autowired
 	RoundRepository round;
 	
