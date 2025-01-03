@@ -3,13 +3,14 @@ package org.arn.hdsscapture.views;
 import java.util.Date;
 import java.util.List;
 
+import org.arn.hdsscapture.entity.Fieldworker;
 import org.arn.hdsscapture.projection.EventTrend;
 import org.arn.hdsscapture.projection.FieldReports;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface FieldRepository extends JpaRepository <FieldReport, String> {
+public interface FieldRepository extends JpaRepository <Fieldworker, String> {
 	
 	@Query(nativeQuery = true, value = "SELECT a.uuid as id,concat(b.firstName,' ',b.lastName)as Fieldworker,username,count(a.uuid) as total,\r\n"
 			+ "max(a.insertDate)insertDate,max(date(a.submitDate))submitDate,e.name,year(recordedDate) as year,Case when outcome_date IS NULL then 'No Outcome' else 'Outcome' end as type\r\n"

@@ -3,11 +3,12 @@ package org.arn.hdsscapture.query;
 import java.util.Date;
 import java.util.List;
 
+import org.arn.hdsscapture.entity.Fieldworker;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface QueryRepository extends JpaRepository <Queries, String> {
+public interface QueryRepository extends JpaRepository <Fieldworker, String> {
 	
 	@Query(nativeQuery = true, value = "SELECT a.uuid as id,a.extId as id1, groupName as id4,dob as id2,a.insertDate as id3,b.extId as id8, b.extId AS id5,null as id9, compno as id6,concat(x.firstName,' ',x.lastName) as id7\r\n"
 			+ "FROM socialgroup a INNER JOIN individual b ON a.individual_uuid = b.uuid\r\n"

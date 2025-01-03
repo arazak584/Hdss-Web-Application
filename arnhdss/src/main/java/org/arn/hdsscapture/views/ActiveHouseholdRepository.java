@@ -2,11 +2,12 @@ package org.arn.hdsscapture.views;
 
 import java.util.List;
 
+import org.arn.hdsscapture.entity.Socialgroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface ActiveHouseholdRepository extends JpaRepository <ActiveHouseholds, String> {
+public interface ActiveHouseholdRepository extends JpaRepository <Socialgroup, String> {
 
 	
 	@Query(nativeQuery = true, value = "SELECT * from acthoh WHERE village= :village  ORDER BY subvillage")

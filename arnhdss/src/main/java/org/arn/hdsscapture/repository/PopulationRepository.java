@@ -2,11 +2,12 @@ package org.arn.hdsscapture.repository;
 
 import java.util.List;
 
-import org.arn.hdsscapture.entity.Population;
+import org.arn.hdsscapture.entity.Individual;
+import org.arn.hdsscapture.views.Population;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface PopulationRepository extends JpaRepository <Population, String> {
+public interface PopulationRepository extends JpaRepository <Individual, String> {
 	
 	
 	

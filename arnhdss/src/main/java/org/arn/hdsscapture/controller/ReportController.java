@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.arn.hdsscapture.entity.ErrorLog;
 import org.arn.hdsscapture.entity.Fieldworker;
-import org.arn.hdsscapture.entity.Population;
 import org.arn.hdsscapture.entity.RegisterBook;
 import org.arn.hdsscapture.entity.Round;
 import org.arn.hdsscapture.projection.EventTrend;
@@ -18,6 +17,7 @@ import org.arn.hdsscapture.query.QueryRepository;
 import org.arn.hdsscapture.repository.CodebookRepository;
 import org.arn.hdsscapture.repository.ErrorLogRepository;
 import org.arn.hdsscapture.repository.FieldworkerRepository;
+import org.arn.hdsscapture.repository.IndividualRepository;
 import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.PopulationRepository;
 import org.arn.hdsscapture.repository.RegisterRepository;
@@ -28,7 +28,7 @@ import org.arn.hdsscapture.views.ActiveHouseholds;
 import org.arn.hdsscapture.views.FieldReport;
 import org.arn.hdsscapture.views.FieldRepository;
 import org.arn.hdsscapture.views.IndividualSearch;
-import org.arn.hdsscapture.views.SearchRepository;
+import org.arn.hdsscapture.views.Population;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -606,7 +606,7 @@ public class ReportController {
     }
 	
 	@Autowired
-	SearchRepository searchs;
+	IndividualRepository searchs;
 	
 	@GetMapping("/report/search")
 	public String search(@RequestParam(name = "search", required = false)  String search,

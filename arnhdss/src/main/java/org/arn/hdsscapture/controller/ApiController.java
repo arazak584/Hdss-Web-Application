@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.arn.hdsscapture.entity.Locationhierarchy;
-import org.arn.hdsscapture.entity.Population;
 import org.arn.hdsscapture.projection.EventTrend;
 import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.PopulationRepository;
@@ -12,6 +11,7 @@ import org.arn.hdsscapture.utils.DataWrapper;
 import org.arn.hdsscapture.views.Events;
 import org.arn.hdsscapture.views.EventsRepository;
 import org.arn.hdsscapture.views.FieldRepository;
+import org.arn.hdsscapture.views.Population;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
