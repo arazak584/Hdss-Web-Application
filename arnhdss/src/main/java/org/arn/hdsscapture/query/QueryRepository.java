@@ -113,8 +113,8 @@ public interface QueryRepository extends JpaRepository <Fieldworker, String> {
 	List<Queries> DthHOH(@Param("query") String query);
 	
 	@Query(nativeQuery = true, value = "SELECT b.name AS id, COUNT(DISTINCT a.uuid) AS id1,\r\n"
-			+ "COUNT(DISTINCT CASE WHEN c.insertDate > (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) AS id4,\r\n"
-			+ "ROUND(IFNULL(COUNT(DISTINCT CASE WHEN c.insertDate > (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) / COUNT(DISTINCT a.uuid) * 100, 0), 2) AS id5,\r\n"
+			+ "COUNT(DISTINCT CASE WHEN c.insertDate >= (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) AS id4,\r\n"
+			+ "ROUND(IFNULL(COUNT(DISTINCT CASE WHEN c.insertDate >= (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) / COUNT(DISTINCT a.uuid) * 100, 0), 2) AS id5,\r\n"
 			+ "COUNT(DISTINCT CASE WHEN e.endType = 1 THEN e.socialgroup_uuid END) AS id6,\r\n"
 			+ "COUNT(DISTINCT f.extId) AS id7,null as id2,null as id3,\r\n"
 			+ "ROUND(IFNULL(COUNT(DISTINCT f.extId) / NULLIF(COUNT(DISTINCT CASE WHEN e.endType = 1 THEN e.socialgroup_uuid END), 0) * 100, 0), 2) AS id8,\r\n"
@@ -122,7 +122,7 @@ public interface QueryRepository extends JpaRepository <Fieldworker, String> {
 			+ "FROM location a INNER JOIN locationhierarchy b ON a.locationLevel_uuid = b.uuid\r\n"
 			+ "LEFT JOIN listing c ON a.compno = c.compno LEFT JOIN fieldworker d ON b.fw_name = d.username \r\n"
 			+ "LEFT JOIN residency e on a.uuid=e.location_uuid\r\n"
-			+ "LEFT JOIN     (SELECT * FROM visit WHERE insertDate > (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1)) f ON a.uuid = f.location_uuid\r\n"
+			+ "LEFT JOIN     (SELECT * FROM visit WHERE insertDate >= (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1)) f ON a.uuid = f.location_uuid\r\n"
 			+ "WHERE b.name!= :query GROUP BY b.uuid ORDER BY b.name")
 	List<Queries> Compvisit(@Param("query") String query);
 	

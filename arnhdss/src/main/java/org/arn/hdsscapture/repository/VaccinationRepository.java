@@ -13,7 +13,7 @@ public interface VaccinationRepository extends JpaRepository <Vaccination, Strin
 			+ "death b ON a.individual_uuid=b.individual_uuid where b.individual_uuid is null LIMIT ?1 OFFSET ?2")
 	List<Vaccination> findVaccination(int pageSize, int offset);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM vaccination a WHERE a.`status`=2 AND a.editDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
+	@Query(nativeQuery = true, value = "SELECT a.* FROM vaccination a WHERE a.`status`=2 AND a.editDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
     List<Vaccination> rejected(@Param("fw")String fw);
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM vaccination WHERE uuid = :uuid LIMIT 1")
@@ -28,7 +28,7 @@ public interface VaccinationRepository extends JpaRepository <Vaccination, Strin
 			+ "sbf,scar,slpbednet,concat(b.firstName,' ',b.lastName,' ',COALESCE(otherName, '')) as socialgroup_uuid,stm,a.sttime,sty,a.uuid,vitaminA12,vitaminA18,\r\n"
 			+ "vitaminA6,weight,yellow_fever,comment,a.status,supervisor,approveDate FROM vaccination a INNER JOIN individual b \r\n"
 			+ "ON a.individual_uuid=b.uuid INNER JOIN location c on a.location_uuid=c.uuid INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid \r\n"
-			+ "where a.editDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.uuid = :uuid LIMIT 1")
+			+ "where a.editDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.uuid = :uuid LIMIT 1")
 	List<Vaccination> findByUuid(@Param("uuid") String uuid);
 
 		
@@ -40,7 +40,7 @@ public interface VaccinationRepository extends JpaRepository <Vaccination, Strin
 			+ "sbf,scar,slpbednet,concat(b.firstName,' ',b.lastName,' ',COALESCE(otherName, '')) as socialgroup_uuid,stm,a.sttime,sty,a.uuid,vitaminA12,vitaminA18,\r\n"
 			+ "vitaminA6,weight,yellow_fever,comment,a.status,supervisor,approveDate FROM vaccination a INNER JOIN individual b \r\n"
 			+ "ON a.individual_uuid=b.uuid INNER JOIN location c on a.location_uuid=c.uuid INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid \r\n"
-			+ "where a.fw_uuid= :fw AND a.editDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+			+ "where a.fw_uuid= :fw AND a.editDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	List<Vaccination> findItem(@Param("fw") String fw);
 	
 	@Query(nativeQuery = true, value ="SELECT individual_uuid,admission, admitDate,arti,artitreat,bcg,bednet,chlbednet,diarrhoea,diarrhoeatreat,b.dob as dob,\r\n"
@@ -51,7 +51,7 @@ public interface VaccinationRepository extends JpaRepository <Vaccination, Strin
 			+ "sbf,scar,slpbednet,concat(b.firstName,' ',b.lastName,' ',COALESCE(otherName, '')) as socialgroup_uuid,stm,a.sttime,sty,a.uuid,vitaminA12,vitaminA18,\r\n"
 			+ "vitaminA6,weight,yellow_fever,comment,a.status,supervisor,approveDate FROM vaccination a INNER JOIN individual b \r\n"
 			+ "ON a.individual_uuid=b.uuid INNER JOIN location c on a.location_uuid=c.uuid INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid \r\n"
-			+ "where a.`status`=3 AND a.editDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+			+ "where a.`status`=3 AND a.editDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	List<Vaccination> findItems();
 	
 	@Query(nativeQuery = true, value ="SELECT individual_uuid,admission, admitDate,arti,artitreat,bcg,bednet,chlbednet,diarrhoea,diarrhoeatreat,b.dob as dob,\r\n"
@@ -62,7 +62,7 @@ public interface VaccinationRepository extends JpaRepository <Vaccination, Strin
 			+ "sbf,scar,slpbednet,concat(b.firstName,' ',b.lastName,' ',COALESCE(otherName, '')) as socialgroup_uuid,stm,a.sttime,sty,a.uuid,vitaminA12,vitaminA18,\r\n"
 			+ "vitaminA6,weight,yellow_fever,comment,a.status,supervisor,approveDate FROM vaccination a INNER JOIN individual b \r\n"
 			+ "ON a.individual_uuid=b.uuid INNER JOIN location c on a.location_uuid=c.uuid INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid \r\n"
-			+ "where a.`status`=2 AND a.editDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+			+ "where a.`status`=2 AND a.editDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	List<Vaccination> findRej();
 
 }

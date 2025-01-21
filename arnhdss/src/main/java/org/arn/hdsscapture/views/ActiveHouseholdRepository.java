@@ -69,8 +69,8 @@ public interface ActiveHouseholdRepository extends JpaRepository <Socialgroup, S
 	
 	
 	@Query(nativeQuery = true, value = "SELECT b.name AS villcode, COUNT(DISTINCT a.uuid) AS households,CONCAT(d.firstName, ' ', d.lastName) AS District,\r\n"
-			+ "COUNT(DISTINCT CASE WHEN c.insertDate > (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) AS compounds,\r\n"
-			+ "ROUND(IFNULL(COUNT(DISTINCT CASE WHEN c.insertDate > (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) / COUNT(DISTINCT a.uuid) * 100, 0), 2) AS pop,null as village,null as subvillage \r\n"
+			+ "COUNT(DISTINCT CASE WHEN c.insertDate >= (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) AS compounds,\r\n"
+			+ "ROUND(IFNULL(COUNT(DISTINCT CASE WHEN c.insertDate >= (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) / COUNT(DISTINCT a.uuid) * 100, 0), 2) AS pop,null as village,null as subvillage \r\n"
 			+ "FROM location a INNER JOIN locationhierarchy b ON a.locationLevel_uuid = b.uuid \r\n"
 			+ "LEFT JOIN listing c ON a.compno = c.compno LEFT JOIN fieldworker d ON b.fw_name = d.username GROUP BY \r\n"
 			+ "b.uuid ORDER BY District")

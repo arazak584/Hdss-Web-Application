@@ -13,7 +13,7 @@ public interface SesRepository extends JpaRepository <Sociodemographic, String> 
 	        + " WHERE b.endType = 1 AND a.insertDate >= (SELECT r.sesDate from settings r) GROUP BY a.socialgroup_uuid LIMIT ?1 OFFSET ?2")
 	List<Sociodemographic> findSes(int pageSize, int offset);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM sociodemographic a WHERE a.`status`=2 AND a.formcompldate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
+	@Query(nativeQuery = true, value = "SELECT a.* FROM sociodemographic a WHERE a.`status`=2 AND a.formcompldate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
     List<Sociodemographic> rejected(@Param("fw")String fw);
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM sociodemographic WHERE uuid = :uuid LIMIT 1")
@@ -83,7 +83,7 @@ public interface SesRepository extends JpaRepository <Sociodemographic, String> 
 			+ "watch_fcorres,watch_num_fcorres from sociodemographic a INNER JOIN socialgroup b ON a.socialgroup_uuid=b.uuid \r\n"
 			+ "INNER JOIN location c on a.location_uuid=c.uuid \r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid \r\n"
-			+ "where a.formcompldate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.uuid = :uuid LIMIT 1")
+			+ "where a.formcompldate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.uuid = :uuid LIMIT 1")
 	List<Sociodemographic> findByUuid(@Param("uuid") String uuid);
 	
 	@Query(nativeQuery = true, value ="SELECT b.extId as socialgroup_uuid,aircon_fcorres,aircon_num_fcorres,animal_othr_fcorres,animal_othr_num_fcorres,\r\n"
@@ -150,7 +150,7 @@ public interface SesRepository extends JpaRepository <Sociodemographic, String> 
 			+ "watch_fcorres,watch_num_fcorres from sociodemographic a INNER JOIN socialgroup b ON a.socialgroup_uuid=b.uuid \r\n"
 			+ "INNER JOIN location c on a.location_uuid=c.uuid \r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid \r\n"
-			+ "where a.fw_uuid= :fw AND a.formcompldate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+			+ "where a.fw_uuid= :fw AND a.formcompldate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	List<Sociodemographic> findItem(@Param("fw") String fw);
 	
 	@Query(nativeQuery = true, value ="SELECT b.extId as socialgroup_uuid,aircon_fcorres,aircon_num_fcorres,animal_othr_fcorres,animal_othr_num_fcorres,\r\n"
@@ -217,7 +217,7 @@ public interface SesRepository extends JpaRepository <Sociodemographic, String> 
 			+ "watch_fcorres,watch_num_fcorres from sociodemographic a INNER JOIN socialgroup b ON a.socialgroup_uuid=b.uuid \r\n"
 			+ "INNER JOIN location c on a.location_uuid=c.uuid \r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid \r\n"
-			+ "where a.`status`=3 AND a.formcompldate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+			+ "where a.`status`=3 AND a.formcompldate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	List<Sociodemographic> findItems();
 
 	
@@ -285,7 +285,7 @@ public interface SesRepository extends JpaRepository <Sociodemographic, String> 
 			+ "watch_fcorres,watch_num_fcorres from sociodemographic a INNER JOIN socialgroup b ON a.socialgroup_uuid=b.uuid \r\n"
 			+ "INNER JOIN location c on a.location_uuid=c.uuid \r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid \r\n"
-			+ "where a.`status`=2 AND a.formcompldate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+			+ "where a.`status`=2 AND a.formcompldate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	List<Sociodemographic> findRej();
 
 }

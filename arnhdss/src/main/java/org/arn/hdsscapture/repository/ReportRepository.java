@@ -15,14 +15,14 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
 //			+ "(SELECT count(DISTINCT z.socialgroup_uuid) from residency z where z.endType=1)*100,2) as done")
 //    Double countHse();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from residency v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from residency v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
 			+ "(SELECT count(z.uuid) from residency z where z.endType=1)*100,2) as done")
     Double perRES();
 	
 	@Query(nativeQuery = true, value ="SELECT count(Distinct r.socialgroup_uuid) FROM residency r WHERE r.endType = 1")
 	Long countSocialgroup();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from socialgroup v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from socialgroup v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
 			+ "(SELECT count(DISTINCT z.socialgroup_uuid) from residency z where z.endType=1)*100,2) as done")
     Double perHH();
 	
@@ -35,7 +35,7 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
 	@Query(nativeQuery = true, value ="SELECT count(DISTINCT a.fw_uuid) FROM fieldworker a Where a.`status`=1 ")
 	Long countFw();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.compno) from listing v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.compno) from listing v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
 			+ "(SELECT count(uuid) from location)*100,2) as done")
     Double perComp();
 	
@@ -44,73 +44,73 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
 			+ "FROM location a INNER JOIN residency b on a.uuid=b.location_uuid Where b.endType = 1)*100,2) as done")
     Double perLoc();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.compno) from listing v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.compno) from listing v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countList();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from inmigration v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from inmigration v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countImg();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from outmigration v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from outmigration v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countOmg();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT b.uuid) from pregnancyoutcome v INNER JOIN outcome b ON v.uuid=b.preg_uuid where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT b.uuid) from pregnancyoutcome v INNER JOIN outcome b ON v.uuid=b.preg_uuid where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countOutcome();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from pregnancyobservation v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from pregnancyobservation v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countPreg();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from death v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from death v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countDth();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from morbidity v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from morbidity v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countMor();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from sociodemographic v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from sociodemographic v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countSes();
 	
 	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from sociodemographic v where v.formcompldate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)  and v.insertDate < (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countoldSes();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from vaccination v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from vaccination v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countVac();
 	
 	@Query(nativeQuery = true, value ="SELECT count(uuid) from individual")
     Long countInd();
 
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from individual v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from individual v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
 			+ "(SELECT count(uuid) from individual)*100,2) as done")
     Double perInd();
 	
-	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from visit v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
+	@Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from visit v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1))/\r\n"
 			+ "(SELECT count(DISTINCT socialgroup_uuid) from residency where endType=1)*100,2) as done")
     Double hhVisit();
 	
-	@Query(nativeQuery = true, value ="SELECT count(DISTINCT v.uuid) from visit v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+	@Query(nativeQuery = true, value ="SELECT count(DISTINCT v.uuid) from visit v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	Long visit();
 	
 	@Query(nativeQuery = true, value ="SELECT count(DISTINCT socialgroup_uuid) from residency where endType=1;")
 	Long hhAct();
 	
-	@Query(nativeQuery = true, value ="SELECT count(DISTINCT v.socialgroup_uuid) from visit v JOIN residency r ON v.socialgroup_uuid = r.socialgroup_uuid where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) "
+	@Query(nativeQuery = true, value ="SELECT count(DISTINCT v.socialgroup_uuid) from visit v JOIN residency r ON v.socialgroup_uuid = r.socialgroup_uuid where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) "
 			+ " AND NOT EXISTS (SELECT 1 FROM residency r2 WHERE r2.socialgroup_uuid = v.socialgroup_uuid AND r2.endType = 1 );")
 	Long hhNot();
     
-    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from visit v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from visit v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countVisit();
     
-    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from relationship v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from relationship v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countRel();
     
-    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from socialgroup v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from socialgroup v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countHH();
     
 //    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from socialgroup v INNER JOIN residency a on v.uuid=a.socialgroup_uuid where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
 //    Long countHH();
     
-    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from individual v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from individual v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countPerson();
     
-    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from location v where v.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
+    @Query(nativeQuery = true, value ="SELECT  round((SELECT count(DISTINCT v.uuid) from location v where v.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)))")
     Long countLoc();
     
     @Query(nativeQuery = true, value ="SELECT COUNT(a.uuid) from individual a LEFT JOIN residency b on a.uuid=b.individual_uuid\r\n"
@@ -163,7 +163,7 @@ public interface ReportRepository extends JpaRepository <Fieldworker, String> {
     		+ "    SELECT COUNT(DISTINCT a.username) AS Number\r\n"
     		+ "    FROM fieldworker a\r\n"
     		+ "    INNER JOIN visit b ON a.fw_uuid = b.fw_uuid\r\n"
-    		+ "    WHERE b.insertDate > (\r\n"
+    		+ "    WHERE b.insertDate >= (\r\n"
     		+ "        SELECT r.startDate\r\n"
     		+ "        FROM round r\r\n"
     		+ "        ORDER BY r.roundNumber DESC\r\n"

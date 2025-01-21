@@ -15,7 +15,7 @@ public interface DemographicRepository extends JpaRepository <Demographic, Strin
 			+ "death b ON a.individual_uuid=b.individual_uuid where b.individual_uuid is null LIMIT ?1 OFFSET ?2")
 	List<Demographic> findDemographic(int pageSize, int offset);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM demographic a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
+	@Query(nativeQuery = true, value = "SELECT a.* FROM demographic a WHERE a.`status`=2 AND a.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
     List<Demographic> rejected(@Param("fw")String fw);
 	
 	
@@ -27,7 +27,7 @@ public interface DemographicRepository extends JpaRepository <Demographic, Strin
 			+ "FROM demographic a INNER JOIN individual b on a.individual_uuid=b.uuid\r\n"
 			+ "INNER JOIN residency c on b.uuid=c.individual_uuid INNER JOIN location d on c.location_uuid=d.uuid\r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
-			+ "where a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND endType=1 AND a.individual_uuid = :uuid LIMIT 1")
+			+ "where a.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND endType=1 AND a.individual_uuid = :uuid LIMIT 1")
 	List<Demographic> findByUuid(@Param("uuid") String uuid);
 
 		
@@ -37,7 +37,7 @@ public interface DemographicRepository extends JpaRepository <Demographic, Strin
 			+ "FROM demographic a INNER JOIN individual b on a.individual_uuid=b.uuid\r\n"
 			+ "INNER JOIN residency c on b.uuid=c.individual_uuid INNER JOIN location d on c.location_uuid=d.uuid\r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
-			+ "where a.fw_uuid= :fw AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND endType=1")
+			+ "where a.fw_uuid= :fw AND a.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND endType=1")
 	List<Demographic> findItem(@Param("fw") String fw);
 	
 	@Query(nativeQuery = true, value ="SELECT a.individual_uuid,denomination,akan_tribe,comp_yrs,education,concat(f.firstName,' ',f.lastName) as fw_uuid,"
@@ -46,7 +46,7 @@ public interface DemographicRepository extends JpaRepository <Demographic, Strin
 			+ "FROM demographic a INNER JOIN individual b on a.individual_uuid=b.uuid\r\n"
 			+ "INNER JOIN residency c on b.uuid=c.individual_uuid INNER JOIN location d on c.location_uuid=d.uuid\r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
-			+ "where a.status=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND endType=1")
+			+ "where a.status=2 AND a.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND endType=1")
 	List<Demographic> findRej();
 	
 	@Query(nativeQuery = true, value ="SELECT a.individual_uuid,denomination,akan_tribe,comp_yrs,education,concat(f.firstName,' ',f.lastName) as fw_uuid,"
@@ -55,7 +55,7 @@ public interface DemographicRepository extends JpaRepository <Demographic, Strin
 			+ "FROM demographic a INNER JOIN individual b on a.individual_uuid=b.uuid\r\n"
 			+ "INNER JOIN residency c on b.uuid=c.individual_uuid INNER JOIN location d on c.location_uuid=d.uuid\r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
-			+ "where a.`status`= 3 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND endType=1")
+			+ "where a.`status`= 3 AND a.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND endType=1")
 	List<Demographic> findItems();
 
 

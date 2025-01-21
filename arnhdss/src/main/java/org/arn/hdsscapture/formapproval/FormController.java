@@ -14,7 +14,6 @@ import org.arn.hdsscapture.entity.Morbidity;
 import org.arn.hdsscapture.entity.Outmigration;
 import org.arn.hdsscapture.entity.Pregnancyobservation;
 import org.arn.hdsscapture.entity.Pregnancyoutcome;
-import org.arn.hdsscapture.entity.RegisterBook;
 import org.arn.hdsscapture.entity.Relationship;
 import org.arn.hdsscapture.entity.Sociodemographic;
 import org.arn.hdsscapture.entity.Vaccination;

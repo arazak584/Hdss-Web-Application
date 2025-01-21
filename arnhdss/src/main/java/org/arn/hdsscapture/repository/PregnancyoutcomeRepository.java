@@ -13,7 +13,7 @@ public interface PregnancyoutcomeRepository extends JpaRepository <Pregnancyoutc
 	@Query(nativeQuery = true, value = "SELECT a.* FROM pregnancyoutcome as a INNER JOIN outcome b on a.uuid=b.preg_uuid WHERE b.uuid = :uuid LIMIT 1")
     List<Pregnancyoutcome> findByUuids(@Param("uuid") String uuid);
 	
-	@Query(nativeQuery = true, value = "SELECT a.* FROM pregnancyoutcome a WHERE a.`status`=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
+	@Query(nativeQuery = true, value = "SELECT a.* FROM pregnancyoutcome a WHERE a.`status`=2 AND a.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND a.fw_uuid = :fw")
     List<Pregnancyoutcome> rejected(@Param("fw")String fw);
 	
 	
@@ -25,7 +25,7 @@ public interface PregnancyoutcomeRepository extends JpaRepository <Pregnancyoutc
 			+ "INNER JOIN visit c on a.visit_uuid=c.uuid INNER JOIN location d on c.location_uuid=d.uuid\r\n"
 			+ "INNER JOIN outcome h on a.uuid=h.preg_uuid\r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
-			+ "where a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND h.uuid = :uuid LIMIT 1")
+			+ "where a.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1) AND h.uuid = :uuid LIMIT 1")
 	List<Pregnancyoutcome> findByUuid(@Param("uuid") String uuid);
 
 		
@@ -38,7 +38,7 @@ public interface PregnancyoutcomeRepository extends JpaRepository <Pregnancyoutc
 			+ "INNER JOIN outcome h on a.uuid=h.preg_uuid\r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
 			+ "INNER JOIN pregnancyobservation i ON a.pregnancy_uuid=i.uuid\r\n"
-			+ "where a.fw_uuid= :fw AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+			+ "where a.fw_uuid= :fw AND a.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	List<Pregnancyoutcome> findItem(@Param("fw") String fw);
 	
 	@Query(nativeQuery = true, value ="SELECT	h.uuid as uuid,ass_del,ass_del_other,b_place,pregnancy_uuid,h.chd_weight as father_uuid,conceptionDate,first_nb,first_rec,\r\n"
@@ -49,7 +49,7 @@ public interface PregnancyoutcomeRepository extends JpaRepository <Pregnancyoutc
 			+ "INNER JOIN visit c on a.visit_uuid=c.uuid INNER JOIN location d on c.location_uuid=d.uuid\r\n"
 			+ "INNER JOIN outcome h on a.uuid=h.preg_uuid\r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
-			+ "where a.status=2 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+			+ "where a.status=2 AND a.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	List<Pregnancyoutcome> findRej();
 	
 	@Query(nativeQuery = true, value ="SELECT	h.uuid as uuid,ass_del,ass_del_other,b_place,pregnancy_uuid,h.chd_weight as father_uuid,conceptionDate,a.first_nb,i.`status` as first_rec,\r\n"
@@ -61,7 +61,7 @@ public interface PregnancyoutcomeRepository extends JpaRepository <Pregnancyoutc
 			+ "INNER JOIN outcome h on a.uuid=h.preg_uuid\r\n"
 			+ "INNER JOIN fieldworker f on a.fw_uuid=f.fw_uuid\r\n"
 			+ "INNER JOIN pregnancyobservation i ON a.pregnancy_uuid=i.uuid\r\n"
-			+ "where a.`status`= 3 AND a.insertDate > (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
+			+ "where a.`status`= 3 AND a.insertDate >= (SELECT r.startDate from round r ORDER BY r.roundNumber DESC limit 1)")
 	List<Pregnancyoutcome> findItems();
 
 }
