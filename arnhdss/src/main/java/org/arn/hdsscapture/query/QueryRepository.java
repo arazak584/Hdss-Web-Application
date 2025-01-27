@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface QueryRepository extends JpaRepository <Fieldworker, String> {
 	
-	@Query(nativeQuery = true, value = "SELECT a.uuid as id,a.extId as id1, groupName as id4,dob as id2,a.insertDate as id3,b.extId as id8, b.extId AS id5,null as id9, compno as id6,concat(x.firstName,' ',x.lastName) as id7\r\n"
+	@Query(nativeQuery = true, value = "SELECT a.uuid as id,a.extId as id1, groupName as id4,dob as id2,a.insertDate as id3,b.extId as id8, b.extId AS id5,'' as id9, compno as id6,concat(x.firstName,' ',x.lastName) as id7\r\n"
 			+ "FROM socialgroup a INNER JOIN individual b ON a.individual_uuid = b.uuid\r\n"
 			+ "INNER JOIN fieldworker x on a.fw_uuid=x.fw_uuid\r\n"
 			+ "LEFT JOIN (SELECT *, ROW_NUMBER() OVER (PARTITION BY individual_uuid ORDER BY startDate DESC) AS rn\r\n"
@@ -32,21 +32,21 @@ public interface QueryRepository extends JpaRepository <Fieldworker, String> {
 //	List<Queries> Minor(@Param("query") String query);
 	
 	
-	@Query(nativeQuery = true, value = "SELECT a.uuid as id,a.extId as id1,concat(a.firstName,' ',a.lastName)as id4,null as id9,"
+	@Query(nativeQuery = true, value = "SELECT a.uuid as id,a.extId as id1,concat(a.firstName,' ',a.lastName)as id4,'' as id9,"
 			+ "gender as id5,dob as id3,a.insertDate as id2,concat(c.firstName,' ',c.lastName)as id6,a.extId as id7,a.extId as id8 from individual a LEFT JOIN residency b on a.uuid=b.individual_uuid\r\n"
 			+ "INNER JOIN fieldworker c on a.fw_uuid=c.fw_uuid\r\n"
 			+ "where b.individual_uuid IS NULL AND a.uuid!='UNK'\r\n"
 			+ "AND a.extId!= :query")
 	List<Queries> Nomem(@Param("query") String query);
 	
-	@Query(nativeQuery = true, value = "SELECT a.uuid as id,a.extId as id1,concat(a.firstName,' ',a.lastName)as id4,null as id9,dob as id2,startDate as id3,a.firstName as id5,"
+	@Query(nativeQuery = true, value = "SELECT a.uuid as id,a.extId as id1,concat(a.firstName,' ',a.lastName)as id4,'' as id9,dob as id2,startDate as id3,a.firstName as id5,"
 			+ "a.firstName as id6,a.firstName as id7,a.firstName as id8 from "
 			+ "individual a INNER JOIN residency b on a.uuid=b.individual_uuid\r\n"
 			+ "WHERE a.dob>startDate\r\n"
 			+ "AND a.extId!= :query")
 	List<Queries> Dob(@Param("query") String query);
 	
-	@Query(nativeQuery = true, value = "SELECT uuid as id,extId as id8,individual_uuid as id1, name as id4, startDate as id2,null as id9, endType as id5, dob as id3, compno as id6,fw as id7\r\n"
+	@Query(nativeQuery = true, value = "SELECT uuid as id,extId as id8,individual_uuid as id1, name as id4, startDate as id2,'' as id9, endType as id5, dob as id3, compno as id6,fw as id7\r\n"
 			+ "FROM (SELECT a.uuid,extId,individual_uuid, startDate, endDate, \r\n"
 			+ "CASE WHEN endType = 1 THEN 'Active' END AS endType, \r\n"
 			+ "dob, compno, concat(b.firstName,' ',b.lastName)name,concat(d.firstName,' ',d.lastName)fw,\r\n"
@@ -71,7 +71,7 @@ public interface QueryRepository extends JpaRepository <Fieldworker, String> {
 //			+ "AND extId != :query")
 //	List<Queries> Dup(@Param("query") String query);
 	
-	@Query(nativeQuery = true, value = "SELECT uuid as id,extId as id1,individual_uuid as id4,startDate as id2,endDate as id3,null as id9,name as id5,\r\n"
+	@Query(nativeQuery = true, value = "SELECT uuid as id,extId as id1,individual_uuid as id4,startDate as id2,endDate as id3,'' as id9,name as id5,\r\n"
 			+ "prev_endDate as id6,firstName as id7,firstName as id8 \r\n"
 			+ "FROM (SELECT firstName,a.uuid,extId,individual_uuid, startDate, endDate,concat(b.firstName,' ',b.lastName)name,\r\n"
 			+ "LAG(endDate) OVER (PARTITION BY individual_uuid ORDER BY startDate) AS prev_endDate\r\n"
@@ -89,7 +89,7 @@ public interface QueryRepository extends JpaRepository <Fieldworker, String> {
 //			+ "AND extId != :query")
 //	List<Queries> Lag(@Param("query") String query);
 	
-	@Query(nativeQuery = true, value = "SELECT a.uuid as id,groupName as id1,d.extId as id4,compno as id5,a.insertDate as id2,null as id9,a.dob as id3,a.firstName as id6,a.firstName as id7,a.firstName as id8 FROM individual AS a INNER JOIN residency AS b ON a.uuid = b.individual_uuid\r\n"
+	@Query(nativeQuery = true, value = "SELECT a.uuid as id,groupName as id1,d.extId as id4,compno as id5,a.insertDate as id2,'' as id9,a.dob as id3,a.firstName as id6,a.firstName as id7,a.firstName as id8 FROM individual AS a INNER JOIN residency AS b ON a.uuid = b.individual_uuid\r\n"
 			+ "INNER JOIN location c on b.location_uuid=c.uuid INNER JOIN socialgroup d on b.socialgroup_uuid=d.uuid\r\n"
 			+ "LEFT JOIN `duplicate` z on a.uuid=z.dup_uuid LEFT JOIN `duplicate` x on a.uuid=x.dup1_uuid \r\n"
 			+ "LEFT JOIN `duplicate` y on a.uuid=y.dup2_uuid WHERE b.endType = 1 AND z.dup_uuid is null AND x.dup1_uuid is null \r\n"
@@ -98,13 +98,13 @@ public interface QueryRepository extends JpaRepository <Fieldworker, String> {
 			+ "GROUP BY socialgroup_uuid HAVING MAX(TIMESTAMPDIFF(YEAR, a2.dob, CURDATE())) < (select hoh_age from settings)) AND a.extId!= :query GROUP BY d.extId")
 	List<Queries> Minors(@Param("query") String query);
 	
-	@Query(nativeQuery = true, value = "SELECT a.extId as id,concat(a.firstName,' ',a.lastName)id1,outcomeDate as id2,null as id9,b.insertDate as id3,concat(d.firstName,' ',d.lastName)id4,NULL as id5,NULL as id6,NULL as id7,NULL as id8 from individual a INNER JOIN pregnancyoutcome b ON a.uuid=b.mother_uuid\r\n"
+	@Query(nativeQuery = true, value = "SELECT a.extId as id,concat(a.firstName,' ',a.lastName)id1,outcomeDate as id2,'' as id9,b.insertDate as id3,concat(d.firstName,' ',d.lastName)id4,NULL as id5,NULL as id6,NULL as id7,NULL as id8 from individual a INNER JOIN pregnancyoutcome b ON a.uuid=b.mother_uuid\r\n"
 			+ "LEFT JOIN outcome c on b.uuid=c.preg_uuid \r\n"
 			+ "INNER JOIN fieldworker d on b.fw_uuid=d.fw_uuid WHERE preg_uuid IS NULL \r\n"
 			+ "AND a.extId!= :query")
 	List<Queries> Outcome(@Param("query") String query);
 	
-	@Query(nativeQuery = true, value = "SELECT b.extId as id,groupName as id1,f.compno as id5,a.insertDate as id2,deathDate as id3,null as id9,concat(e.firstName,' ',e.lastName)id4,NULL as id6,NULL as id7,NULL as id8 FROM death as a INNER JOIN socialgroup as b ON a.individual_uuid=b.individual_uuid\r\n"
+	@Query(nativeQuery = true, value = "SELECT b.extId as id,groupName as id1,f.compno as id5,a.insertDate as id2,deathDate as id3,'' as id9,concat(e.firstName,' ',e.lastName)id4,NULL as id6,NULL as id7,NULL as id8 FROM death as a INNER JOIN socialgroup as b ON a.individual_uuid=b.individual_uuid\r\n"
 			+ "INNER JOIN residency as c on b.uuid=c.socialgroup_uuid\r\n"
 			+ "INNER JOIN individual as d on c.individual_uuid=d.uuid\r\n"
 			+ "INNER JOIN location f on c.location_uuid=f.uuid\r\n"
@@ -116,7 +116,7 @@ public interface QueryRepository extends JpaRepository <Fieldworker, String> {
 			+ "COUNT(DISTINCT CASE WHEN c.insertDate >= (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) AS id4,\r\n"
 			+ "ROUND(IFNULL(COUNT(DISTINCT CASE WHEN c.insertDate >= (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) / COUNT(DISTINCT a.uuid) * 100, 0), 2) AS id5,\r\n"
 			+ "COUNT(DISTINCT CASE WHEN e.endType = 1 THEN e.socialgroup_uuid END) AS id6,\r\n"
-			+ "COUNT(DISTINCT f.extId) AS id7,null as id2,null as id3,\r\n"
+			+ "COUNT(DISTINCT f.extId) AS id7,'' as id2,'' as id3,\r\n"
 			+ "ROUND(IFNULL(COUNT(DISTINCT f.extId) / NULLIF(COUNT(DISTINCT CASE WHEN e.endType = 1 THEN e.socialgroup_uuid END), 0) * 100, 0), 2) AS id8,\r\n"
 			+ "CONCAT(d.firstName, ' ', d.lastName) AS id9\r\n"
 			+ "FROM location a INNER JOIN locationhierarchy b ON a.locationLevel_uuid = b.uuid\r\n"
