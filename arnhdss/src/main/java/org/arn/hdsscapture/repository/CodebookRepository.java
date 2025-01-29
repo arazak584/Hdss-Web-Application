@@ -18,7 +18,7 @@ public interface CodebookRepository extends JpaRepository <Codebook, Integer> {
 	@Query(nativeQuery = true, value = "SELECT COUNT(*) FROM codebook WHERE codeFeature = :codeFeature ")
 	int codeErrs(@Param("codeFeature") String codeFeature);
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM codebook WHERE codeFeature='odk_gender'")
+	@Query(nativeQuery = true, value = "SELECT * FROM codebook WHERE codeFeature='gender'")
 	List<Codebook> odk_gender();
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM codebook Where codeFeature='itemlist'")

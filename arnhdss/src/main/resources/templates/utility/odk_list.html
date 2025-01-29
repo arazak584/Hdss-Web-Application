@@ -76,7 +76,9 @@
 													<th th:text="#{odk.min}"></th>
 													<th th:text="#{odk.max}"></th>
 													<th th:text="#{odk.gender}"></th>
-													<th th:text="#{odk.enabled}"></th>
+													<th th:text="#{odk.csv}"></th>
+													<th th:text="#{odk.statuz}"></th>
+													<th th:text="#{odk.enabled}"></th>													
 													<th th:text="#{fw.action}"></th>
                                                 </tr>
                                                 </thead>
@@ -88,6 +90,8 @@
 														<td th:text="${item.minAge}"></td>
 														<td th:text="${item.maxAge}"></td>
 														<td th:text="${item.gender}"></td>
+														<td th:text="${item.csv}"></td>
+														<td th:text="${item.status}"></td>
 														<td th:classappend="${item.enabled == 1 ? 'status-enabled' : item.enabled == 2 ? 'status-disabled': 'status-disabled'}">
 															  <span th:if="${item.enabled == 1}">  <i class="ik ik-check-circle"></i>  </span>
 															  <span th:if="${item.enabled == 2}">  <i class="ik ik-info"></i>  </span>		

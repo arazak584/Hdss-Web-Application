@@ -336,7 +336,6 @@ public class UtilityController {
     public String saveOdk(@ModelAttribute("odk") ODK odk, BindingResult bindingResult, Model model) {		
 		
 		boolean formIDExists = odkrepo.findByformID(odk.getFormID()).isPresent();
-
 		if (formIDExists) {
 			//bindingResult.rejectValue("formID", "formID.exists");
 			model.addAttribute("error", "Form ID Exists");
@@ -357,7 +356,7 @@ public class UtilityController {
 
 
 	@GetMapping("/extra-forms/edit/{id}")
-	public String editOdk(@PathVariable("id") Integer id, Model model) {
+	public String editOdk(@PathVariable("id") Long id, Model model) {
 		List<ODK> optionalOdk = odkrepo.findID(id);
 		if (!optionalOdk.isEmpty()) {
 			ODK odk = optionalOdk.get(0);
@@ -379,15 +378,23 @@ public class UtilityController {
 	}
 
 	@PostMapping("/extra-forms/edit/{id}")
-	public String updateOdk(@PathVariable("id") Integer id, @ModelAttribute("round") ODK odk,
+	public String updateOdk(@PathVariable("id") Long id, @ModelAttribute("odk") ODK odk,
+			//@PathVariable("uuid") String uuid,
 			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			// Handle validation errors if necessary
-			return "odk_edit";
+			return "utility/odk_edit";
 		} else {
 			List<ODK> optionalOdk = odkrepo.findID(id);
 			if (!optionalOdk.isEmpty()) {
 				ODK existingOdk = optionalOdk.get(0);
+				
+				boolean isDuplicate = odkrepo.existsByFormIDAndNotId(odk.getFormID(), id);
+		        if (isDuplicate) {
+		            result.rejectValue("formID", "formID.exists", "Form ID already exists");
+		            return "utility/odk_edit"; // Return to the edit page with an error message
+		        }				
+				
 				existingOdk.setFormID(odk.getFormID());
 				//existingOdk.setInsertDate(odk.getInsertDate());
 				existingOdk.setFormName(odk.getFormName());
@@ -396,6 +403,8 @@ public class UtilityController {
 				existingOdk.setEnabled(odk.getEnabled());
 				existingOdk.setMinAge(odk.getMinAge());
 				existingOdk.setMaxAge(odk.getMaxAge());
+				existingOdk.setCsv(odk.getCsv());
+				existingOdk.setStatus(odk.getStatus());
 				odkrepo.save(existingOdk);
 				return "redirect:/utility/extra-forms";
 			} else {

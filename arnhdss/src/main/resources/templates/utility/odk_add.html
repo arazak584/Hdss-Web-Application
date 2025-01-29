@@ -70,6 +70,7 @@
                                             <div class="form-group">
                                                 <label th:text="#{odk.formid}"></label>
                                                 <input type="text" name="formID" th:field ="*{formID}" class="form-control" required placeholder="Enter ODK Form ID">
+                                                <small class="form-text text-danger" th:if="${#fields.hasErrors('formID')}" th:errors="*{formID}"></small>
                                             </div>
                                             <div class="form-group">
                                                 <label th:text="#{odk.forname}"></label>
@@ -89,10 +90,12 @@
                                             </div>
                                            <div class="form-group">
 											   <label th:text="#{odk.gender}"></label>
-										     <select name="gender" class="form-control" th:field="*{gender}" required>
-												 <option value=""></option>
-										        <option th:each="item : ${items}" th:value="${item.codeValue}" th:text="${item.codeLabel}"></option>
-										    </select>
+											   <select class="form-control" name="gender" th:field="*{gender}" required>
+														<option value=""></option>
+												        <option value="1" th:selected="${odk.gender == 1}">Male</option>
+												        <option value="2" th:selected="${odk.gender == 2}">Female</option>
+												        <option value="3" th:selected="${odk.gender == 3}">All</option>
+												    </select>										    
 										    </div>
 										     <div class="form-group">
                                                 <label th:text="#{odk.enabled}"></label>
@@ -101,7 +104,19 @@
 												        <option value="1" th:selected="${odk.enabled == 1}">Enabled</option>
 												        <option value="2" th:selected="${odk.enabled == 2}">Disabled</option>
 												    </select>
-                                            </div>							
+                                            </div>
+                                            <div class="form-group">
+                                                <label th:text="#{odk.status}"></label>
+                                                    <select class="form-control" name="status" th:field="*{status}" required>
+														<option value=""></option>
+												        <option value="1" th:selected="${odk.status == 1}">Active</option>
+												        <option value="3" th:selected="${odk.status == 3}">Dead</option>
+												    </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label th:text="#{csv.name}"></label>
+                                                <input type="text" class="form-control" name="csv" th:field ="*{csv}" Placeholder="Enter Name of CSV File" required>
+                                            </div>					
                                             
                                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
                                              <a class="btn btn-secondary btn-lg" href="#" th:href="@{/utility/extra-forms}">Cancel</a>

@@ -54,6 +54,12 @@ public class ODK implements Serializable {
 	@Column(name = "maxAge", nullable = true)
 	public Integer maxAge;
 	
+	@Column(name = "csv", nullable = true)
+	public String csv;
+	
+	@Column(name = "status", nullable = true)
+	public String status;
+	
 
 	public ODK() {
 	}
@@ -148,6 +154,24 @@ public class ODK implements Serializable {
 		this.maxAge = maxAge;
 	}
 
-	
+
+	public String getCsv() {
+		return csv;
+	}
+
+
+	public void setCsv(String csv) {
+		this.csv = csv;
+	}
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 }

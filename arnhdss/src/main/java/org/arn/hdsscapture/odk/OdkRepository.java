@@ -10,8 +10,8 @@ import org.springframework.data.repository.query.Param;
 public interface OdkRepository extends JpaRepository <ODK, Long> {
 
 	
-	@Query(nativeQuery = true, value = "SELECT id,formID,insertDate,formName,formDesc,minAge,maxAge,Case when gender=1 then 'Male' when gender=2 then\r\n"
-			+ "'Female' else 'All' end as gender,enabled\r\n"
+	@Query(nativeQuery = true, value = "SELECT id,formID,insertDate,formName,formDesc,minAge,maxAge,csv,Case when gender=1 then 'Male' when gender=2 then\r\n"
+			+ "'Female' else 'All' end as gender,Case when status=1 then 'Active' when status =3 then 'Dead' else '' end as status,enabled\r\n"
 			+ " from odkform ORDER BY insertDate Desc")
 	List<ODK> find();
 	
@@ -22,7 +22,11 @@ public interface OdkRepository extends JpaRepository <ODK, Long> {
 	Optional<ODK> findByformID(String formID);
 	
 	@Query(nativeQuery = true, value = "SELECT * from odkform WHERE id = :id ORDER BY id")
-	List<ODK> findID(@Param("id") Integer id);
+	List<ODK> findID(@Param("id") Long id);
+	
+	@Query("SELECT COUNT(o) > 0 FROM ODK o WHERE o.formID = :formID AND o.id <> :id")
+	boolean existsByFormIDAndNotId(@Param("formID") String formID, @Param("id") Long id);
+
 
 	
 
