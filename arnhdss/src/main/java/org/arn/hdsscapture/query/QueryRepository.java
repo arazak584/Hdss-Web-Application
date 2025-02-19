@@ -98,13 +98,13 @@ public interface QueryRepository extends JpaRepository <Fieldworker, String> {
 			+ "GROUP BY socialgroup_uuid HAVING MAX(TIMESTAMPDIFF(YEAR, a2.dob, CURDATE())) < (select hoh_age from settings)) AND a.extId!= :query GROUP BY d.extId")
 	List<Queries> Minors(@Param("query") String query);
 	
-	@Query(nativeQuery = true, value = "SELECT a.extId as id,concat(a.firstName,' ',a.lastName)id1,outcomeDate as id2,'' as id9,b.insertDate as id3,concat(d.firstName,' ',d.lastName)id4,NULL as id5,NULL as id6,NULL as id7,NULL as id8 from individual a INNER JOIN pregnancyoutcome b ON a.uuid=b.mother_uuid\r\n"
+	@Query(nativeQuery = true, value = "SELECT a.extId as id,concat(a.firstName,' ',a.lastName)id1,outcomeDate as id2,'' as id9,b.insertDate as id3,concat(d.firstName,' ',d.lastName)id4,'' as id5,'' as id6,'' as id7,'' as id8 from individual a INNER JOIN pregnancyoutcome b ON a.uuid=b.mother_uuid\r\n"
 			+ "LEFT JOIN outcome c on b.uuid=c.preg_uuid \r\n"
 			+ "INNER JOIN fieldworker d on b.fw_uuid=d.fw_uuid WHERE preg_uuid IS NULL \r\n"
 			+ "AND a.extId!= :query")
 	List<Queries> Outcome(@Param("query") String query);
 	
-	@Query(nativeQuery = true, value = "SELECT b.extId as id,groupName as id1,f.compno as id5,a.insertDate as id2,deathDate as id3,'' as id9,concat(e.firstName,' ',e.lastName)id4,NULL as id6,NULL as id7,NULL as id8 FROM death as a INNER JOIN socialgroup as b ON a.individual_uuid=b.individual_uuid\r\n"
+	@Query(nativeQuery = true, value = "SELECT b.extId as id,groupName as id1,f.compno as id5,a.insertDate as id2,deathDate as id3,'' as id9,concat(e.firstName,' ',e.lastName)id4,'' as id6,'' as id7,'' as id8 FROM death as a INNER JOIN socialgroup as b ON a.individual_uuid=b.individual_uuid\r\n"
 			+ "INNER JOIN residency as c on b.uuid=c.socialgroup_uuid\r\n"
 			+ "INNER JOIN individual as d on c.individual_uuid=d.uuid\r\n"
 			+ "INNER JOIN location f on c.location_uuid=f.uuid\r\n"
