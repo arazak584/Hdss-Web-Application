@@ -50,7 +50,7 @@
                                   <div class="card">
                                     <div class="card-header d-block">
                                         <h3>Active Fieldworkers</h3> 
-                                        <button class="btn btn-theme" id="btn-export" onclick="ExportToExcel('xlsx', 'active_fw.xlsx')">Export to Excel</button>
+                                        <button class="btn btn-theme" id="btn-export" onclick="exportToExcel()">Export to Excel</button>
                                     </div>
                                     <div class="card-block">
 										
@@ -134,6 +134,21 @@
 <script>
     function logout() {
         document.getElementById('logoutForm').submit();
+    }
+</script>
+
+<script>
+    function exportToExcel() {
+        
+        // Get today's date in YYYY-MM-DD format
+        let today = new Date();
+        let formattedDate = today.toISOString().split('T')[0]; // Extract YYYY-MM-DD
+
+        // Default filename if no event type is selected
+        let fileName = `active-fw-${formattedDate}.xlsx`;
+
+        // Call the actual export function
+        ExportToExcel('xlsx', fileName);
     }
 </script>
 

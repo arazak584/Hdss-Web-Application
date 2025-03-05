@@ -50,7 +50,7 @@
   
                                
 							<div class="card-header d-block">
-                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'work_done.xlsx')">Export to Excel</button>
+                                        <button id="btn-export" onclick="exportToExcel()">Export to Excel</button>
                                         <form class="form-inline" method="GET"  action="/hdss/report/workoutput" style="text-align: center;">                                       
                                                  <input type="text" name="query" class="form-control" value="query" required readonly hidden>
                                                 <button type="submit" class="btn btn-theme">Generate Work Output</button>
@@ -139,7 +139,20 @@
     }
 </script>
 
+<script>
+    function exportToExcel() {
+        
+        // Get today's date in YYYY-MM-DD format
+        let today = new Date();
+        let formattedDate = today.toISOString().split('T')[0]; // Extract YYYY-MM-DD
 
+        // Default filename if no event type is selected
+        let fileName = `work-done-${formattedDate}.xlsx`;
+
+        // Call the actual export function
+        ExportToExcel('xlsx', fileName);
+    }
+</script>
         
     </body>
 </html>

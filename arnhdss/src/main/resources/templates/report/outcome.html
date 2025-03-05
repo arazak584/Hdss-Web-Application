@@ -52,7 +52,7 @@
                                   <div class="card">
                                     <div class="card-header d-block">
                                         <h3>Pregnancy Outcome</h3> 
-                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'outcome.xlsx')">Export to Excel</button>
+                                        <button id="btn-export" onclick="exportToExcel()">Export to Excel</button>
                                     </div>
                                     <div class="card-block">
 										<form class="form-inline" method="GET"  action="/hdss/report/outcome" style="text-align: center;">
@@ -152,7 +152,20 @@
     }
 </script>
 
+<script>
+    function exportToExcel() {
+        
+        // Get today's date in YYYY-MM-DD format
+        let today = new Date();
+        let formattedDate = today.toISOString().split('T')[0]; // Extract YYYY-MM-DD
 
+        // Default filename if no event type is selected
+        let fileName = `outcome-${formattedDate}.xlsx`;
+
+        // Call the actual export function
+        ExportToExcel('xlsx', fileName);
+    }
+</script>
         
     </body>
 </html>

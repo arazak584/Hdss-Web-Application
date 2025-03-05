@@ -50,47 +50,72 @@
   
                                   <div class="card">
                                     <div class="card-header d-block">
-                                        <h3>Daily Household Visit</h3> 
-                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'daily.xlsx')">Export to Excel</button>
+                                        <h3>Daily Household Events</h3>                                         
+                                        <button id="btn-export" onclick="exportToExcel()">Export to Excel</button>
                                     </div>
                                     <div class="card-block">
-										
+																				
 										<form class="row g-3 mb-4" method="get" th:action="@{/hdss/attendance-report}">
-								            <div class="col-md-4">
-								                <label for="startDate" class="form-label">Start Date</label>
-								                <input type="date" class="form-control" id="startDate" name="startDate" 
-								                       th:value="${startDate}">
-								            </div>
-								            <div class="col-md-4">
-								                <label for="endDate" class="form-label">End Date</label>
-								                <input type="date" class="form-control" id="endDate" name="endDate" 
-								                       th:value="${endDate}">
-								            </div>
-								            <div class="col-md-4 d-flex align-items-end">
-								                <button type="submit" class="btn btn-primary">Apply Filter</button>
-								            </div>
-								        </form>
+									    <div class="col-md-4">
+									        <label for="startDate" class="form-label">Start Date</label>
+									        <input type="date" class="form-control" id="startDate" name="startDate"
+									               th:value="${startDate}">
+									    </div>
+									    <div class="col-md-4">
+									        <label for="endDate" class="form-label">End Date</label>
+									        <input type="date" class="form-control" id="endDate" name="endDate"
+									               th:value="${endDate}">
+									    </div>
+									    <div class="col-md-3">
+									        <label for="entityTypesSelect" class="form-label">Event Type</label>
+									        <select class="form-control" id="entityTypesSelect" name="entityTypes" >
+									            <option th:each="type : ${availableEntityTypes}"
+									                    th:value="${type}"
+									                    th:text="${#strings.capitalize(type)}"
+									                    th:selected="${selectedEntityTypes != null and selectedEntityTypes.contains(type)}">
+									                Event Type
+									            </option>
+									        </select>
+									    </div>
+									    <div class="col-md-1 d-flex align-items-end">
+									        <button type="submit" class="btn btn-primary w-100">Apply</button>
+									    </div>
+									</form>
 										 
-                                        <div class="table-responsive">
-                                            <table id="order-table" class="table table-striped table-bordered wrap" data-order='[[0, "asc"]]'>
-                                                <thead class="table-dark">
-								                    <tr>
-								                        <th>Date</th>
-								                        <th th:each="name : ${fieldworkerNames}" th:text="${name}">Fieldworker Name</th>
-								                    </tr>
-								                </thead>
-								                <tbody>
-								                    <tr th:each="row : ${reportData}">
-								                        <td th:text="${#dates.format(row.visitDate, 'yyyy-MM-dd')}">2025-02-01</td>
-								                        <td th:each="name : ${fieldworkerNames}" 
-								                            th:text="${row.fieldworkerAttendance.get(name)}">Absent</td>
-								                    </tr>
-								                </tbody>
-                                                <tfoot>
-                                                
-                                                </tfoot>
-                                            </table>
-                                        </div>
+                                        <!-- Summary View -->
+										<div class="table-responsive">
+										    <table id="order-table" class="table table-striped table-bordered wrap" data-order='[[0, "asc"]]'>
+											  <thead class="thead-dark">
+											    <tr>
+											      <th>Date</th>
+											      <th:block th:each="name : ${fieldworkerNames}">
+											        <th th:text="${name}">Fieldworker Name</th>
+											      </th:block>
+											    </tr>
+											  </thead>
+											  <tbody>
+											    <tr th:each="row : ${reportData}">
+											      <td th:text="${#dates.format(row.visitDate, 'yyyy-MM-dd')}">2025-02-01</td>
+											      
+											      <th:block th:each="name : ${fieldworkerNames}">
+											        <!-- Total count cell with color coding but only showing the number -->
+											        <td th:text="${row.getTotalCount(name)}"
+											            th:class="${row.getTotalCount(name) > 0 ? 'text-success fw-bold' : 'text-danger'}">
+											          0
+											        </td>
+											      </th:block>
+											    </tr>
+											  </tbody>
+											  <tfoot>
+											    <tr class="table-secondary">
+											        <th>Total</th>
+											        <th:block th:each="name : ${fieldworkerNames}">
+											            <td th:text="${columnTotals.get(name)}" class="fw-bold">0</td>
+											        </th:block>
+											    </tr>
+											</tfoot>
+											</table>
+										</div>
                                     </div>
                                 </div>
   
@@ -143,6 +168,30 @@
         document.getElementById('logoutForm').submit();
     }
 </script>
+
+<script>
+    function exportToExcel() {
+        // Get the selected event type
+        let eventType = document.getElementById("entityTypesSelect").value;
+        
+        // Get today's date in YYYY-MM-DD format
+        let today = new Date();
+        let formattedDate = today.toISOString().split('T')[0]; // Extract YYYY-MM-DD
+
+        // Default filename if no event type is selected
+        let fileName = `daily_${formattedDate}.xlsx`;
+
+        // If an event type is selected, append it to the filename
+        if (eventType) {
+            fileName = `daily-${eventType}-${formattedDate}.xlsx`;
+        }
+
+        // Call the actual export function
+        ExportToExcel('xlsx', fileName);
+    }
+</script>
+
+
 
 
         

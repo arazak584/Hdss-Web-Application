@@ -51,7 +51,7 @@
                                   <div class="card">
                                     <div class="card-header d-block">
                                         <h3>Unvisited Compounds</h3> 
-                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'unvisited.xlsx')">Export to Excel</button>
+                                        <button id="btn-export" onclick="exportToExcel()">Export to Excel</button>
                                     </div>
                                     <div class="card-block">
 										  <form class="form-inline" method="GET" action="/hdss/report/unvisited" style="text-align: center;">
@@ -156,6 +156,20 @@
 	$('.js-states').select2();
 </script>
 
+<script>
+    function exportToExcel() {
+        
+        // Get today's date in YYYY-MM-DD format
+        let today = new Date();
+        let formattedDate = today.toISOString().split('T')[0]; // Extract YYYY-MM-DD
+
+        // Default filename if no event type is selected
+        let fileName = `unvisited-compounds-${formattedDate}.xlsx`;
+
+        // Call the actual export function
+        ExportToExcel('xlsx', fileName);
+    }
+</script>
         
     </body>
 </html>

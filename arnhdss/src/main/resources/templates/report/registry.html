@@ -61,7 +61,7 @@
                                   <div class="card">
                                     <div class="card-header d-block">
                                         <h3>Registry</h3> 
-                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'registry.xlsx')">Export to Excel</button>
+                                        <button id="btn-export" onclick="exportToExcel()">Export to Excel</button>
                                         <button style="font-weight: bold; text-transform: uppercase;" th:text="#{view}" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sectionaModal"></button>
                                     </div>
                                     <div class="card-block">
@@ -265,6 +265,21 @@
     });
 });
 
+</script>
+
+<script>
+    function exportToExcel() {
+        
+        // Get today's date in YYYY-MM-DD format
+        let today = new Date();
+        let formattedDate = today.toISOString().split('T')[0]; // Extract YYYY-MM-DD
+
+        // Default filename if no event type is selected
+        let fileName = `registry-${formattedDate}.xlsx`;
+
+        // Call the actual export function
+        ExportToExcel('xlsx', fileName);
+    }
 </script>
         
     </body>

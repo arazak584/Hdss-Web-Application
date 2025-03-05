@@ -51,7 +51,7 @@
                                   <div class="card">
                                     <div class="card-header d-block">
                                         <h3>Inmigration</h3> 
-                                        <button id="btn-export" onclick="ExportToExcel('xlsx', 'inmigration.xlsx')">Export to Excel</button>
+                                        <button id="btn-export" onclick="exportToExcel()">Export to Excel</button>
                                     </div>
                                     <div class="card-block">
 										<form class="form-inline" method="GET"  action="/hdss/report/inmigration" style="text-align: center;">
@@ -150,7 +150,20 @@
     }
 </script>
 
+<script>
+    function exportToExcel() {
+        
+        // Get today's date in YYYY-MM-DD format
+        let today = new Date();
+        let formattedDate = today.toISOString().split('T')[0]; // Extract YYYY-MM-DD
 
+        // Default filename if no event type is selected
+        let fileName = `inmigration-${formattedDate}.xlsx`;
+
+        // Call the actual export function
+        ExportToExcel('xlsx', fileName);
+    }
+</script>
         
     </body>
 </html>
