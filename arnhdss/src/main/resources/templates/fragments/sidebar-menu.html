@@ -1,3 +1,5 @@
+
+
 <div class="app-sidebar colored">
     <div class="sidebar-header">
         <a class="header-brand" th:href="@{/hdss/report}">
@@ -15,8 +17,8 @@
                 <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">
                     <a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Configuration</span></a>
                     <div class="submenu-content">
-                        <a th:href="@{/utility/task}" class="menu-item">Task</a>
-                        <a th:href="@{/utility/parameters}" class="menu-item">Parameters</a>
+                        <a th:href="@{/utility/task}" class="menu-item" title="Generate ZIP Files">Task</a>
+                        <a th:href="@{/utility/parameters}" class="menu-item" title="Define Parameters">Parameters</a>
                         <a th:href="@{/controls/users}" class="menu-item" sec:authorize="hasAnyRole('CONTROLLER')">Users</a>
                         <a th:href="@{/utility/fw}" class="menu-item">Fieldworker</a>
                         <a th:href="@{/utility/round}" class="menu-item">Round</a>
@@ -38,39 +40,18 @@
                 </div>
                 <div class="nav-item has-sub">
                     <a href="#"><i class="ik ik-box"></i><span>Utility</span></a>
-                    <div class="submenu-content">
-                        <a sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" href="#" th:href="@{/hdss/report/activehoh}" class="menu-item">Household Population</a>
+                    <div class="submenu-content">                       
                         <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/utility/activefw}" class="menu-item">Active Fieldworkers</a>
                         <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/file/assign}" class="menu-item">Schedule Fieldworker</a>
-                        <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/hdss/report/unvisited}" class="menu-item">Unvisited Compounds</a>
-                        <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/utility/community}" class="menu-item">Community Report</a>
-                        <a href="#" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')" th:href="@{/utility/vpm}" class="menu-item">Vpm List</a>
-                        <a href="#" th:href="@{/hdss/map}" class="menu-item">Site Map</a>
-                        <a href="#" th:href="@{/hdss/event-chart}" class="menu-item">Event Trend</a>
+                        <a href="#" th:href="@{/hdss/map}" class="menu-item">Site Map</a>                      
                         <a href="#" th:href="@{/hdss/report/search}" class="menu-item">Search</a>
                     </div>
                 </div>
-                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR','SUPERVISOR')">
-                    <a href="#" ><i class="fa fa-exclamation-triangle"></i><span>Queries</span><span class="badge badge-danger" id="errors"></span></a>
-                    <div class="submenu-content">
-                        <a href="#" th:href="@{/hdss/query/nomembership}" class="menu-item">No Membership<span class="badge badge-danger" id="nomemb"></span></a>
-                        <a href="#" th:href="@{/hdss/query/lagging}" class="menu-item">Lagging Date<span class="badge badge-danger" id="lag"></span></a>
-                        <a href="#" th:href="@{/hdss/query/dob}" class="menu-item">DOB> StartDate<span class="badge badge-danger" id="dobs"></span></a>
-                        <a href="#" th:href="@{/hdss/query/residency}" class="menu-item">Duplicate Residency<span class="badge badge-danger" id="dupres"></span></a>
-                        <a th:href="@{/hdss/query/minorhoh}" class="menu-item">Minor HOH<span class="badge badge-danger" id="minor"></span></a>
-                        <a th:href="@{/hdss/query/minors}" class="menu-item">Minors Only<span class="badge badge-danger" id="minors"></span></a>
-                        <a th:href="@{/hdss/query/outcome}" class="menu-item">No Outcome<span class="badge badge-danger" id="out"></span></a>
-                        <a th:href="@{/hdss/query/dthoh}" class="menu-item">Dead HOH<span class="badge badge-danger" id="dthoh"></span></a>
-                    </div>
-                </div>
+                
                 <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
-                    <a href="#"><i class="ik ik-pie-chart"></i><span>Report</span></a>
-                    <div class="submenu-content">
-						<a href="#" th:href="@{/hdss/attendance-report}" class="menu-item">Daily Household Report</a>
-                        <a href="#" th:href="@{/hdss/report/pop}" class="menu-item">Population</a>
-                        <a href="#" th:href="@{/hdss/report/registry}" class="menu-item">Registry</a>
-                        <a href="#" th:href="@{/hdss/report/workoutput}" class="menu-item">Work Output</a>
-                        <a href="#" th:href="@{/hdss/report/fw_report}" class="menu-item">Field Report</a>
+                    <a href="#"><i class="ik ik-pie-chart"></i><span>Field Report</span></a>
+                    <div class="submenu-content">					
+                        <a href="#" th:href="@{/hdss/report/registry}" class="menu-item">Registry</a>                      
                         <a href="#" th:href="@{/hdss/report/visit}" class="menu-item">Household Visit</a>
                         <a th:href = "@{/hdss/report/listing}" class="menu-item">Compound Visit</a>
                         <a th:href = "@{/hdss/report/inmigration}" class="menu-item">Inmigration</a>
@@ -84,10 +65,19 @@
                         <a th:href = "@{/hdss/report/ses}" class="menu-item">SES</a>
                     </div>
                 </div>
-                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">
-                    <a href="#"><i class="ik ik-edit"></i><span>Forms</span></a>
+                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR')">
+                    <a href="#"><i class="ik ik-edit"></i><span>Generate Report</span></a>
                     <div class="submenu-content">
-                        <a href="#" class="menu-item">Update</a>
+                        <a href="#" th:href="@{/hdss/attendance-report}" class="menu-item" title="View Events by Each Active Fieldworker Over a Selected Period">Daily Household Report</a>
+                        <a href="#" th:href="@{/hdss/report/pop}" class="menu-item" title="View Population by Age Group & Gender">Population</a>
+                         <a href="#" th:href="@{/hdss/report/workoutput}" class="menu-item" title="Percentage of Compounds and Households Visited Per SubVillage">Village Output</a>
+                        <a href="#" th:href="@{/hdss/report/fw_report}" class="menu-item" title="Number of Field Events Picked by a Fieldworker Over a Selected Period">Field Events</a>
+                        <a th:href="@{/hdss/report/activehoh}" class="menu-item" title="View Population by SubVillage, Number of Compounds & Households">Household Population</a>
+                        <a th:href="@{/utility/community}" class="menu-item" title="View Social Amenities by SubVillage">Community Report</a>
+                        <a th:href="@{/utility/vpm}" class="menu-item" title="List of VPM yet to be Conducted">Vpm List</a>
+                        <a th:href="@{/hdss/report/unvisited}" class="menu-item" title="Compounds Yet To Be Visited">Unvisited Compounds</a>
+                        <a th:href="@{/hdss/event-chart}" class="menu-item" title="View Trend of Event For Last Five Rounds per Village/SubVillage">Event Trend</a>
+
                     </div>
                 </div>
                 <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR','SUPERVISOR')">
@@ -106,6 +96,21 @@
                         <a href="#" class="menu-item" th:href="@{/hdss/approval/morlist}">Morbidity</a>
                     </div>
                 </div>
+                
+                <div class="nav-item has-sub" sec:authorize="hasAnyRole('CONTROLLER','MANAGER','COORDINATOR','SUPERVISOR')">
+                    <a href="#" ><i class="fa fa-exclamation-triangle"></i><span>Queries</span><span class="badge badge-danger" id="errors"></span></a>
+                    <div class="submenu-content">
+                        <a href="#" th:href="@{/hdss/query/nomembership}" class="menu-item" title="Individual Without Corresponding Residency">No Membership<span class="badge badge-danger" id="nomemb"></span></a>
+                        <a href="#" th:href="@{/hdss/query/lagging}" class="menu-item" title="Start Date For Current Residency Less Than Previous Residency End Date">Lagging Date<span class="badge badge-danger" id="lag"></span></a>
+                        <a href="#" th:href="@{/hdss/query/dob}" class="menu-item" title="Updated Date of Birth Greater Than Start Date"> DOB > StartDate<span class="badge badge-danger" id="dobs"></span></a>
+                        <a href="#" th:href="@{/hdss/query/residency}" class="menu-item" title="Individual Moved Into Separate Compounds By Different Fieldworkers During Same Round">Duplicate Residency<span class="badge badge-danger" id="dupres"></span></a>
+                        <a th:href="@{/hdss/query/minorhoh}" class="menu-item" title="Household Head is a Minor">Minor HOH<span class="badge badge-danger" id="minor"></span></a>
+                        <a th:href="@{/hdss/query/minors}" class="menu-item" title="No Member of the Household is Qualified to be a Respondent">Minors Only<span class="badge badge-danger" id="minors"></span></a>
+                        <a th:href="@{/hdss/query/outcome}" class="menu-item" title="No Corresponding Outcome (Caused by Different Fieldworkers Picking Same Outcome)">No Outcome<span class="badge badge-danger" id="out"></span></a>
+                        <a th:href="@{/hdss/query/dthoh}" class="menu-item" title="The Current Household Head is Dead and Need to be Replaced">Dead HOH<span class="badge badge-danger" id="dthoh"></span></a>
+                    </div>
+                </div>
+                
             </nav>
         </div>
     </div>

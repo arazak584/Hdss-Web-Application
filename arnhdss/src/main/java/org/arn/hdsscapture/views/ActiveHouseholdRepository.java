@@ -53,7 +53,7 @@ public interface ActiveHouseholdRepository extends JpaRepository <Socialgroup, S
 	@Query(nativeQuery = true, value = "SELECT a.compno as villcode,a.locationName as District,longitude as households,latitude as compounds,b.name as subvillage,CASE when a.`status`=1 then 'Active' \r\n"
 			+ "when a.`status`=2 then 'Commercial' when a.`status`=3 then 'Could not locate' when a.`status`=4 then 'Deserted/Broken' \r\n"
 			+ "when a.`status`=5 then 'Incomplete' \r\n"
-			+ "when a.`status`=6 then 'Unoccupied' else 'Unknown' end as village,null as pop from location a\r\n"
+			+ "when a.`status`=6 then 'Unoccupied' else 'Unknown' end as village,'' as pop from location a\r\n"
 			+ "inner join locationhierarchy b on a.locationLevel_uuid=b.uuid left join openhds.locationhierarchy c on b.parent_uuid=c.uuid\r\n"
 			+ "left join listing d on a.compno=d.compno where d.compno is null\r\n"
 			+ "AND b.name= :village")
@@ -70,7 +70,7 @@ public interface ActiveHouseholdRepository extends JpaRepository <Socialgroup, S
 	
 	@Query(nativeQuery = true, value = "SELECT b.name AS villcode, COUNT(DISTINCT a.uuid) AS households,CONCAT(d.firstName, ' ', d.lastName) AS District,\r\n"
 			+ "COUNT(DISTINCT CASE WHEN c.insertDate >= (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) AS compounds,\r\n"
-			+ "ROUND(IFNULL(COUNT(DISTINCT CASE WHEN c.insertDate >= (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) / COUNT(DISTINCT a.uuid) * 100, 0), 2) AS pop,null as village,null as subvillage \r\n"
+			+ "ROUND(IFNULL(COUNT(DISTINCT CASE WHEN c.insertDate >= (SELECT startDate FROM round ORDER BY roundNumber DESC LIMIT 1) THEN c.compno END) / COUNT(DISTINCT a.uuid) * 100, 0), 2) AS pop,'' as village,'' as subvillage \r\n"
 			+ "FROM location a INNER JOIN locationhierarchy b ON a.locationLevel_uuid = b.uuid \r\n"
 			+ "LEFT JOIN listing c ON a.compno = c.compno LEFT JOIN fieldworker d ON b.fw_name = d.username GROUP BY \r\n"
 			+ "b.uuid ORDER BY District")

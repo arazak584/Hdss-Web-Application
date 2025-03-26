@@ -132,7 +132,7 @@ public interface QueryRepository extends JpaRepository <Fieldworker, String> {
 			+ "FROM registry a INNER JOIN fieldworker b ON a.fw_uuid=b.fw_uuid\r\n"
 			+ "INNER JOIN location  d on  a.location_uuid=d.uuid\r\n"
 			+ "inner JOIN locationhierarchy e on d.locationLevel_uuid=e.uuid\r\n"
-			+ "WHERE a.insertDate BETWEEN :startDate AND :endDate GROUP BY id1,id6 ORDER BY id1,id5")
+			+ "WHERE date(a.insertDate) BETWEEN :startDate AND :endDate GROUP BY id1,id6 ORDER BY id1,id5")
 	List<Queries> registry(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
 }

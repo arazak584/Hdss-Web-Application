@@ -166,7 +166,7 @@ public class ReportController {
         //Failure to sync for 2 plus days
         data.put("notify", repo.sync());
 
-     // Get fieldworkers and format their details
+     // Get fieldworkers and format their details for last field visit
         List<Fieldworker> fws = field.lastSync();
         List<String> formattedFieldworkers = new ArrayList<>();
         for (Fieldworker fw : fws) {
@@ -181,6 +181,7 @@ public class ReportController {
         
         // Add formatted fieldworkers to the data map
         data.put("fieldworkers", formattedFieldworkers);
+        //System.out.println(formattedFieldworkers);
 
         return ResponseEntity.ok(data);
     }
