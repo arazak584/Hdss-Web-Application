@@ -289,7 +289,7 @@
 													<label th:text="#{preg_ready}"></label>
 													<select name="preg_ready" class="form-control" th:field="*{preg_ready}" readonly style="pointer-events: none;">
 														<option value="" ></option>
-													<option th:each="codebook : ${yn}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
+													<option th:each="codebook : ${more_chd}" th:value="${codebook.codeValue}" th:text="${codebook.codeLabel}"></option>
 													</select>
 												</div>
 											</div>

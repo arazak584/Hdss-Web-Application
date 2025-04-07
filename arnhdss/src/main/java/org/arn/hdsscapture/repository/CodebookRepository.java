@@ -92,7 +92,6 @@ public interface CodebookRepository extends JpaRepository <Codebook, Integer> {
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='fam_plan_method' ")
 	List<Codebook> fam_plan_method();
 	
-	
 	//Pregnancy Outcome
 	@Query(nativeQuery = true, value ="SELECT  * from codebook v where v.codeFeature='outcometype' ")
 	List<Codebook> outcometype();

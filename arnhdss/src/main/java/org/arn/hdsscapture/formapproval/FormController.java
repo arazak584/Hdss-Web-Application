@@ -546,6 +546,7 @@ public class FormController {
         model.addAttribute("assist", repo.assist());
         model.addAttribute("bnetLoc", repo.bnetLoc());
         model.addAttribute("plan_method", repo.fam_plan_method());
+        model.addAttribute("more_chd", repo.more_chd());
         
     }
 
