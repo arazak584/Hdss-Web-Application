@@ -711,6 +711,7 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_metho
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Implants', 6);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'IUD', 7);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Emergency contraception ', 8);
+INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('fam_plan_method', 'Calendar Method', 9);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Other Specify', 77);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'None', 11);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('crop', 'Consumption mainly', 1);

@@ -54,7 +54,7 @@ public interface ActiveHouseholdRepository extends JpaRepository <Socialgroup, S
 			+ "when a.`status`=2 then 'Commercial' when a.`status`=3 then 'Could not locate' when a.`status`=4 then 'Deserted/Broken' \r\n"
 			+ "when a.`status`=5 then 'Incomplete' \r\n"
 			+ "when a.`status`=6 then 'Unoccupied' else 'Unknown' end as village,'' as pop from location a\r\n"
-			+ "inner join locationhierarchy b on a.locationLevel_uuid=b.uuid left join openhds.locationhierarchy c on b.parent_uuid=c.uuid\r\n"
+			+ "inner join locationhierarchy b on a.locationLevel_uuid=b.uuid\r\n"
 			+ "left join listing d on a.compno=d.compno where d.compno is null\r\n"
 			+ "AND b.name= :village")
 	List<ActiveHouseholds> Unvisited(@Param("village") String village);
