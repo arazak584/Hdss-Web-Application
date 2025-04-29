@@ -51,6 +51,9 @@ public class Listing implements Serializable {
 	
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
+	
+	@Column(name = "edit_compno", nullable = false)
+	private Integer edit_compno;
 		
 	
 	public Listing() {}
@@ -123,6 +126,14 @@ public class Listing implements Serializable {
 
 	public void setLocation_uuid(String location_uuid) {
 		this.location_uuid = location_uuid;
+	}
+
+	public Integer getEdit_compno() {
+		return edit_compno;
+	}
+
+	public void setEdit_compno(Integer edit_compno) {
+		this.edit_compno = edit_compno;
 	}
 	
 	

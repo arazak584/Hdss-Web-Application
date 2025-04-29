@@ -209,7 +209,7 @@ public class LocationZipController {
         		.addColumn("uuid").addColumn("accuracy").addColumn("compextId").addColumn("compno").addColumn("edtime")
   			  .addColumn("fw_uuid").addColumn("insertDate").addColumn("latitude").addColumn("locationLevel_uuid").addColumn("locationName")
   			  .addColumn("locationType").addColumn("longitude").addColumn("status")
-  			  .addColumn("sttime").addColumn("vill_extId")
+  			  .addColumn("sttime").addColumn("vill_extId").addColumn("altitude")
                 .build();
         CsvMapper csvMapper = new CsvMapper();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

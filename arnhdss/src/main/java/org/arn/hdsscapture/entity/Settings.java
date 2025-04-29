@@ -14,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -59,14 +60,17 @@ public class Settings implements Serializable{
 	private boolean updates;
 	
 	@Column(nullable = false)
-	private boolean enumeration;	
+	private boolean enumeration;
+	
+	@Column(name = "compno", nullable = false)
+	private String compno = "TE0001";
+	
 	
 	public Settings() {}
 
 	public Integer getId() {
 		return id;
 	}
-
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -143,6 +147,14 @@ public class Settings implements Serializable{
 
 	public void setSite(String site) {
 		this.site = site;
+	}
+
+	public String getCompno() {
+		return compno;
+	}
+
+	public void setCompno(String compno) {
+		this.compno = compno;
 	}
 	
 

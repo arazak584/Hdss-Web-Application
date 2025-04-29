@@ -471,6 +471,7 @@ public class UtilityController {
 				existingSettings.setUpdates(settings.isUpdates());
 				existingSettings.setSesDate(settings.getSesDate());
 				existingSettings.setSite(settings.getSite());
+				existingSettings.setCompno(settings.getCompno());
 				// Update any other necessary properties of the object
 				setrepo.save(existingSettings);
 				return "redirect:/utility/parameters";

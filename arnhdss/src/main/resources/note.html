@@ -45,23 +45,13 @@ create database hdss;
 // Set bind address for docker to connect
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 set 
+[mysqld]
 bind-address = 0.0.0.0
 sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
 ctrl + X to save
 restart mysql
 sudo service mysql restart
 sudo mysql
-
-
-
-[mysqld]
-bind-address = 0.0.0.0
-sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY
-pid-file        = /var/run/mysqld/mysqld.pid
-socket          = /var/run/mysqld/mysqld.sock
-datadir         = /var/lib/mysql
-log-error       = /var/log/mysql/error.log
-
 
 
 //Install app on docker

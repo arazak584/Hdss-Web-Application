@@ -43,6 +43,17 @@ public class ListingController {
 		return w;
 	}
 	
+	@GetMapping("/edit")
+	public DataWrapper<Listing> findEdit() {
+
+		List<Listing> data = repo.findEdit();
+
+		DataWrapper<Listing> w = new DataWrapper<>();
+		w.setData(data);
+
+		return w;
+	}
+	
 	
 	@PostMapping("")
     public DataWrapper<Listing> saveAll(@RequestBody DataWrapper<Listing> data) {

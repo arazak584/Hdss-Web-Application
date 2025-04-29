@@ -648,7 +648,7 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('cashcrops', 'C
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for home consumption', 1);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for sale on market', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('livestock', 'Livestock mainly for home consumption and sale on market', 3);
-INSERT INTO settings (`earliestDate`, `father_age`, `hoh_age`, `mother_age`, `rel_age`, `updates`, `enumeration`) VALUES ('2018-01-01', 12, 14, 12, 12,true,false);
+INSERT INTO settings (`earliestDate`, `father_age`, `hoh_age`, `mother_age`, `rel_age`, `updates`, `enumeration`,`sesDate`, `site`, `compno`) VALUES ('2018-01-01', 12, 14, 12, 12,true,false,'2023-08-01', "HDSS", "XX1001");
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('modules', 'HDSS', 1);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('modules', 'Covid', 2);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('enabled', 'True', 1);
@@ -712,6 +712,7 @@ INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_metho
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'IUD', 7);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Emergency contraception ', 8);
 INSERT INTO codebook (`codeFeature`, `codeLabel`, `codeValue`) VALUES ('fam_plan_method', 'Calendar Method', 9);
+INSERT INTO codebook ( `codeFeature`, `codeLabel`, `codeValue`) VALUES ('fam_plan_method', 'Tubal Ligation', 10);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'Other Specify', 77);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('fam_plan_method', 'None', 11);
 INSERT INTO codebook (codeFeature, codeLabel, codeValue) VALUES ('crop', 'Consumption mainly', 1);
