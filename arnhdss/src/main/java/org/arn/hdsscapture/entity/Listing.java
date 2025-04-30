@@ -52,7 +52,7 @@ public class Listing implements Serializable {
 	@Column(name = "fw_uuid", nullable = false)
 	private String fw_uuid;
 	
-	@Column(name = "edit_compno", nullable = false)
+	@Column(name = "edit_compno", nullable = true)
 	private Integer edit_compno;
 		
 	
