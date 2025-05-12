@@ -222,7 +222,7 @@ public class IndividualZipController {
     
     private void saveOrUpdateTask(String directoryPath, int totalRecords) {
         try {
-            Optional<Task> optionalTask = taskRepository.findByFileName("individuals");
+            Optional<Task> optionalTask = taskRepository.findByFileName("individual");
             Task task;
             if (optionalTask.isPresent()) {
                 // Update the existing zipfile entity with the new file data
@@ -230,7 +230,7 @@ public class IndividualZipController {
             } else {
                 // Create a new zipfile entity and save it to the database
                 task = new Task();
-                task.setFileName("individuals");
+                task.setFileName("individual");
             }
 
             task.setTimestamp(LocalDateTime.now());
@@ -285,7 +285,7 @@ public class IndividualZipController {
         System.out.println("Cache Hits: " + cacheStats.hitCount());
         System.out.println("Cache Misses: " + cacheStats.missCount());
         // Find task entity by filename
-        Optional<Task> optionalTask = taskRepository.findByFileName("individuals");
+        Optional<Task> optionalTask = taskRepository.findByFileName("individual");
         if (!optionalTask.isPresent()) {
             return ResponseEntity.notFound().build();
         }

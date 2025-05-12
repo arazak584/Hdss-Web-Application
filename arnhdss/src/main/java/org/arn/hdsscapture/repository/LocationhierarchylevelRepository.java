@@ -22,4 +22,7 @@ public interface LocationhierarchylevelRepository extends JpaRepository <Locatio
 	List<Locationhierarchylevel> find5();
 	@Query(nativeQuery = true, value = "SELECT * FROM locationhierarchylevel Where uuid='hierarchyLevelId6'")
 	List<Locationhierarchylevel> find6();
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM locationhierarchylevel ORDER BY uuid")
+	List<Locationhierarchylevel> hierarchy();
 }

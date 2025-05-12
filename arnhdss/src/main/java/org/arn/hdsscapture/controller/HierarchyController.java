@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import org.arn.hdsscapture.entity.Locationhierarchy;
+import org.arn.hdsscapture.entity.Locationhierarchylevel;
 import org.arn.hdsscapture.repository.LocationhierarchyRepository;
 import org.arn.hdsscapture.repository.LocationhierarchylevelRepository;
+import org.arn.hdsscapture.views.ActiveHouseholds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
-@RequestMapping("/hierarchy")
+@RequestMapping("")
 public class HierarchyController {
 	
 	
@@ -30,13 +33,75 @@ public class HierarchyController {
 	LocationhierarchylevelRepository level;
 
 	// Community
-	@GetMapping("/country")
-	public String findHierarchy(Model model) {
-		List<Locationhierarchy> items = repo.country();
-		model.addAttribute("items", items);
-		Hierarchy(model);
-		return "hierarchy/hierarchy_list";
+	@GetMapping("/hierarchy/list")
+	public String findHierarchy(@RequestParam(name = "level_uuid", required = false)  String level_uuid,
+            Model model) {
+		
+		List<Locationhierarchylevel> villages = level.hierarchy();
+		model.addAttribute("villages", villages);
+//		model.addAttribute("level_uuid", level_uuid);
+		
+		if (level_uuid != null) {
+	        List<Locationhierarchy> items = repo.Report(level_uuid);
+	        model.addAttribute("items", items);
+	    } else {
+	    	model.addAttribute("message", "Select Level");
+	    }
+
+		return "hierarchy/hierarchy";
 	}
+	
+	@GetMapping("/hierarchy/add")
+	public String NewHierarchy(Model model,@RequestParam(name = "level_uuid", required = false)  String level_uuid,
+	                       @RequestParam(name = "success", required = false) String success) {
+		List<Locationhierarchylevel> villages = level.hierarchy();
+		model.addAttribute("villages", villages);
+		
+//		List<Locationhierarchy> levels = repo.Report(level_uuid);
+//		model.addAttribute("levels", levels);
+		
+		Locationhierarchy item = new Locationhierarchy();
+	    model.addAttribute("item", item);
+	    Hierarchy(model);
+	    if (success != null) {
+	        model.addAttribute("success", "Successfully saved");
+	    }
+	    return "hierarchy/hierarchy_new";
+	}
+	
+	@PostMapping("/hierarchy/add")
+    public String saveNewHierarchy(@ModelAttribute("item") Locationhierarchy item, BindingResult bindingResult, Model model) {
+		 //Generate a UUID for the Fieldworker's ID
+	    String uuid = UUID.randomUUID().toString();
+	    String uuidString = uuid.replaceAll("-", "");
+
+	    // Set the ID
+	    item.setUuid(uuidString);
+
+        // Save the Round object using the repository
+        repo.save(item);
+
+        return "redirect:/hierarchy/add?success";
+    }
+	
+	@GetMapping("/api/levels")
+	@ResponseBody
+	public List<Locationhierarchy> getLevels(@RequestParam("level_uuid") String level_uuid) {
+	    return repo.Report(level_uuid); // This should return the matching parent options
+	}
+
+	
+//	@GetMapping("/country")
+//	public String findHierarchy(Model model) {
+//		
+//		List<String> villages = level.hierarchy();
+//		model.addAttribute("villages", villages);
+//		
+//		List<Locationhierarchy> items = repo.country();
+//		model.addAttribute("items", items);
+//		Hierarchy(model);
+//		return "hierarchy/hierarchy_list";
+//	}
 
 	@GetMapping("/country/add")
 	public String addHierarchy(Model model,

@@ -51,8 +51,8 @@ VALUES('UNK','UNK','UNK',NULL,'UNK',1, '1800-12-19 15:07:43', 'UNK', 'UNK','2023
 INSERT IGNORE INTO locationhierarchy(uuid,name,extId,level_uuid,parent_uuid) VALUES('hierarchy_root','', 'HIERARCHY_ROOT', NULL,NULL);
 
 
-INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUES ('294.00 bytes', 'individuals', '2023-05-19 11:32:55', 1, 'application/octet-stream');
-INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUES ('140.00 bytes', 'locations', '2023-05-19 11:32:57', 0, 'application/octet-stream');
+INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUES ('294.00 bytes', 'individual', '2023-05-19 11:32:55', 1, 'application/octet-stream');
+INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUES ('140.00 bytes', 'location', '2023-05-19 11:32:57', 0, 'application/octet-stream');
 INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUES ('142.00 bytes', 'residency', '2023-05-19 11:32:59', 0, 'application/octet-stream');
 INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUES ('146.00 bytes', 'socialgroup', '2023-05-19 11:33:00', 0, 'application/octet-stream');
 INSERT IGNORE INTO task (`data`, `fileName`, `timestamp`, `total`, `type`) VALUES ('148.00 bytes', 'relationship', '2023-05-19 11:33:01', 0, 'application/octet-stream');

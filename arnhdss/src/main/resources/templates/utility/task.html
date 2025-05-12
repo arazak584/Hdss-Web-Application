@@ -195,19 +195,25 @@
                                             <table class="table table-hover mb-0">
 												<thead class="">
 													<tr>
-														<th th:text="#{task.name}"></th>
+														<!--<th th:text="#{task.name}"></th>-->
 														<th th:text="#{task.size}"></th>
 														<th th:text="#{task.date}"></th>
 														<th th:text="#{task.total}"></th>
+														<th th:text="#{task.name}"></th>
 													</tr>
 												</thead>
                                                 <tbody>
                                                    <tr th:each="item : ${items}">
-														<td th:text="${item.fileName}"></td>
+														<!--<td th:text="${item.fileName}"></td>-->
 														<td th:text="${item.data}"></td>
 														<td th:text="${item.timestamp}"></td>
 														<td th:text="${item.total}"></td>
-														
+														<td>
+										                    <a th:href="@{/api/zip/{fileName}(fileName=${item.fileName})}"
+										                       class="btn btn-sm btn-primary" download style="width: 100px;">
+										                        <span th:text="${item.fileName}" ></span>
+										                    </a>
+										                </td>
 									            	</tr>
                                                 </tbody>
                                             </table>

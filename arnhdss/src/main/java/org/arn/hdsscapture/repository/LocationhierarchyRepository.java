@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.arn.hdsscapture.entity.Locationhierarchy;
+import org.arn.hdsscapture.views.ActiveHouseholds;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -67,5 +68,13 @@ public interface LocationhierarchyRepository extends JpaRepository <Locationhier
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM locationhierarchy WHERE level_uuid = 'hierarchyLevelId6' AND extId = :extId")
 	List<Locationhierarchy> findByUuid(@Param("extId") String extId);
+	
+	
+	@Query(nativeQuery = true, value = "SELECT a.uuid,a.area,a.extId,a.level_uuid,a.`name`,b.`name` as parent_uuid,a.town,a.fw_name \r\n"
+			+ " from locationhierarchy as a INNER JOIN locationhierarchy b ON a.parent_uuid=b.uuid where  a.level_uuid= :level_uuid")
+	List<Locationhierarchy> Report(@Param("level_uuid") String level_uuid);
+	
+	@Query(nativeQuery = true, value = "SELECT a.* from locationhierarchy a where a.level_uuid= :level_uuid")
+	List<Locationhierarchy> list(@Param("level_uuid") String level_uuid);
 
 }

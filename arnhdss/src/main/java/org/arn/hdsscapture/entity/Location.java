@@ -62,7 +62,7 @@ public class Location implements Serializable {
 	private String accuracy;
 	
 	@Column(name = "altitude")
-	private float altitude;
+	private Double altitude;
 	
 	@Column(name = "locationType", nullable = false)
 	private Integer locationType;
@@ -235,13 +235,13 @@ public class Location implements Serializable {
 	public void setEdtime(String edtime) {
 		this.edtime = edtime;
 	}
-	
-	public Float getAltitude() {
+
+	public Double getAltitude() {
 		return altitude;
 	}
 
 
-	public void setAltitude(Float altitude) {
+	public void setAltitude(Double altitude) {
 		this.altitude = altitude;
 	}
 
