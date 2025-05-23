@@ -52,7 +52,6 @@
                                     <div class="card-header d-block">
                                         <h3>Location Hierarchy</h3> 
                                         <button id="btn-export" onclick="exportToExcel()">Export to Excel</button>
-                                        
                                         <a class="btn btn-primary" th:href = "@{/hierarchy/add}" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')"> 
 												   Add Hierarchy
 												  </a>
@@ -88,7 +87,11 @@
 											            <td th:text="${item.level_uuid}"></td>
 											            <td th:text="${item.name}"></td>
 											            <td th:text="${item.parent_uuid}"></td>
-											            <td th:text="${item.town}"></td>
+											            <td sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">
+										                <a th:href="@{/hierarchy/edit/{uuids}(uuids=${item.uuid})}" 
+										                class="btn btn-success btn-sm">Edit</a>
+										
+										            	</td>
 											            </tr>                                                                                
                                                
                                             </tbody>

@@ -2,9 +2,11 @@ package org.arn.hdsscapture.repository;
 
 import java.util.List;
 
+import org.arn.hdsscapture.entity.Locationhierarchy;
 import org.arn.hdsscapture.entity.Locationhierarchylevel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 
 public interface LocationhierarchylevelRepository extends JpaRepository <Locationhierarchylevel, String> {
@@ -25,4 +27,13 @@ public interface LocationhierarchylevelRepository extends JpaRepository <Locatio
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM locationhierarchylevel ORDER BY uuid")
 	List<Locationhierarchylevel> hierarchy();
+	
+	@Query(nativeQuery = true, value ="SELECT COUNT(uuid) FROM locationhierarchylevel")
+	Long hierarchycnt();
+	
+	@Query(nativeQuery = true, value = "SELECT MAX(keyIdentifier) FROM locationhierarchylevel")
+	 Integer findMaxNumber();
+	
+	@Query(nativeQuery = true, value = "SELECT * from locationhierarchylevel WHERE uuid = :uuid")
+	List<Locationhierarchylevel> findUuid(@Param("uuid") String uuid);
 }

@@ -32,12 +32,13 @@
                     <a href="javascript:void(0)"><i class="ik ik-list"></i><span>Hierarchy</span> <span class="badge badge-success" id="cntall"></span></a>
                     <div class="submenu-content">
 						<a th:href="@{/hierarchy/list}" class="menu-item">Hierarchy<span class="badge badge-success" ></span></a>
-                        <a th:href="@{/hierarchy/country}" class="menu-item">Country<span class="badge badge-success" id="cnt1"></span></a>
+						<a th:href="@{/hierarchylevel/list}" class="menu-item" sec:authorize="hasAnyRole('CONTROLLER','MANAGER')">Hierarchy Level<span class="badge badge-success" ></span></a>
+                        <!--<a th:href="@{/hierarchy/country}" class="menu-item">Country<span class="badge badge-success" id="cnt1"></span></a>
                         <a th:href="@{/hierarchy/region}" class="menu-item">Region<span class="badge badge-success" id="cnt2"></span></a>
                         <a th:href="@{/hierarchy/district}" class="menu-item">District<span class="badge badge-success" id="cnt3"></span></a>
                         <a th:href="@{/hierarchy/subdistrict}" class="menu-item">Sub District<span class="badge badge-success" id="cnt4"></span></a>
                         <a th:href="@{/hierarchy/village}" class="menu-item">Village<span class="badge badge-success" id="cnt5"></span></a>
-                        <a th:href="@{/hierarchy/subvillage}" class="menu-item">Subvillage<span class="badge badge-success" id="cnt6"></span></a>
+                        <a th:href="@{/hierarchy/subvillage}" class="menu-item">Subvillage<span class="badge badge-success" id="cnt6"></span></a>-->
                     </div>
                 </div>
                 <div class="nav-item has-sub">

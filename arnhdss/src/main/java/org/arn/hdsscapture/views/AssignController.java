@@ -130,7 +130,7 @@ public class AssignController {
 	        	    List<Fieldworker> relatedEntity = fwrepo.findFieldworkerByUsername(newFwname);
 
 	        	    if (!relatedEntity.isEmpty()) {
-	        	        Optional<Locationhierarchy> optionalItem = loc.findByExtId(extId);
+	        	        Optional<Locationhierarchy> optionalItem = loc.findByExtIdz(extId);
 
 	        	        optionalItem.ifPresent(item -> {
 	        	            // Update the fw_name field

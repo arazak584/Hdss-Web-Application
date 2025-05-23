@@ -36,14 +36,14 @@ function updateHierarchy(data) {
     $('#itemsContainer').html(renderItems(data.items));
     
     // Hierarchy
-    $('#cnt1').text(data.cnt1);
+    $('#cntall').text(data.cnt1 + '+');
     $('#cnt2').text(data.cnt2);
     $('#cnt3').text(data.cnt3);
     $('#cnt4').text(data.cnt4);
     $('#cnt5').text(data.cnt5);
     $('#cnt6').text(data.cnt6);
 
-$('#cntall').text(data.cnt1+data.cnt2+data.cnt3+data.cnt4+data.cnt5+data.cnt6 + '+');
+//$('#cntall').text(data.cnt1+data.cnt2+data.cnt3+data.cnt4+data.cnt5+data.cnt6 + '+');
 }
 
 function updateQuery(data) {

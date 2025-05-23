@@ -91,13 +91,13 @@
 
 											
 											<div class="form-group">
-													<label th:text="#{village}"></label>
+													<label id="dynamicLabel">Village</label>
 												 <input type="text" class="form-control"  name="name" th:field ="*{name}" required>
 
 											</div>
 											
 											<div class="form-group">
-													<label th:text="#{town}"></label>
+													<label id="dynamicLabels">Village</label>
 												 <input type="text" class="form-control"  name="town" th:field ="*{town}" required>
 
 											</div>
@@ -105,13 +105,14 @@
 											
 											
 											<div class="form-group">
-													<label th:text="#{villcode}"></label>
+													<label id="dynamicCode">Code</label>
+													<small class="text-danger" th:if="${error}">[[${error}]]</small>
 												 <input type="text" class="form-control"  name="extId" th:field ="*{extId}" required>
 
 											</div>																				
                                             
                                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                            <a class="btn btn-secondary btn-lg" href="#" th:href="@{/hierarchy/subdistrict}">CANCEL</a>
+                                            <a class="btn btn-secondary btn-lg" href="#" th:href="@{/hierarchy/list}">CANCEL</a>
                                             <!--<button class="btn btn-light">Cancel</button>-->
                                           </form>
                                     </div>
@@ -199,6 +200,72 @@ document.getElementById("levelSelect").addEventListener("change", function () {
 });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const select = document.getElementById("levelSelect");
+    const label = document.getElementById("dynamicLabel");
+
+    function updateLabel() {
+        const selectedText = select.options[select.selectedIndex].text;
+        if (select.value) {
+            label.textContent = "Name of " + selectedText;
+        } else {
+            label.textContent = "Name of Cluster"; // default fallback
+        }
+    }
+
+    // Update on selection change
+    select.addEventListener("change", updateLabel);
+
+    // Trigger once on load (e.g., in edit mode)
+    updateLabel();
+});
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const select = document.getElementById("levelSelect");
+    const label = document.getElementById("dynamicLabels");
+
+    function updateLabels() {
+        const selectedText = select.options[select.selectedIndex].text;
+        if (select.value) {
+            label.textContent = "This Should Same as Name of " + selectedText;
+        } else {
+            label.textContent = "This Should Same as Name of Cluster"; // default fallback
+        }
+    }
+
+    // Update on selection change
+    select.addEventListener("change", updateLabels);
+
+    // Trigger once on load (e.g., in edit mode)
+    updateLabels();
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const select = document.getElementById("levelSelect");
+    const label = document.getElementById("dynamicCode");
+
+    function updateCode() {
+        const selectedText = select.options[select.selectedIndex].text;
+        if (select.value) {
+            label.textContent =  selectedText + " Code";
+        } else {
+            label.textContent = "Code"; // default fallback
+        }
+    }
+
+    // Update on selection change
+    select.addEventListener("change", updateCode);
+
+    // Trigger once on load (e.g., in edit mode)
+    updateCode();
+});
+</script>
 
         
     </body>

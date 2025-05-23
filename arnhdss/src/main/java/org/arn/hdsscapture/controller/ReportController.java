@@ -111,11 +111,11 @@ public class ReportController {
         data.put("items", codebook.findAll());
         //Query
         data.put("cnt1", loc.cnt1());
-        data.put("cnt2", loc.cnt2());
-        data.put("cnt3", loc.cnt3());
-        data.put("cnt4", loc.cnt4());
-        data.put("cnt5", loc.cnt5());
-        data.put("cnt6", loc.cnt6());
+//        data.put("cnt2", loc.cnt2());
+//        data.put("cnt3", loc.cnt3());
+//        data.put("cnt4", loc.cnt4());
+//        data.put("cnt5", loc.cnt5());
+//        data.put("cnt6", loc.cnt6());
 
         return ResponseEntity.ok(data);
     }

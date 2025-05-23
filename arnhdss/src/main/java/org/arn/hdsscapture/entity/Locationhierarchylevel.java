@@ -23,7 +23,7 @@ public class Locationhierarchylevel {
 	private String uuid;
 	
 	@Column(name = "keyIdentifier", nullable = false)
-	private String keyIdentifier;
+	private Integer keyIdentifier;
 	
 	@Column(name = "name", nullable = false)
 	private String name;
@@ -42,11 +42,11 @@ public class Locationhierarchylevel {
 		this.uuid = uuid;
 	}
 
-	public String getKeyIdentifier() {
+	public Integer getKeyIdentifier() {
 		return keyIdentifier;
 	}
 
-	public void setKeyIdentifier(String keyIdentifier) {
+	public void setKeyIdentifier(Integer keyIdentifier) {
 		this.keyIdentifier = keyIdentifier;
 	}
 
